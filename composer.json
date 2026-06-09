@@ -1,0 +1,6 @@
+{
+    "name": "fsteltenkamp/laravel-twcss-components",
+    "description": "A Collection of TailwindCSS Components for Laravel",
+    "require": {},
+    "license": "AGPL-3.0-only"
+}
