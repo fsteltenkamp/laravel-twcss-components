@@ -1,8 +1,8 @@
 <?php
 
-namespace Fsteltenkamp\fltcComponents\View\Components\Button;
+namespace Fsteltenkamp\TwcssComponents\View\Components\Button;
 
-use Fsteltenkamp\fltcComponents\View\Components\Button;
+use Fsteltenkamp\TwcssComponents\View\Components\Button;
 use Closure;
 use Illuminate\Contracts\View\View;
 

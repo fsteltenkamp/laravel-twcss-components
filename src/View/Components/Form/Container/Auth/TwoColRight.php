@@ -1,6 +1,6 @@
 <?php
 
-namespace Fsteltenkamp\fltcComponents\View\Components\Form\Container\Auth;
+namespace Fsteltenkamp\TwcssComponents\View\Components\Form\Container\Auth;
 
 use Closure;
 use Illuminate\Contracts\View\View;

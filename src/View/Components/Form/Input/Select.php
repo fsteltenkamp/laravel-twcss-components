@@ -1,8 +1,8 @@
 <?php
 
-namespace Fsteltenkamp\fltcComponents\View\Components\Form\Input;
+namespace Fsteltenkamp\TwcssComponents\View\Components\Form\Input;
 
-use Fsteltenkamp\fltcComponents\View\Components\Form\Input;
+use Fsteltenkamp\TwcssComponents\View\Components\Form\Input;
 use Closure;
 use Illuminate\Contracts\View\View;
 

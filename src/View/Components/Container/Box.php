@@ -1,6 +1,6 @@
 <?php
 
-namespace Fsteltenkamp\fltcComponents\View\Components\Container;
+namespace Fsteltenkamp\TwcssComponents\View\Components\Container;
 
 use Closure;
 use Illuminate\Contracts\View\View;

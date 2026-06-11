@@ -1,6 +1,6 @@
 <?php
 
-namespace Fsteltenkamp\fltcComponents\View\Components\Nav\Navbar\Dropdown;
+namespace Fsteltenkamp\TwcssComponents\View\Components\Nav\Navbar\Dropdown;
 
 use Closure;
 use Illuminate\Contracts\View\View;

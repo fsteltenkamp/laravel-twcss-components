@@ -1,6 +1,6 @@
 <?php
 
-namespace Fsteltenkamp\fltcComponents\View\Components\Accordion;
+namespace Fsteltenkamp\TwcssComponents\View\Components\Accordion;
 
 use Closure;
 use Illuminate\Contracts\View\View;

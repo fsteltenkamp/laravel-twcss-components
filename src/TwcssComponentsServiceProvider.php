@@ -1,17 +1,17 @@
 <?php
 
-namespace Fsteltenkamp\fltcComponents;
+namespace Fsteltenkamp\TwcssComponents;
 
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
-class fltcComponentsServiceProvider extends ServiceProvider
+class TwcssComponentsServiceProvider extends ServiceProvider
 {
     public function boot(): void
     {
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'fltc');
 
-        Blade::componentNamespace('Fsteltenkamp\\fltcComponents\\View\\Components', 'fltc');
+        Blade::componentNamespace('Fsteltenkamp\\TwcssComponents\\View\\Components', 'fltc');
 
         Blade::anonymousComponentPath(__DIR__.'/../resources/views/components', 'fltc');
 

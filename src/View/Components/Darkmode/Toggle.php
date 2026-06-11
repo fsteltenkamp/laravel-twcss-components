@@ -1,6 +1,6 @@
 <?php
 
-namespace Fsteltenkamp\fltcComponents\View\Components\Darkmode;
+namespace Fsteltenkamp\TwcssComponents\View\Components\Darkmode;
 
 use Closure;
 use Illuminate\Contracts\View\View;

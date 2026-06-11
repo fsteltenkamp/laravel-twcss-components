@@ -1,6 +1,6 @@
 <?php
 
-namespace Fsteltenkamp\fltcComponents\View\Components\Nav\Navbar;
+namespace Fsteltenkamp\TwcssComponents\View\Components\Nav\Navbar;
 
 use Closure;
 use Illuminate\Contracts\View\View;

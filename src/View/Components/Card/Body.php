@@ -1,6 +1,6 @@
 <?php
 
-namespace Fsteltenkamp\fltcComponents\View\Components\Card;
+namespace Fsteltenkamp\TwcssComponents\View\Components\Card;
 
 use Closure;
 use Illuminate\Contracts\View\View;

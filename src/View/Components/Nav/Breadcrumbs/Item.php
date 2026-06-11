@@ -1,6 +1,6 @@
 <?php
 
-namespace Fsteltenkamp\fltcComponents\View\Components\Nav\Breadcrumbs;
+namespace Fsteltenkamp\TwcssComponents\View\Components\Nav\Breadcrumbs;
 
 use Closure;
 use Illuminate\Contracts\View\View;
