@@ -1,5 +1,5 @@
 <div data-card-rows {{ $attributes->class([$classList]) }}>
-    <x-twcss::table
+    <x-fltc::table
         :theme="$theme"
         :striped="$striped"
         :hover="$hover"
@@ -9,9 +9,9 @@
         radius="0"
     >
         @isset($head)
-            <x-twcss::table.head>
+            <x-fltc::table.head>
                 {{ $head }}
-            </x-twcss::table.head>
+            </x-fltc::table.head>
         @endisset
 
         <tbody id="{{ $bodyId }}">
@@ -19,9 +19,9 @@
         </tbody>
 
         @isset($foot)
-            <x-twcss::table.foot>
+            <x-fltc::table.foot>
                 {{ $foot }}
-            </x-twcss::table.foot>
+            </x-fltc::table.foot>
         @endisset
-    </x-twcss::table>
+    </x-fltc::table>
 </div>

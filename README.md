@@ -12,16 +12,16 @@ The service provider is auto-discovered via Laravel's package discovery.
 
 ## Usage
 
-Components are registered under the `twcss` namespace:
+Components are registered under the `fltc` namespace:
 
 ```blade
-<x-twcss::button variant="primary">
+<x-fltc::button variant="primary">
     Save
-</x-twcss::button>
+</x-fltc::button>
 
-<x-twcss::button variant="danger" type="submit">
+<x-fltc::button variant="danger" type="submit">
     Delete
-</x-twcss::button>
+</x-fltc::button>
 ```
 
 ## Publishing

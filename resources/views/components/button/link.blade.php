@@ -1,5 +1,5 @@
 @if(filled(trim($tooltip)))
-	<x-twcss::tooltip :text="$tooltip" :theme="$theme" :class="$width === 'full' ? 'w-full' : ''">
+	<x-fltc::tooltip :text="$tooltip" :theme="$theme" :class="$width === 'full' ? 'w-full' : ''">
 		<a
 			href="{{ $disabled ? '#' : $href }}"
 			@if($navigate && !$disabled) wire:navigate @endif
@@ -8,7 +8,7 @@
 				$classList
 			])->merge(['style' => $heightStyle]) }}
 		>{{ $slot }}</a>
-	</x-twcss::tooltip>
+	</x-fltc::tooltip>
 @else
 	<a
 		href="{{ $disabled ? '#' : $href }}"

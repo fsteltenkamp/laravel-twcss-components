@@ -1,6 +1,6 @@
 <?php
 
-namespace Fsteltenkamp\TwcssComponents\View\Components\Darkmode;
+namespace Fsteltenkamp\fltcComponents\View\Components\Darkmode;
 
 use Closure;
 use Illuminate\Contracts\View\View;
@@ -55,6 +55,6 @@ SVG;
      */
     public function render(): View|Closure|string
     {
-        return view('twcss::components.darkmode.toggle');
+        return view('fltc::components.darkmode.toggle');
     }
 }

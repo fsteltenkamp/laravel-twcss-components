@@ -1,6 +1,6 @@
 <?php
 
-namespace Fsteltenkamp\TwcssComponents\View\Components\Nav;
+namespace Fsteltenkamp\fltcComponents\View\Components\Nav;
 
 use Closure;
 use Illuminate\Contracts\View\View;
@@ -91,6 +91,6 @@ class Breadcrumbs extends Component
     {
         ViewFacade::share('tailwindBreadcrumbsTheme', $this->theme);
 
-        return view('twcss::components.nav.breadcrumbs');
+        return view('fltc::components.nav.breadcrumbs');
     }
 }

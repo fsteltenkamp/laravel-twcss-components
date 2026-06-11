@@ -1,6 +1,6 @@
 <?php
 
-namespace Fsteltenkamp\TwcssComponents\View\Components\Accordion;
+namespace Fsteltenkamp\fltcComponents\View\Components\Accordion;
 
 use Closure;
 use Illuminate\Contracts\View\View;
@@ -187,6 +187,6 @@ class Item extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('twcss::components.accordion.item');
+        return view('fltc::components.accordion.item');
     }
 }

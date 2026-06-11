@@ -1,8 +1,8 @@
 <?php
 
-namespace Fsteltenkamp\TwcssComponents\View\Components\Form\Input;
+namespace Fsteltenkamp\fltcComponents\View\Components\Form\Input;
 
-use Fsteltenkamp\TwcssComponents\View\Components\Form\Input;
+use Fsteltenkamp\fltcComponents\View\Components\Form\Input;
 use Closure;
 use Illuminate\Contracts\View\View;
 
@@ -41,6 +41,6 @@ class Email extends Input
 
     public function render(): View|Closure|string
     {
-        return view('twcss::components.form.input.email');
+        return view('fltc::components.form.input.email');
     }
 }

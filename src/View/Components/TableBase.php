@@ -1,6 +1,6 @@
 <?php
 
-namespace Fsteltenkamp\TwcssComponents\View\Components;
+namespace Fsteltenkamp\fltcComponents\View\Components;
 
 use Illuminate\View\Component;
 

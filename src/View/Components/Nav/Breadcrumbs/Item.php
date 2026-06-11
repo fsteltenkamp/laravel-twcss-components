@@ -1,6 +1,6 @@
 <?php
 
-namespace Fsteltenkamp\TwcssComponents\View\Components\Nav\Breadcrumbs;
+namespace Fsteltenkamp\fltcComponents\View\Components\Nav\Breadcrumbs;
 
 use Closure;
 use Illuminate\Contracts\View\View;
@@ -161,6 +161,6 @@ class Item extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('twcss::components.nav.breadcrumbs.item');
+        return view('fltc::components.nav.breadcrumbs.item');
     }
 }

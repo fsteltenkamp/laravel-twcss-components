@@ -1,6 +1,6 @@
 <?php
 
-namespace Fsteltenkamp\TwcssComponents\View\Components;
+namespace Fsteltenkamp\fltcComponents\View\Components;
 
 use Closure;
 use Illuminate\Contracts\View\View;
@@ -61,6 +61,6 @@ class Accordion extends Component
         ViewFacade::share('tailwindAccordionDraggable', $this->draggable);
         ViewFacade::share('tailwindAccordionOpenFirst', $this->openFirst);
 
-        return view('twcss::components.accordion');
+        return view('fltc::components.accordion');
     }
 }

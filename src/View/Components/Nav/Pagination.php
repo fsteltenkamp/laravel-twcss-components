@@ -1,6 +1,6 @@
 <?php
 
-namespace Fsteltenkamp\TwcssComponents\View\Components\Nav;
+namespace Fsteltenkamp\fltcComponents\View\Components\Nav;
 
 use Closure;
 use Illuminate\Contracts\View\View;
@@ -36,6 +36,6 @@ class Pagination extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('twcss::components.nav.pagination');
+        return view('fltc::components.nav.pagination');
     }
 }

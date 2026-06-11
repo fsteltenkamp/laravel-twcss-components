@@ -55,7 +55,7 @@
                             </details>
                         @endif
 
-                        <x-twcss::array-to-table
+                        <x-fltc::array-to-table
                             :array="$value"
                             prefix="{{ $index }}"
                             idPrefix="{{ $idPrefix ?? '' }}"

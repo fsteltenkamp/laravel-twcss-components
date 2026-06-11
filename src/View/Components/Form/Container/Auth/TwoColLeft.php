@@ -1,6 +1,6 @@
 <?php
 
-namespace Fsteltenkamp\TwcssComponents\View\Components\Form\Container\Auth;
+namespace Fsteltenkamp\fltcComponents\View\Components\Form\Container\Auth;
 
 use Closure;
 use Illuminate\Contracts\View\View;
@@ -147,6 +147,6 @@ class TwoColLeft extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('twcss::components.form.container.auth.two-col-left');
+        return view('fltc::components.form.container.auth.two-col-left');
     }
 }

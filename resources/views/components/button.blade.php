@@ -1,5 +1,5 @@
 @if(filled(trim($tooltip)))
-    <x-twcss::tooltip :text="$tooltip" :theme="$theme" :class="$width === 'full' ? 'w-full' : ''">
+    <x-fltc::tooltip :text="$tooltip" :theme="$theme" :class="$width === 'full' ? 'w-full' : ''">
         <button
             @disabled($disabled)
             {{ $attributes->class([
@@ -9,7 +9,7 @@
                 'style' => $heightStyle,
             ]) }}
         >{{ $slot }}</button>
-    </x-twcss::tooltip>
+    </x-fltc::tooltip>
 @else
     <button
         @disabled($disabled)

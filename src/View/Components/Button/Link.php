@@ -1,8 +1,8 @@
 <?php
 
-namespace Fsteltenkamp\TwcssComponents\View\Components\Button;
+namespace Fsteltenkamp\fltcComponents\View\Components\Button;
 
-use Fsteltenkamp\TwcssComponents\View\Components\Button;
+use Fsteltenkamp\fltcComponents\View\Components\Button;
 use Closure;
 use Illuminate\Contracts\View\View;
 
@@ -24,6 +24,6 @@ class Link extends Button
 
     public function render(): View|Closure|string
     {
-        return view('twcss::components.button.link');
+        return view('fltc::components.button.link');
     }
 }

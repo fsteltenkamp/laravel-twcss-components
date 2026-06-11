@@ -1,8 +1,8 @@
 <?php
 
-namespace Fsteltenkamp\TwcssComponents\View\Components\Form\Input;
+namespace Fsteltenkamp\fltcComponents\View\Components\Form\Input;
 
-use Fsteltenkamp\TwcssComponents\View\Components\Form\Input;
+use Fsteltenkamp\fltcComponents\View\Components\Form\Input;
 use Closure;
 use Illuminate\Contracts\View\View;
 
@@ -37,6 +37,6 @@ class Datetime extends Input
 
     public function render(): View|Closure|string
     {
-        return view('twcss::components.form.input.datetime');
+        return view('fltc::components.form.input.datetime');
     }
 }

@@ -48,20 +48,20 @@
         <div class="{{ $panelClass }}">
             <div class="flex flex-wrap items-center gap-2 sm:min-w-0 sm:flex-1">
                 @if ($hasBackward)
-                    <x-twcss::button
+                    <x-fltc::button
                         :theme="$theme"
                         variant="outline"
                         onclick="{{ $onclickPrefix }}util.stepperPreviousStep({{ $currentStepKey }})"
                     >
                         <x-icon i="arrow-left" />
                         <span>Zuruck</span>
-                    </x-twcss::button>
+                    </x-fltc::button>
 
                     @if ($savebtn)
-                        <x-twcss::button theme="green" id="formularInstanceUpdateButton" onclick="submit()">
+                        <x-fltc::button theme="green" id="formularInstanceUpdateButton" onclick="submit()">
                             <x-icon i="floppy-disk" />
                             <span>Speichern</span>
-                        </x-twcss::button>
+                        </x-fltc::button>
                     @endif
                 @endif
             </div>
@@ -73,19 +73,19 @@
             <div class="flex flex-wrap items-center justify-start gap-2 sm:min-w-0 sm:flex-1 sm:justify-end">
                 @if ($hasForward)
                     @if ($savebtn)
-                        <x-twcss::button theme="green" id="formularInstanceUpdateButton" onclick="submit()">
+                        <x-fltc::button theme="green" id="formularInstanceUpdateButton" onclick="submit()">
                             <x-icon i="floppy-disk" />
                             <span>Speichern</span>
-                        </x-twcss::button>
+                        </x-fltc::button>
                     @endif
 
-                    <x-twcss::button
+                    <x-fltc::button
                         :theme="$theme"
                         onclick="{{ $onclickPrefix }}util.stepperNextStep({{ $currentStepKey }})"
                     >
                         <span>Weiter</span>
                         <x-icon i="arrow-right" />
-                    </x-twcss::button>
+                    </x-fltc::button>
                 @endif
             </div>
         </div>

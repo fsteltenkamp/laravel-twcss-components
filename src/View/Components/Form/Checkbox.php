@@ -1,6 +1,6 @@
 <?php
 
-namespace Fsteltenkamp\TwcssComponents\View\Components\Form;
+namespace Fsteltenkamp\fltcComponents\View\Components\Form;
 
 use Closure;
 use Illuminate\Contracts\View\View;
@@ -220,6 +220,6 @@ class Checkbox extends Component
 
     public function render(): View|Closure|string
     {
-        return view('twcss::components.form.checkbox');
+        return view('fltc::components.form.checkbox');
     }
 }

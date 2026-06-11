@@ -14,13 +14,13 @@
         <ol data-breadcrumb-list class="{{ $listClass }}">
             @if ($items !== [])
                 @foreach ($items as $item)
-                    <x-twcss::nav.breadcrumbs.item
+                    <x-fltc::nav.breadcrumbs.item
                         :href="$item['href']"
                         :icon="$item['icon']"
                         :is-active="$item['isActive']"
                         :show-separator="$item['showSeparator']"
                         :theme="$theme"
-                    >{{ $item['label'] }}</x-twcss::nav.breadcrumbs.item>
+                    >{{ $item['label'] }}</x-fltc::nav.breadcrumbs.item>
                 @endforeach
             @else
                 {{ $slot }}

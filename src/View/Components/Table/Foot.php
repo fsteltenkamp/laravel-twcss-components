@@ -1,6 +1,6 @@
 <?php
 
-namespace Fsteltenkamp\TwcssComponents\View\Components\Table;
+namespace Fsteltenkamp\fltcComponents\View\Components\Table;
 
 use Closure;
 use Illuminate\Contracts\View\View;
@@ -18,6 +18,6 @@ class Foot extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('twcss::components.table.foot');
+        return view('fltc::components.table.foot');
     }
 }

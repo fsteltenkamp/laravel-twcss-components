@@ -1,6 +1,6 @@
 <?php
 
-namespace Fsteltenkamp\TwcssComponents\View\Components;
+namespace Fsteltenkamp\fltcComponents\View\Components;
 
 use Closure;
 use Illuminate\Contracts\View\View;
@@ -128,6 +128,6 @@ class Button extends Component
 
     public function render(): View|Closure|string
     {
-        return view('twcss::components.button');
+        return view('fltc::components.button');
     }
 }

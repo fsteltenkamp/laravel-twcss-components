@@ -1,6 +1,6 @@
 <?php
 
-namespace Fsteltenkamp\TwcssComponents\View\Components\Nav\Navbar;
+namespace Fsteltenkamp\fltcComponents\View\Components\Nav\Navbar;
 
 use Closure;
 use Illuminate\Contracts\View\View;
@@ -62,6 +62,6 @@ class Onclick extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('twcss::components.nav.navbar.onclick');
+        return view('fltc::components.nav.navbar.onclick');
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Fsteltenkamp\TwcssComponents\View\Components;
+namespace Fsteltenkamp\fltcComponents\View\Components;
 
 use Closure;
 use Illuminate\Contracts\View\View;
@@ -112,6 +112,6 @@ class Table extends TableBase
      */
     public function render(): View|Closure|string
     {
-        return view('twcss::components.table');
+        return view('fltc::components.table');
     }
 }

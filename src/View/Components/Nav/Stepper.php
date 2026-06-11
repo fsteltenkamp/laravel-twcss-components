@@ -1,6 +1,6 @@
 <?php
 
-namespace Fsteltenkamp\TwcssComponents\View\Components\Nav;
+namespace Fsteltenkamp\fltcComponents\View\Components\Nav;
 
 use Closure;
 use Illuminate\Contracts\View\View;
@@ -286,6 +286,6 @@ class Stepper extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('twcss::components.nav.stepper');
+        return view('fltc::components.nav.stepper');
     }
 }

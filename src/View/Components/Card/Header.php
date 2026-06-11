@@ -1,6 +1,6 @@
 <?php
 
-namespace Fsteltenkamp\TwcssComponents\View\Components\Card;
+namespace Fsteltenkamp\fltcComponents\View\Components\Card;
 
 use Closure;
 use Illuminate\Contracts\View\View;
@@ -50,6 +50,6 @@ class Header extends Component
 
     public function render(): View|Closure|string
     {
-        return view('twcss::components.card.header');
+        return view('fltc::components.card.header');
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Fsteltenkamp\TwcssComponents\View\Components\Container;
+namespace Fsteltenkamp\fltcComponents\View\Components\Container;
 
 use Closure;
 use Illuminate\Contracts\View\View;
@@ -56,6 +56,6 @@ class Box extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('twcss::components.container.box');
+        return view('fltc::components.container.box');
     }
 }

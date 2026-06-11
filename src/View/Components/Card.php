@@ -1,6 +1,6 @@
 <?php
 
-namespace Fsteltenkamp\TwcssComponents\View\Components;
+namespace Fsteltenkamp\fltcComponents\View\Components;
 
 use Closure;
 use Illuminate\Contracts\View\View;
@@ -62,6 +62,6 @@ class Card extends Component
     {
         ViewFacade::share('tailwindCardTheme', $this->theme);
 
-        return view('twcss::components.card');
+        return view('fltc::components.card');
     }
 }

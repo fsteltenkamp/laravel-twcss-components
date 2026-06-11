@@ -5,9 +5,9 @@
 
 <div class="mb-4">
     @if ($label !== '')
-        <x-twcss::form.label :for="$id" :required="$required">
+        <x-fltc::form.label :for="$id" :required="$required">
             {{ $label }}
-        </x-twcss::form.label>
+        </x-fltc::form.label>
     @endif
 
     <div class="relative">

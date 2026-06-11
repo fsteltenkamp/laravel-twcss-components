@@ -1,6 +1,6 @@
 <?php
 
-namespace Fsteltenkamp\TwcssComponents\View\Components\Nav\Navbar\Dropdown;
+namespace Fsteltenkamp\fltcComponents\View\Components\Nav\Navbar\Dropdown;
 
 use Closure;
 use Illuminate\Contracts\View\View;
@@ -65,6 +65,6 @@ class Postlink extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('twcss::components.nav.navbar.dropdown.postlink');
+        return view('fltc::components.nav.navbar.dropdown.postlink');
     }
 }

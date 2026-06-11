@@ -1,6 +1,6 @@
 <?php
 
-namespace Fsteltenkamp\TwcssComponents\View\Components\Form;
+namespace Fsteltenkamp\fltcComponents\View\Components\Form;
 
 use Closure;
 use Illuminate\Contracts\View\View;
@@ -108,6 +108,6 @@ class Textarea extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('twcss::components.form.textarea');
+        return view('fltc::components.form.textarea');
     }
 }
