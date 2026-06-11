@@ -24,6 +24,9 @@ Components are registered under the `fltc` namespace:
 </x-fltc::button>
 ```
 
+### Component Catalog:
+[Component Catalog (WIKI)](wiki/components.md)
+
 ## Publishing
 
 Publish views to override them:
