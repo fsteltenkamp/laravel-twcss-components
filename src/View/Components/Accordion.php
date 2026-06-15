@@ -45,9 +45,17 @@ class Accordion extends Component
             'rose'    => 'border-rose-200 bg-white divide-rose-200 dark:border-rose-700 dark:bg-rose-950/30 dark:divide-rose-800',
         ];
 
+        // Resolve to a known theme so the interpolated Primary Content classes below
+        // always reference a real palette (the literals are emitted by Body.php, so
+        // Tailwind generates them for every theme).
+        $resolved = isset($containerThemeMap[$this->theme]) ? $this->theme : 'slate';
+
         $this->classList = trim(implode(' ', array_filter([
             'overflow-hidden rounded-xl border divide-y',
-            $containerThemeMap[$this->theme] ?? $containerThemeMap['slate'],
+            // Primary Content text so the body slot stays legible after a dark-mode
+            // switch; the header button sets its own colour on top of this baseline.
+            "text-{$resolved}-900 dark:text-{$resolved}-100",
+            $containerThemeMap[$resolved],
             $this->class,
         ])));
     }

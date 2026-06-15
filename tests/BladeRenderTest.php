@@ -83,9 +83,13 @@ it('renders the floating table variant as separated rounded pills', function () 
         ->toContain('Apple')
         ->toContain('border-separate')
         ->toContain('border-spacing-y-3')
-        // pill background re-targeted onto the row cells, with rounded outer corners.
-        // `&` and `>` are HTML-escaped inside the attribute, so match the escaped form.
-        ->toContain('[&amp;&gt;td]:')
-        ->toContain('[&amp;&gt;td:first-child]:rounded-l-lg')
-        ->toContain('[&amp;&gt;td:last-child]:rounded-r-lg');
+        // pill surface, border and shadow re-targeted onto every row cell (td and th,
+        // so the head row matches), with rounded outer corners. `&` and `>` are
+        // HTML-escaped inside the attribute, so match the escaped form.
+        ->toContain('[&amp;&gt;*]:bg-gray-100/90')
+        ->toContain('[&amp;&gt;*]:border-gray-200')
+        ->toContain('[&amp;&gt;*]:border-y')
+        ->toContain('[&amp;&gt;*]:shadow-sm')
+        ->toContain('[&amp;&gt;*:first-child]:rounded-l-lg')
+        ->toContain('[&amp;&gt;*:last-child]:rounded-r-lg');
 });

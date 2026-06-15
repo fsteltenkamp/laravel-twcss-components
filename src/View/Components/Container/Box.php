@@ -44,9 +44,16 @@ class Box extends Component
             'olive'   => 'border-olive-200 dark:border-olive-700 bg-white dark:bg-olive-900',
         ];
 
+        // Resolve to a known theme so the interpolated Primary Content classes below
+        // always reference a real palette (the literals are emitted by Body.php, so
+        // Tailwind generates them for every theme).
+        $resolved = isset($themeMap[$theme]) ? $theme : 'slate';
+
         $this->classList = trim(implode(' ', [
-            'rounded-xl border  p-4 shadow-sm dark:shadow-lg',
-            $themeMap[$theme] ?? $themeMap['slate'] ?? '',
+            'rounded-xl border p-4 shadow-sm dark:shadow-lg',
+            // Primary Content text so slot content stays legible after a dark-mode switch.
+            "text-{$resolved}-900 dark:text-{$resolved}-100",
+            $themeMap[$resolved],
             $class,
         ]));
     }

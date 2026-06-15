@@ -15,6 +15,21 @@ All components support the full color palette:
 - **Colors**: red, orange, amber, yellow, lime, green, emerald, teal, cyan, sky, blue, indigo, violet, purple, fuchsia, pink, rose
 - **Neutrals**: slate, gray, zinc, neutral, stone, taupe, mauve, mist, olive
 
+### Color Shades
+
+Within a theme, surfaces and text are assigned fixed **roles**, each defined as a
+light/dark pair so components flip cleanly in dark mode. For a theme colour `c`:
+
+- **Background** — page `c-50`/`c-950`, surface (tables, boxes, cards) `c-100`/`c-900`
+- **Primary Content** `c-900`/`c-100` — headings and body copy
+- **Secondary Content** `c-700`/`c-300` — supporting text, table cells
+- **Tertiary Content** `c-500`/`c-400` — muted text, placeholders, icons
+
+Any component that sets a Background **must** set or inherit a paired Content text colour
+for the same mode, otherwise its text will not follow a dark-mode switch. Tables sit one
+step darker than the page (surface vs. page Background) for context. See the
+[README "Color shades"](../README.md#color-shades) section for the full guide.
+
 ### Layout and Navigation
 
 **Layouts**:

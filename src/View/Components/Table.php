@@ -93,21 +93,28 @@ class Table extends TableBase
         // border-separate + vertical border-spacing produces the gap between rows.
         $this->tableClasses = 'w-full min-w-full text-sm border-separate border-spacing-y-3';
 
-        // Minimal, background-less header — just muted uppercase labels above the pills.
+        // The head row is a pill like the others (same surface), so it only needs the
+        // shared label typography here; the pill surface/border/shadow come from
+        // rowBorderClasses below, which every row — head included — receives.
         $this->headClasses = trim(implode(' ', array_filter([
             $colors['cell'],
             'text-left text-xs font-semibold tracking-wide uppercase',
         ])));
 
-        // The pill background lives on the row's <td> cells (not the <tr>) so the
-        // first/last-cell corner radius clips a solid box cleanly. Hover, when enabled,
-        // is likewise re-targeted onto the cells. No horizontal border-spacing means
-        // adjacent cell backgrounds join into one continuous pill.
+        // The pill surface, border and shadow live on the row's cells (both <td> and
+        // <th>, so the head row gets the same shade as the body rows) rather than the
+        // <tr>, so the first/last-cell corner radius clips a solid box cleanly. Hover,
+        // when enabled, is likewise re-targeted onto the cells. No horizontal
+        // border-spacing means adjacent cells join into one continuous pill: the border
+        // runs top/bottom across every cell and only left/right on the outer cells, so
+        // there are no seams between cells.
         $this->rowBorderClasses = trim(implode(' ', array_filter([
-            $this->retarget($colors['row'], '[&>td]:', 'dark:[&>td]:'),
-            $this->hover ? $this->retarget($colors['hover'], '[&:hover>td]:', 'dark:[&:hover>td]:') : '',
-            '[&>td:first-child]:rounded-l-lg [&>th:first-child]:rounded-l-lg',
-            '[&>td:last-child]:rounded-r-lg [&>th:last-child]:rounded-r-lg',
+            $this->retarget($colors['row'], '[&>*]:', 'dark:[&>*]:'),
+            $this->retarget($colors['border'], '[&>*]:', 'dark:[&>*]:'),
+            '[&>*]:border-y [&>*:first-child]:border-l [&>*:last-child]:border-r',
+            '[&>*]:shadow-sm',
+            $this->hover ? $this->retarget($colors['hover'], '[&:hover>*]:', 'dark:[&:hover>*]:') : '',
+            '[&>*:first-child]:rounded-l-lg [&>*:last-child]:rounded-r-lg',
         ])));
 
         $this->cellClasses = $colors['cell'];
@@ -122,7 +129,7 @@ class Table extends TableBase
     /**
      * Re-target a space-separated class string onto the row's cells via arbitrary
      * variants, preserving `dark:` / `hover:` modifiers. e.g. `dark:bg-gray-800/90`
-     * with prefixes `[&>td]:` / `dark:[&>td]:` becomes `dark:[&>td]:bg-gray-800/90`.
+     * with prefixes `[&>*]:` / `dark:[&>*]:` becomes `dark:[&>*]:bg-gray-800/90`.
      */
     protected function retarget(string $classes, string $prefix, string $darkPrefix): string
     {

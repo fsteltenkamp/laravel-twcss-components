@@ -2,7 +2,6 @@
 
 namespace Fsteltenkamp\TwcssComponents\View\Components\Form;
 
-use Illuminate\Support\Facades\View;
 use Illuminate\View\Component;
 
 abstract class Input extends Component
@@ -41,8 +40,10 @@ abstract class Input extends Component
 
     protected function getBackgroundClasses($theme = 'slate'): string
     {
-        $mainTheme = View::shared('mainTheme');
-        return "bg-$mainTheme-200 dark:bg-$mainTheme-900 text-$theme-900 dark:text-$theme-400";
+        // Surface + Primary Content shades (see README "Color shades"). The input sits
+        // one step off the page background and uses the theme's high-contrast text so it
+        // stays legible after a dark-mode switch without the host setting anything.
+        return "bg-white dark:bg-$theme-900 text-$theme-900 dark:text-$theme-100";
     }
 
     protected function getNormalClasses(string $theme = 'sky', string $class = ''): string
