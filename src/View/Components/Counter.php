@@ -18,6 +18,8 @@ class Counter extends Component
         public string $count = '',
         public string $description = '',
         public string $icon = '',
+        public string $link = '',
+        public bool $navigate = false,
         public string $class = '',
     ) {
         $themeMap = [
@@ -55,6 +57,7 @@ class Counter extends Component
 
         $this->classList = trim(implode(' ', [
             'flex flex-col rounded-xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-900 dark:shadow-lg',
+            filled($this->link) ? 'cursor-pointer transition hover:shadow-md dark:hover:shadow-xl' : '',
             $this->class,
         ]));
 

@@ -71,6 +71,8 @@ Props:
 - `count`: the counter value shown large/left-aligned (falls back to the default slot when empty, so a formatted/animated value can be passed as inner content)
 - `description`: small muted line under the value
 - `icon`: Phosphor icon class string (e.g. `ph ph-users`) shown small in the top right
+- `link`: when set, the entire counter renders as an `<a>` and becomes clickable with a pointer cursor and hover elevation
+- `navigate`: adds `wire:navigate` to the link (only when `link` is set; default: false)
 - `class`: extra wrapper classes
 
 Use for dashboard KPIs and at-a-glance metrics. Description text is intentionally muted and theme-independent.

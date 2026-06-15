@@ -49,3 +49,13 @@ it('renders the counter component via the fltc Blade handle', function () {
         ->toContain('active this week')
         ->toContain('ph ph-users');
 });
+
+it('renders the counter component as a link when link is set', function () {
+    $html = Blade::render('<x-fltc::counter title="Users" count="42" link="/dashboard/users" navigate />');
+
+    expect($html)
+        ->toContain('<a')
+        ->toContain('href="/dashboard/users"')
+        ->toContain('wire:navigate')
+        ->toContain('cursor-pointer');
+});
