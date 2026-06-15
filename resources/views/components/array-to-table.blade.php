@@ -27,7 +27,7 @@
                         data-copy="{{ $varId }}"
                         onclick="att_copyIndex(this)"
                         title="Kopieren"
-                    ><x-icon i="copy" class="text-sm"/></button>
+                    ><i class="ph ph-copy text-sm" aria-hidden="true"></i></button>
                 @endif
                 <span class="font-mono ml-2 text-xs">{{ $varId }}</span>
             </td>

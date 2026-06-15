@@ -12,7 +12,7 @@
             <nav class="{{ $tabsNavClass }}" aria-label="Stepper">
                 @if ($hasBackward)
                     <a href="{{ $previousStepUrl }}" class="{{ $controlClass }}">
-                        <x-icon i="arrow-left" />
+                        <i class="ph ph-arrow-left" aria-hidden="true"></i>
                         <span>Zurück</span>
                     </a>
                 @endif
@@ -25,7 +25,7 @@
                         class="{{ $iconsOnly ? $stepIconOnlyClass : $stepBaseClass }} {{ $step['isActive'] ? $activeStepClass : $inactiveStepClass }}"
                     >
                         @if ($step['icon'])
-                            <x-icon :i="$step['icon']" />
+                            <i class="ph ph-{{ $step['icon'] }}" aria-hidden="true"></i>
                         @endif
 
                         @unless ($iconsOnly)
@@ -39,7 +39,7 @@
                 @if ($hasForward)
                     <a href="{{ $nextStepUrl }}" class="{{ $controlClass }}">
                         <span>Weiter</span>
-                        <x-icon i="arrow-right" />
+                        <i class="ph ph-arrow-right" aria-hidden="true"></i>
                     </a>
                 @endif
             </nav>
@@ -53,13 +53,13 @@
                         variant="outline"
                         onclick="{{ $onclickPrefix }}util.stepperPreviousStep({{ $currentStepKey }})"
                     >
-                        <x-icon i="arrow-left" />
+                        <i class="ph ph-arrow-left" aria-hidden="true"></i>
                         <span>Zuruck</span>
                     </x-fltc::button>
 
                     @if ($savebtn)
                         <x-fltc::button theme="green" id="formularInstanceUpdateButton" onclick="submit()">
-                            <x-icon i="floppy-disk" />
+                            <i class="ph ph-floppy-disk" aria-hidden="true"></i>
                             <span>Speichern</span>
                         </x-fltc::button>
                     @endif
@@ -74,7 +74,7 @@
                 @if ($hasForward)
                     @if ($savebtn)
                         <x-fltc::button theme="green" id="formularInstanceUpdateButton" onclick="submit()">
-                            <x-icon i="floppy-disk" />
+                            <i class="ph ph-floppy-disk" aria-hidden="true"></i>
                             <span>Speichern</span>
                         </x-fltc::button>
                     @endif
@@ -84,7 +84,7 @@
                         onclick="{{ $onclickPrefix }}util.stepperNextStep({{ $currentStepKey }})"
                     >
                         <span>Weiter</span>
-                        <x-icon i="arrow-right" />
+                        <i class="ph ph-arrow-right" aria-hidden="true"></i>
                     </x-fltc::button>
                 @endif
             </div>
