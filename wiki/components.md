@@ -61,6 +61,20 @@ Card props:
 
 Header, body, rows, and footer sections inherit card theme automatically. Use `rows` when card content is primarily a table or table rows. Rows is the table-shell section: provide optional head slot and direct `x-fltc::table.row` children.
 
+### Counter
+
+**Counter** (`x-fltc::counter`): a self-contained dashboard stat card. Layout, top-left to bottom-right: title (top left), icon (small, top right), counter value (left, next row), description (small/muted, left, next row).
+
+Props:
+- `theme`: full palette (default: slate) — colors the counter value and icon
+- `title`: small label shown top left
+- `count`: the counter value shown large/left-aligned (falls back to the default slot when empty, so a formatted/animated value can be passed as inner content)
+- `description`: small muted line under the value
+- `icon`: Phosphor icon class string (e.g. `ph ph-users`) shown small in the top right
+- `class`: extra wrapper classes
+
+Use for dashboard KPIs and at-a-glance metrics. Description text is intentionally muted and theme-independent.
+
 ### Accordion
 
 Components:

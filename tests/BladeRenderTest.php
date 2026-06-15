@@ -39,3 +39,13 @@ it('renders the tooltip component via the fltc Blade handle', function () {
 
     expect($html)->toContain('child');
 });
+
+it('renders the counter component via the fltc Blade handle', function () {
+    $html = Blade::render('<x-fltc::counter title="Users" count="42" description="active this week" icon="ph ph-users" />');
+
+    expect($html)
+        ->toContain('Users')
+        ->toContain('42')
+        ->toContain('active this week')
+        ->toContain('ph ph-users');
+});
