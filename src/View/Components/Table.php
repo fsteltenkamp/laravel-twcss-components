@@ -27,6 +27,7 @@ class Table extends TableBase
         public bool $bordered = true,
         public bool $compact = false,
         public bool $responsive = true,
+        public bool $floating = false,
     ) {
         // Backward compatibility: allow legacy `color` while standardizing on `theme`.
         if ($color !== null && $this->theme === 'gray') {
@@ -34,6 +35,17 @@ class Table extends TableBase
         }
 
         $colors = $this->getThemeColors($this->theme);
+
+        // The "floating" variant is a different border/spacing model (rows render as
+        // separated rounded pills). It reuses the same theme colors and flows down to
+        // the head/row/cell children through the existing @aware keys, so no Blade
+        // changes are needed — only the computed class strings differ.
+        if ($this->floating) {
+            $this->buildFloatingClasses($colors);
+
+            return;
+        }
+
         $radiusOptions = $this->resolveRadiusOptions($this->radius);
 
         $this->scrollClasses = trim(implode(' ', array_filter([
@@ -64,6 +76,71 @@ class Table extends TableBase
         ])));
         $this->stripeClasses = $this->striped ? $colors['stripe'] : '';
         $this->hoverClasses = $this->hover ? $colors['hover'] : '';
+    }
+
+    /**
+     * Compute the class strings for the "floating" variant: rows separated by
+     * vertical spacing, each rendered as a themed rounded pill with no cell borders.
+     */
+    protected function buildFloatingClasses(array $colors): void
+    {
+        $this->scrollClasses = trim(implode(' ', array_filter([
+            'w-full',
+            $this->responsive ? 'overflow-x-auto' : '',
+        ])));
+        $this->scrollStyle = '';
+
+        // border-separate + vertical border-spacing produces the gap between rows.
+        $this->tableClasses = 'w-full min-w-full text-sm border-separate border-spacing-y-3';
+
+        // Minimal, background-less header — just muted uppercase labels above the pills.
+        $this->headClasses = trim(implode(' ', array_filter([
+            $colors['cell'],
+            'text-left text-xs font-semibold tracking-wide uppercase',
+        ])));
+
+        // The pill background lives on the row's <td> cells (not the <tr>) so the
+        // first/last-cell corner radius clips a solid box cleanly. Hover, when enabled,
+        // is likewise re-targeted onto the cells. No horizontal border-spacing means
+        // adjacent cell backgrounds join into one continuous pill.
+        $this->rowBorderClasses = trim(implode(' ', array_filter([
+            $this->retarget($colors['row'], '[&>td]:', 'dark:[&>td]:'),
+            $this->hover ? $this->retarget($colors['hover'], '[&:hover>td]:', 'dark:[&:hover>td]:') : '',
+            '[&>td:first-child]:rounded-l-lg [&>th:first-child]:rounded-l-lg',
+            '[&>td:last-child]:rounded-r-lg [&>th:last-child]:rounded-r-lg',
+        ])));
+
+        $this->cellClasses = $colors['cell'];
+        $this->cellBorderClasses = ''; // floating rows have no cell borders
+        $this->footClasses = $colors['foot'];
+
+        // Striping and the standard row-level hover are folded into the pill above.
+        $this->stripeClasses = '';
+        $this->hoverClasses = '';
+    }
+
+    /**
+     * Re-target a space-separated class string onto the row's cells via arbitrary
+     * variants, preserving `dark:` / `hover:` modifiers. e.g. `dark:bg-gray-800/90`
+     * with prefixes `[&>td]:` / `dark:[&>td]:` becomes `dark:[&>td]:bg-gray-800/90`.
+     */
+    protected function retarget(string $classes, string $prefix, string $darkPrefix): string
+    {
+        $out = [];
+
+        foreach (preg_split('/\s+/', trim($classes), -1, PREG_SPLIT_NO_EMPTY) as $token) {
+            if (str_starts_with($token, 'dark:hover:')) {
+                $out[] = $darkPrefix.substr($token, strlen('dark:hover:'));
+            } elseif (str_starts_with($token, 'dark:')) {
+                $out[] = $darkPrefix.substr($token, strlen('dark:'));
+            } elseif (str_starts_with($token, 'hover:')) {
+                $out[] = $prefix.substr($token, strlen('hover:'));
+            } else {
+                $out[] = $prefix.$token;
+            }
+        }
+
+        return implode(' ', $out);
     }
 
     protected function resolveRadiusOptions(string $radius): array
