@@ -59,3 +59,33 @@ it('renders the counter component as a link when link is set', function () {
         ->toContain('wire:navigate')
         ->toContain('cursor-pointer');
 });
+
+it('renders the default table variant with collapsed borders', function () {
+    $html = Blade::render(<<<'BLADE'
+        <x-fltc::table>
+            <x-fltc::table.row><x-fltc::table.cell>Apple</x-fltc::table.cell></x-fltc::table.row>
+        </x-fltc::table>
+    BLADE);
+
+    expect($html)
+        ->toContain('Apple')
+        ->not->toContain('border-separate');
+});
+
+it('renders the floating table variant as separated rounded pills', function () {
+    $html = Blade::render(<<<'BLADE'
+        <x-fltc::table floating theme="gray">
+            <x-fltc::table.row><x-fltc::table.cell>Apple</x-fltc::table.cell></x-fltc::table.row>
+        </x-fltc::table>
+    BLADE);
+
+    expect($html)
+        ->toContain('Apple')
+        ->toContain('border-separate')
+        ->toContain('border-spacing-y-3')
+        // pill background re-targeted onto the row cells, with rounded outer corners.
+        // `&` and `>` are HTML-escaped inside the attribute, so match the escaped form.
+        ->toContain('[&amp;&gt;td]:')
+        ->toContain('[&amp;&gt;td:first-child]:rounded-l-lg')
+        ->toContain('[&amp;&gt;td:last-child]:rounded-r-lg');
+});
