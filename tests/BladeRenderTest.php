@@ -84,11 +84,9 @@ it('renders the floating table variant as separated rounded pills', function () 
         ->toContain('border-separate')
         ->toContain('border-spacing-y-3')
         // pill surface, border and shadow re-targeted onto every row cell (td and th,
-        // so the head row matches), with rounded outer corners. The surface is elevated
-        // (white / -800) rather than panel-flush so it keeps contrast on a same-theme
-        // card. `&` and `>` are HTML-escaped inside the attribute, so match the escaped form.
-        ->toContain('[&amp;&gt;*]:bg-white')
-        ->toContain('dark:[&amp;&gt;*]:bg-gray-800')
+        // so the head row matches), with rounded outer corners. `&` and `>` are
+        // HTML-escaped inside the attribute, so match the escaped form.
+        ->toContain('[&amp;&gt;*]:bg-gray-100/90')
         ->toContain('[&amp;&gt;*]:border-gray-200')
         ->toContain('[&amp;&gt;*]:border-y')
         ->toContain('[&amp;&gt;*]:shadow-sm')

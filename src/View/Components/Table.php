@@ -101,13 +101,11 @@ class Table extends TableBase
             'text-left text-xs font-semibold tracking-wide uppercase',
         ])));
 
-        // Pills are *elevated*: rather than the panel-flush `row` color (which blends
-        // into a same-theme surface behind it — e.g. a card — leaving only the border
-        // visible), they use a surface a step lighter than the page/card (white in light
-        // mode, the -800 shade in dark mode) plus a slightly stronger border and a
-        // shadow, so each row reads as a raised card with real contrast in any context.
+        // Pills keep the panel-flush `row` surface, but the dark border is lifted one
+        // step (-700 instead of the panel `border`'s -800) so it stays visible against a
+        // same-theme card body (whose dark surface is -800) and the pills read as raised
+        // rather than recessed; light mode keeps the standard -200 border.
         $theme = isset($this->themeMap[$this->theme]) ? $this->theme : 'gray';
-        $pillSurface = "bg-white dark:bg-{$theme}-800";
         $pillBorder = "border-{$theme}-200 dark:border-{$theme}-700";
 
         // The pill surface, border and shadow live on the row's cells (both <td> and
@@ -118,7 +116,7 @@ class Table extends TableBase
         // runs top/bottom across every cell and only left/right on the outer cells, so
         // there are no seams between cells.
         $this->rowBorderClasses = trim(implode(' ', array_filter([
-            $this->retarget($pillSurface, '[&>*]:', 'dark:[&>*]:'),
+            $this->retarget($colors['row'], '[&>*]:', 'dark:[&>*]:'),
             $this->retarget($pillBorder, '[&>*]:', 'dark:[&>*]:'),
             '[&>*]:border-y [&>*:first-child]:border-l [&>*:last-child]:border-r',
             '[&>*]:shadow-sm',
