@@ -27,6 +27,28 @@ Components are registered under the `fltc` namespace:
 ### Component Catalog:
 [Component Catalog (WIKI)](wiki/components.md)
 
+## Icons
+
+Components that render icons use the [Phosphor Icons](https://phosphoricons.com) web font
+(`<i class="ph ph-...">`). The host application must load the font CSS. Install it with
+[Bun](https://bun.sh):
+
+```bash
+bun add @phosphor-icons/web
+```
+
+Then import the weight(s) you use in your app's CSS/JS bundle:
+
+```js
+import "@phosphor-icons/web/regular";
+```
+
+Alternatively, include it from a CDN in your layout `<head>`:
+
+```html
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2/src/regular/style.css">
+```
+
 ## Publishing
 
 Publish views to override them:

@@ -1,0 +1,9 @@
+{
+    "name": "@fsteltenkamp/laravel-twcss-components",
+    "description": "TailwindCSS Blade components for Laravel",
+    "license": "AGPL-3.0-only",
+    "private": true,
+    "dependencies": {
+        "@phosphor-icons/web": "^2.1.2"
+    }
+}
