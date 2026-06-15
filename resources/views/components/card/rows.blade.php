@@ -6,6 +6,7 @@
         :bordered="$bordered"
         :compact="$compact"
         :responsive="$responsive"
+        :floating="$floating"
         radius="0"
     >
         @isset($head)

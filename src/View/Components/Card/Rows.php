@@ -21,6 +21,7 @@ class Rows extends Component
         public bool $bordered = true,
         public bool $compact = false,
         public bool $responsive = true,
+        public bool $floating = false,
         public string $bodyId = '',
     ) {
         $this->theme = $this->theme ?? ViewFacade::shared('tailwindCardTheme', 'slate');
