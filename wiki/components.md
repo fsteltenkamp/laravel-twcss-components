@@ -34,7 +34,7 @@ All components support the full color palette:
 
 **Stepper** (`x-fltc::nav.stepper`):
 - `theme`: full palette (default: slate)
-- `steps`: array keyed by step number/name; each step may be string label, `[label, icon]`, or `['label' => ..., 'icon' => ...]`
+- `steps`: array keyed by step number/name; each step may be string label, `[label, icon]`, or `['label' => ..., 'icon' => ...]`. The step `icon` is a Phosphor icon name (e.g. `check`), rendered internally as `<i class="ph ph-{icon}">`
 - `stepIndex`: current active step key (default: `1`)
 - `stepParam`: query-string parameter for tab links (default: `step`)
 - `tabs`: renders linked step tabs with previous/next controls (default: false)
@@ -142,6 +142,7 @@ Common props:
 - `required`
 - `model`: Livewire binding target
 - `live`: use `wire:model.live` when true
+- `icon`: a Phosphor icon name (e.g. `user`, `envelope`) on the text/email/password/select inputs. Rendered internally as `<i class="ph ph-{icon}">` — the host app only needs the Phosphor icon stylesheet loaded; the library has no `<x-icon>` dependency.
 
 **Auth Container** props:
 - `id`: optional wrapper id
@@ -162,6 +163,7 @@ Table props:
 - `bordered`
 - `compact`
 - `responsive`
+- `floating`: switches to the "floating row" variant — rows are separated by vertical spacing and rendered as themed rounded pills with no cell borders, instead of the default collapsed/bordered grid. Same `theme`, `hover`, and child markup (`x-fltc::table.head/row/cell`) apply; `striped`, `bordered`, and `radius` are ignored in this mode (the outer radius is replaced by per-row pill rounding). The variant is computed entirely in `Table.php` and propagated to the section children through the existing `@aware` keys, so no separate floating components exist.
 
 Use `x-fltc::table.cell` as `th` for headers and as `td` for data cells. Keep row actions inside cells rather than building separate mini-layouts.
 
