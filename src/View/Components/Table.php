@@ -101,6 +101,15 @@ class Table extends TableBase
             'text-left text-xs font-semibold tracking-wide uppercase',
         ])));
 
+        // Pills are *elevated*: rather than the panel-flush `row` color (which blends
+        // into a same-theme surface behind it — e.g. a card — leaving only the border
+        // visible), they use a surface a step lighter than the page/card (white in light
+        // mode, the -800 shade in dark mode) plus a slightly stronger border and a
+        // shadow, so each row reads as a raised card with real contrast in any context.
+        $theme = isset($this->themeMap[$this->theme]) ? $this->theme : 'gray';
+        $pillSurface = "bg-white dark:bg-{$theme}-800";
+        $pillBorder = "border-{$theme}-200 dark:border-{$theme}-700";
+
         // The pill surface, border and shadow live on the row's cells (both <td> and
         // <th>, so the head row gets the same shade as the body rows) rather than the
         // <tr>, so the first/last-cell corner radius clips a solid box cleanly. Hover,
@@ -109,8 +118,8 @@ class Table extends TableBase
         // runs top/bottom across every cell and only left/right on the outer cells, so
         // there are no seams between cells.
         $this->rowBorderClasses = trim(implode(' ', array_filter([
-            $this->retarget($colors['row'], '[&>*]:', 'dark:[&>*]:'),
-            $this->retarget($colors['border'], '[&>*]:', 'dark:[&>*]:'),
+            $this->retarget($pillSurface, '[&>*]:', 'dark:[&>*]:'),
+            $this->retarget($pillBorder, '[&>*]:', 'dark:[&>*]:'),
             '[&>*]:border-y [&>*:first-child]:border-l [&>*:last-child]:border-r',
             '[&>*]:shadow-sm',
             $this->hover ? $this->retarget($colors['hover'], '[&:hover>*]:', 'dark:[&:hover>*]:') : '',

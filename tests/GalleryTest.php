@@ -3,7 +3,7 @@
 /*
  * Visual gallery generator.
  *
- * This is not an assertion test — it renders one representative example of every
+ * This is not an assertion test — it renders representative examples of every
  * component through the REAL Blade pipeline (same service provider + @aware +
  * theming as production) and writes a browsable static page to ./gallery.html.
  *
@@ -24,96 +24,168 @@ use Illuminate\Support\Facades\View;
 use Illuminate\Support\ViewErrorBag;
 
 /**
- * The gallery content: a list of [section => [ [label, code, data?], ... ] ].
- * `code` is rendered with Blade::render($code, $data ?? []).
+ * The gallery content, grouped section => [ component => [ variant, ... ] ].
+ *
+ * Each component renders as one full-width card; every variant inside it is a
+ * [label, code, data?] triple, where `code` is rendered with
+ * Blade::render($code, $data ?? []). When a component has more than one variant
+ * the variant label is shown above its preview; a single-variant component
+ * renders without a label.
  */
 function galleryGroups(): array
 {
     return [
         'Typography' => [
-            ['Text', '<x-fltc::text>The quick brown fox jumps over the lazy dog.</x-fltc::text>'],
+            'Text' => [
+                ['default', '<x-fltc::text>The quick brown fox jumps over the lazy dog.</x-fltc::text>'],
+            ],
         ],
 
         'Buttons' => [
-            ['Button — solid', '<x-fltc::button theme="sky">Save</x-fltc::button>'],
-            ['Button — outline', '<x-fltc::button theme="rose" variant="outline">Delete</x-fltc::button>'],
-            ['Button — disabled', '<x-fltc::button theme="gray" disabled>Disabled</x-fltc::button>'],
-            ['Button link', '<x-fltc::button.link href="#" theme="emerald">Go somewhere</x-fltc::button.link>'],
-            ['Button group', '<x-fltc::buttongroup>
+            'Button' => [
+                ['solid', '<x-fltc::button theme="sky">Save</x-fltc::button>'],
+                ['outline', '<x-fltc::button theme="rose" variant="outline">Delete</x-fltc::button>'],
+                ['disabled', '<x-fltc::button theme="gray" disabled>Disabled</x-fltc::button>'],
+            ],
+            'Button link' => [
+                ['default', '<x-fltc::button.link href="#" theme="emerald">Go somewhere</x-fltc::button.link>'],
+            ],
+            'Button group' => [
+                ['default', '<x-fltc::buttongroup>
     <x-fltc::button theme="slate">Left</x-fltc::button>
     <x-fltc::button theme="slate">Middle</x-fltc::button>
     <x-fltc::button theme="slate">Right</x-fltc::button>
 </x-fltc::buttongroup>'],
+            ],
         ],
 
         'Status & Feedback' => [
-            ['Badge', '<x-fltc::badge theme="green">available</x-fltc::badge> <x-fltc::badge theme="red">no stock</x-fltc::badge> <x-fltc::badge theme="yellow">start sale</x-fltc::badge>'],
-            ['Alert', '<x-fltc::alert theme="amber">Heads up — your trial ends soon.</x-fltc::alert>'],
-            ['Message box', '<x-fltc::messagebox theme="sky" title="Note">
+            'Badge' => [
+                ['themes', '<x-fltc::badge theme="green">available</x-fltc::badge> <x-fltc::badge theme="red">no stock</x-fltc::badge> <x-fltc::badge theme="yellow">start sale</x-fltc::badge>'],
+            ],
+            'Alert' => [
+                ['default', '<x-fltc::alert theme="amber">Heads up — your trial ends soon.</x-fltc::alert>'],
+            ],
+            'Message box' => [
+                ['default', '<x-fltc::messagebox theme="sky" title="Note">
     Selected 3 items. Choose an action below.
 </x-fltc::messagebox>'],
-            ['Tooltip', '<x-fltc::tooltip text="More info here" theme="gray">Hover me</x-fltc::tooltip>'],
+            ],
+            'Tooltip' => [
+                ['default', '<x-fltc::tooltip text="More info here" theme="gray">Hover me</x-fltc::tooltip>'],
+            ],
         ],
 
         'Cards' => [
-            ['Card with sections', '<x-fltc::card theme="slate" class="max-w-sm">
+            'Card' => [
+                ['sections (header / body / footer)', '<x-fltc::card theme="slate" class="max-w-sm">
     <x-fltc::card.header class="px-4 py-3 font-semibold border-b border-slate-200 dark:border-slate-700">Project</x-fltc::card.header>
     <x-fltc::card.body class="p-4">Body content goes here, inheriting the card theme.</x-fltc::card.body>
     <x-fltc::card.footer class="px-4 py-3 border-t border-slate-200 dark:border-slate-700 text-sm">Updated just now</x-fltc::card.footer>
 </x-fltc::card>'],
+                ['themed (emerald)', '<x-fltc::card theme="emerald" class="max-w-sm">
+    <x-fltc::card.header class="px-4 py-3 font-semibold border-b border-emerald-200 dark:border-emerald-900">Deployment</x-fltc::card.header>
+    <x-fltc::card.body class="p-4">Sections inherit the card theme automatically.</x-fltc::card.body>
+</x-fltc::card>'],
+            ],
+            'Card content' => [
+                ['header + body only', '<x-fltc::card theme="sky" class="max-w-sm">
+    <x-fltc::card.header class="px-4 py-3 font-semibold border-b border-sky-200 dark:border-sky-900">Summary</x-fltc::card.header>
+    <x-fltc::card.body class="p-4">Just a header and a body — no footer.</x-fltc::card.body>
+</x-fltc::card>'],
+                ['rows — default table', cardRowsExample(false)],
+                ['rows — floating', cardRowsExample(true)],
+            ],
         ],
 
         'Counters' => [
-            ['Counter', '<x-fltc::counter theme="indigo" title="Users" count="1,204" description="active this week" icon="ph ph-users" class="max-w-xs" />'],
+            'Counter' => [
+                ['default', '<x-fltc::counter theme="indigo" title="Users" count="1,204" description="active this week" icon="ph ph-users" class="max-w-xs" />'],
+                ['linked', '<x-fltc::counter theme="emerald" title="Revenue" count="€48k" description="this month" icon="ph ph-currency-eur" link="#" class="max-w-xs" />'],
+            ],
         ],
 
         'Accordion' => [
-            ['Accordion', '<x-fltc::accordion theme="slate" class="max-w-md">
+            'Accordion' => [
+                ['default', '<x-fltc::accordion theme="slate" class="max-w-md">
     <x-fltc::accordion.item title="First section" subtext="open by default">Content of the first item.</x-fltc::accordion.item>
     <x-fltc::accordion.item title="Second section">Content of the second item.</x-fltc::accordion.item>
 </x-fltc::accordion>'],
+            ],
         ],
 
         'Tables' => [
-            ['Table — default (bordered grid)', tableExample(false)],
-            ['Table — floating variant', tableExample(true)],
+            'Table' => [
+                ['default (bordered grid)', tableExample(false)],
+                ['floating', tableExample(true)],
+            ],
         ],
 
         'Forms' => [
-            ['Text input', '<x-fltc::form.input.text label="Name" placeholder="Jane Doe" icon="user" class="max-w-sm" />'],
-            ['Email input', '<x-fltc::form.input.email label="Email" placeholder="you@example.com" icon="envelope" class="max-w-sm" />'],
-            ['Password input', '<x-fltc::form.input.password label="Password" placeholder="••••••••" class="max-w-sm" />'],
-            ['Select', '<x-fltc::form.input.select label="Country" placeholder="Choose…" class="max-w-sm">
+            'Text input' => [
+                ['default', '<x-fltc::form.input.text label="Name" placeholder="Jane Doe" icon="user" class="max-w-sm" />'],
+            ],
+            'Email input' => [
+                ['default', '<x-fltc::form.input.email label="Email" placeholder="you@example.com" icon="envelope" class="max-w-sm" />'],
+            ],
+            'Password input' => [
+                ['default', '<x-fltc::form.input.password label="Password" placeholder="••••••••" class="max-w-sm" />'],
+            ],
+            'Select' => [
+                ['default', '<x-fltc::form.input.select label="Country" placeholder="Choose…" class="max-w-sm">
     <option value="de">Germany</option>
     <option value="us">United States</option>
 </x-fltc::form.input.select>'],
-            ['Datetime', '<x-fltc::form.input.datetime label="Starts at" class="max-w-sm" />'],
-            ['Textarea', '<x-fltc::form.textarea label="Notes" rows="3" placeholder="Write something…" class="max-w-sm" />'],
-            ['Checkbox', '<x-fltc::form.checkbox label="I agree to the terms" theme="sky" />'],
-            ['Label', '<x-fltc::form.label for="x" required description="Shown to other members">Display name</x-fltc::form.label>'],
-            ['Checklist', '<x-fltc::form.checklist :items="$items" theme="emerald" showProgress />', ['items' => [
-                ['label' => 'Create account', 'status' => 'completed'],
-                ['label' => 'Verify email', 'status' => 'inProgress'],
-                ['label' => 'Add payment', 'status' => 'pending'],
-            ]]],
+            ],
+            'Datetime' => [
+                ['default', '<x-fltc::form.input.datetime label="Starts at" class="max-w-sm" />'],
+            ],
+            'Textarea' => [
+                ['default', '<x-fltc::form.textarea label="Notes" rows="3" placeholder="Write something…" class="max-w-sm" />'],
+            ],
+            'Checkbox' => [
+                ['default', '<x-fltc::form.checkbox label="I agree to the terms" theme="sky" />'],
+            ],
+            'Label' => [
+                ['default', '<x-fltc::form.label for="x" required description="Shown to other members">Display name</x-fltc::form.label>'],
+            ],
+            'Checklist' => [
+                ['default', '<x-fltc::form.checklist :items="$items" theme="emerald" showProgress />', ['items' => [
+                    ['label' => 'Create account', 'status' => 'completed'],
+                    ['label' => 'Verify email', 'status' => 'inProgress'],
+                    ['label' => 'Add payment', 'status' => 'pending'],
+                ]]],
+            ],
         ],
 
         'Navigation' => [
-            ['Nav link', '<x-fltc::nav.link href="#" theme="slate">Dashboard</x-fltc::nav.link>'],
-            ['Breadcrumbs', '<x-fltc::nav.breadcrumbs :crumbs="$crumbs" theme="slate" />', ['crumbs' => [
-                ['label' => 'Home', 'href' => '#'],
-                ['label' => 'Library', 'href' => '#'],
-                ['label' => 'Data', 'href' => null],
-            ]]],
-            ['Pagination', '<x-fltc::nav.pagination :currentPage="2" :totalPages="5" :start="1" :end="5" />'],
-            ['Stepper', '<x-fltc::nav.stepper :steps="$steps" :stepIndex="2" theme="sky" />', ['steps' => [
-                ['label' => 'Cart'], ['label' => 'Shipping'], ['label' => 'Payment'],
-            ]]],
+            'Nav link' => [
+                ['default', '<x-fltc::nav.link href="#" theme="slate">Dashboard</x-fltc::nav.link>'],
+            ],
+            'Breadcrumbs' => [
+                ['default', '<x-fltc::nav.breadcrumbs :crumbs="$crumbs" theme="slate" />', ['crumbs' => [
+                    ['label' => 'Home', 'href' => '#'],
+                    ['label' => 'Library', 'href' => '#'],
+                    ['label' => 'Data', 'href' => null],
+                ]]],
+            ],
+            'Pagination' => [
+                ['default', '<x-fltc::nav.pagination :currentPage="2" :totalPages="5" :start="1" :end="5" />'],
+            ],
+            'Stepper' => [
+                ['default', '<x-fltc::nav.stepper :steps="$steps" :stepIndex="2" theme="sky" />', ['steps' => [
+                    ['label' => 'Cart'], ['label' => 'Shipping'], ['label' => 'Payment'],
+                ]]],
+            ],
         ],
 
         'Utility' => [
-            ['Dark mode toggle', '<x-fltc::darkmode.toggle />'],
-            ['Container box', '<x-fltc::container.box theme="slate" class="p-4 max-w-sm">Boxed content.</x-fltc::container.box>'],
+            'Dark mode toggle' => [
+                ['default', '<x-fltc::darkmode.toggle />'],
+            ],
+            'Container box' => [
+                ['default', '<x-fltc::container.box theme="slate" class="p-4 max-w-sm">Boxed content.</x-fltc::container.box>'],
+            ],
         ],
     ];
 }
@@ -148,43 +220,87 @@ function tableExample(bool $floating): string
         BLADE;
 }
 
+function cardRowsExample(bool $floating): string
+{
+    $floatAttr = $floating ? ' floating' : '';
+
+    return <<<BLADE
+        <x-fltc::card theme="slate" class="max-w-2xl">
+            <x-fltc::card.header class="px-4 py-3 font-semibold border-b border-slate-200 dark:border-slate-700">Products</x-fltc::card.header>
+            <x-fltc::card.rows theme="slate"{$floatAttr}>
+                <x-slot:head>
+                    <x-fltc::table.row>
+                        <x-fltc::table.cell as="th">Brand</x-fltc::table.cell>
+                        <x-fltc::table.cell as="th" numeric>Price</x-fltc::table.cell>
+                    </x-fltc::table.row>
+                </x-slot:head>
+                <x-fltc::table.row>
+                    <x-fltc::table.cell>Apple</x-fltc::table.cell>
+                    <x-fltc::table.cell numeric>200.00\$</x-fltc::table.cell>
+                </x-fltc::table.row>
+                <x-fltc::table.row>
+                    <x-fltc::table.cell>Realme</x-fltc::table.cell>
+                    <x-fltc::table.cell numeric>150.00\$</x-fltc::table.cell>
+                </x-fltc::table.row>
+            </x-fltc::card.rows>
+        </x-fltc::card>
+        BLADE;
+}
+
 function renderGalleryHtml(array $groups): string
 {
     $sections = '';
 
-    foreach ($groups as $section => $examples) {
+    foreach ($groups as $section => $components) {
         $cards = '';
 
-        foreach ($examples as $example) {
-            $label = $example[0];
-            $code = $example[1];
-            $data = $example[2] ?? [];
+        foreach ($components as $componentName => $variants) {
+            $multi = count($variants) > 1;
+            $blocks = '';
 
-            try {
-                $rendered = Blade::render($code, $data);
-                $preview = $rendered;
-            } catch (\Throwable $e) {
-                $preview = '<div class="text-sm text-red-600 dark:text-red-400 font-mono">'
-                    .'⚠ render error (likely needs host-app context): '
-                    .htmlspecialchars($e->getMessage())
-                    .'</div>';
+            foreach ($variants as $variant) {
+                $label = $variant[0];
+                $code = $variant[1];
+                $data = $variant[2] ?? [];
+
+                try {
+                    $preview = Blade::render($code, $data);
+                } catch (\Throwable $e) {
+                    $preview = '<div class="text-sm text-red-600 dark:text-red-400 font-mono">'
+                        .'⚠ render error (likely needs host-app context): '
+                        .htmlspecialchars($e->getMessage())
+                        .'</div>';
+                }
+
+                $source = htmlspecialchars(trim($code));
+
+                $variantLabel = $multi
+                    ? '<div class="mb-3 text-xs font-medium uppercase tracking-wide text-gray-400 dark:text-gray-500">'.htmlspecialchars($label).'</div>'
+                    : '';
+
+                $blocks .= <<<HTML
+                    <div class="border-t border-gray-100 dark:border-gray-700 first:border-t-0">
+                        <div class="p-6">
+                            {$variantLabel}
+                            <div class="flex flex-wrap items-start gap-3 rounded-md p-4 bg-[repeating-conic-gradient(#0000_0_25%,#00000008_0_50%)] dark:bg-none">{$preview}</div>
+                        </div>
+                        <pre class="m-0 px-6 py-4 text-sm leading-relaxed overflow-x-auto bg-gray-50 dark:bg-gray-900 text-gray-700 dark:text-gray-300 border-t border-gray-100 dark:border-gray-700"><code>{$source}</code></pre>
+                    </div>
+                    HTML;
             }
-
-            $source = htmlspecialchars(trim($code));
 
             $cards .= <<<HTML
                 <div class="rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 overflow-hidden">
-                    <div class="px-4 py-2 text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400 border-b border-gray-100 dark:border-gray-700">{$label}</div>
-                    <div class="p-5 flex flex-wrap items-start gap-3 bg-[repeating-conic-gradient(#0000_0_25%,#00000008_0_50%)] dark:bg-none">{$preview}</div>
-                    <pre class="m-0 px-4 py-3 text-xs leading-relaxed overflow-x-auto bg-gray-50 dark:bg-gray-900 text-gray-700 dark:text-gray-300 border-t border-gray-100 dark:border-gray-700"><code>{$source}</code></pre>
+                    <div class="px-6 py-3 text-sm font-semibold text-gray-700 dark:text-gray-200 border-b border-gray-100 dark:border-gray-700">{$componentName}</div>
+                    {$blocks}
                 </div>
                 HTML;
         }
 
         $sections .= <<<HTML
-            <section class="space-y-4">
+            <section class="space-y-5">
                 <h2 class="text-lg font-bold text-gray-800 dark:text-gray-100">{$section}</h2>
-                <div class="grid gap-5 md:grid-cols-2 xl:grid-cols-3">{$cards}</div>
+                <div class="space-y-5">{$cards}</div>
             </section>
             HTML;
     }
@@ -213,7 +329,7 @@ function renderGalleryHtml(array $groups): string
                     Toggle dark
                 </button>
             </header>
-            <main class="max-w-7xl mx-auto px-6 py-8 space-y-12">
+            <main class="max-w-5xl mx-auto px-6 py-8 space-y-12">
                 {$sections}
             </main>
         </body>

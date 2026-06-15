@@ -55,7 +55,19 @@ class Rows extends Component
             'olive'   => 'bg-olive-50 text-olive-700 dark:bg-olive-900 dark:text-olive-200',
         ];
 
-        $this->classList = 'px-0 py-0 ' . ($themeMap[$this->theme] ?? $themeMap['slate']);
+        if ($this->floating) {
+            // Floating rows render as elevated, rounded pills (see
+            // Table::buildFloatingClasses, which gives the pills a lighter surface +
+            // shadow). The section gets its own backdrop a step *darker* than the pills
+            // (-100 light / -950 dark) so they read as raised cards regardless of what
+            // sits behind the card, plus a horizontal inset so the pill corners clear the
+            // card's rounded, overflow-hidden edges. Vertical gaps come from the table's
+            // border-spacing, and the pill cells supply their own text color.
+            $theme = isset($themeMap[$this->theme]) ? $this->theme : 'slate';
+            $this->classList = "px-3 py-0 bg-{$theme}-100 dark:bg-{$theme}-950";
+        } else {
+            $this->classList = 'px-0 py-0 ' . ($themeMap[$this->theme] ?? $themeMap['slate']);
+        }
     }
 
     /**

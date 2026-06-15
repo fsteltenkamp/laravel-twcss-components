@@ -43,7 +43,7 @@ abstract class Input extends Component
         // Surface + Primary Content shades (see README "Color shades"). The input sits
         // one step off the page background and uses the theme's high-contrast text so it
         // stays legible after a dark-mode switch without the host setting anything.
-        return "bg-white dark:bg-$theme-900 text-$theme-900 dark:text-$theme-100";
+        return "bg-white dark:bg-$theme-950 text-$theme-900 dark:text-$theme-100";
     }
 
     protected function getNormalClasses(string $theme = 'sky', string $class = ''): string
