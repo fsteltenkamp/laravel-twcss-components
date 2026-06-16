@@ -1,7 +1,8 @@
 {
   "permissions": {
     "allow": [
-      "Bash(bash test.sh)"
+      "Bash(bash test.sh)",
+      "Bash(./test.sh)"
     ]
   }
 }

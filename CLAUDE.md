@@ -11,12 +11,16 @@ backed by `orchestra/testbench`.
 
 ## Commands
 
-```bash
-composer install          # install deps (vendor/ is gitignored, not committed)
-composer test             # run the full Pest suite (alias for vendor/bin/pest)
+**PHP and Composer are not installed on the host** — everything runs in a
+container via the wrapper scripts. Always verify progress with `./test.sh`.
 
-vendor/bin/pest tests/BladeRenderTest.php          # one test file
-vendor/bin/pest --filter="renders the button"      # one test by name
+```bash
+./test.sh                                   # install deps + run the full Pest suite (use this to check progress)
+./test.sh tests/BladeRenderTest.php         # one test file
+./test.sh --filter="renders the button"     # one test by name (args forward to pest)
+
+./php.sh php --version                       # run php in the container
+./php.sh composer install                    # composer ships in the image
 ```
 
 There is no linter or build step configured.
