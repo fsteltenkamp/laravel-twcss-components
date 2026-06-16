@@ -93,3 +93,119 @@ it('renders the floating table variant as separated rounded pills', function () 
         ->toContain('[&amp;&gt;*:first-child]:rounded-l-lg')
         ->toContain('[&amp;&gt;*:last-child]:rounded-r-lg');
 });
+
+it('renders the sidebar with nav links, a collapsible group and a footer', function () {
+    $html = Blade::render(<<<'BLADE'
+        <x-fltc::nav.sidebar theme="indigo">
+            <x-fltc::nav.sidebar.link href="/dashboard" icon="ph ph-gauge">Dashboard</x-fltc::nav.sidebar.link>
+
+            <x-fltc::nav.sidebar.group label="Settings" icon="ph ph-gear">
+                <x-fltc::nav.sidebar.link href="/settings/profile">Profile</x-fltc::nav.sidebar.link>
+            </x-fltc::nav.sidebar.group>
+
+            <x-slot:footer>
+                <x-fltc::nav.sidebar.footer>
+                    <x-fltc::nav.sidebar.profile name="Ada Lovelace" email="ada@example.com">
+                        <x-fltc::nav.sidebar.link href="/logout">Sign out</x-fltc::nav.sidebar.link>
+                    </x-fltc::nav.sidebar.profile>
+                </x-fltc::nav.sidebar.footer>
+            </x-slot:footer>
+        </x-fltc::nav.sidebar>
+    BLADE);
+
+    expect($html)
+        ->toContain('<aside')
+        ->toContain('h-screen')
+        ->toContain('Dashboard')
+        ->toContain('Profile')
+        // collapsible group wiring
+        ->toContain('data-sidebar-group')
+        ->toContain('data-sidebar-group-key="settings"')
+        ->toContain('data-sidebar-group-trigger')
+        // profile menu + derived initials
+        ->toContain('data-sidebar-profile')
+        ->toContain('Ada Lovelace')
+        ->toContain('AL')
+        ->toContain('Sign out');
+});
+
+it('marks the sidebar link active when its href matches the current url', function () {
+    $html = Blade::render(
+        '<x-fltc::nav.sidebar.link href="/dashboard">Dashboard</x-fltc::nav.sidebar.link>',
+        [],
+    );
+
+    // No active state for a non-matching path under the test request ("/").
+    expect($html)->not->toContain('aria-current="page"');
+
+    $active = Blade::render('<x-fltc::nav.sidebar.link active href="/dashboard">Dashboard</x-fltc::nav.sidebar.link>');
+
+    expect($active)
+        ->toContain('aria-current="page"')
+        ->toContain('data-sidebar-active');
+});
+
+it('renders the navbar with links, an item, a dropdown and an onclick action', function () {
+    $html = Blade::render(<<<'BLADE'
+        <x-fltc::nav.navbar theme="slate">
+            <x-slot:left>
+                <x-fltc::nav.navbar.link href="/dashboard">Dashboard</x-fltc::nav.navbar.link>
+                <x-fltc::nav.navbar.item>Static</x-fltc::nav.navbar.item>
+                <x-fltc::nav.navbar.dropdown>
+                    <x-slot:trigger>Resources</x-slot:trigger>
+                    <x-fltc::nav.navbar.dropdown.link href="/docs">Docs</x-fltc::nav.navbar.dropdown.link>
+                </x-fltc::nav.navbar.dropdown>
+            </x-slot:left>
+            <x-slot:right>
+                <x-fltc::nav.navbar.onclick onclick="toggle()">Action</x-fltc::nav.navbar.onclick>
+            </x-slot:right>
+        </x-fltc::nav.navbar>
+    BLADE);
+
+    expect($html)
+        ->toContain('<nav')
+        ->toContain('Dashboard')
+        ->toContain('Static')
+        ->toContain('Resources')
+        ->toContain('Docs')
+        ->toContain('data-navbar-dropdown')
+        ->toContain('data-dropdown-menu')
+        ->toContain('onclick="toggle()"');
+});
+
+it('renders a navbar dropdown postlink as a POST form with a CSRF field', function () {
+    $html = Blade::render(<<<'BLADE'
+        <x-fltc::nav.navbar.dropdown.postlink action="/logout">Sign out</x-fltc::nav.navbar.dropdown.postlink>
+    BLADE);
+
+    expect($html)
+        ->toContain('Sign out')
+        ->toContain('method="POST"')
+        ->toContain('action="/logout"')
+        ->toContain('name="_token"')
+        ->toContain('<button')
+        ->toContain('type="submit"');
+});
+
+it('makes the navbar sticky to the top with a top edge border', function () {
+    $html = Blade::render('<x-fltc::nav.navbar theme="gray" stickyTop>nav</x-fltc::nav.navbar>');
+
+    expect($html)
+        ->toContain('sticky')
+        ->toContain('top-0')
+        ->toContain('z-40')
+        ->toContain('border-b');
+});
+
+it('uses the navbar as a footer pinned to the bottom via stickyBottom', function () {
+    $html = Blade::render('<x-fltc::nav.navbar theme="gray" stickyBottom>footer</x-fltc::nav.navbar>');
+
+    expect($html)
+        ->toContain('fixed')
+        ->toContain('inset-x-0')
+        ->toContain('bottom-0')
+        ->toContain('z-40')
+        // a bottom-pinned bar carries its edge border on top, not bottom
+        ->toContain('border-t')
+        ->not->toContain('border-b');
+});

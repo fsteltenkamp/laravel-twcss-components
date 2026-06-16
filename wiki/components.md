@@ -58,7 +58,48 @@ step darker than the page (surface vs. page Background) for context. See the
 - `onclick`: JavaScript prefix before legacy `util.stepperPreviousStep/NextStep` calls
 - `class`: extra wrapper classes
 
-**Navbar**: `x-fltc::nav.navbar`, `x-fltc::nav.navbar.item`, `x-fltc::nav.navbar.link`, `x-fltc::nav.navbar.dropdown` and dropdown link/postlink/onclick variants
+**Navbar** (`x-fltc::nav.navbar`): a horizontal top/bottom bar.
+- `theme`: full palette (default: slate) — shared with all navbar children (which inherit it unless given their own `theme`)
+- `containerClass`: inner container width/padding (default: `w-full px-4 sm:px-6 lg:px-8`)
+- `stickyTop` / `stickyBottom`: pin the bar to the top/bottom; sets the matching edge border and applies `zIndexClass`. Use `stickyBottom` to make the navbar double as a page footer (bottom-pinned, top edge border)
+- `zIndexClass`: z-index when sticky (default: `z-40`)
+- `showLogo`: render the host app's `<x-application-logo/>` at the start (default: false)
+- Slots: `left` (or the default slot) and `right` for start/end aligned content
+- Children: `x-fltc::nav.navbar.link` (`href`), `x-fltc::nav.navbar.item` (static label), `x-fltc::nav.navbar.onclick` (`onclick` JS string), and `x-fltc::nav.navbar.dropdown` (`trigger` slot, optional `hover`) with `dropdown.link` (`href`) and `dropdown.postlink` (`action` — POST form + CSRF) menu items. Self-initialising vanilla JS handles open/close, outside-click, Escape and optional hover.
+
+**Sidebar** (`x-fltc::nav.sidebar`): a full-height vertical navigation column.
+- `theme`: full palette (default: slate) — shared with all child links/groups/footer/profile, which inherit it unless they set their own `theme`
+- `width`: column width class (default: `w-64`)
+- `heightClass`: height class (default: `h-screen` for full viewport height; override when nesting inside a layout, e.g. `h-full`)
+- `class`: extra wrapper classes
+- Slots: `brand` (top header row, e.g. logo), default slot (nav body), `footer` (pinned to the bottom)
+
+**Sidebar link** (`x-fltc::nav.sidebar.link`):
+- `href`: link target (default `#`)
+- `icon`: full icon class string (e.g. `ph ph-gauge`)
+- `active`: force the active state; when omitted it is auto-derived by matching the current request URL
+- `activePattern`: `Request::is()` pattern for active detection (defaults to the href path; supports wildcards like `settings/*`)
+- `theme`: full palette (default: inherited from the sidebar)
+- Active links render `aria-current="page"` and a `data-sidebar-active` marker (the latter is what auto-opens an enclosing group)
+- `trailing` slot: right-aligned content such as a badge or counter
+
+**Sidebar group** (`x-fltc::nav.sidebar.group`): a collapsible section of links.
+- `label`: trigger label
+- `icon`: full icon class string
+- `open`: force the initial open state; defaults to open when `activeWhen` matches
+- `activeWhen`: `Request::is()` pattern that both highlights the trigger and opens the group by default (e.g. `settings/*`)
+- `id`: stable key for persisting the open state in `localStorage` (defaults to a slug of `label`)
+- `theme`: full palette (default: inherited)
+- Behaviour: groups **stay open once opened** (the choice is remembered in `localStorage` across page loads / `wire:navigate`) and are **forced open when the URL is on one of their sub-items** (detected via a child `data-sidebar-active` link). Self-initialising vanilla JS, no Alpine dependency.
+
+**Sidebar footer** (`x-fltc::nav.sidebar.footer`): bottom region pinned with `mt-auto` and a top border. Drop it in the sidebar's `footer` slot. `theme` inherited; `class` for extras.
+
+**Sidebar profile** (`x-fltc::nav.sidebar.profile`): an optional account row for the footer.
+- `name`: display name; `email`: secondary line
+- `avatar`: image URL (falls back to auto-derived `initials` when omitted)
+- `initials`: override the derived initials
+- `href`: link target used when no menu is provided
+- When the default slot has content it renders a button that toggles a popover menu (opens upward, closes on outside-click/Escape); otherwise it renders a static row (or an `<a>` when `href` is set). Put `x-fltc::nav.sidebar.link`s in the slot for menu items.
 
 ### Cards
 

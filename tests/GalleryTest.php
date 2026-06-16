@@ -177,6 +177,13 @@ function galleryGroups(): array
                     ['label' => 'Cart'], ['label' => 'Shipping'], ['label' => 'Payment'],
                 ]]],
             ],
+            'Navbar' => [
+                ['default', navbarExample()],
+                ['footer (stickyBottom)', navbarFooterExample()],
+            ],
+            'Sidebar' => [
+                ['default', sidebarExample()],
+            ],
         ],
 
         'Utility' => [
@@ -188,6 +195,80 @@ function galleryGroups(): array
             ],
         ],
     ];
+}
+
+function navbarExample(): string
+{
+    return <<<'BLADE'
+        <x-fltc::nav.navbar theme="slate" class="rounded-xl border shadow-sm">
+            <x-slot:left>
+                <x-fltc::nav.navbar.link href="#">Dashboard</x-fltc::nav.navbar.link>
+                <x-fltc::nav.navbar.link href="#">Projects</x-fltc::nav.navbar.link>
+                <x-fltc::nav.navbar.dropdown>
+                    <x-slot:trigger>Resources</x-slot:trigger>
+                    <x-fltc::nav.navbar.dropdown.link href="#">Docs</x-fltc::nav.navbar.dropdown.link>
+                    <x-fltc::nav.navbar.dropdown.link href="#">Guides</x-fltc::nav.navbar.dropdown.link>
+                </x-fltc::nav.navbar.dropdown>
+            </x-slot:left>
+            <x-slot:right>
+                <x-fltc::nav.navbar.dropdown>
+                    <x-slot:trigger>Account</x-slot:trigger>
+                    <x-fltc::nav.navbar.dropdown.link href="#">Profile</x-fltc::nav.navbar.dropdown.link>
+                    <x-fltc::nav.navbar.dropdown.postlink action="#">Sign out</x-fltc::nav.navbar.dropdown.postlink>
+                </x-fltc::nav.navbar.dropdown>
+            </x-slot:right>
+        </x-fltc::nav.navbar>
+        BLADE;
+}
+
+function navbarFooterExample(): string
+{
+    // stickyBottom pins the bar to the bottom with a top edge border. The
+    // wrapper uses translate-x-0 to create a containing block so the otherwise
+    // viewport-`fixed` bar sits at the bottom of this preview box instead.
+    return <<<'BLADE'
+        <div class="relative h-40 translate-x-0 overflow-hidden rounded-xl border border-slate-200 dark:border-slate-700">
+            <div class="p-4 text-sm text-slate-500 dark:text-slate-400">Page content…</div>
+            <x-fltc::nav.navbar theme="slate" stickyBottom>
+                <x-slot:left>
+                    <x-fltc::nav.navbar.link href="#">Home</x-fltc::nav.navbar.link>
+                    <x-fltc::nav.navbar.link href="#">Pricing</x-fltc::nav.navbar.link>
+                </x-slot:left>
+                <x-slot:right>
+                    <x-fltc::nav.navbar.item>© Acme</x-fltc::nav.navbar.item>
+                </x-slot:right>
+            </x-fltc::nav.navbar>
+        </div>
+        BLADE;
+}
+
+function sidebarExample(): string
+{
+    return <<<'BLADE'
+        <x-fltc::nav.sidebar theme="indigo" heightClass="h-96" class="rounded-xl border shadow-sm">
+            <x-slot:brand>
+                <span class="text-base font-semibold">Acme Inc.</span>
+            </x-slot:brand>
+
+            <x-fltc::nav.sidebar.link href="#" icon="ph ph-gauge" active>Dashboard</x-fltc::nav.sidebar.link>
+
+            <x-fltc::nav.sidebar.group label="Settings" icon="ph ph-gear" open>
+                <x-fltc::nav.sidebar.link href="#">Profile</x-fltc::nav.sidebar.link>
+                <x-fltc::nav.sidebar.link href="#">Billing</x-fltc::nav.sidebar.link>
+            </x-fltc::nav.sidebar.group>
+
+            <x-fltc::nav.sidebar.link href="#" icon="ph ph-users">Team</x-fltc::nav.sidebar.link>
+
+            <x-slot:footer>
+                <x-fltc::nav.sidebar.footer>
+                    <x-fltc::nav.sidebar.profile name="Ada Lovelace" email="ada@example.com">
+                        <x-fltc::nav.sidebar.link href="#">Account</x-fltc::nav.sidebar.link>
+                        <x-fltc::nav.sidebar.link href="#">Sign out</x-fltc::nav.sidebar.link>
+                    </x-fltc::nav.sidebar.profile>
+                </x-fltc::nav.sidebar.footer>
+            </x-slot:footer>
+        </x-fltc::nav.sidebar>
+        BLADE;
 }
 
 function tableExample(bool $floating): string
