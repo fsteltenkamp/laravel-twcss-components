@@ -6,3 +6,4 @@ composer.lock
 .phpunit.cache
 .pest.cache
 gallery.html
+/examples/dist
