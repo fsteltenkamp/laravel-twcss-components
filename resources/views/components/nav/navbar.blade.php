@@ -1,11 +1,11 @@
 <nav {{ $attributes->merge(['class' => $classList]) }}>
 	<div class="{{ $containerClass }}">
 		<div class="flex h-16 items-center gap-4">
-			@if($showLogo)
+			@isset($logo)
 			<div class="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden">
-				<x-application-logo/>
+				{{ $logo }}
 			</div>
-			@endif
+			@endisset
 
 			<div class="flex h-full min-w-0 items-stretch gap-1">
 				@isset($left)

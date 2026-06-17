@@ -21,7 +21,6 @@ class Navbar extends Component
         public bool $stickyTop = false,
         public bool $stickyBottom = false,
         public string $zIndexClass = 'z-40',
-        public bool $showLogo = false,
     ) {
         $edgeBorderClass = match (true) {
             $this->stickyTop && $this->stickyBottom => 'border-y',
