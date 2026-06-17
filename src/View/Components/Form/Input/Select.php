@@ -24,7 +24,7 @@ class Select extends Input
         public string $class = '',
         public string $label = '',
         public string $icon = '',
-        public string $iconVariant = 'solid',
+        public string $iconVariant = 'regular',
     ) {
         if ($this->name === '') {
             $this->name = $this->id;

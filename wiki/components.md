@@ -220,7 +220,7 @@ Shared props:
 - `variant`: solid or outline
 - `tooltip`: plain text tooltip; when set, button renders inside `x-fltc::tooltip`
 - `icon`: Phosphor icon name rendered via `x-fltc::icon` (e.g. `floppy-disk`). Automatically spaced from the label
-- `iconVariant`: Phosphor weight for the icon (default: `solid`) — see Icon below
+- `iconVariant`: Phosphor weight for the icon (default: `regular`) — see Icon below
 - `iconPosition`: `before` (default) or `after` the label
 
 Default button text is white. Use color names for semantic meaning.
@@ -254,7 +254,7 @@ Common props:
 - `model`: Livewire binding target
 - `live`: use `wire:model.live` when true
 - `icon`: a Phosphor icon name (e.g. `user`, `envelope`) on the text/email/password/select inputs. Rendered internally through `x-fltc::icon` — the host app only needs the Phosphor icon stylesheet loaded.
-- `iconVariant`: Phosphor weight for the input icon (default: `solid`) — see Icon below
+- `iconVariant`: Phosphor weight for the input icon (default: `regular`) — see Icon below
 
 **OTP** (`x-fltc::form.otp`): a segmented one-time-code input with auto-advance, backspace,
 arrow-key navigation and paste support. Renders `length` single-character boxes backed by a
@@ -322,7 +322,8 @@ Props:
   (`ph ph-user`) is also accepted and rendered verbatim, so props that pass a complete icon
   class keep working
 - `variant`: Phosphor weight — `thin`, `light`, `regular`, `bold`, `fill`/`solid`, or
-  `duotone` (default: `solid`, i.e. Phosphor "fill"). Ignored when `name` is a full class string
+  `duotone` (default: `regular`, the base `ph` weight). The non-regular weights are opt-in
+  and require the host app to load that weight's Phosphor CSS. Ignored when `name` is a full class string
 - `color`: theme palette name; applies the tertiary-content icon role
   (`text-{c}-500 dark:text-{c}-400`). Omit to inherit the surrounding text colour
   (`currentColor`). `theme` is accepted as an alias

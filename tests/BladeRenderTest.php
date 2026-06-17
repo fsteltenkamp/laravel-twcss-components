@@ -28,14 +28,20 @@ it('renders the button component via the fltc Blade handle', function () {
         ->toContain('<button');
 });
 
-it('renders the icon component with the solid (fill) variant by default', function () {
+it('renders the icon component with the regular (base "ph") weight by default', function () {
     $html = Blade::render('<x-fltc::icon name="user" />');
 
     expect($html)
         ->toContain('<i')
-        ->toContain('ph-fill')
-        ->toContain('ph-user')
+        ->toContain('ph ph-user')
+        ->not->toContain('ph-fill')
         ->toContain('aria-hidden="true"');
+});
+
+it('renders the solid (fill) weight when explicitly requested', function () {
+    $html = Blade::render('<x-fltc::icon name="user" variant="solid" />');
+
+    expect($html)->toContain('ph-fill')->toContain('ph-user');
 });
 
 it('applies icon modifiers: variant, color, size, spacing and alignment', function () {

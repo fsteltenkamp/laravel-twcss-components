@@ -16,7 +16,9 @@ class Icon extends Component
      *                           rendered verbatim so the existing "full icon class" props
      *                           keep working.
      * @param  string  $variant  Phosphor weight: thin, light, regular, bold, fill/solid,
-     *                           duotone. Defaults to solid (Phosphor "fill").
+     *                           duotone. Defaults to regular (the base "ph" weight), since
+     *                           that is the weight host apps load by default; the other
+     *                           weights are opt-in and require the host to load their CSS.
      * @param  string  $color    Theme palette name colouring the glyph; empty inherits the
      *                           surrounding text colour (currentColor).
      * @param  string  $theme    Alias for $color (General Properties theme support).
@@ -27,7 +29,7 @@ class Icon extends Component
      */
     public function __construct(
         public string $name = '',
-        public string $variant = 'solid',
+        public string $variant = 'regular',
         public string $color = '',
         public string $theme = '',
         public string $size = '',
@@ -45,7 +47,7 @@ class Icon extends Component
             'duotone' => 'ph-duotone',
         ];
 
-        $weightClass = $variantMap[strtolower(trim($variant))] ?? $variantMap['solid'];
+        $weightClass = $variantMap[strtolower(trim($variant))] ?? $variantMap['regular'];
 
         $trimmedName = trim($name);
 

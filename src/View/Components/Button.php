@@ -19,7 +19,7 @@ class Button extends Component
         public bool $disabled = false,
         public string $variant = 'solid',
         public string $icon = '',
-        public string $iconVariant = 'solid',
+        public string $iconVariant = 'regular',
         public string $iconPosition = 'before',
         string $class = ''
     )

@@ -18,7 +18,7 @@ class Link extends Button
         public bool $disabled = false,
         public string $variant = 'solid',
         string $icon = '',
-        string $iconVariant = 'solid',
+        string $iconVariant = 'regular',
         string $iconPosition = 'before',
         string $class = ''
     )
