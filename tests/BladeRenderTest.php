@@ -267,6 +267,34 @@ it('renders a navbar dropdown postlink as a POST form with a CSRF field', functi
         ->toContain('type="submit"');
 });
 
+it('renders a navbar postlink as a POST form with a CSRF field', function () {
+    $html = Blade::render(<<<'BLADE'
+        <x-fltc::nav.navbar.postlink action="/logout">Sign out</x-fltc::nav.navbar.postlink>
+    BLADE);
+
+    expect($html)
+        ->toContain('Sign out')
+        ->toContain('method="POST"')
+        ->toContain('action="/logout"')
+        ->toContain('name="_token"')
+        ->toContain('<button')
+        ->toContain('type="submit"');
+});
+
+it('renders a sidebar postlink as a POST form with a CSRF field', function () {
+    $html = Blade::render(<<<'BLADE'
+        <x-fltc::nav.sidebar.postlink action="/logout" icon="ph ph-sign-out">Sign out</x-fltc::nav.sidebar.postlink>
+    BLADE);
+
+    expect($html)
+        ->toContain('Sign out')
+        ->toContain('method="POST"')
+        ->toContain('action="/logout"')
+        ->toContain('name="_token"')
+        ->toContain('<button')
+        ->toContain('type="submit"');
+});
+
 it('makes the navbar sticky to the top with a top edge border', function () {
     $html = Blade::render('<x-fltc::nav.navbar theme="gray" stickyTop>nav</x-fltc::nav.navbar>');
 

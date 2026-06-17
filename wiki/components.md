@@ -64,7 +64,7 @@ step darker than the page (surface vs. page Background) for context. See the
 - `stickyTop` / `stickyBottom`: pin the bar to the top/bottom; sets the matching edge border and applies `zIndexClass`. Use `stickyBottom` to make the navbar double as a page footer (bottom-pinned, top edge border)
 - `zIndexClass`: z-index when sticky (default: `z-40`)
 - Slots: `logo` (optional start-aligned logo box — only rendered when provided), `left` (or the default slot) and `right` for start/end aligned content
-- Children: `x-fltc::nav.navbar.link` (`href`), `x-fltc::nav.navbar.item` (static label), `x-fltc::nav.navbar.onclick` (`onclick` JS string), `x-fltc::nav.navbar.toggle` (sidebar drawer button, see below), and `x-fltc::nav.navbar.dropdown` (`trigger` slot, optional `hover`) with `dropdown.link` (`href`) and `dropdown.postlink` (`action` — POST form + CSRF) menu items. Self-initialising vanilla JS handles open/close, outside-click, Escape and optional hover.
+- Children: `x-fltc::nav.navbar.link` (`href`), `x-fltc::nav.navbar.postlink` (`action` — styled like a link but submits a POST form + CSRF, e.g. logout), `x-fltc::nav.navbar.item` (static label), `x-fltc::nav.navbar.onclick` (`onclick` JS string), `x-fltc::nav.navbar.toggle` (sidebar drawer button, see below), and `x-fltc::nav.navbar.dropdown` (`trigger` slot, optional `hover`) with `dropdown.link` (`href`) and `dropdown.postlink` (`action` — POST form + CSRF) menu items. Self-initialising vanilla JS handles open/close, outside-click, Escape and optional hover.
 
 **Navbar toggle** (`x-fltc::nav.navbar.toggle`): a hamburger button that opens the responsive sidebar drawer on small screens. Place it in the navbar's `left` slot.
 - `target`: the `name` of the sidebar to control — only needed when more than one sidebar is on the page (default: the unnamed sidebar)
@@ -90,6 +90,12 @@ step darker than the page (surface vs. page Background) for context. See the
 - `activePattern`: `Request::is()` pattern for active detection (defaults to the href path; supports wildcards like `settings/*`)
 - `theme`: full palette (default: inherited from the sidebar)
 - Active links render `aria-current="page"` and a `data-sidebar-active` marker (the latter is what auto-opens an enclosing group)
+- `trailing` slot: right-aligned content such as a badge or counter
+
+**Sidebar postlink** (`x-fltc::nav.sidebar.postlink`): styled like a sidebar link but submits a surrounding POST form (with CSRF) instead of navigating — e.g. logout. Works standalone or inside a `x-fltc::nav.sidebar.group`.
+- `action`: form action the submit button posts to
+- `icon`: full icon class string (e.g. `ph ph-sign-out`)
+- `theme`: full palette (default: inherited from the sidebar)
 - `trailing` slot: right-aligned content such as a badge or counter
 
 **Sidebar group** (`x-fltc::nav.sidebar.group`): a collapsible section of links.
