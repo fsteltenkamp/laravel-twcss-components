@@ -52,8 +52,8 @@
                             class="peer sr-only"
                         />
 
-                        <i class="{{ $iconPending }} text-base leading-none flex-shrink-0 {{ $iconColorPendingThemed }} peer-checked:hidden"></i>
-                        <i class="{{ $iconCompleted }} text-base leading-none flex-shrink-0 {{ $iconColorChecked }} hidden peer-checked:inline"></i>
+                        <x-fltc::icon :name="$iconPending" class="text-base leading-none flex-shrink-0 {{ $iconColorPendingThemed }} peer-checked:hidden" />
+                        <x-fltc::icon :name="$iconCompleted" class="text-base leading-none flex-shrink-0 {{ $iconColorChecked }} hidden peer-checked:inline" />
 
                         <span class="text-sm {{ $labelColorPendingThemed }} @if ($strikeThroughChecked) peer-checked:line-through peer-checked:opacity-60 @endif">
                             {{ $item['label'] }}
@@ -73,13 +73,13 @@
                             @else {{ $iconColorPendingThemed }}
                             @endif">
                             @if ($status === 'completed')
-                                <i class="{{ $iconCompleted }}"></i>
+                                <x-fltc::icon :name="$iconCompleted" />
                             @elseif ($status === 'failed')
-                                <i class="{{ $iconFailed }}"></i>
+                                <x-fltc::icon :name="$iconFailed" />
                             @elseif ($status === 'in_progress')
-                                <i class="{{ $iconInProgress }}"></i>
+                                <x-fltc::icon :name="$iconInProgress" />
                             @else
-                                <i class="{{ $iconPending }}"></i>
+                                <x-fltc::icon :name="$iconPending" />
                             @endif
                         </span>
                         <span class="text-sm

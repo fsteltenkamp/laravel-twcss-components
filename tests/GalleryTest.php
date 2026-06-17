@@ -46,6 +46,7 @@ function galleryGroups(): array
                 ['solid', '<x-fltc::button theme="sky">Save</x-fltc::button>'],
                 ['outline', '<x-fltc::button theme="rose" variant="outline">Delete</x-fltc::button>'],
                 ['disabled', '<x-fltc::button theme="gray" disabled>Disabled</x-fltc::button>'],
+                ['with icon', '<x-fltc::button theme="emerald" icon="floppy-disk">Save</x-fltc::button> <x-fltc::button theme="sky" icon="arrow-right" iconPosition="after">Next</x-fltc::button> <x-fltc::button theme="rose" icon="trash" />'],
             ],
             'Button link' => [
                 ['default', '<x-fltc::button.link href="#" theme="emerald">Go somewhere</x-fltc::button.link>'],
@@ -187,6 +188,11 @@ function galleryGroups(): array
         ],
 
         'Utility' => [
+            'Icon' => [
+                ['variants', '<span class="text-2xl"><x-fltc::icon name="heart" variant="thin" after="2" /><x-fltc::icon name="heart" variant="regular" after="2" /><x-fltc::icon name="heart" variant="bold" after="2" /><x-fltc::icon name="heart" variant="fill" after="2" /><x-fltc::icon name="heart" variant="duotone" /></span>'],
+                ['colors', '<span class="text-2xl"><x-fltc::icon name="circle" color="red" after="2" /><x-fltc::icon name="circle" color="amber" after="2" /><x-fltc::icon name="circle" color="emerald" after="2" /><x-fltc::icon name="circle" color="sky" after="2" /><x-fltc::icon name="circle" color="violet" /></span>'],
+                ['sizes', '<span class="inline-flex items-baseline"><x-fltc::icon name="star" size="sm" after="2" /><x-fltc::icon name="star" size="lg" after="2" /><x-fltc::icon name="star" size="2xl" after="2" /><x-fltc::icon name="star" size="4xl" /></span>'],
+            ],
             'Dark mode toggle' => [
                 ['default', '<x-fltc::darkmode.toggle />'],
             ],

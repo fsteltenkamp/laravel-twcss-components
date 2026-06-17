@@ -17,7 +17,7 @@
                     title="Drag item"
                     aria-label="Drag item"
                 >
-                    <i class="ph ph-dots-six-vertical" aria-hidden="true"></i>
+                    <x-fltc::icon name="dots-six-vertical" />
                 </span>
             @endif
 
@@ -30,7 +30,7 @@
             </span>
         </span>
 
-        <i class="{{ $chevronClass }}" data-accordion-chevron aria-hidden="true"></i>
+        <x-fltc::icon :name="$chevronClass" data-accordion-chevron />
     </button>
 
     <div class="{{ $contentClass }}" data-accordion-content hidden>

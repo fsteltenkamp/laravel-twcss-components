@@ -27,7 +27,7 @@
                         data-copy="{{ $varId }}"
                         onclick="att_copyIndex(this)"
                         title="Kopieren"
-                    ><i class="ph ph-copy text-sm" aria-hidden="true"></i></button>
+                    ><x-fltc::icon name="copy" class="text-sm" /></button>
                 @endif
                 <span class="font-mono ml-2 text-xs">{{ $varId }}</span>
             </td>

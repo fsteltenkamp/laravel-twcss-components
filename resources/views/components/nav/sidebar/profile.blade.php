@@ -13,7 +13,7 @@
             aria-expanded="false"
         >
             @include('fltc::components.nav.sidebar.profile.identity', $identity)
-            <i class="ph ph-dots-three-vertical ml-auto shrink-0 text-base" aria-hidden="true"></i>
+            <x-fltc::icon name="dots-three-vertical" class="ml-auto shrink-0 text-base" />
         </button>
 
         <div class="{{ $menuClass }}" data-sidebar-profile-menu>

@@ -9,7 +9,7 @@
         @endif
 
         @if (filled($icon))
-            <i class="{{ $icon }} text-lg {{ $iconClasses }}" aria-hidden="true"></i>
+            <x-fltc::icon :name="$icon" class="text-lg {{ $iconClasses }}" />
         @endif
     </div>
 

@@ -28,6 +28,48 @@ it('renders the button component via the fltc Blade handle', function () {
         ->toContain('<button');
 });
 
+it('renders the icon component with the solid (fill) variant by default', function () {
+    $html = Blade::render('<x-fltc::icon name="user" />');
+
+    expect($html)
+        ->toContain('<i')
+        ->toContain('ph-fill')
+        ->toContain('ph-user')
+        ->toContain('aria-hidden="true"');
+});
+
+it('applies icon modifiers: variant, color, size, spacing and alignment', function () {
+    $html = Blade::render('<x-fltc::icon name="user" variant="bold" color="red" size="lg" before="2" after="3" align="middle" />');
+
+    expect($html)
+        ->toContain('ph-bold')
+        ->toContain('ph-user')
+        ->toContain('text-red-500')
+        ->toContain('dark:text-red-400')
+        ->toContain('text-lg')
+        ->toContain('ms-2')
+        ->toContain('me-3')
+        ->toContain('align-middle');
+});
+
+it('renders a full icon class string verbatim without doubling the prefix', function () {
+    $html = Blade::render('<x-fltc::icon name="ph ph-gauge" class="shrink-0" />');
+
+    expect($html)
+        ->toContain('ph ph-gauge')
+        ->toContain('shrink-0')
+        ->not->toContain('ph-fill');
+});
+
+it('renders a button with an icon before its label', function () {
+    $html = Blade::render('<x-fltc::button icon="floppy-disk">Save</x-fltc::button>');
+
+    expect($html)
+        ->toContain('Save')
+        ->toContain('ph-floppy-disk')
+        ->toContain('me-2');
+});
+
 it('renders the buttongroup component via the fltc Blade handle', function () {
     $html = Blade::render('<x-fltc::buttongroup>inner</x-fltc::buttongroup>');
 

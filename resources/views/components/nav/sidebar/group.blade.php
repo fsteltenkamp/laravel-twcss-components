@@ -12,16 +12,16 @@
         aria-expanded="{{ $isOpen ? 'true' : 'false' }}"
     >
         @if ($icon)
-            <i class="{{ $icon }} shrink-0 text-base" aria-hidden="true"></i>
+            <x-fltc::icon :name="$icon" class="shrink-0 text-base" />
         @endif
 
         <span class="min-w-0 flex-1 truncate text-left">{{ $label }}</span>
 
-        <i
-            class="ph ph-caret-down ml-auto shrink-0 text-sm transition-transform duration-200 {{ $isOpen ? 'rotate-180' : '' }}"
+        <x-fltc::icon
+            name="caret-down"
+            class="ml-auto shrink-0 text-sm transition-transform duration-200 {{ $isOpen ? 'rotate-180' : '' }}"
             data-sidebar-group-chevron
-            aria-hidden="true"
-        ></i>
+        />
     </button>
 
     <div data-sidebar-group-content @unless ($isOpen) hidden @endunless>

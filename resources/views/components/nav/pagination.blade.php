@@ -4,14 +4,14 @@
         theme="{{$mainTheme}}"
         width="fit"
         class="px-2.5 justify-center"
-    ><i class="ph ph-skip-back" aria-hidden="true"></i></x-fltc::button>
+    ><x-fltc::icon name="skip-back" /></x-fltc::button>
 
     <x-fltc::button
         wire:click="gotoPage({{$currentPage - 1}})"
         theme="{{$mainTheme}}"
         width="fit"
         class="px-2.5 justify-center"
-    ><i class="ph ph-rewind" aria-hidden="true"></i></x-fltc::button>
+    ><x-fltc::icon name="rewind" /></x-fltc::button>
 
     @for ($i = $start; $i <= $end; $i++)
         <x-fltc::button
@@ -28,12 +28,12 @@
         theme="{{$mainTheme}}"
         width="fit"
         class="px-2.5 justify-center"
-    ><i class="ph ph-fast-forward" aria-hidden="true"></i></x-fltc::button>
+    ><x-fltc::icon name="fast-forward" /></x-fltc::button>
 
     <x-fltc::button
         wire:click="gotoPage({{$totalPages}})"
         theme="{{$mainTheme}}"
         width="fit"
         class="px-2.5 justify-center"
-    ><i class="ph ph-skip-forward" aria-hidden="true"></i></x-fltc::button>
+    ><x-fltc::icon name="skip-forward" /></x-fltc::button>
 </x-fltc::buttongroup>

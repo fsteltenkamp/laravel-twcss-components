@@ -1,3 +1,5 @@
+@php($hasIcon = filled(trim($icon)))
+@php($hasLabel = filled(trim($slot)))
 @if(filled(trim($tooltip)))
 	<x-fltc::tooltip :text="$tooltip" :theme="$theme" :class="$width === 'full' ? 'w-full' : ''">
 		<a
@@ -7,7 +9,7 @@
 			{{ $attributes->class([
 				$classList
 			])->merge(['style' => $heightStyle]) }}
-		>{{ $slot }}</a>
+		>@if($hasIcon && $iconPosition !== 'after')<x-fltc::icon :name="$icon" :variant="$iconVariant" :after="$hasLabel ? '2' : ''" />@endif{{ $slot }}@if($hasIcon && $iconPosition === 'after')<x-fltc::icon :name="$icon" :variant="$iconVariant" :before="$hasLabel ? '2' : ''" />@endif</a>
 	</x-fltc::tooltip>
 @else
 	<a
@@ -17,5 +19,5 @@
 		{{ $attributes->class([
 			$classList
 		])->merge(['style' => $heightStyle]) }}
-	>{{ $slot }}</a>
+	>@if($hasIcon && $iconPosition !== 'after')<x-fltc::icon :name="$icon" :variant="$iconVariant" :after="$hasLabel ? '2' : ''" />@endif{{ $slot }}@if($hasIcon && $iconPosition === 'after')<x-fltc::icon :name="$icon" :variant="$iconVariant" :before="$hasLabel ? '2' : ''" />@endif</a>
 @endif

@@ -18,6 +18,9 @@ class Button extends Component
         public string $tooltip = '',
         public bool $disabled = false,
         public string $variant = 'solid',
+        public string $icon = '',
+        public string $iconVariant = 'solid',
+        public string $iconPosition = 'before',
         string $class = ''
     )
     {

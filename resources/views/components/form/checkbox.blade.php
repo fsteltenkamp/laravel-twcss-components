@@ -22,8 +22,8 @@
         class="peer sr-only"
     />
 
-    <i class="{{ $iconUnchecked }} text-lg leading-none flex-shrink-0 transition-colors {{ $iconColorUnchecked }} peer-checked:hidden"></i>
-    <i class="{{ $iconChecked }} text-lg leading-none flex-shrink-0 transition-colors {{ $iconColorChecked }} hidden peer-checked:inline"></i>
+    <x-fltc::icon :name="$iconUnchecked" class="text-lg leading-none flex-shrink-0 transition-colors {{ $iconColorUnchecked }} peer-checked:hidden" />
+    <x-fltc::icon :name="$iconChecked" class="text-lg leading-none flex-shrink-0 transition-colors {{ $iconColorChecked }} hidden peer-checked:inline" />
 
     @if ($label)
         <span class="{{ $labelClasses }}">{{ $label }}</span>

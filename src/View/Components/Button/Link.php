@@ -16,10 +16,14 @@ class Link extends Button
         string $height = 'md',
         string $tooltip = '',
         public bool $disabled = false,
-        public string $variant = 'solid'
+        public string $variant = 'solid',
+        string $icon = '',
+        string $iconVariant = 'solid',
+        string $iconPosition = 'before',
+        string $class = ''
     )
     {
-        parent::__construct(theme: $theme, width: $width, height: $height, tooltip: $tooltip, disabled: $disabled, variant: $variant);
+        parent::__construct(theme: $theme, width: $width, height: $height, tooltip: $tooltip, disabled: $disabled, variant: $variant, icon: $icon, iconVariant: $iconVariant, iconPosition: $iconPosition, class: $class);
     }
 
     public function render(): View|Closure|string

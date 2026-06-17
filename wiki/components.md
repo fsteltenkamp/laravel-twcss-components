@@ -49,7 +49,7 @@ step darker than the page (surface vs. page Background) for context. See the
 
 **Stepper** (`x-fltc::nav.stepper`):
 - `theme`: full palette (default: slate)
-- `steps`: array keyed by step number/name; each step may be string label, `[label, icon]`, or `['label' => ..., 'icon' => ...]`. The step `icon` is a Phosphor icon name (e.g. `check`), rendered internally as `<i class="ph ph-{icon}">`
+- `steps`: array keyed by step number/name; each step may be string label, `[label, icon]`, or `['label' => ..., 'icon' => ...]`. The step `icon` is a Phosphor icon name (e.g. `check`), rendered internally through `x-fltc::icon`
 - `stepIndex`: current active step key (default: `1`)
 - `stepParam`: query-string parameter for tab links (default: `step`)
 - `tabs`: renders linked step tabs with previous/next controls (default: false)
@@ -168,6 +168,9 @@ Shared props:
 - `disabled`: true or false
 - `variant`: solid or outline
 - `tooltip`: plain text tooltip; when set, button renders inside `x-fltc::tooltip`
+- `icon`: Phosphor icon name rendered via `x-fltc::icon` (e.g. `floppy-disk`). Automatically spaced from the label
+- `iconVariant`: Phosphor weight for the icon (default: `solid`) — see Icon below
+- `iconPosition`: `before` (default) or `after` the label
 
 Default button text is white. Use color names for semantic meaning.
 
@@ -198,7 +201,8 @@ Common props:
 - `required`
 - `model`: Livewire binding target
 - `live`: use `wire:model.live` when true
-- `icon`: a Phosphor icon name (e.g. `user`, `envelope`) on the text/email/password/select inputs. Rendered internally as `<i class="ph ph-{icon}">` — the host app only needs the Phosphor icon stylesheet loaded; the library has no `<x-icon>` dependency.
+- `icon`: a Phosphor icon name (e.g. `user`, `envelope`) on the text/email/password/select inputs. Rendered internally through `x-fltc::icon` — the host app only needs the Phosphor icon stylesheet loaded.
+- `iconVariant`: Phosphor weight for the input icon (default: `solid`) — see Icon below
 
 **Auth Container** props:
 - `id`: optional wrapper id
@@ -238,6 +242,29 @@ Components:
 - `x-fltc::buttongroup`
 - `x-fltc::darkmode.toggle`
 - `x-fltc::tooltip`
+- `x-fltc::icon`
+
+**Icon** (`x-fltc::icon`): renders a single [Phosphor](https://phosphoricons.com) webfont glyph
+as an `<i>` element. The host app must load the Phosphor icon stylesheet. This is the
+canonical way to render an icon — prefer it over hand-written `<i class="ph …">` markup,
+and most components that take an `icon` prop render it through this component.
+
+Props:
+- `name`: the Phosphor icon identifier (e.g. `user`, `caret-right`). A full class string
+  (`ph ph-user`) is also accepted and rendered verbatim, so props that pass a complete icon
+  class keep working
+- `variant`: Phosphor weight — `thin`, `light`, `regular`, `bold`, `fill`/`solid`, or
+  `duotone` (default: `solid`, i.e. Phosphor "fill"). Ignored when `name` is a full class string
+- `color`: theme palette name; applies the tertiary-content icon role
+  (`text-{c}-500 dark:text-{c}-400`). Omit to inherit the surrounding text colour
+  (`currentColor`). `theme` is accepted as an alias
+- `size`: Tailwind text-size token sans prefix (e.g. `sm`, `lg`, `2xl`) — Phosphor glyphs
+  scale with font size
+- `before` / `after`: logical margin before / after the glyph (e.g. `2` → `ms-2` / `me-2`),
+  for spacing the icon next to adjacent text
+- `align`: vertical-align token (e.g. `middle`, `text-bottom`)
+- `class`, `id`, `wire:*`, `data-*`: pass through and merge onto the `<i>` as usual.
+  `aria-hidden="true"` is applied by default and can be overridden
 
 **Tooltip** props:
 - `text`: tooltip body content
