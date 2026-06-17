@@ -11,7 +11,7 @@
 
 <x-ex::layout :title="$title" :theme="$theme">
     <div class="flex min-h-screen">
-        <x-fltc::nav.sidebar :theme="$theme" class="sticky top-0">
+        <x-fltc::nav.sidebar :theme="$theme" class="lg:sticky lg:top-0">
             <x-slot:brand>
                 <a href="app-sidebar-profile.html" class="flex items-center gap-2 font-semibold tracking-tight">
                     <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-{{ $theme }}-500 text-white">
@@ -49,8 +49,9 @@
         <div class="flex min-w-0 flex-1 flex-col">
             <x-fltc::nav.navbar :theme="$theme" stickyTop containerClass="w-full px-4 sm:px-6 lg:px-8">
                 <x-slot:left>
+                    <x-fltc::nav.navbar.toggle />
                     <span class="flex items-center text-sm font-medium opacity-70">
-                        <i class="ph ph-list mr-2 text-lg" aria-hidden="true"></i>
+                        <i class="ph ph-list mr-2 hidden text-lg lg:inline" aria-hidden="true"></i>
                         Workspace
                     </span>
                 </x-slot:left>

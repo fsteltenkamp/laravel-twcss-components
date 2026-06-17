@@ -63,16 +63,25 @@ step darker than the page (surface vs. page Background) for context. See the
 - `containerClass`: inner container width/padding (default: `w-full px-4 sm:px-6 lg:px-8`)
 - `stickyTop` / `stickyBottom`: pin the bar to the top/bottom; sets the matching edge border and applies `zIndexClass`. Use `stickyBottom` to make the navbar double as a page footer (bottom-pinned, top edge border)
 - `zIndexClass`: z-index when sticky (default: `z-40`)
-- `showLogo`: render the host app's `<x-application-logo/>` at the start (default: false)
-- Slots: `left` (or the default slot) and `right` for start/end aligned content
-- Children: `x-fltc::nav.navbar.link` (`href`), `x-fltc::nav.navbar.item` (static label), `x-fltc::nav.navbar.onclick` (`onclick` JS string), and `x-fltc::nav.navbar.dropdown` (`trigger` slot, optional `hover`) with `dropdown.link` (`href`) and `dropdown.postlink` (`action` — POST form + CSRF) menu items. Self-initialising vanilla JS handles open/close, outside-click, Escape and optional hover.
+- Slots: `logo` (optional start-aligned logo box — only rendered when provided), `left` (or the default slot) and `right` for start/end aligned content
+- Children: `x-fltc::nav.navbar.link` (`href`), `x-fltc::nav.navbar.item` (static label), `x-fltc::nav.navbar.onclick` (`onclick` JS string), `x-fltc::nav.navbar.toggle` (sidebar drawer button, see below), and `x-fltc::nav.navbar.dropdown` (`trigger` slot, optional `hover`) with `dropdown.link` (`href`) and `dropdown.postlink` (`action` — POST form + CSRF) menu items. Self-initialising vanilla JS handles open/close, outside-click, Escape and optional hover.
 
-**Sidebar** (`x-fltc::nav.sidebar`): a full-height vertical navigation column.
+**Navbar toggle** (`x-fltc::nav.navbar.toggle`): a hamburger button that opens the responsive sidebar drawer on small screens. Place it in the navbar's `left` slot.
+- `target`: the `name` of the sidebar to control — only needed when more than one sidebar is on the page (default: the unnamed sidebar)
+- `label`: accessible label (default: `Toggle navigation`)
+- `theme`: full palette (default: inherited from the navbar)
+- `class`: extra classes; the default slot overrides the built-in hamburger icon
+- Behaviour: hidden from `lg` up (where the sidebar is a permanent column) and dispatches the `fltc-sidebar-toggle` window event the sidebar listens for. Requires Alpine.
+
+**Sidebar** (`x-fltc::nav.sidebar`): a full-height vertical navigation column that automatically collapses into an off-canvas drawer below `lg`.
 - `theme`: full palette (default: slate) — shared with all child links/groups/footer/profile, which inherit it unless they set their own `theme`
 - `width`: column width class (default: `w-64`)
 - `heightClass`: height class (default: `h-screen` for full viewport height; override when nesting inside a layout, e.g. `h-full`)
-- `class`: extra wrapper classes
+- `collapsible`: enable the responsive mobile drawer (default: `true`); set `false` for a sidebar that is always an in-flow column (the original behaviour, no Alpine)
+- `name`: stable key so a `x-fltc::nav.navbar.toggle` with a matching `target` controls this specific sidebar (only needed with multiple sidebars)
+- `class`: extra wrapper classes — apply desktop positioning with the `lg:` prefix (e.g. `lg:sticky lg:top-0`) so it doesn't fight the mobile `fixed` drawer
 - Slots: `brand` (top header row, e.g. logo), default slot (nav body), `footer` (pinned to the bottom)
+- Behaviour (when `collapsible`): below `lg` the sidebar is pinned off-screen and slides in over a dimmed backdrop when toggled; it closes on backdrop click, Escape, navigating a link, and when the viewport grows to `lg`. From `lg` up it is a static column, always visible regardless of the toggle state. Self-contained Alpine, no extra wiring — pair it with `x-fltc::nav.navbar.toggle`.
 
 **Sidebar link** (`x-fltc::nav.sidebar.link`):
 - `href`: link target (default `#`)

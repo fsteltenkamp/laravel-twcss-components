@@ -171,6 +171,44 @@ it('renders the sidebar with nav links, a collapsible group and a footer', funct
         ->toContain('Sign out');
 });
 
+it('makes the sidebar a collapsible off-canvas drawer by default', function () {
+    $html = Blade::render('<x-fltc::nav.sidebar name="main">links</x-fltc::nav.sidebar>');
+
+    expect($html)
+        // mobile drawer positioning + the always-visible desktop override
+        ->toContain('max-lg:fixed')
+        ->toContain('max-lg:-translate-x-full')
+        ->toContain('lg:translate-x-0')
+        // Alpine wiring + the named-target event hooks
+        ->toContain('x-data')
+        ->toContain('fltc-sidebar-toggle.window')
+        ->toContain('main')
+        ->toContain('x-teleport="body"');
+});
+
+it('opts a sidebar out of the mobile drawer with collapsible=false', function () {
+    $html = Blade::render('<x-fltc::nav.sidebar :collapsible="false">links</x-fltc::nav.sidebar>');
+
+    expect($html)
+        ->not->toContain('max-lg:fixed')
+        ->not->toContain('x-data')
+        ->not->toContain('fltc-sidebar-toggle');
+});
+
+it('renders the navbar toggle as a button dispatching the sidebar event', function () {
+    $html = Blade::render('<x-fltc::nav.navbar.toggle target="main" />');
+
+    expect($html)
+        ->toContain('<button')
+        ->toContain('lg:hidden')
+        ->toContain('aria-label="Toggle navigation"')
+        ->toContain('$dispatch(')
+        ->toContain('fltc-sidebar-toggle')
+        ->toContain('main')
+        // default hamburger icon
+        ->toContain('ph-list');
+});
+
 it('marks the sidebar link active when its href matches the current url', function () {
     $html = Blade::render(
         '<x-fltc::nav.sidebar.link href="/dashboard">Dashboard</x-fltc::nav.sidebar.link>',
