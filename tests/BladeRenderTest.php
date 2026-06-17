@@ -317,3 +317,54 @@ it('uses the navbar as a footer pinned to the bottom via stickyBottom', function
         ->toContain('border-t')
         ->not->toContain('border-b');
 });
+
+it('renders the heading component with a level-based tag', function () {
+    $html = Blade::render('<x-fltc::heading level="1" size="xl">Settings</x-fltc::heading>');
+
+    expect($html)
+        ->toContain('<h1')
+        ->toContain('Settings')
+        ->toContain('text-xl')
+        ->toContain('font-semibold');
+});
+
+it('renders the subheading component as muted copy', function () {
+    $html = Blade::render('<x-fltc::subheading>Manage your account</x-fltc::subheading>');
+
+    expect($html)
+        ->toContain('Manage your account')
+        ->toContain('text-zinc-500');
+});
+
+it('renders the separator component', function () {
+    $html = Blade::render('<x-fltc::separator />');
+
+    expect($html)
+        ->toContain('role="separator"')
+        ->toContain('border-t');
+
+    $vertical = Blade::render('<x-fltc::separator vertical />');
+
+    expect($vertical)->toContain('border-l');
+});
+
+it('renders the modal component with an entangled open state', function () {
+    $html = Blade::render('<x-fltc::modal name="demo"><p>body</p></x-fltc::modal>');
+
+    expect($html)
+        ->toContain('x-data')
+        ->toContain('open-modal.window')
+        ->toContain('role="dialog"')
+        ->toContain('body');
+});
+
+it('renders the otp component with the requested number of boxes', function () {
+    $html = Blade::render('<x-fltc::form.otp length="4" name="code" />');
+
+    expect($html)
+        ->toContain('x-ref="box0"')
+        ->toContain('x-ref="box3"')
+        ->not->toContain('x-ref="box4"')
+        ->toContain('type="hidden"')
+        ->toContain('name="code"');
+});

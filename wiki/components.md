@@ -116,6 +116,42 @@ step darker than the page (surface vs. page Background) for context. See the
 - `href`: link target used when no menu is provided
 - When the default slot has content it renders a button that toggles a popover menu (opens upward, closes on outside-click/Escape); otherwise it renders a static row (or an `<a>` when `href` is set). Put `x-fltc::nav.sidebar.link`s in the slot for menu items.
 
+### Typography
+
+Components:
+- `x-fltc::heading`
+- `x-fltc::subheading`
+
+Use for section titles and supporting copy. Both use the neutral Primary/Tertiary Content
+roles so they flip cleanly in dark mode.
+
+**Heading** (`x-fltc::heading`):
+- `size`: `sm`, `base` (default), `lg`, `xl`, `2xl`
+- `level`: heading level `1`–`6`, renders the matching `<h1>`–`<h6>` tag (default: `2`)
+- `class`, `id`, etc.: passed through and merged
+
+**Subheading** (`x-fltc::subheading`): muted secondary line rendered as a `<p>`.
+- `size`: `xs`, `sm` (default), `base`, `lg`
+
+### Overlays
+
+**Modal** (`x-fltc::modal`): a self-contained Alpine dialog with a dimmed backdrop. No
+Flux/Livewire JS runtime required — open state can be driven three ways:
+- `wire:model="prop"`: entangles the open state with a Livewire boolean
+- `name` + `open-modal` event: dispatch `$dispatch('open-modal', 'your-name')` to open and
+  `$dispatch('close-modal', 'your-name')` to close. The modal also emits a `close` event when
+  it closes, so a host can react with `@close="$wire.someMethod()"`
+- `open`: initial open state (e.g. pass `:open="$errors->isNotEmpty()"`)
+
+Props:
+- `name`: stable key for event-based opening
+- `open`: initial open state (default: false)
+- `maxWidth`: `sm`, `md`, `lg` (default), `xl`, `2xl`, `3xl`
+- `closeable`: allow closing via backdrop/Escape (default: true)
+
+The Alpine scope exposes a `close()` method, so any element inside the modal can close it
+with `x-on:click="close()"` (use this for a Cancel button — no separate close component needed).
+
 ### Cards
 
 Components:
@@ -203,6 +239,7 @@ Components:
 - `x-fltc::form.input.email`
 - `x-fltc::form.textarea`
 - `x-fltc::form.checkbox`
+- `x-fltc::form.otp`
 - `x-fltc::form.container.auth.simple`
 - `x-fltc::form.container.auth.two-col-left`
 - `x-fltc::form.container.auth.two-col-right`
@@ -218,6 +255,16 @@ Common props:
 - `live`: use `wire:model.live` when true
 - `icon`: a Phosphor icon name (e.g. `user`, `envelope`) on the text/email/password/select inputs. Rendered internally through `x-fltc::icon` — the host app only needs the Phosphor icon stylesheet loaded.
 - `iconVariant`: Phosphor weight for the input icon (default: `solid`) — see Icon below
+
+**OTP** (`x-fltc::form.otp`): a segmented one-time-code input with auto-advance, backspace,
+arrow-key navigation and paste support. Renders `length` single-character boxes backed by a
+hidden input that carries the joined value.
+- `length`: number of digit boxes (default: 6)
+- `theme`: full palette (default: slate)
+- `name`, `wire:model`, `x-model`: passed through to the hidden input, so the joined value
+  posts with a form / binds to Livewire or Alpine. Use `wire:model.live` for live length checks
+- The first visible box is the first `<input>` in the DOM, so
+  `el.querySelector('input').focus()` focuses the field as expected
 
 **Auth Container** props:
 - `id`: optional wrapper id
@@ -258,6 +305,12 @@ Components:
 - `x-fltc::darkmode.toggle`
 - `x-fltc::tooltip`
 - `x-fltc::icon`
+- `x-fltc::separator`
+
+**Separator** (`x-fltc::separator`): a thin divider rule.
+- `vertical`: render a vertical rule instead of horizontal (default: false)
+- `variant`: `default` or `subtle` (lighter border)
+- `class`: extra classes (e.g. `my-4`, `md:hidden`)
 
 **Icon** (`x-fltc::icon`): renders a single [Phosphor](https://phosphoricons.com) webfont glyph
 as an `<i>` element. The host app must load the Phosphor icon stylesheet. This is the
