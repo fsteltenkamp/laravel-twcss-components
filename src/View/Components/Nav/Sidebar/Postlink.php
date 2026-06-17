@@ -28,7 +28,7 @@ class Postlink extends Component
         $resolvedTheme = $theme ?? (app('view')->getShared()['sidebarTheme'] ?? 'slate');
 
         $this->classList = trim(implode(' ', array_filter([
-            'nav-link flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition focus:outline-none focus-visible:ring-2',
+            'nav-link cursor-pointer flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition focus:outline-none focus-visible:ring-2',
             SidebarTheme::inactive($resolvedTheme),
             $class,
         ])));

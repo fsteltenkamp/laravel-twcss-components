@@ -7,7 +7,7 @@
     <div {{ $attributes->class(['relative'])->merge(['data-sidebar-profile' => '']) }}>
         <button
             type="button"
-            class="{{ $triggerClass }}"
+            class="{{ $triggerClass }} cursor-pointer"
             data-sidebar-profile-trigger
             aria-haspopup="true"
             aria-expanded="false"
