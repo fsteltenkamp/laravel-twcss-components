@@ -256,6 +256,22 @@ Common props:
 - `icon`: a Phosphor icon name (e.g. `user`, `envelope`) on the text/email/password/select inputs. Rendered internally through `x-fltc::icon` — the host app only needs the Phosphor icon stylesheet loaded.
 - `iconVariant`: Phosphor weight for the input icon (default: `regular`) — see Icon below
 
+**Checkbox** (`x-fltc::form.checkbox`): a CSS-only checkbox backed by a real
+`<input type="checkbox">`, so it works with plain forms and `wire:model` without any
+JavaScript. Two visual variants:
+- `variant="default"` (default): a bordered row that swaps `iconUnchecked` → `iconChecked`
+  (Phosphor names) when checked. Props: `bordered` (default: true), `theme` (full palette,
+  default `sky`), `iconChecked`, `iconUnchecked`.
+- `variant="toggle"`: a pill-style switch (the "darkmode toggle" look) with a sliding knob.
+  - `theme`: track color while **on** (checked) — full palette, default `sky`
+  - `themeOff`: track color while **off** (unchecked) — full palette, default `slate`
+  - `size`: `sm`, `md` (default), or `lg` — sets track, knob and icon sizes
+  - `iconChecked` / `iconUnchecked`: optional Phosphor icons shown inside the knob for the
+    on / off states (colored by `theme` / `themeOff`). Pass an empty string to hide one.
+
+Shared props: `id`, `name`, `value`, `label`, `model` (Livewire binding), `live`
+(`wire:model.live`), `checked`, `disabled`, `class`.
+
 **OTP** (`x-fltc::form.otp`): a segmented one-time-code input with auto-advance, backspace,
 arrow-key navigation and paste support. Renders `length` single-character boxes backed by a
 hidden input that carries the joined value.

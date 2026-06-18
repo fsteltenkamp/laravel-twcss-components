@@ -146,6 +146,8 @@ function galleryGroups(): array
             ],
             'Checkbox' => [
                 ['default', '<x-fltc::form.checkbox label="I agree to the terms" theme="sky" />'],
+                ['toggle', '<x-fltc::form.checkbox variant="toggle" label="Email notifications" theme="emerald" themeOff="slate" checked />'],
+                ['toggle with icons', '<x-fltc::form.checkbox variant="toggle" size="lg" label="Dark mode" theme="indigo" themeOff="amber" iconChecked="ph ph-moon" iconUnchecked="ph ph-sun" />'],
             ],
             'Label' => [
                 ['default', '<x-fltc::form.label for="x" required description="Shown to other members">Display name</x-fltc::form.label>'],

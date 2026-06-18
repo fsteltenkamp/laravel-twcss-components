@@ -15,6 +15,14 @@ class Checkbox extends Component
     public string $containerBorder;
     public string $rowBg;
     public string $rowBgCheckedHas;
+    public string $trackOn;
+    public string $trackOff;
+    public string $trackSize;
+    public string $knobSize;
+    public string $knobTranslate;
+    public string $knobIconSize;
+    public string $iconColorOn;
+    public string $iconColorOff;
 
     public function __construct(
         public string $id = '',
@@ -30,6 +38,9 @@ class Checkbox extends Component
         public string $iconChecked = 'ph ph-check-circle',
         public string $iconUnchecked = 'ph ph-circle',
         public bool $bordered = true,
+        public string $variant = 'default',
+        public string $size = 'md',
+        public string $themeOff = 'slate',
     ) {
         $iconColorMap = [
             'slate'   => 'text-slate-500 dark:text-slate-400',
@@ -204,6 +215,81 @@ class Checkbox extends Component
             'mist'    => 'has-[:checked]:bg-mist-50 dark:has-[:checked]:bg-mist-950/30',
             'olive'   => 'has-[:checked]:bg-olive-50 dark:has-[:checked]:bg-olive-950/30',
         ];
+
+        // Toggle ("switch") variant — separate on/off themes, sizes and icons.
+        $trackOnMap = [
+            'slate'   => 'group-has-[:checked]/toggle:bg-slate-500 dark:group-has-[:checked]/toggle:bg-slate-600',
+            'gray'    => 'group-has-[:checked]/toggle:bg-gray-500 dark:group-has-[:checked]/toggle:bg-gray-600',
+            'zinc'    => 'group-has-[:checked]/toggle:bg-zinc-500 dark:group-has-[:checked]/toggle:bg-zinc-600',
+            'neutral' => 'group-has-[:checked]/toggle:bg-neutral-500 dark:group-has-[:checked]/toggle:bg-neutral-600',
+            'stone'   => 'group-has-[:checked]/toggle:bg-stone-500 dark:group-has-[:checked]/toggle:bg-stone-600',
+            'red'     => 'group-has-[:checked]/toggle:bg-red-500 dark:group-has-[:checked]/toggle:bg-red-600',
+            'orange'  => 'group-has-[:checked]/toggle:bg-orange-500 dark:group-has-[:checked]/toggle:bg-orange-600',
+            'amber'   => 'group-has-[:checked]/toggle:bg-amber-500 dark:group-has-[:checked]/toggle:bg-amber-600',
+            'yellow'  => 'group-has-[:checked]/toggle:bg-yellow-500 dark:group-has-[:checked]/toggle:bg-yellow-600',
+            'lime'    => 'group-has-[:checked]/toggle:bg-lime-500 dark:group-has-[:checked]/toggle:bg-lime-600',
+            'green'   => 'group-has-[:checked]/toggle:bg-green-500 dark:group-has-[:checked]/toggle:bg-green-600',
+            'emerald' => 'group-has-[:checked]/toggle:bg-emerald-500 dark:group-has-[:checked]/toggle:bg-emerald-600',
+            'teal'    => 'group-has-[:checked]/toggle:bg-teal-500 dark:group-has-[:checked]/toggle:bg-teal-600',
+            'cyan'    => 'group-has-[:checked]/toggle:bg-cyan-500 dark:group-has-[:checked]/toggle:bg-cyan-600',
+            'sky'     => 'group-has-[:checked]/toggle:bg-sky-500 dark:group-has-[:checked]/toggle:bg-sky-600',
+            'blue'    => 'group-has-[:checked]/toggle:bg-blue-500 dark:group-has-[:checked]/toggle:bg-blue-600',
+            'indigo'  => 'group-has-[:checked]/toggle:bg-indigo-500 dark:group-has-[:checked]/toggle:bg-indigo-600',
+            'violet'  => 'group-has-[:checked]/toggle:bg-violet-500 dark:group-has-[:checked]/toggle:bg-violet-600',
+            'purple'  => 'group-has-[:checked]/toggle:bg-purple-500 dark:group-has-[:checked]/toggle:bg-purple-600',
+            'fuchsia' => 'group-has-[:checked]/toggle:bg-fuchsia-500 dark:group-has-[:checked]/toggle:bg-fuchsia-600',
+            'pink'    => 'group-has-[:checked]/toggle:bg-pink-500 dark:group-has-[:checked]/toggle:bg-pink-600',
+            'rose'    => 'group-has-[:checked]/toggle:bg-rose-500 dark:group-has-[:checked]/toggle:bg-rose-600',
+            'taupe'   => 'group-has-[:checked]/toggle:bg-taupe-500 dark:group-has-[:checked]/toggle:bg-taupe-600',
+            'mauve'   => 'group-has-[:checked]/toggle:bg-mauve-500 dark:group-has-[:checked]/toggle:bg-mauve-600',
+            'mist'    => 'group-has-[:checked]/toggle:bg-mist-500 dark:group-has-[:checked]/toggle:bg-mist-600',
+            'olive'   => 'group-has-[:checked]/toggle:bg-olive-500 dark:group-has-[:checked]/toggle:bg-olive-600',
+        ];
+
+        $trackOffMap = [
+            'slate'   => 'bg-slate-200 dark:bg-slate-700',
+            'gray'    => 'bg-gray-200 dark:bg-gray-700',
+            'zinc'    => 'bg-zinc-200 dark:bg-zinc-700',
+            'neutral' => 'bg-neutral-200 dark:bg-neutral-700',
+            'stone'   => 'bg-stone-200 dark:bg-stone-700',
+            'red'     => 'bg-red-200 dark:bg-red-800',
+            'orange'  => 'bg-orange-200 dark:bg-orange-800',
+            'amber'   => 'bg-amber-200 dark:bg-amber-800',
+            'yellow'  => 'bg-yellow-200 dark:bg-yellow-800',
+            'lime'    => 'bg-lime-200 dark:bg-lime-800',
+            'green'   => 'bg-green-200 dark:bg-green-800',
+            'emerald' => 'bg-emerald-200 dark:bg-emerald-800',
+            'teal'    => 'bg-teal-200 dark:bg-teal-800',
+            'cyan'    => 'bg-cyan-200 dark:bg-cyan-800',
+            'sky'     => 'bg-sky-200 dark:bg-sky-800',
+            'blue'    => 'bg-blue-200 dark:bg-blue-800',
+            'indigo'  => 'bg-indigo-200 dark:bg-indigo-800',
+            'violet'  => 'bg-violet-200 dark:bg-violet-800',
+            'purple'  => 'bg-purple-200 dark:bg-purple-800',
+            'fuchsia' => 'bg-fuchsia-200 dark:bg-fuchsia-800',
+            'pink'    => 'bg-pink-200 dark:bg-pink-800',
+            'rose'    => 'bg-rose-200 dark:bg-rose-800',
+            'taupe'   => 'bg-taupe-200 dark:bg-taupe-800',
+            'mauve'   => 'bg-mauve-200 dark:bg-mauve-800',
+            'mist'    => 'bg-mist-200 dark:bg-mist-800',
+            'olive'   => 'bg-olive-200 dark:bg-olive-800',
+        ];
+
+        $sizeMap = [
+            'sm' => ['track' => 'h-5 w-9',  'knob' => 'h-4 w-4', 'translate' => 'group-has-[:checked]/toggle:translate-x-4', 'icon' => 'text-[10px]'],
+            'md' => ['track' => 'h-6 w-11', 'knob' => 'h-5 w-5', 'translate' => 'group-has-[:checked]/toggle:translate-x-5', 'icon' => 'text-xs'],
+            'lg' => ['track' => 'h-7 w-14', 'knob' => 'h-6 w-6', 'translate' => 'group-has-[:checked]/toggle:translate-x-7', 'icon' => 'text-sm'],
+        ];
+        $sizeSet = $sizeMap[$size] ?? $sizeMap['md'];
+
+        $this->trackOn       = $trackOnMap[$theme] ?? $trackOnMap['sky'];
+        $this->trackOff      = $trackOffMap[$themeOff] ?? $trackOffMap['slate'];
+        $this->trackSize     = $sizeSet['track'];
+        $this->knobSize      = $sizeSet['knob'];
+        $this->knobTranslate = $sizeSet['translate'];
+        $this->knobIconSize  = $sizeSet['icon'];
+        $this->iconColorOn   = $iconColorMap[$theme] ?? $iconColorMap['sky'];
+        $this->iconColorOff  = $iconColorMap[$themeOff] ?? $iconColorMap['slate'];
 
         $this->iconColorUnchecked   = $iconColorUncheckedMap[$theme] ?? $iconColorUncheckedMap['sky'];
         $this->iconColorChecked     = $iconColorMap[$theme] ?? $iconColorMap['sky'];

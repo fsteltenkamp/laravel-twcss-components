@@ -374,3 +374,29 @@ it('renders the otp component with the requested number of boxes', function () {
         ->toContain('type="hidden"')
         ->toContain('name="code"');
 });
+
+it('renders the checkbox as a toggle switch with on/off themes, size and icons', function () {
+    $html = Blade::render('<x-fltc::form.checkbox
+        variant="toggle"
+        size="lg"
+        theme="emerald"
+        themeOff="rose"
+        iconChecked="ph ph-check"
+        iconUnchecked="ph ph-x"
+        label="Notifications" />');
+
+    expect($html)
+        ->toContain('type="checkbox"')
+        ->toContain('group/toggle')
+        // on-theme track tint applies only while the peer input is checked
+        ->toContain('group-has-[:checked]/toggle:bg-emerald-500')
+        // off-theme track tint is the resting state
+        ->toContain('bg-rose-200')
+        // large size knob travel
+        ->toContain('h-7 w-14')
+        ->toContain('group-has-[:checked]/toggle:translate-x-7')
+        // both configurable icons are present and swap on state
+        ->toContain('ph ph-x')
+        ->toContain('ph ph-check')
+        ->toContain('Notifications');
+});
