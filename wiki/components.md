@@ -366,7 +366,9 @@ treated as `system`, so the OS setting (`prefers-color-scheme`) is the default. 
 and state is re-applied after `livewire:navigated`. Two variants:
 - `variant="default"` (default): a three-button segmented control — **Light**, **Dark**,
   **System** — with the active segment highlighted.
-  - `theme`: accent colour of the active segment (full palette, default `sky`)
+  - `theme`: accent colour of the whole control — the track background plus the active
+    segment fill and the muted/hover text of the inactive segments (full palette, default
+    `sky`)
 - `variant="toggle"`: the classic pill switch, built on the
   `x-fltc::form.checkbox` toggle (checked = dark). Forwards:
   - `theme`: track colour while dark/on (full palette, default `sky`)

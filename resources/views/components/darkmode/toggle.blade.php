@@ -18,7 +18,8 @@
             data-darkmode-group
             data-storage-key="{{ $storageKey }}"
             data-active-class="{{ $activeClasses }}"
-            class="inline-flex items-center gap-1 rounded-lg bg-slate-100 p-1 dark:bg-slate-800"
+            data-inactive-class="{{ $inactiveClasses }}"
+            class="inline-flex items-center gap-1 rounded-lg p-1 {{ $containerClasses }}"
         >
             @foreach ($options as $option)
                 <button
@@ -26,7 +27,7 @@
                     data-theme-option
                     data-theme-value="{{ $option['value'] }}"
                     aria-pressed="false"
-                    class="inline-flex items-center gap-1.5 rounded-md px-3 py-1.5 text-sm font-medium transition-colors cursor-pointer text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100"
+                    class="inline-flex items-center gap-1.5 rounded-md px-3 py-1.5 text-sm font-medium transition-colors cursor-pointer {{ $inactiveClasses }}"
                 >
                     <x-fltc::icon :name="$option['icon']" class="leading-none" />
                     <span>{{ $option['label'] }}</span>
@@ -45,7 +46,6 @@
         window.__fltcDarkmodeInitialized = true;
 
         const DEFAULT = 'system';
-        const INACTIVE = ['text-slate-600', 'hover:text-slate-900', 'dark:text-slate-400', 'dark:hover:text-slate-100'];
         const media = window.matchMedia('(prefers-color-scheme: dark)');
 
         const getKey = () => {
@@ -65,6 +65,7 @@
 
             document.querySelectorAll('[data-darkmode-group]').forEach((group) => {
                 const active = (group.dataset.activeClass || '').split(' ').filter(Boolean);
+                const inactive = (group.dataset.inactiveClass || '').split(' ').filter(Boolean);
 
                 group.querySelectorAll('[data-theme-option]').forEach((button) => {
                     const isActive = button.dataset.themeValue === pref;
@@ -72,11 +73,11 @@
                     button.setAttribute('aria-pressed', isActive ? 'true' : 'false');
 
                     if (isActive) {
+                        if (inactive.length) button.classList.remove(...inactive);
                         if (active.length) button.classList.add(...active);
-                        button.classList.remove(...INACTIVE);
                     } else {
                         if (active.length) button.classList.remove(...active);
-                        button.classList.add(...INACTIVE);
+                        if (inactive.length) button.classList.add(...inactive);
                     }
                 });
             });
