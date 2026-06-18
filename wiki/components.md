@@ -357,3 +357,18 @@ Props:
 - `class`: extra wrapper classes
 
 Use tooltip for short helper text around interactive elements. Keep content brief and non-essential.
+
+**Dark mode toggle** (`x-fltc::darkmode.toggle`): switches the document between light and
+dark by toggling the `dark` class on `<html>`. The chosen preference is persisted in
+`localStorage` under the `theme` key as `light`, `dark`, or `system`; a missing value is
+treated as `system`, so the OS setting (`prefers-color-scheme`) is the default. While in
+`system` mode the toggle follows live OS changes. All instances on the page stay in sync,
+and state is re-applied after `livewire:navigated`. Two variants:
+- `variant="default"` (default): a three-button segmented control — **Light**, **Dark**,
+  **System** — with the active segment highlighted.
+  - `theme`: accent colour of the active segment (full palette, default `sky`)
+- `variant="toggle"`: the classic pill switch, built on the
+  `x-fltc::form.checkbox` toggle (checked = dark). Forwards:
+  - `theme`: track colour while dark/on (full palette, default `sky`)
+  - `themeOff`: track colour while light/off (full palette, default `slate`)
+  - `size`: `sm`, `md` (default), or `lg`

@@ -17,11 +17,15 @@
     <title>{{ $title }} · laravel-twcss-components</title>
 
     {{-- Apply the persisted dark-mode choice before first paint to avoid a flash.
-         The key matches <x-fltc::darkmode.toggle>'s storage key ("isDarkmode"). --}}
+         The key matches <x-fltc::darkmode.toggle>'s storage key ("theme"), which
+         stores "light", "dark", or "system" (missing = system = follow the OS). --}}
     <script>
-        if (localStorage.getItem('isDarkmode') === 'true') {
-            document.documentElement.classList.add('dark');
-        }
+        (function () {
+            const pref = localStorage.getItem('theme') || 'system';
+            const isDark = pref === 'dark'
+                || (pref === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+            document.documentElement.classList.toggle('dark', isDark);
+        })();
     </script>
 
     <script src="https://cdn.tailwindcss.com"></script>

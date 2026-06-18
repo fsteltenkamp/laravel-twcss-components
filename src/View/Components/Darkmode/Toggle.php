@@ -8,46 +8,67 @@ use Illuminate\View\Component;
 
 class Toggle extends Component
 {
-    public readonly string $darkIcon;
-    public readonly string $lightIcon;
-    public readonly array $lightState;
-    public readonly array $darkState;
     public readonly string $storageKey;
+    public readonly array $options;
+    public readonly string $activeClasses;
 
     /**
-     * Create a new component instance.
+     * @param  string  $variant   `default` renders a three-button segmented control
+     *                            (light / dark / system); `toggle` renders the pill
+     *                            switch built on the form checkbox toggle component.
+     * @param  string  $theme     Accent colour: the active segment (default variant) or
+     *                            the "on"/dark track (toggle variant). Full palette.
+     * @param  string  $themeOff  The "off"/light track colour for the toggle variant.
+     * @param  string  $size      Size token forwarded to the toggle variant (sm/md/lg).
      */
-    public function __construct()
-    {
-        $this->darkIcon = <<<'SVG'
-<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-</svg>
-SVG;
+    public function __construct(
+        public string $variant = 'default',
+        public string $theme = 'sky',
+        public string $themeOff = 'slate',
+        public string $size = 'md',
+    ) {
+        // Stored preference is one of: light | dark | system. A missing value is
+        // treated as `system` so the OS setting is the default.
+        $this->storageKey = 'theme';
 
-        $this->lightIcon = <<<'SVG'
-<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-</svg>
-SVG;
-
-        // Light mode: yellow background, positioned to the left
-        $this->lightState = [
-            'icon' => $this->lightIcon,
-            'bgColor' => 'bg-yellow-500',
-            'removeClasses' => ['bg-gray-700', 'translate-x-full'],
-            'addClasses' => ['bg-yellow-500', '-translate-x-2'],
+        $this->options = [
+            ['value' => 'light',  'label' => 'Light',  'icon' => 'sun'],
+            ['value' => 'dark',   'label' => 'Dark',   'icon' => 'moon'],
+            ['value' => 'system', 'label' => 'System', 'icon' => 'desktop'],
         ];
 
-        // Dark mode: gray background, positioned to the right
-        $this->darkState = [
-            'icon' => $this->darkIcon,
-            'bgColor' => 'bg-gray-700',
-            'removeClasses' => ['bg-yellow-500', '-translate-x-2'],
-            'addClasses' => ['bg-gray-700', 'translate-x-full'],
+        // Active segment colour for the segmented control. Literal strings so the host
+        // app's Tailwind scanner picks them up (dynamic class names are not detected).
+        $activeMap = [
+            'slate'   => 'bg-slate-600 text-white shadow-sm dark:bg-slate-500',
+            'gray'    => 'bg-gray-600 text-white shadow-sm dark:bg-gray-500',
+            'zinc'    => 'bg-zinc-600 text-white shadow-sm dark:bg-zinc-500',
+            'neutral' => 'bg-neutral-600 text-white shadow-sm dark:bg-neutral-500',
+            'stone'   => 'bg-stone-600 text-white shadow-sm dark:bg-stone-500',
+            'red'     => 'bg-red-600 text-white shadow-sm dark:bg-red-500',
+            'orange'  => 'bg-orange-600 text-white shadow-sm dark:bg-orange-500',
+            'amber'   => 'bg-amber-600 text-white shadow-sm dark:bg-amber-500',
+            'yellow'  => 'bg-yellow-600 text-white shadow-sm dark:bg-yellow-500',
+            'lime'    => 'bg-lime-600 text-white shadow-sm dark:bg-lime-500',
+            'green'   => 'bg-green-600 text-white shadow-sm dark:bg-green-500',
+            'emerald' => 'bg-emerald-600 text-white shadow-sm dark:bg-emerald-500',
+            'teal'    => 'bg-teal-600 text-white shadow-sm dark:bg-teal-500',
+            'cyan'    => 'bg-cyan-600 text-white shadow-sm dark:bg-cyan-500',
+            'sky'     => 'bg-sky-600 text-white shadow-sm dark:bg-sky-500',
+            'blue'    => 'bg-blue-600 text-white shadow-sm dark:bg-blue-500',
+            'indigo'  => 'bg-indigo-600 text-white shadow-sm dark:bg-indigo-500',
+            'violet'  => 'bg-violet-600 text-white shadow-sm dark:bg-violet-500',
+            'purple'  => 'bg-purple-600 text-white shadow-sm dark:bg-purple-500',
+            'fuchsia' => 'bg-fuchsia-600 text-white shadow-sm dark:bg-fuchsia-500',
+            'pink'    => 'bg-pink-600 text-white shadow-sm dark:bg-pink-500',
+            'rose'    => 'bg-rose-600 text-white shadow-sm dark:bg-rose-500',
+            'taupe'   => 'bg-taupe-600 text-white shadow-sm dark:bg-taupe-500',
+            'mauve'   => 'bg-mauve-600 text-white shadow-sm dark:bg-mauve-500',
+            'mist'    => 'bg-mist-600 text-white shadow-sm dark:bg-mist-500',
+            'olive'   => 'bg-olive-600 text-white shadow-sm dark:bg-olive-500',
         ];
 
-        $this->storageKey = 'isDarkmode';
+        $this->activeClasses = $activeMap[$theme] ?? $activeMap['sky'];
     }
 
     /**

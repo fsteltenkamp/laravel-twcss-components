@@ -196,7 +196,8 @@ function galleryGroups(): array
                 ['sizes', '<span class="inline-flex items-baseline"><x-fltc::icon name="star" size="sm" after="2" /><x-fltc::icon name="star" size="lg" after="2" /><x-fltc::icon name="star" size="2xl" after="2" /><x-fltc::icon name="star" size="4xl" /></span>'],
             ],
             'Dark mode toggle' => [
-                ['default', '<x-fltc::darkmode.toggle />'],
+                ['default (segmented)', '<x-fltc::darkmode.toggle />'],
+                ['toggle', '<x-fltc::darkmode.toggle variant="toggle" />'],
             ],
             'Container box' => [
                 ['default', '<x-fltc::container.box theme="slate" class="p-4 max-w-sm">Boxed content.</x-fltc::container.box>'],
