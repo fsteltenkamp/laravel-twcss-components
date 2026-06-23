@@ -9,7 +9,7 @@
         @endif
 
         @if (filled($icon))
-            <x-fltc::icon :name="$icon" class="text-lg {{ $iconClasses }}" />
+            <x-fltc::icon :name="$icon" :color="$iconColor" class="text-lg" />
         @endif
     </div>
 
