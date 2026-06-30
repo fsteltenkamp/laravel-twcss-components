@@ -29,7 +29,7 @@
     @if ($variant === 'card')
         {{-- Card: proper header with title + body with message --}}
         <div {{ $attributes->class([$classList, 'rounded-xl overflow-hidden']) }}>
-            <div class="flex items-center gap-2.5 px-4 py-2.5 border-b">
+            <div class="flex items-center gap-2.5 px-4 py-2.5 border-b {{ $borderClasses }}">
                 @if ($icon)
                     <x-fltc::icon :name="$icon" :class="$iconClasses . ' shrink-0'" aria-hidden="true" />
                 @endif

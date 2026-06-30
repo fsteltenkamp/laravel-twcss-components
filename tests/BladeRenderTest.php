@@ -429,7 +429,8 @@ it('renders a static card toast with title and message', function () {
         ->toContain('Updated')
         ->toContain('Your profile has been updated.')
         ->toContain('rounded-xl')
-        ->toContain('border-blue-200');
+        ->toContain('border-blue-200')
+        ->toContain('dark:border-blue-800');
 });
 
 it('renders a static baguette toast as a wide banner', function () {
