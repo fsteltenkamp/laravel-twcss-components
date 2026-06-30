@@ -77,6 +77,8 @@
                     });
                 };
 
+                container.__refreshAccordionItems = refreshItems;
+
                 const getDropTarget = (containerElement, yPos) => {
                     const candidates = [...containerElement.querySelectorAll(itemSelector)].filter((item) => {
                         return item !== containerElement.__draggingItem;
@@ -194,7 +196,10 @@
             };
 
             const initAll = () => {
-                document.querySelectorAll(containerSelector).forEach((container) => setupContainer(container));
+                document.querySelectorAll(containerSelector).forEach((container) => {
+                    setupContainer(container);
+                    container.__refreshAccordionItems?.();
+                });
             };
 
             if (document.readyState === 'loading') {
