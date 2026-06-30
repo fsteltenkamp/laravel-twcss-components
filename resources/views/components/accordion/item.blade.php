@@ -21,6 +21,10 @@
                 </span>
             @endif
 
+            @isset($leading)
+                {{ $leading }}
+            @endisset
+
             <span class="min-w-0 flex-1">
                 <span class="{{ $titleClass }}">{{ $title }}</span>
 

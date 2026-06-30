@@ -19,33 +19,33 @@
             const itemSelector = '[data-accordion-item]';
             const handleSelector = '[data-accordion-drag-handle]';
 
+            const setItemExpanded = (item, expanded) => {
+                if (!item) {
+                    return;
+                }
+
+                const trigger = item.querySelector('[data-accordion-trigger]');
+                const content = item.querySelector('[data-accordion-content]');
+                const chevron = trigger?.querySelector('[data-accordion-chevron]');
+
+                if (!trigger || !content) {
+                    return;
+                }
+
+                trigger.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+                content.hidden = !expanded;
+
+                if (chevron) {
+                    chevron.classList.toggle('rotate-180', expanded);
+                }
+            };
+
             const setupContainer = (container) => {
                 if (!container || container.__tailwindAccordionSetup) {
                     return;
                 }
 
                 container.__tailwindAccordionSetup = true;
-
-                const setItemExpanded = (item, expanded) => {
-                    if (!item) {
-                        return;
-                    }
-
-                    const trigger = item.querySelector('[data-accordion-trigger]');
-                    const content = item.querySelector('[data-accordion-content]');
-                    const chevron = trigger?.querySelector('[data-accordion-chevron]');
-
-                    if (!trigger || !content) {
-                        return;
-                    }
-
-                    trigger.setAttribute('aria-expanded', expanded ? 'true' : 'false');
-                    content.hidden = !expanded;
-
-                    if (chevron) {
-                        chevron.classList.toggle('rotate-180', expanded);
-                    }
-                };
 
                 container.addEventListener('click', (event) => {
                     const trigger = event.target.closest('[data-accordion-trigger]');
@@ -179,19 +179,17 @@
                 });
 
                 refreshItems();
+            };
 
-                const shouldOpenFirst = container.getAttribute('data-tailwind-accordion-open-first') !== 'false';
-
-                if (shouldOpenFirst) {
-                    const items = [...container.querySelectorAll(itemSelector)];
-                    const hasExpandedItem = items.some((item) => {
-                        const trigger = item.querySelector('[data-accordion-trigger]');
-                        return trigger?.getAttribute('aria-expanded') === 'true';
-                    });
-
-                    if (!hasExpandedItem && items.length > 0) {
-                        setItemExpanded(items[0], true);
-                    }
+            const openFirstIfNeeded = (container) => {
+                if (container.getAttribute('data-tailwind-accordion-open-first') === 'false') return;
+                const items = [...container.querySelectorAll(itemSelector)];
+                const hasExpandedItem = items.some((item) => {
+                    const trigger = item.querySelector('[data-accordion-trigger]');
+                    return trigger?.getAttribute('aria-expanded') === 'true';
+                });
+                if (!hasExpandedItem && items.length > 0) {
+                    setItemExpanded(items[0], true);
                 }
             };
 
@@ -199,6 +197,7 @@
                 document.querySelectorAll(containerSelector).forEach((container) => {
                     setupContainer(container);
                     container.__refreshAccordionItems?.();
+                    openFirstIfNeeded(container);
                 });
             };
 
@@ -208,8 +207,10 @@
                 initAll();
             }
 
+            let __accordionInitTimer;
             const observer = new MutationObserver(() => {
-                initAll();
+                clearTimeout(__accordionInitTimer);
+                __accordionInitTimer = setTimeout(initAll, 0);
             });
 
             observer.observe(document.documentElement, {
