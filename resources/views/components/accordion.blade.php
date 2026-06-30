@@ -10,7 +10,7 @@
     {{ $slot }}
 </div>
 
-@once
+@assets
     <script>
         if (!window.__tailwindAccordionInitialized) {
             window.__tailwindAccordionInitialized = true;
@@ -219,4 +219,4 @@
             });
         }
     </script>
-@endonce
+@endassets
