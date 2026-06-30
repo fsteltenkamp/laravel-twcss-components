@@ -311,8 +311,60 @@ Components:
 - `x-fltc::messagebox`
 - `x-fltc::alert`
 - `x-fltc::badge`
+- `x-fltc::toast`
+- `x-fltc::toast.container`
 
 Use message boxes for alerts, empty-state notices, warnings, and selected-item summaries. Use alerts for simple inline messages with theme support. Badge is for compact labels and status chips.
+
+### Toast Notifications
+
+Components:
+- `x-fltc::toast` — static single toast (Alpine-driven dismiss)
+- `x-fltc::toast.container` — dynamic Alpine container; listens for `fltc:toast` events
+
+**Static toast** (`x-fltc::toast`): renders a single, self-dismissing toast in-place.
+- `theme`: full palette (default: `gray`)
+- `variant`: `simple` (pill, default), `card` (rounded box with separate description row), `baguette` (wide solid-fill horizontal bar)
+- `message`: primary text (falls back to the default slot)
+- `description`: optional secondary line
+- `icon`: Phosphor icon class string (e.g. `ph ph-check-circle`)
+- `duration`: auto-dismiss delay in milliseconds (`0` = no auto-dismiss, default `0`)
+- `dismissible`: show/hide the close button (default `true`)
+
+**Toast container** (`x-fltc::toast.container`): a fixed-position Alpine-powered container for dynamic toasts. Designed for use with `@persist` so toasts survive `wire:navigate` page loads.
+
+Props:
+- `position`: `top-left`, `top-center`, `top-right`, `bottom-left`, `bottom-center`, `bottom-right` (default: `bottom-right`)
+- `theme`: default theme applied to toasts that don't specify their own (default: `gray`)
+- `variant`: default variant for incoming toasts (default: `simple`)
+- `duration`: default auto-dismiss delay in ms (default: `4000`)
+- `width`: Tailwind width class for the container column (default: `w-80`; use `w-full max-w-2xl` for baguette-only setups)
+
+**Placement in layout:**
+```blade
+@persist('fltc-toasts')
+    <x-fltc::toast.container position="bottom-right" />
+@endpersist
+```
+
+**Dispatching toasts:**
+```blade
+{{-- Alpine --}}
+$dispatch('fltc:toast', { message: 'Saved!', theme: 'green', variant: 'card', description: 'Changes persisted.' })
+
+{{-- Livewire --}}
+$this->dispatch('fltc:toast', message: 'Saved!', theme: 'green')
+
+{{-- Plain JS --}}
+window.dispatchEvent(new CustomEvent('fltc:toast', { detail: { message: 'Saved!', icon: 'ph ph-check-circle' } }))
+```
+
+**Flux compatibility:** the container also listens for `flux:toast` events and maps Flux semantic variants (`success` → `green`, `warning` → `amber`, `danger` → `red`, `info` → `blue`, `default` → fallback theme).
+
+**Variant visual guide:**
+- `simple`: lightweight pill — good for brief confirmations
+- `card`: bordered card with distinct title + description areas — good for richer messages
+- `baguette`: wide, solid-filled horizontal bar — good for system-level notices or when you want high visual contrast
 
 ### Utility
 

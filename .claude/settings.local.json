@@ -3,7 +3,8 @@
     "allow": [
       "Bash(bash test.sh)",
       "Bash(./test.sh)",
-      "Bash(./test.sh tests/BladeRenderTest.php)"
+      "Bash(./test.sh tests/BladeRenderTest.php)",
+      "Bash(vendor/bin/pest *)"
     ]
   }
 }

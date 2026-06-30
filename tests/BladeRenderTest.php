@@ -400,3 +400,74 @@ it('renders the checkbox as a toggle switch with on/off themes, size and icons',
         ->toContain('ph ph-check')
         ->toContain('Notifications');
 });
+
+it('renders a static simple toast with message and dismiss button', function () {
+    $html = Blade::render('<x-fltc::toast message="Saved!" theme="green" />');
+
+    expect($html)
+        ->toContain('Saved!')
+        ->toContain('rounded-full')
+        ->toContain('bg-green-50')
+        ->toContain('x-data')
+        ->toContain('ph ph-x');
+});
+
+it('renders a static card toast with description', function () {
+    $html = Blade::render('<x-fltc::toast variant="card" theme="blue" message="Updated" description="Your profile has been updated." />');
+
+    expect($html)
+        ->toContain('Updated')
+        ->toContain('Your profile has been updated.')
+        ->toContain('rounded-xl')
+        ->toContain('bg-blue-50');
+});
+
+it('renders a static baguette toast', function () {
+    $html = Blade::render('<x-fltc::toast variant="baguette" theme="red" message="Error occurred" description="Please try again." />');
+
+    expect($html)
+        ->toContain('Error occurred')
+        ->toContain('Please try again.')
+        ->toContain('bg-red-600')
+        ->toContain('rounded-lg');
+});
+
+it('renders the toast container with Alpine data and event listener wiring', function () {
+    $html = Blade::render('<x-fltc::toast.container position="bottom-right" />');
+
+    expect($html)
+        ->toContain('x-data')
+        ->toContain('fltc:toast')
+        ->toContain('flux:toast')
+        ->toContain('fixed')
+        ->toContain('bottom-4')
+        ->toContain('right-4')
+        ->toContain('aria-live="polite"');
+});
+
+it('renders the toast container at top-left position', function () {
+    $html = Blade::render('<x-fltc::toast.container position="top-left" />');
+
+    expect($html)
+        ->toContain('top-4')
+        ->toContain('left-4');
+});
+
+it('passes default theme, variant and duration to the Alpine scope', function () {
+    $html = Blade::render('<x-fltc::toast.container theme="emerald" variant="card" :duration="6000" />');
+
+    expect($html)
+        ->toContain('"emerald"')
+        ->toContain('"card"')
+        ->toContain('6000');
+});
+
+it('passes the full theme map to Alpine via @js()', function () {
+    $html = Blade::render('<x-fltc::toast.container />');
+
+    // Spot-check a few theme/variant class strings are present in the serialised map.
+    expect($html)
+        ->toContain('bg-green-50')
+        ->toContain('bg-red-600')
+        ->toContain('rounded-full');
+});
