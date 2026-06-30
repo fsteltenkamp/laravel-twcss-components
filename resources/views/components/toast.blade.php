@@ -29,7 +29,7 @@
     @if ($variant === 'card')
         {{-- Card: proper header with title + body with message --}}
         <div {{ $attributes->class([$classList, 'rounded-xl overflow-hidden']) }}>
-            <div class="flex items-center gap-2.5 px-4 py-2.5 border-b border-current/10">
+            <div class="flex items-center gap-2.5 px-4 py-2.5 border-b">
                 @if ($icon)
                     <x-fltc::icon :name="$icon" :class="$iconClasses . ' shrink-0'" aria-hidden="true" />
                 @endif
@@ -64,7 +64,7 @@
             @if ($dismissible)
                 <button
                     x-on:click="dismiss()"
-                    class="{{ $closeClasses }} shrink-0 rounded p-0.5 focus:outline-none focus:ring-2 focus:ring-white/50"
+                    class="{{ $closeClasses }} shrink-0 rounded p-0.5 focus:outline-none focus:ring-2 focus:ring-current/50"
                     aria-label="{{ __('Dismiss') }}"
                 >
                     <x-fltc::icon name="x" size="sm" aria-hidden="true" />
@@ -87,7 +87,7 @@
             @if ($dismissible)
                 <button
                     x-on:click="dismiss()"
-                    class="{{ $closeClasses }} shrink-0 rounded p-0.5 focus:outline-none focus:ring-2 focus:ring-white/50"
+                    class="{{ $closeClasses }} shrink-0 rounded p-0.5 focus:outline-none focus:ring-2 focus:ring-current/50"
                     aria-label="{{ __('Dismiss') }}"
                 >
                     <x-fltc::icon name="x" size="sm" aria-hidden="true" />

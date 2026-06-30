@@ -407,7 +407,7 @@ it('renders a static pill toast with title and dismiss button', function () {
     expect($html)
         ->toContain('Saved!')
         ->toContain('rounded-full')
-        ->toContain('bg-green-50')
+        ->toContain('bg-green-100')
         ->toContain('x-data')
         ->toContain('ph ph-x');
 });
@@ -418,7 +418,7 @@ it('renders a static toast (default) variant with title and message', function (
     expect($html)
         ->toContain('Connection lost')
         ->toContain('Please try again.')
-        ->toContain('bg-red-600')
+        ->toContain('bg-red-100')
         ->toContain('rounded-lg');
 });
 
@@ -438,7 +438,7 @@ it('renders a static baguette toast as a wide banner', function () {
     expect($html)
         ->toContain('Error occurred')
         ->toContain('Please try again.')
-        ->toContain('bg-red-600')
+        ->toContain('bg-red-100')
         ->toContain('rounded-xl')
         ->toContain('w-4/5');
 });
@@ -477,9 +477,9 @@ it('passes default theme, variant and duration to the Alpine scope', function ()
 it('passes the full theme map to Alpine via @js()', function () {
     $html = Blade::render('<x-fltc::toast.container />');
 
-    // Spot-check pill/toast/baguette class strings are serialised into the Alpine themeMap.
+    // Spot-check class strings are serialised into the Alpine themeMap.
     expect($html)
-        ->toContain('bg-green-50')   // pill variant
-        ->toContain('bg-red-600')    // toast/baguette variants
+        ->toContain('bg-green-100')  // all variants share pill palette
+        ->toContain('bg-red-100')    // toast/baguette now use pill colors
         ->toContain('rounded-full'); // pill template in Alpine HTML
 });
