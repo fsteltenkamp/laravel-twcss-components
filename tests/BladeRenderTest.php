@@ -401,8 +401,8 @@ it('renders the checkbox as a toggle switch with on/off themes, size and icons',
         ->toContain('Notifications');
 });
 
-it('renders a static simple toast with message and dismiss button', function () {
-    $html = Blade::render('<x-fltc::toast message="Saved!" theme="green" />');
+it('renders a static pill toast with title and dismiss button', function () {
+    $html = Blade::render('<x-fltc::toast title="Saved!" theme="green" variant="pill" />');
 
     expect($html)
         ->toContain('Saved!')
@@ -412,24 +412,35 @@ it('renders a static simple toast with message and dismiss button', function () 
         ->toContain('ph ph-x');
 });
 
-it('renders a static card toast with description', function () {
-    $html = Blade::render('<x-fltc::toast variant="card" theme="blue" message="Updated" description="Your profile has been updated." />');
+it('renders a static toast (default) variant with title and message', function () {
+    $html = Blade::render('<x-fltc::toast title="Connection lost" theme="red" message="Please try again." />');
+
+    expect($html)
+        ->toContain('Connection lost')
+        ->toContain('Please try again.')
+        ->toContain('bg-red-600')
+        ->toContain('rounded-lg');
+});
+
+it('renders a static card toast with title and message', function () {
+    $html = Blade::render('<x-fltc::toast variant="card" theme="blue" title="Updated" message="Your profile has been updated." />');
 
     expect($html)
         ->toContain('Updated')
         ->toContain('Your profile has been updated.')
         ->toContain('rounded-xl')
-        ->toContain('bg-blue-50');
+        ->toContain('border-blue-200');
 });
 
-it('renders a static baguette toast', function () {
-    $html = Blade::render('<x-fltc::toast variant="baguette" theme="red" message="Error occurred" description="Please try again." />');
+it('renders a static baguette toast as a wide banner', function () {
+    $html = Blade::render('<x-fltc::toast variant="baguette" theme="red" title="Error occurred" message="Please try again." />');
 
     expect($html)
         ->toContain('Error occurred')
         ->toContain('Please try again.')
         ->toContain('bg-red-600')
-        ->toContain('rounded-lg');
+        ->toContain('rounded-xl')
+        ->toContain('w-4/5');
 });
 
 it('renders the toast container with Alpine data and event listener wiring', function () {
@@ -456,18 +467,19 @@ it('renders the toast container at top-left position', function () {
 it('passes default theme, variant and duration to the Alpine scope', function () {
     $html = Blade::render('<x-fltc::toast.container theme="emerald" variant="card" :duration="6000" />');
 
+    // @js() wraps PHP strings in single quotes for JS output.
     expect($html)
-        ->toContain('"emerald"')
-        ->toContain('"card"')
+        ->toContain("'emerald'")
+        ->toContain("'card'")
         ->toContain('6000');
 });
 
 it('passes the full theme map to Alpine via @js()', function () {
     $html = Blade::render('<x-fltc::toast.container />');
 
-    // Spot-check a few theme/variant class strings are present in the serialised map.
+    // Spot-check pill/toast/baguette class strings are serialised into the Alpine themeMap.
     expect($html)
-        ->toContain('bg-green-50')
-        ->toContain('bg-red-600')
-        ->toContain('rounded-full');
+        ->toContain('bg-green-50')   // pill variant
+        ->toContain('bg-red-600')    // toast/baguette variants
+        ->toContain('rounded-full'); // pill template in Alpine HTML
 });

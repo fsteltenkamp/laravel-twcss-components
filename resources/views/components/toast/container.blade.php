@@ -8,9 +8,9 @@
             <x-fltc::toast.container position="bottom-right" />
         @endpersist
 
-    Dispatching (Alpine):   $dispatch('fltc:toast', { message: '…', theme: 'green', variant: 'card' })
-    Dispatching (Livewire): $this->dispatch('fltc:toast', message: '…', theme: 'green')
-    Dispatching (JS):       window.dispatchEvent(new CustomEvent('fltc:toast', { detail: { message: '…' } }))
+    Dispatching (Alpine):   $dispatch('fltc:toast', { title: '…', theme: 'green', variant: 'card' })
+    Dispatching (Livewire): $this->dispatch('fltc:toast', title: '…', theme: 'green')
+    Dispatching (JS):       window.dispatchEvent(new CustomEvent('fltc:toast', { detail: { title: '…' } }))
 --}}
 <div
     x-data="{
@@ -50,13 +50,13 @@
             const id = ++this.nextId;
             const toast = {
                 id,
-                message:     options.message     ?? '',
-                description: options.description ?? null,
-                icon:        options.icon        ?? null,
-                theme:       options.theme       ?? this.defaultTheme,
-                variant:     options.variant     ?? this.defaultVariant,
-                duration:    options.duration    ?? this.defaultDuration,
-                visible:     true,
+                title:   options.title   ?? '',
+                message: options.message ?? null,
+                icon:    options.icon    ?? null,
+                theme:   options.theme   ?? this.defaultTheme,
+                variant: options.variant ?? this.defaultVariant,
+                duration: options.duration ?? this.defaultDuration,
+                visible: true,
             };
             this.toasts.push(toast);
             if (toast.duration > 0) {
@@ -73,19 +73,19 @@
         },
 
         wrapperClasses(toast) {
-            return (this.themeMap[toast.theme]?.[toast.variant] ?? this.themeMap.gray?.simple)?.wrapper ?? '';
+            return (this.themeMap[toast.theme]?.[toast.variant] ?? this.themeMap.gray?.toast)?.wrapper ?? '';
         },
 
         iconClasses(toast) {
-            return (this.themeMap[toast.theme]?.[toast.variant] ?? this.themeMap.gray?.simple)?.icon ?? '';
+            return (this.themeMap[toast.theme]?.[toast.variant] ?? this.themeMap.gray?.toast)?.icon ?? '';
         },
 
         closeClasses(toast) {
-            return (this.themeMap[toast.theme]?.[toast.variant] ?? this.themeMap.gray?.simple)?.close ?? '';
+            return (this.themeMap[toast.theme]?.[toast.variant] ?? this.themeMap.gray?.toast)?.close ?? '';
         },
 
         descClasses(toast) {
-            return (this.themeMap[toast.theme]?.[toast.variant] ?? this.themeMap.gray?.simple)?.desc ?? '';
+            return (this.themeMap[toast.theme]?.[toast.variant] ?? this.themeMap.gray?.toast)?.desc ?? '';
         },
     }"
     {{ $attributes->class([$classList]) }}
@@ -104,22 +104,50 @@
             class="pointer-events-auto w-full"
             role="alert"
         >
-            {{-- Simple variant: lightweight pill --}}
-            <template x-if="toast.variant === 'simple'">
+            {{-- Card variant: header with title + body with message --}}
+            <template x-if="toast.variant === 'card'">
                 <div
-                    :class="[wrapperClasses(toast), 'flex items-center gap-2.5 rounded-full px-4 py-2 text-sm']"
+                    :class="[wrapperClasses(toast), 'rounded-xl overflow-hidden']"
+                >
+                    <div class="flex items-center gap-2.5 px-4 py-2.5 border-b border-current/10">
+                        <template x-if="toast.icon">
+                            <i :class="[toast.icon, iconClasses(toast), 'shrink-0']" aria-hidden="true"></i>
+                        </template>
+                        <p class="flex-1 text-sm font-semibold leading-snug" x-text="toast.title"></p>
+                        <button
+                            :class="[closeClasses(toast), '-mr-0.5 rounded p-0.5 focus:outline-none focus:ring-2 focus:ring-current']"
+                            x-on:click="dismiss(toast.id)"
+                            aria-label="{{ __('Dismiss') }}"
+                        >
+                            <i class="ph ph-x text-sm" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                    <p
+                        x-show="toast.message"
+                        :class="[descClasses(toast), 'px-4 py-3 text-sm leading-relaxed']"
+                        x-text="toast.message"
+                    ></p>
+                </div>
+            </template>
+
+            {{-- Baguette variant: centered ~80% wide solid-fill banner --}}
+            <template x-if="toast.variant === 'baguette'">
+                <div
+                    :class="[wrapperClasses(toast), 'mx-auto flex w-4/5 items-center gap-4 rounded-xl px-6 py-3.5 text-sm']"
                 >
                     <template x-if="toast.icon">
-                        <i :class="[toast.icon, iconClasses(toast), 'shrink-0']" aria-hidden="true"></i>
+                        <i :class="[toast.icon, iconClasses(toast), 'text-lg shrink-0']" aria-hidden="true"></i>
                     </template>
-                    <span class="min-w-0 flex-1 font-medium leading-snug" x-text="toast.message"></span>
-                    <span
-                        x-show="toast.description"
-                        :class="[descClasses(toast), 'shrink-0 text-xs']"
-                        x-text="toast.description"
-                    ></span>
+                    <div class="flex min-w-0 flex-1 items-baseline gap-2">
+                        <span class="font-medium" x-text="toast.title"></span>
+                        <span
+                            x-show="toast.message"
+                            :class="[descClasses(toast), 'truncate text-xs']"
+                            x-text="toast.message"
+                        ></span>
+                    </div>
                     <button
-                        :class="[closeClasses(toast), 'shrink-0 rounded-full p-0.5 focus:outline-none focus:ring-2 focus:ring-current']"
+                        :class="[closeClasses(toast), 'shrink-0 rounded p-0.5 focus:outline-none focus:ring-2 focus:ring-white/50']"
                         x-on:click="dismiss(toast.id)"
                         aria-label="{{ __('Dismiss') }}"
                     >
@@ -128,36 +156,8 @@
                 </div>
             </template>
 
-            {{-- Card variant: rounded box with title + description --}}
-            <template x-if="toast.variant === 'card'">
-                <div
-                    :class="[wrapperClasses(toast), 'rounded-xl p-4']"
-                >
-                    <div class="flex items-start gap-3">
-                        <template x-if="toast.icon">
-                            <i :class="[toast.icon, iconClasses(toast), 'mt-0.5 text-lg shrink-0']" aria-hidden="true"></i>
-                        </template>
-                        <div class="min-w-0 flex-1">
-                            <p class="text-sm font-medium leading-snug" x-text="toast.message"></p>
-                            <p
-                                x-show="toast.description"
-                                :class="[descClasses(toast), 'mt-1 text-xs leading-relaxed']"
-                                x-text="toast.description"
-                            ></p>
-                        </div>
-                        <button
-                            :class="[closeClasses(toast), '-mr-0.5 -mt-0.5 rounded p-0.5 focus:outline-none focus:ring-2 focus:ring-current']"
-                            x-on:click="dismiss(toast.id)"
-                            aria-label="{{ __('Dismiss') }}"
-                        >
-                            <i class="ph ph-x text-sm" aria-hidden="true"></i>
-                        </button>
-                    </div>
-                </div>
-            </template>
-
-            {{-- Baguette variant: wide solid-fill horizontal bar --}}
-            <template x-if="toast.variant === 'baguette'">
+            {{-- Toast variant (default): compact solid-fill horizontal bar --}}
+            <template x-if="toast.variant === 'toast'">
                 <div
                     :class="[wrapperClasses(toast), 'flex items-center gap-4 rounded-lg px-4 py-3 text-sm']"
                 >
@@ -165,15 +165,39 @@
                         <i :class="[toast.icon, iconClasses(toast), 'text-lg shrink-0']" aria-hidden="true"></i>
                     </template>
                     <div class="flex min-w-0 flex-1 items-baseline gap-2">
-                        <span class="font-medium" x-text="toast.message"></span>
+                        <span class="font-medium" x-text="toast.title"></span>
                         <span
-                            x-show="toast.description"
+                            x-show="toast.message"
                             :class="[descClasses(toast), 'truncate text-xs']"
-                            x-text="toast.description"
+                            x-text="toast.message"
                         ></span>
                     </div>
                     <button
                         :class="[closeClasses(toast), 'shrink-0 rounded p-0.5 focus:outline-none focus:ring-2 focus:ring-white/50']"
+                        x-on:click="dismiss(toast.id)"
+                        aria-label="{{ __('Dismiss') }}"
+                    >
+                        <i class="ph ph-x text-sm" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </template>
+
+            {{-- Pill variant: lightweight bordered pill --}}
+            <template x-if="toast.variant === 'pill'">
+                <div
+                    :class="[wrapperClasses(toast), 'flex items-center gap-2.5 rounded-full px-4 py-2 text-sm']"
+                >
+                    <template x-if="toast.icon">
+                        <i :class="[toast.icon, iconClasses(toast), 'shrink-0']" aria-hidden="true"></i>
+                    </template>
+                    <span class="min-w-0 flex-1 font-medium leading-snug" x-text="toast.title"></span>
+                    <span
+                        x-show="toast.message"
+                        :class="[descClasses(toast), 'shrink-0 text-xs']"
+                        x-text="toast.message"
+                    ></span>
+                    <button
+                        :class="[closeClasses(toast), 'shrink-0 rounded-full p-0.5 focus:outline-none focus:ring-2 focus:ring-current']"
                         x-on:click="dismiss(toast.id)"
                         aria-label="{{ __('Dismiss') }}"
                     >

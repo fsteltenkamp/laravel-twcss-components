@@ -75,6 +75,12 @@ function galleryGroups(): array
             'Tooltip' => [
                 ['default', '<x-fltc::tooltip text="More info here" theme="gray">Hover me</x-fltc::tooltip>'],
             ],
+            'Toast' => [
+                ['toast (default) — compact solid bar', '<x-fltc::toast title="File saved" theme="emerald" message="Your changes are safe." />'],
+                ['pill — lightweight bordered pill', '<x-fltc::toast variant="pill" title="File saved" theme="green" />'],
+                ['card — header + body', '<x-fltc::toast variant="card" theme="blue" title="Profile updated" message="Your changes have been saved successfully." />'],
+                ['baguette — centered 80% banner', '<div class="w-full py-2"><x-fltc::toast variant="baguette" theme="indigo" title="Deploying to production…" message="This may take a moment." /></div>'],
+            ],
         ],
 
         'Cards' => [
