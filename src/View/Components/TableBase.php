@@ -18,6 +18,7 @@ abstract class TableBase extends Component
         'slate' => [
             'wrapper' => 'bg-slate-100 dark:bg-slate-900',
             'border' => 'border-slate-200 dark:border-slate-800',
+            'pillBorder' => 'border-slate-200 dark:border-slate-700',
             'divide' => 'divide-slate-200 dark:divide-slate-800',
             'head' => 'bg-slate-200/90 dark:bg-slate-800/90 text-slate-900 dark:text-slate-100',
             'cell' => 'text-slate-800 dark:text-slate-200',
@@ -29,6 +30,7 @@ abstract class TableBase extends Component
         'gray' => [
             'wrapper' => 'bg-gray-100 dark:bg-gray-900',
             'border' => 'border-gray-200 dark:border-gray-800',
+            'pillBorder' => 'border-gray-200 dark:border-gray-700',
             'divide' => 'divide-gray-200 dark:divide-gray-800',
             'head' => 'bg-gray-200/90 dark:bg-gray-800/90 text-gray-900 dark:text-gray-100',
             'cell' => 'text-gray-800 dark:text-gray-200',
@@ -40,6 +42,7 @@ abstract class TableBase extends Component
         'zinc' => [
             'wrapper' => 'bg-zinc-100 dark:bg-zinc-900',
             'border' => 'border-zinc-200 dark:border-zinc-800',
+            'pillBorder' => 'border-zinc-200 dark:border-zinc-700',
             'divide' => 'divide-zinc-200 dark:divide-zinc-800',
             'head' => 'bg-zinc-200/90 dark:bg-zinc-800/90 text-zinc-900 dark:text-zinc-100',
             'cell' => 'text-zinc-800 dark:text-zinc-200',
@@ -51,6 +54,7 @@ abstract class TableBase extends Component
         'neutral' => [
             'wrapper' => 'bg-neutral-100 dark:bg-neutral-900',
             'border' => 'border-neutral-200 dark:border-neutral-800',
+            'pillBorder' => 'border-neutral-200 dark:border-neutral-700',
             'divide' => 'divide-neutral-200 dark:divide-neutral-800',
             'head' => 'bg-neutral-200/90 dark:bg-neutral-800/90 text-neutral-900 dark:text-neutral-100',
             'cell' => 'text-neutral-800 dark:text-neutral-200',
@@ -62,6 +66,7 @@ abstract class TableBase extends Component
         'stone' => [
             'wrapper' => 'bg-stone-100 dark:bg-stone-900',
             'border' => 'border-stone-200 dark:border-stone-800',
+            'pillBorder' => 'border-stone-200 dark:border-stone-700',
             'divide' => 'divide-stone-200 dark:divide-stone-800',
             'head' => 'bg-stone-200/90 dark:bg-stone-800/90 text-stone-900 dark:text-stone-100',
             'cell' => 'text-stone-800 dark:text-stone-200',
@@ -73,6 +78,7 @@ abstract class TableBase extends Component
         'red' => [
             'wrapper' => 'bg-red-100 dark:bg-red-900',
             'border' => 'border-red-200 dark:border-red-800',
+            'pillBorder' => 'border-red-200 dark:border-red-700',
             'divide' => 'divide-red-200 dark:divide-red-800',
             'head' => 'bg-red-200/90 dark:bg-red-800/90 text-red-900 dark:text-red-100',
             'cell' => 'text-red-800 dark:text-red-200',
@@ -84,6 +90,7 @@ abstract class TableBase extends Component
         'orange' => [
             'wrapper' => 'bg-orange-100 dark:bg-orange-900',
             'border' => 'border-orange-200 dark:border-orange-800',
+            'pillBorder' => 'border-orange-200 dark:border-orange-700',
             'divide' => 'divide-orange-200 dark:divide-orange-800',
             'head' => 'bg-orange-200/90 dark:bg-orange-800/90 text-orange-900 dark:text-orange-100',
             'cell' => 'text-orange-800 dark:text-orange-200',
@@ -95,6 +102,7 @@ abstract class TableBase extends Component
         'amber' => [
             'wrapper' => 'bg-amber-100 dark:bg-amber-900',
             'border' => 'border-amber-200 dark:border-amber-800',
+            'pillBorder' => 'border-amber-200 dark:border-amber-700',
             'divide' => 'divide-amber-200 dark:divide-amber-800',
             'head' => 'bg-amber-200/90 dark:bg-amber-800/90 text-amber-900 dark:text-amber-100',
             'cell' => 'text-amber-800 dark:text-amber-200',
@@ -106,6 +114,7 @@ abstract class TableBase extends Component
         'yellow' => [
             'wrapper' => 'bg-yellow-100 dark:bg-yellow-900',
             'border' => 'border-yellow-200 dark:border-yellow-800',
+            'pillBorder' => 'border-yellow-200 dark:border-yellow-700',
             'divide' => 'divide-yellow-200 dark:divide-yellow-800',
             'head' => 'bg-yellow-200/90 dark:bg-yellow-800/90 text-yellow-900 dark:text-yellow-100',
             'cell' => 'text-yellow-800 dark:text-yellow-200',
@@ -117,6 +126,7 @@ abstract class TableBase extends Component
         'lime' => [
             'wrapper' => 'bg-lime-100 dark:bg-lime-900',
             'border' => 'border-lime-200 dark:border-lime-800',
+            'pillBorder' => 'border-lime-200 dark:border-lime-700',
             'divide' => 'divide-lime-200 dark:divide-lime-800',
             'head' => 'bg-lime-200/90 dark:bg-lime-800/90 text-lime-900 dark:text-lime-100',
             'cell' => 'text-lime-800 dark:text-lime-200',
@@ -128,6 +138,7 @@ abstract class TableBase extends Component
         'green' => [
             'wrapper' => 'bg-green-100 dark:bg-green-900',
             'border' => 'border-green-200 dark:border-green-800',
+            'pillBorder' => 'border-green-200 dark:border-green-700',
             'divide' => 'divide-green-200 dark:divide-green-800',
             'head' => 'bg-green-200/90 dark:bg-green-800/90 text-green-900 dark:text-green-100',
             'cell' => 'text-green-800 dark:text-green-200',
@@ -139,6 +150,7 @@ abstract class TableBase extends Component
         'emerald' => [
             'wrapper' => 'bg-emerald-100 dark:bg-emerald-900',
             'border' => 'border-emerald-200 dark:border-emerald-800',
+            'pillBorder' => 'border-emerald-200 dark:border-emerald-700',
             'divide' => 'divide-emerald-200 dark:divide-emerald-800',
             'head' => 'bg-emerald-200/90 dark:bg-emerald-800/90 text-emerald-900 dark:text-emerald-100',
             'cell' => 'text-emerald-800 dark:text-emerald-200',
@@ -150,6 +162,7 @@ abstract class TableBase extends Component
         'teal' => [
             'wrapper' => 'bg-teal-100 dark:bg-teal-900',
             'border' => 'border-teal-200 dark:border-teal-800',
+            'pillBorder' => 'border-teal-200 dark:border-teal-700',
             'divide' => 'divide-teal-200 dark:divide-teal-800',
             'head' => 'bg-teal-200/90 dark:bg-teal-800/90 text-teal-900 dark:text-teal-100',
             'cell' => 'text-teal-800 dark:text-teal-200',
@@ -161,6 +174,7 @@ abstract class TableBase extends Component
         'cyan' => [
             'wrapper' => 'bg-cyan-100 dark:bg-cyan-900',
             'border' => 'border-cyan-200 dark:border-cyan-800',
+            'pillBorder' => 'border-cyan-200 dark:border-cyan-700',
             'divide' => 'divide-cyan-200 dark:divide-cyan-800',
             'head' => 'bg-cyan-200/90 dark:bg-cyan-800/90 text-cyan-900 dark:text-cyan-100',
             'cell' => 'text-cyan-800 dark:text-cyan-200',
@@ -172,6 +186,7 @@ abstract class TableBase extends Component
         'sky' => [
             'wrapper' => 'bg-sky-100 dark:bg-sky-900',
             'border' => 'border-sky-200 dark:border-sky-800',
+            'pillBorder' => 'border-sky-200 dark:border-sky-700',
             'divide' => 'divide-sky-200 dark:divide-sky-800',
             'head' => 'bg-sky-200/90 dark:bg-sky-800/90 text-sky-900 dark:text-sky-100',
             'cell' => 'text-sky-800 dark:text-sky-200',
@@ -183,6 +198,7 @@ abstract class TableBase extends Component
         'blue' => [
             'wrapper' => 'bg-blue-100 dark:bg-blue-900',
             'border' => 'border-blue-200 dark:border-blue-800',
+            'pillBorder' => 'border-blue-200 dark:border-blue-700',
             'divide' => 'divide-blue-200 dark:divide-blue-800',
             'head' => 'bg-blue-200/90 dark:bg-blue-800/90 text-blue-900 dark:text-blue-100',
             'cell' => 'text-blue-800 dark:text-blue-200',
@@ -194,6 +210,7 @@ abstract class TableBase extends Component
         'indigo' => [
             'wrapper' => 'bg-indigo-100 dark:bg-indigo-900',
             'border' => 'border-indigo-200 dark:border-indigo-800',
+            'pillBorder' => 'border-indigo-200 dark:border-indigo-700',
             'divide' => 'divide-indigo-200 dark:divide-indigo-800',
             'head' => 'bg-indigo-200/90 dark:bg-indigo-800/90 text-indigo-900 dark:text-indigo-100',
             'cell' => 'text-indigo-800 dark:text-indigo-200',
@@ -205,6 +222,7 @@ abstract class TableBase extends Component
         'violet' => [
             'wrapper' => 'bg-violet-100 dark:bg-violet-900',
             'border' => 'border-violet-200 dark:border-violet-800',
+            'pillBorder' => 'border-violet-200 dark:border-violet-700',
             'divide' => 'divide-violet-200 dark:divide-violet-800',
             'head' => 'bg-violet-200/90 dark:bg-violet-800/90 text-violet-900 dark:text-violet-100',
             'cell' => 'text-violet-800 dark:text-violet-200',
@@ -216,6 +234,7 @@ abstract class TableBase extends Component
         'purple' => [
             'wrapper' => 'bg-purple-100 dark:bg-purple-900',
             'border' => 'border-purple-200 dark:border-purple-800',
+            'pillBorder' => 'border-purple-200 dark:border-purple-700',
             'divide' => 'divide-purple-200 dark:divide-purple-800',
             'head' => 'bg-purple-200/90 dark:bg-purple-800/90 text-purple-900 dark:text-purple-100',
             'cell' => 'text-purple-800 dark:text-purple-200',
@@ -227,6 +246,7 @@ abstract class TableBase extends Component
         'fuchsia' => [
             'wrapper' => 'bg-fuchsia-100 dark:bg-fuchsia-900',
             'border' => 'border-fuchsia-200 dark:border-fuchsia-800',
+            'pillBorder' => 'border-fuchsia-200 dark:border-fuchsia-700',
             'divide' => 'divide-fuchsia-200 dark:divide-fuchsia-800',
             'head' => 'bg-fuchsia-200/90 dark:bg-fuchsia-800/90 text-fuchsia-900 dark:text-fuchsia-100',
             'cell' => 'text-fuchsia-800 dark:text-fuchsia-200',
@@ -238,6 +258,7 @@ abstract class TableBase extends Component
         'pink' => [
             'wrapper' => 'bg-pink-100 dark:bg-pink-900',
             'border' => 'border-pink-200 dark:border-pink-800',
+            'pillBorder' => 'border-pink-200 dark:border-pink-700',
             'divide' => 'divide-pink-200 dark:divide-pink-800',
             'head' => 'bg-pink-200/90 dark:bg-pink-800/90 text-pink-900 dark:text-pink-100',
             'cell' => 'text-pink-800 dark:text-pink-200',
@@ -249,6 +270,7 @@ abstract class TableBase extends Component
         'rose' => [
             'wrapper' => 'bg-rose-100 dark:bg-rose-900',
             'border' => 'border-rose-200 dark:border-rose-800',
+            'pillBorder' => 'border-rose-200 dark:border-rose-700',
             'divide' => 'divide-rose-200 dark:divide-rose-800',
             'head' => 'bg-rose-200/90 dark:bg-rose-800/90 text-rose-900 dark:text-rose-100',
             'cell' => 'text-rose-800 dark:text-rose-200',
@@ -260,6 +282,7 @@ abstract class TableBase extends Component
         'taupe' => [
             'wrapper' => 'bg-taupe-100 dark:bg-taupe-900',
             'border' => 'border-taupe-200 dark:border-taupe-800',
+            'pillBorder' => 'border-taupe-200 dark:border-taupe-700',
             'divide' => 'divide-taupe-200 dark:divide-taupe-800',
             'head' => 'bg-taupe-200/90 dark:bg-taupe-800/90 text-taupe-900 dark:text-taupe-100',
             'cell' => 'text-taupe-800 dark:text-taupe-200',
@@ -271,6 +294,7 @@ abstract class TableBase extends Component
         'mauve' => [
             'wrapper' => 'bg-mauve-100 dark:bg-mauve-900',
             'border' => 'border-mauve-200 dark:border-mauve-800',
+            'pillBorder' => 'border-mauve-200 dark:border-mauve-700',
             'divide' => 'divide-mauve-200 dark:divide-mauve-800',
             'head' => 'bg-mauve-200/90 dark:bg-mauve-800/90 text-mauve-900 dark:text-mauve-100',
             'cell' => 'text-mauve-800 dark:text-mauve-200',
@@ -282,6 +306,7 @@ abstract class TableBase extends Component
         'mist' => [
             'wrapper' => 'bg-mist-100 dark:bg-mist-900',
             'border' => 'border-mist-200 dark:border-mist-800',
+            'pillBorder' => 'border-mist-200 dark:border-mist-700',
             'divide' => 'divide-mist-200 dark:divide-mist-800',
             'head' => 'bg-mist-200/90 dark:bg-mist-800/90 text-mist-900 dark:text-mist-100',
             'cell' => 'text-mist-800 dark:text-mist-200',
@@ -293,6 +318,7 @@ abstract class TableBase extends Component
         'olive' => [
             'wrapper' => 'bg-olive-100 dark:bg-olive-900',
             'border' => 'border-olive-200 dark:border-olive-800',
+            'pillBorder' => 'border-olive-200 dark:border-olive-700',
             'divide' => 'divide-olive-200 dark:divide-olive-800',
             'head' => 'bg-olive-200/90 dark:bg-olive-800/90 text-olive-900 dark:text-olive-100',
             'cell' => 'text-olive-800 dark:text-olive-200',
