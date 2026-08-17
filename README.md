@@ -10,6 +10,38 @@ composer require fsteltenkamp/laravel-twcss-components
 
 The service provider is auto-discovered via Laravel's package discovery.
 
+### Tailwind CSS setup
+
+Component classes live in this package's Blade views and PHP classes, not in the host
+app's own `resources/views`. Tailwind only generates CSS for classes it can see in files
+it's told to scan, so the host app's Tailwind config must include this package's source
+files or component styling will be silently missing from the compiled CSS.
+
+**Tailwind v4** (CSS-based config) — add to the app's main CSS file:
+
+```css
+@source '../../vendor/fsteltenkamp/laravel-twcss-components/resources/views/components/';
+@source '../../vendor/fsteltenkamp/laravel-twcss-components/src/View/Components/';
+```
+
+(Paths are relative to the CSS file; adjust for your app's directory layout.) Both paths
+are needed — the Blade views hold most of the class strings, while class-backed
+components (e.g. `Button.php`, `TableBase.php`) build parts of their `classList` in PHP.
+
+**Tailwind v3** (`tailwind.config.js`) — add the same paths to `content`:
+
+```js
+content: [
+    // ...
+    './vendor/fsteltenkamp/laravel-twcss-components/resources/views/components/**/*.blade.php',
+    './vendor/fsteltenkamp/laravel-twcss-components/src/View/Components/**/*.php',
+],
+```
+
+If you publish views with `vendor:publish --tag=fltc-components-views`, published files
+land in `resources/views/vendor/fltc`, which your app's default content globs already
+cover.
+
 ## Usage
 
 Components are registered under the `fltc` namespace:
@@ -85,7 +117,7 @@ Alternatively, include it from a CDN in your layout `<head>`:
 Publish views to override them:
 
 ```bash
-php artisan vendor:publish --tag=twcss-components-views
+php artisan vendor:publish --tag=fltc-components-views
 ```
 
 ## License

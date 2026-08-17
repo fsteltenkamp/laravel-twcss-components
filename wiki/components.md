@@ -146,7 +146,7 @@ Flux/Livewire JS runtime required — open state can be driven three ways:
 Props:
 - `name`: stable key for event-based opening
 - `open`: initial open state (default: false)
-- `maxWidth`: `sm`, `md`, `lg` (default), `xl`, `2xl`, `3xl`
+- `maxWidth`: `sm`, `md`, `lg` (default), `xl`, `2xl`, `3xl`, `4xl`, `5xl`, `6xl`, `7xl`, `full`
 - `closeable`: allow closing via backdrop/Escape (default: true)
 
 The Alpine scope exposes a `close()` method, so any element inside the modal can close it
