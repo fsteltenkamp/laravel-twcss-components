@@ -46,6 +46,10 @@ class SidebarTheme
             'mauve'   => 'bg-white dark:bg-mauve-900 border-mauve-200 dark:border-mauve-700 text-mauve-900 dark:text-mauve-100',
             'mist'    => 'bg-white dark:bg-mist-900 border-mist-200 dark:border-mist-700 text-mist-900 dark:text-mist-100',
             'olive'   => 'bg-white dark:bg-olive-900 border-olive-200 dark:border-olive-700 text-olive-900 dark:text-olive-100',
+            'skin'    => 'bg-white dark:bg-skin-900 border-skin-200 dark:border-skin-700 text-skin-900 dark:text-skin-100',
+            'cyberpunk' => 'bg-white dark:bg-cyberpunk-900 border-cyberpunk-200 dark:border-cyberpunk-700 text-cyberpunk-900 dark:text-cyberpunk-100',
+            'fantasy' => 'bg-white dark:bg-fantasy-900 border-fantasy-200 dark:border-fantasy-700 text-fantasy-900 dark:text-fantasy-100',
+            'wh40k'   => 'bg-white dark:bg-wh40k-900 border-wh40k-200 dark:border-wh40k-700 text-wh40k-900 dark:text-wh40k-100',
         ];
 
         return $map[$theme] ?? $map['slate'];
@@ -83,6 +87,10 @@ class SidebarTheme
             'mauve'   => 'text-mauve-700 hover:bg-mauve-100 hover:text-mauve-900 dark:text-mauve-300 dark:hover:bg-mauve-800 dark:hover:text-mauve-100 focus-visible:ring-mauve-400 dark:focus-visible:ring-mauve-600',
             'mist'    => 'text-mist-700 hover:bg-mist-100 hover:text-mist-900 dark:text-mist-300 dark:hover:bg-mist-800 dark:hover:text-mist-100 focus-visible:ring-mist-400 dark:focus-visible:ring-mist-600',
             'olive'   => 'text-olive-700 hover:bg-olive-100 hover:text-olive-900 dark:text-olive-300 dark:hover:bg-olive-800 dark:hover:text-olive-100 focus-visible:ring-olive-400 dark:focus-visible:ring-olive-600',
+            'skin'    => 'text-skin-700 hover:bg-skin-100 hover:text-skin-900 dark:text-skin-300 dark:hover:bg-skin-800 dark:hover:text-skin-100 focus-visible:ring-skin-400 dark:focus-visible:ring-skin-600',
+            'cyberpunk' => 'text-cyberpunk-700 hover:bg-cyberpunk-100 hover:text-cyberpunk-900 dark:text-cyberpunk-300 dark:hover:bg-cyberpunk-800 dark:hover:text-cyberpunk-100 focus-visible:ring-cyberpunk-400 dark:focus-visible:ring-cyberpunk-600',
+            'fantasy' => 'text-fantasy-700 hover:bg-fantasy-100 hover:text-fantasy-900 dark:text-fantasy-300 dark:hover:bg-fantasy-800 dark:hover:text-fantasy-100 focus-visible:ring-fantasy-400 dark:focus-visible:ring-fantasy-600',
+            'wh40k'   => 'text-wh40k-700 hover:bg-wh40k-100 hover:text-wh40k-900 dark:text-wh40k-300 dark:hover:bg-wh40k-800 dark:hover:text-wh40k-100 focus-visible:ring-wh40k-400 dark:focus-visible:ring-wh40k-600',
         ];
 
         return $map[$theme] ?? $map['slate'];
@@ -120,6 +128,10 @@ class SidebarTheme
             'mauve'   => 'bg-mauve-100 text-mauve-900 dark:bg-mauve-800 dark:text-mauve-100 focus-visible:ring-mauve-400 dark:focus-visible:ring-mauve-600',
             'mist'    => 'bg-mist-100 text-mist-900 dark:bg-mist-800 dark:text-mist-100 focus-visible:ring-mist-400 dark:focus-visible:ring-mist-600',
             'olive'   => 'bg-olive-100 text-olive-900 dark:bg-olive-800 dark:text-olive-100 focus-visible:ring-olive-400 dark:focus-visible:ring-olive-600',
+            'skin'    => 'bg-skin-100 text-skin-900 dark:bg-skin-800 dark:text-skin-100 focus-visible:ring-skin-400 dark:focus-visible:ring-skin-600',
+            'cyberpunk' => 'bg-cyberpunk-100 text-cyberpunk-900 dark:bg-cyberpunk-800 dark:text-cyberpunk-100 focus-visible:ring-cyberpunk-400 dark:focus-visible:ring-cyberpunk-600',
+            'fantasy' => 'bg-fantasy-100 text-fantasy-900 dark:bg-fantasy-800 dark:text-fantasy-100 focus-visible:ring-fantasy-400 dark:focus-visible:ring-fantasy-600',
+            'wh40k'   => 'bg-wh40k-100 text-wh40k-900 dark:bg-wh40k-800 dark:text-wh40k-100 focus-visible:ring-wh40k-400 dark:focus-visible:ring-wh40k-600',
         ];
 
         return $map[$theme] ?? $map['slate'];
@@ -157,6 +169,10 @@ class SidebarTheme
             'mauve'   => 'border-mauve-200 bg-white dark:border-mauve-700 dark:bg-mauve-900 shadow-lg shadow-mauve-900/5 ring-1 ring-black/5 dark:ring-white/10',
             'mist'    => 'border-mist-200 bg-white dark:border-mist-700 dark:bg-mist-900 shadow-lg shadow-mist-900/5 ring-1 ring-black/5 dark:ring-white/10',
             'olive'   => 'border-olive-200 bg-white dark:border-olive-700 dark:bg-olive-900 shadow-lg shadow-olive-900/5 ring-1 ring-black/5 dark:ring-white/10',
+            'skin'    => 'border-skin-200 bg-white dark:border-skin-700 dark:bg-skin-900 shadow-lg shadow-skin-900/5 ring-1 ring-black/5 dark:ring-white/10',
+            'cyberpunk' => 'border-cyberpunk-200 bg-white dark:border-cyberpunk-700 dark:bg-cyberpunk-900 shadow-lg shadow-cyberpunk-900/5 ring-1 ring-black/5 dark:ring-white/10',
+            'fantasy' => 'border-fantasy-200 bg-white dark:border-fantasy-700 dark:bg-fantasy-900 shadow-lg shadow-fantasy-900/5 ring-1 ring-black/5 dark:ring-white/10',
+            'wh40k'   => 'border-wh40k-200 bg-white dark:border-wh40k-700 dark:bg-wh40k-900 shadow-lg shadow-wh40k-900/5 ring-1 ring-black/5 dark:ring-white/10',
         ];
 
         return $map[$theme] ?? $map['slate'];
@@ -194,6 +210,10 @@ class SidebarTheme
             'mauve'   => 'border-mauve-200 dark:border-mauve-700',
             'mist'    => 'border-mist-200 dark:border-mist-700',
             'olive'   => 'border-olive-200 dark:border-olive-700',
+            'skin'    => 'border-skin-200 dark:border-skin-700',
+            'cyberpunk' => 'border-cyberpunk-200 dark:border-cyberpunk-700',
+            'fantasy' => 'border-fantasy-200 dark:border-fantasy-700',
+            'wh40k'   => 'border-wh40k-200 dark:border-wh40k-700',
         ];
 
         return $map[$theme] ?? $map['slate'];

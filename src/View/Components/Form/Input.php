@@ -2,6 +2,7 @@
 
 namespace Fsteltenkamp\TwcssComponents\View\Components\Form;
 
+use Fsteltenkamp\TwcssComponents\Support\Shades;
 use Illuminate\View\Component;
 
 abstract class Input extends Component
@@ -33,10 +34,22 @@ abstract class Input extends Component
         'mauve'    => 'border-mauve-300 placeholder-mauve-400 focus:border-mauve-500 focus:ring-mauve-500 dark:border-mauve-600 dark:placeholder-mauve-500 dark:focus:border-mauve-400 dark:focus:ring-mauve-400',
         'mist'     => 'border-mist-300 placeholder-mist-400 focus:border-mist-500 focus:ring-mist-500 dark:border-mist-600 dark:placeholder-mist-500 dark:focus:border-mist-400 dark:focus:ring-mist-400',
         'olive'    => 'border-olive-300 placeholder-olive-400 focus:border-olive-500 focus:ring-olive-500 dark:border-olive-600 dark:placeholder-olive-500 dark:focus:border-olive-400 dark:focus:ring-olive-400',
+        'skin'     => 'border-skin-300 placeholder-skin-400 focus:border-skin-500 focus:ring-skin-500 dark:border-skin-600 dark:placeholder-skin-500 dark:focus:border-skin-400 dark:focus:ring-skin-400',
+        'cyberpunk' => 'border-cyberpunk-300 placeholder-cyberpunk-400 focus:border-cyberpunk-500 focus:ring-cyberpunk-500 dark:border-cyberpunk-600 dark:placeholder-cyberpunk-500 dark:focus:border-cyberpunk-400 dark:focus:ring-cyberpunk-400',
+        'fantasy'  => 'border-fantasy-300 placeholder-fantasy-400 focus:border-fantasy-500 focus:ring-fantasy-500 dark:border-fantasy-600 dark:placeholder-fantasy-500 dark:focus:border-fantasy-400 dark:focus:ring-fantasy-400',
+        'wh40k'    => 'border-wh40k-300 placeholder-wh40k-400 focus:border-wh40k-500 focus:ring-wh40k-500 dark:border-wh40k-600 dark:placeholder-wh40k-500 dark:focus:border-wh40k-400 dark:focus:ring-wh40k-400',
     ];
 
     protected string $baseClasses = 'block w-full rounded-md border py-2 pl-10 pr-3 shadow-sm transition duration-150 focus:outline-none focus:ring-2';
     protected string $errorBaseClasses = 'border-red-500 placeholder-red-300 focus:border-red-500 focus:ring-red-500 dark:border-red-400 dark:placeholder-red-400 dark:focus:border-red-400 dark:focus:ring-red-400';
+
+    /**
+     * Leading icon colour: the theme's Tertiary Content shades.
+     */
+    public function iconClasses(): string
+    {
+        return Shades::tertiary($this->theme);
+    }
 
     protected function getBackgroundClasses($theme = 'slate'): string
     {

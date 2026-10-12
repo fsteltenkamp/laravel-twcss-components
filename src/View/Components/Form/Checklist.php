@@ -3,6 +3,7 @@
 namespace Fsteltenkamp\TwcssComponents\View\Components\Form;
 
 use Closure;
+use Fsteltenkamp\TwcssComponents\Support\Shades;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
@@ -29,6 +30,7 @@ class Checklist extends Component
     public int $computedCompleted = 0;
     public int $computedPercent = 0;
     public string $progressBarColor;
+    public string $progressTrackColor;
 
     public function __construct(
         public array $items = [],
@@ -76,6 +78,10 @@ class Checklist extends Component
             'mauve'   => 'text-mauve-500 dark:text-mauve-400',
             'mist'    => 'text-mist-500 dark:text-mist-400',
             'olive'   => 'text-olive-500 dark:text-olive-400',
+            'skin'    => 'text-skin-500 dark:text-skin-400',
+            'cyberpunk' => 'text-cyberpunk-500 dark:text-cyberpunk-400',
+            'fantasy' => 'text-fantasy-500 dark:text-fantasy-400',
+            'wh40k'   => 'text-wh40k-500 dark:text-wh40k-400',
         ];
 
         $iconColorPeerCheckedMap = [
@@ -105,6 +111,10 @@ class Checklist extends Component
             'mauve'   => 'peer-checked:text-mauve-500 dark:peer-checked:text-mauve-400',
             'mist'    => 'peer-checked:text-mist-500 dark:peer-checked:text-mist-400',
             'olive'   => 'peer-checked:text-olive-500 dark:peer-checked:text-olive-400',
+            'skin'    => 'peer-checked:text-skin-500 dark:peer-checked:text-skin-400',
+            'cyberpunk' => 'peer-checked:text-cyberpunk-500 dark:peer-checked:text-cyberpunk-400',
+            'fantasy' => 'peer-checked:text-fantasy-500 dark:peer-checked:text-fantasy-400',
+            'wh40k'   => 'peer-checked:text-wh40k-500 dark:peer-checked:text-wh40k-400',
         ];
 
         $progressBarMap = [
@@ -134,6 +144,10 @@ class Checklist extends Component
             'mauve'   => 'bg-mauve-500',
             'mist'    => 'bg-mist-500',
             'olive'   => 'bg-olive-500',
+            'skin'    => 'bg-skin-500',
+            'cyberpunk' => 'bg-cyberpunk-500',
+            'fantasy' => 'bg-fantasy-500',
+            'wh40k'   => 'bg-wh40k-500',
         ];
 
         $containerBorderMap = [
@@ -163,6 +177,10 @@ class Checklist extends Component
             'mauve'   => 'border-mauve-200 dark:border-mauve-800',
             'mist'    => 'border-mist-200 dark:border-mist-800',
             'olive'   => 'border-olive-200 dark:border-olive-800',
+            'skin'    => 'border-skin-200 dark:border-skin-800',
+            'cyberpunk' => 'border-cyberpunk-200 dark:border-cyberpunk-800',
+            'fantasy' => 'border-fantasy-200 dark:border-fantasy-800',
+            'wh40k'   => 'border-wh40k-200 dark:border-wh40k-800',
         ];
 
         $dividerMap = [
@@ -192,6 +210,10 @@ class Checklist extends Component
             'mauve'   => 'divide-mauve-100 dark:divide-mauve-900',
             'mist'    => 'divide-mist-100 dark:divide-mist-900',
             'olive'   => 'divide-olive-100 dark:divide-olive-900',
+            'skin'    => 'divide-skin-100 dark:divide-skin-900',
+            'cyberpunk' => 'divide-cyberpunk-100 dark:divide-cyberpunk-900',
+            'fantasy' => 'divide-fantasy-100 dark:divide-fantasy-900',
+            'wh40k'   => 'divide-wh40k-100 dark:divide-wh40k-900',
         ];
 
         $rowBgPendingMap = [
@@ -221,6 +243,10 @@ class Checklist extends Component
             'mauve'   => 'bg-mauve-50/40 dark:bg-mauve-950/20',
             'mist'    => 'bg-mist-50/40 dark:bg-mist-950/20',
             'olive'   => 'bg-olive-50/40 dark:bg-olive-950/20',
+            'skin'    => 'bg-skin-50/40 dark:bg-skin-950/20',
+            'cyberpunk' => 'bg-cyberpunk-50/40 dark:bg-cyberpunk-950/20',
+            'fantasy' => 'bg-fantasy-50/40 dark:bg-fantasy-950/20',
+            'wh40k'   => 'bg-wh40k-50/40 dark:bg-wh40k-950/20',
         ];
 
         $iconColorPendingMap = [
@@ -250,6 +276,10 @@ class Checklist extends Component
             'mauve'   => 'text-mauve-300 dark:text-mauve-700',
             'mist'    => 'text-mist-300 dark:text-mist-700',
             'olive'   => 'text-olive-300 dark:text-olive-700',
+            'skin'    => 'text-skin-300 dark:text-skin-700',
+            'cyberpunk' => 'text-cyberpunk-300 dark:text-cyberpunk-700',
+            'fantasy' => 'text-fantasy-300 dark:text-fantasy-700',
+            'wh40k'   => 'text-wh40k-300 dark:text-wh40k-700',
         ];
 
         $labelPendingMap = [
@@ -279,6 +309,10 @@ class Checklist extends Component
             'mauve'   => 'text-mauve-700 dark:text-mauve-300',
             'mist'    => 'text-mist-700 dark:text-mist-300',
             'olive'   => 'text-olive-700 dark:text-olive-300',
+            'skin'    => 'text-skin-700 dark:text-skin-300',
+            'cyberpunk' => 'text-cyberpunk-700 dark:text-cyberpunk-300',
+            'fantasy' => 'text-fantasy-700 dark:text-fantasy-300',
+            'wh40k'   => 'text-wh40k-700 dark:text-wh40k-300',
         ];
 
         $headingColorMap = [
@@ -308,6 +342,10 @@ class Checklist extends Component
             'mauve'   => 'text-mauve-900 dark:text-mauve-100',
             'mist'    => 'text-mist-900 dark:text-mist-100',
             'olive'   => 'text-olive-900 dark:text-olive-100',
+            'skin'    => 'text-skin-900 dark:text-skin-100',
+            'cyberpunk' => 'text-cyberpunk-900 dark:text-cyberpunk-100',
+            'fantasy' => 'text-fantasy-900 dark:text-fantasy-100',
+            'wh40k'   => 'text-wh40k-900 dark:text-wh40k-100',
         ];
 
         $this->iconColorCompleted     = 'text-green-500 dark:text-green-400';
@@ -327,6 +365,7 @@ class Checklist extends Component
         $this->rowBgFailed          = 'bg-red-50 dark:bg-red-950/30';
         $this->rowBgInProgress      = 'bg-blue-50 dark:bg-blue-950/30';
         $this->progressBarColor     = $progressBarMap[$theme] ?? $progressBarMap['sky'];
+        $this->progressTrackColor   = Shades::track($theme);
 
         if (empty($idPrefix)) {
             $this->idPrefix = 'checklist-' . uniqid();

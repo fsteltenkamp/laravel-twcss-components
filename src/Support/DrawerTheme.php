@@ -45,6 +45,10 @@ class DrawerTheme
             'mauve'   => 'bg-white text-mauve-700 border-mauve-300 hover:bg-mauve-50 dark:bg-mauve-900 dark:text-mauve-300 dark:border-mauve-700 dark:hover:bg-mauve-800 focus-visible:ring-mauve-400 dark:focus-visible:ring-mauve-600',
             'mist'    => 'bg-white text-mist-700 border-mist-300 hover:bg-mist-50 dark:bg-mist-900 dark:text-mist-300 dark:border-mist-700 dark:hover:bg-mist-800 focus-visible:ring-mist-400 dark:focus-visible:ring-mist-600',
             'olive'   => 'bg-white text-olive-700 border-olive-300 hover:bg-olive-50 dark:bg-olive-900 dark:text-olive-300 dark:border-olive-700 dark:hover:bg-olive-800 focus-visible:ring-olive-400 dark:focus-visible:ring-olive-600',
+            'skin'    => 'bg-white text-skin-700 border-skin-300 hover:bg-skin-50 dark:bg-skin-900 dark:text-skin-300 dark:border-skin-700 dark:hover:bg-skin-800 focus-visible:ring-skin-400 dark:focus-visible:ring-skin-600',
+            'cyberpunk' => 'bg-white text-cyberpunk-700 border-cyberpunk-300 hover:bg-cyberpunk-50 dark:bg-cyberpunk-900 dark:text-cyberpunk-300 dark:border-cyberpunk-700 dark:hover:bg-cyberpunk-800 focus-visible:ring-cyberpunk-400 dark:focus-visible:ring-cyberpunk-600',
+            'fantasy' => 'bg-white text-fantasy-700 border-fantasy-300 hover:bg-fantasy-50 dark:bg-fantasy-900 dark:text-fantasy-300 dark:border-fantasy-700 dark:hover:bg-fantasy-800 focus-visible:ring-fantasy-400 dark:focus-visible:ring-fantasy-600',
+            'wh40k'   => 'bg-white text-wh40k-700 border-wh40k-300 hover:bg-wh40k-50 dark:bg-wh40k-900 dark:text-wh40k-300 dark:border-wh40k-700 dark:hover:bg-wh40k-800 focus-visible:ring-wh40k-400 dark:focus-visible:ring-wh40k-600',
         ];
 
         return $map[$theme] ?? $map['slate'];
@@ -82,6 +86,10 @@ class DrawerTheme
             'mauve'   => 'bg-mauve-600 text-white border-mauve-600 dark:bg-mauve-500 dark:text-white dark:border-mauve-500 focus-visible:ring-mauve-400 dark:focus-visible:ring-mauve-600',
             'mist'    => 'bg-mist-600 text-white border-mist-600 dark:bg-mist-500 dark:text-white dark:border-mist-500 focus-visible:ring-mist-400 dark:focus-visible:ring-mist-600',
             'olive'   => 'bg-olive-600 text-white border-olive-600 dark:bg-olive-500 dark:text-white dark:border-olive-500 focus-visible:ring-olive-400 dark:focus-visible:ring-olive-600',
+            'skin'    => 'bg-skin-600 text-white border-skin-600 dark:bg-skin-500 dark:text-white dark:border-skin-500 focus-visible:ring-skin-400 dark:focus-visible:ring-skin-600',
+            'cyberpunk' => 'bg-cyberpunk-600 text-white border-cyberpunk-600 dark:bg-cyberpunk-500 dark:text-white dark:border-cyberpunk-500 focus-visible:ring-cyberpunk-400 dark:focus-visible:ring-cyberpunk-600',
+            'fantasy' => 'bg-fantasy-600 text-white border-fantasy-600 dark:bg-fantasy-500 dark:text-white dark:border-fantasy-500 focus-visible:ring-fantasy-400 dark:focus-visible:ring-fantasy-600',
+            'wh40k'   => 'bg-wh40k-600 text-white border-wh40k-600 dark:bg-wh40k-500 dark:text-white dark:border-wh40k-500 focus-visible:ring-wh40k-400 dark:focus-visible:ring-wh40k-600',
         ];
 
         return $map[$theme] ?? $map['slate'];

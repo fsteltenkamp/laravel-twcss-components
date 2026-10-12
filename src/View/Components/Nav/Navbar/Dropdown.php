@@ -49,6 +49,10 @@ class Dropdown extends Component
             'mauve'   => 'text-mauve-700 hover:bg-mauve-100 dark:text-mauve-200 dark:hover:bg-mauve-800 focus-visible:bg-mauve-100 focus-visible:ring-mauve-400 dark:focus-visible:bg-mauve-800 dark:focus-visible:ring-mauve-600',
             'mist'    => 'text-mist-700 hover:bg-mist-100 dark:text-mist-200 dark:hover:bg-mist-800 focus-visible:bg-mist-100 focus-visible:ring-mist-400 dark:focus-visible:bg-mist-800 dark:focus-visible:ring-mist-600',
             'olive'   => 'text-olive-700 hover:bg-olive-100 dark:text-olive-200 dark:hover:bg-olive-800 focus-visible:bg-olive-100 focus-visible:ring-olive-400 dark:focus-visible:bg-olive-800 dark:focus-visible:ring-olive-600',
+            'skin'    => 'text-skin-700 hover:bg-skin-100 dark:text-skin-200 dark:hover:bg-skin-800 focus-visible:bg-skin-100 focus-visible:ring-skin-400 dark:focus-visible:bg-skin-800 dark:focus-visible:ring-skin-600',
+            'cyberpunk' => 'text-cyberpunk-700 hover:bg-cyberpunk-100 dark:text-cyberpunk-200 dark:hover:bg-cyberpunk-800 focus-visible:bg-cyberpunk-100 focus-visible:ring-cyberpunk-400 dark:focus-visible:bg-cyberpunk-800 dark:focus-visible:ring-cyberpunk-600',
+            'fantasy' => 'text-fantasy-700 hover:bg-fantasy-100 dark:text-fantasy-200 dark:hover:bg-fantasy-800 focus-visible:bg-fantasy-100 focus-visible:ring-fantasy-400 dark:focus-visible:bg-fantasy-800 dark:focus-visible:ring-fantasy-600',
+            'wh40k'   => 'text-wh40k-700 hover:bg-wh40k-100 dark:text-wh40k-200 dark:hover:bg-wh40k-800 focus-visible:bg-wh40k-100 focus-visible:ring-wh40k-400 dark:focus-visible:bg-wh40k-800 dark:focus-visible:ring-wh40k-600',
         ];
 
         $menuThemeMap = [
@@ -78,6 +82,10 @@ class Dropdown extends Component
             'mauve'   => 'border-mauve-200 dark:border-mauve-700 bg-white shadow-lg shadow-mauve-900/5 ring-1 ring-black/5 dark:bg-mauve-900 dark:shadow-mauve-950/40 dark:ring-white/10',
             'mist'    => 'border-mist-200 dark:border-mist-700 bg-white shadow-lg shadow-mist-900/5 ring-1 ring-black/5 dark:bg-mist-900 dark:shadow-mist-950/40 dark:ring-white/10',
             'olive'   => 'border-olive-200 dark:border-olive-700 bg-white shadow-lg shadow-olive-900/5 ring-1 ring-black/5 dark:bg-olive-900 dark:shadow-olive-950/40 dark:ring-white/10',
+            'skin'    => 'border-skin-200 dark:border-skin-700 bg-white shadow-lg shadow-skin-900/5 ring-1 ring-black/5 dark:bg-skin-900 dark:shadow-skin-950/40 dark:ring-white/10',
+            'cyberpunk' => 'border-cyberpunk-200 dark:border-cyberpunk-700 bg-white shadow-lg shadow-cyberpunk-900/5 ring-1 ring-black/5 dark:bg-cyberpunk-900 dark:shadow-cyberpunk-950/40 dark:ring-white/10',
+            'fantasy' => 'border-fantasy-200 dark:border-fantasy-700 bg-white shadow-lg shadow-fantasy-900/5 ring-1 ring-black/5 dark:bg-fantasy-900 dark:shadow-fantasy-950/40 dark:ring-white/10',
+            'wh40k'   => 'border-wh40k-200 dark:border-wh40k-700 bg-white shadow-lg shadow-wh40k-900/5 ring-1 ring-black/5 dark:bg-wh40k-900 dark:shadow-wh40k-950/40 dark:ring-white/10',
         ];
 
         $buttonThemeClasses = $buttonThemeMap[$this->resolvedTheme] ?? $buttonThemeMap['slate'];

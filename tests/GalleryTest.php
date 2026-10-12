@@ -37,67 +37,67 @@ function galleryGroups(): array
     return [
         'Typography' => [
             'Text' => [
-                ['default', '<x-fltc::text>The quick brown fox jumps over the lazy dog.</x-fltc::text>'],
+                ['default', '<x-fltc::text theme="skin">The quick brown fox jumps over the lazy dog.</x-fltc::text>'],
             ],
         ],
 
         'Buttons' => [
             'Button' => [
-                ['solid', '<x-fltc::button theme="sky">Save</x-fltc::button>'],
-                ['outline', '<x-fltc::button theme="rose" variant="outline">Delete</x-fltc::button>'],
-                ['disabled', '<x-fltc::button theme="gray" disabled>Disabled</x-fltc::button>'],
-                ['with icon', '<x-fltc::button theme="emerald" icon="floppy-disk">Save</x-fltc::button> <x-fltc::button theme="sky" icon="arrow-right" iconPosition="after">Next</x-fltc::button> <x-fltc::button theme="rose" icon="trash" />'],
+                ['solid', '<x-fltc::button theme="skin">Save</x-fltc::button>'],
+                ['outline', '<x-fltc::button theme="skin" variant="outline">Delete</x-fltc::button>'],
+                ['disabled', '<x-fltc::button theme="skin" disabled>Disabled</x-fltc::button>'],
+                ['with icon', '<x-fltc::button theme="skin" icon="floppy-disk">Save</x-fltc::button> <x-fltc::button theme="skin" icon="arrow-right" iconPosition="after">Next</x-fltc::button> <x-fltc::button theme="skin" icon="trash" />'],
             ],
             'Button link' => [
-                ['default', '<x-fltc::button.link href="#" theme="emerald">Go somewhere</x-fltc::button.link>'],
+                ['default', '<x-fltc::button.link href="#" theme="skin">Go somewhere</x-fltc::button.link>'],
             ],
             'Button group' => [
                 ['default', '<x-fltc::buttongroup>
-    <x-fltc::button theme="slate">Left</x-fltc::button>
-    <x-fltc::button theme="slate">Middle</x-fltc::button>
-    <x-fltc::button theme="slate">Right</x-fltc::button>
+    <x-fltc::button theme="skin">Left</x-fltc::button>
+    <x-fltc::button theme="skin">Middle</x-fltc::button>
+    <x-fltc::button theme="skin">Right</x-fltc::button>
 </x-fltc::buttongroup>'],
             ],
         ],
 
         'Status & Feedback' => [
             'Badge' => [
-                ['themes', '<x-fltc::badge theme="green">available</x-fltc::badge> <x-fltc::badge theme="red">no stock</x-fltc::badge> <x-fltc::badge theme="yellow">start sale</x-fltc::badge>'],
+                ['themes', '<x-fltc::badge theme="skin">available</x-fltc::badge> <x-fltc::badge theme="skin">no stock</x-fltc::badge> <x-fltc::badge theme="skin">start sale</x-fltc::badge>'],
             ],
             'Alert' => [
-                ['default', '<x-fltc::alert theme="amber">Heads up — your trial ends soon.</x-fltc::alert>'],
+                ['default', '<x-fltc::alert theme="skin">Heads up — your trial ends soon.</x-fltc::alert>'],
             ],
             'Message box' => [
-                ['default', '<x-fltc::messagebox theme="sky" title="Note">
+                ['default', '<x-fltc::messagebox theme="skin" title="Note">
     Selected 3 items. Choose an action below.
 </x-fltc::messagebox>'],
             ],
             'Tooltip' => [
-                ['default', '<x-fltc::tooltip text="More info here" theme="gray">Hover me</x-fltc::tooltip>'],
+                ['default', '<x-fltc::tooltip text="More info here" theme="skin">Hover me</x-fltc::tooltip>'],
             ],
             'Toast' => [
-                ['toast (default) — compact solid bar', '<x-fltc::toast title="File saved" theme="emerald" message="Your changes are safe." />'],
-                ['pill — lightweight bordered pill', '<x-fltc::toast variant="pill" title="File saved" theme="green" />'],
-                ['card — header + body', '<x-fltc::toast variant="card" theme="blue" title="Profile updated" message="Your changes have been saved successfully." />'],
-                ['baguette — centered 80% banner', '<div class="w-full py-2"><x-fltc::toast variant="baguette" theme="indigo" title="Deploying to production…" message="This may take a moment." /></div>'],
+                ['toast (default) — compact solid bar', '<x-fltc::toast title="File saved" theme="skin" message="Your changes are safe." />'],
+                ['pill — lightweight bordered pill', '<x-fltc::toast variant="pill" title="File saved" theme="skin" />'],
+                ['card — header + body', '<x-fltc::toast variant="card" theme="skin" title="Profile updated" message="Your changes have been saved successfully." />'],
+                ['baguette — centered 80% banner', '<div class="w-full py-2"><x-fltc::toast variant="baguette" theme="skin" title="Deploying to production…" message="This may take a moment." /></div>'],
             ],
         ],
 
         'Cards' => [
             'Card' => [
-                ['sections (header / body / footer)', '<x-fltc::card theme="slate" class="max-w-sm">
-    <x-fltc::card.header class="px-4 py-3 font-semibold border-b border-slate-200 dark:border-slate-700">Project</x-fltc::card.header>
+                ['sections (header / body / footer)', '<x-fltc::card theme="skin" class="max-w-sm">
+    <x-fltc::card.header class="px-4 py-3 font-semibold border-b border-skin-200 dark:border-skin-700">Project</x-fltc::card.header>
     <x-fltc::card.body class="p-4">Body content goes here, inheriting the card theme.</x-fltc::card.body>
-    <x-fltc::card.footer class="px-4 py-3 border-t border-slate-200 dark:border-slate-700 text-sm">Updated just now</x-fltc::card.footer>
+    <x-fltc::card.footer class="px-4 py-3 border-t border-skin-200 dark:border-skin-700 text-sm">Updated just now</x-fltc::card.footer>
 </x-fltc::card>'],
-                ['themed (emerald)', '<x-fltc::card theme="emerald" class="max-w-sm">
-    <x-fltc::card.header class="px-4 py-3 font-semibold border-b border-emerald-200 dark:border-emerald-900">Deployment</x-fltc::card.header>
+                ['themed (emerald)', '<x-fltc::card theme="skin" class="max-w-sm">
+    <x-fltc::card.header class="px-4 py-3 font-semibold border-b border-skin-200 dark:border-skin-900">Deployment</x-fltc::card.header>
     <x-fltc::card.body class="p-4">Sections inherit the card theme automatically.</x-fltc::card.body>
 </x-fltc::card>'],
             ],
             'Card content' => [
-                ['header + body only', '<x-fltc::card theme="sky" class="max-w-sm">
-    <x-fltc::card.header class="px-4 py-3 font-semibold border-b border-sky-200 dark:border-sky-900">Summary</x-fltc::card.header>
+                ['header + body only', '<x-fltc::card theme="skin" class="max-w-sm">
+    <x-fltc::card.header class="px-4 py-3 font-semibold border-b border-skin-200 dark:border-skin-900">Summary</x-fltc::card.header>
     <x-fltc::card.body class="p-4">Just a header and a body — no footer.</x-fltc::card.body>
 </x-fltc::card>'],
                 ['rows — default table', cardRowsExample(false)],
@@ -107,14 +107,14 @@ function galleryGroups(): array
 
         'Counters' => [
             'Counter' => [
-                ['default', '<x-fltc::counter theme="indigo" title="Users" count="1,204" description="active this week" icon="ph ph-users" class="max-w-xs" />'],
-                ['linked', '<x-fltc::counter theme="emerald" title="Revenue" count="€48k" description="this month" icon="ph ph-currency-eur" link="#" class="max-w-xs" />'],
+                ['default', '<x-fltc::counter theme="skin" title="Users" count="1,204" description="active this week" icon="ph ph-users" class="max-w-xs" />'],
+                ['linked', '<x-fltc::counter theme="skin" title="Revenue" count="€48k" description="this month" icon="ph ph-currency-eur" link="#" class="max-w-xs" />'],
             ],
         ],
 
         'Accordion' => [
             'Accordion' => [
-                ['default', '<x-fltc::accordion theme="slate" class="max-w-md">
+                ['default', '<x-fltc::accordion theme="skin" class="max-w-md">
     <x-fltc::accordion.item title="First section" subtext="open by default">Content of the first item.</x-fltc::accordion.item>
     <x-fltc::accordion.item title="Second section">Content of the second item.</x-fltc::accordion.item>
 </x-fltc::accordion>'],
@@ -130,36 +130,36 @@ function galleryGroups(): array
 
         'Forms' => [
             'Text input' => [
-                ['default', '<x-fltc::form.input.text label="Name" placeholder="Jane Doe" icon="user" class="max-w-sm" />'],
+                ['default', '<x-fltc::form.input.text theme="skin" label="Name" placeholder="Jane Doe" icon="user" class="max-w-sm" />'],
             ],
             'Email input' => [
-                ['default', '<x-fltc::form.input.email label="Email" placeholder="you@example.com" icon="envelope" class="max-w-sm" />'],
+                ['default', '<x-fltc::form.input.email theme="skin" label="Email" placeholder="you@example.com" icon="envelope" class="max-w-sm" />'],
             ],
             'Password input' => [
-                ['default', '<x-fltc::form.input.password label="Password" placeholder="••••••••" class="max-w-sm" />'],
+                ['default', '<x-fltc::form.input.password theme="skin" label="Password" placeholder="••••••••" class="max-w-sm" />'],
             ],
             'Select' => [
-                ['default', '<x-fltc::form.input.select label="Country" placeholder="Choose…" class="max-w-sm">
+                ['default', '<x-fltc::form.input.select theme="skin" label="Country" placeholder="Choose…" class="max-w-sm">
     <option value="de">Germany</option>
     <option value="us">United States</option>
 </x-fltc::form.input.select>'],
             ],
             'Datetime' => [
-                ['default', '<x-fltc::form.input.datetime label="Starts at" class="max-w-sm" />'],
+                ['default', '<x-fltc::form.input.datetime theme="skin" label="Starts at" class="max-w-sm" />'],
             ],
             'Textarea' => [
-                ['default', '<x-fltc::form.textarea label="Notes" rows="3" placeholder="Write something…" class="max-w-sm" />'],
+                ['default', '<x-fltc::form.textarea theme="skin" label="Notes" rows="3" placeholder="Write something…" class="max-w-sm" />'],
             ],
             'Checkbox' => [
-                ['default', '<x-fltc::form.checkbox label="I agree to the terms" theme="sky" />'],
-                ['toggle', '<x-fltc::form.checkbox variant="toggle" label="Email notifications" theme="emerald" themeOff="slate" checked />'],
-                ['toggle with icons', '<x-fltc::form.checkbox variant="toggle" size="lg" label="Dark mode" theme="indigo" themeOff="amber" iconChecked="ph ph-moon" iconUnchecked="ph ph-sun" />'],
+                ['default', '<x-fltc::form.checkbox label="I agree to the terms" theme="skin" />'],
+                ['toggle', '<x-fltc::form.checkbox variant="toggle" label="Email notifications" theme="skin" themeOff="skin" checked />'],
+                ['toggle with icons', '<x-fltc::form.checkbox variant="toggle" size="lg" label="Dark mode" theme="skin" themeOff="skin" iconChecked="ph ph-moon" iconUnchecked="ph ph-sun" />'],
             ],
             'Label' => [
-                ['default', '<x-fltc::form.label for="x" required description="Shown to other members">Display name</x-fltc::form.label>'],
+                ['default', '<x-fltc::form.label theme="skin" for="x" required description="Shown to other members">Display name</x-fltc::form.label>'],
             ],
             'Checklist' => [
-                ['default', '<x-fltc::form.checklist :items="$items" theme="emerald" showProgress />', ['items' => [
+                ['default', '<x-fltc::form.checklist :items="$items" theme="skin" showProgress />', ['items' => [
                     ['label' => 'Create account', 'status' => 'completed'],
                     ['label' => 'Verify email', 'status' => 'inProgress'],
                     ['label' => 'Add payment', 'status' => 'pending'],
@@ -169,20 +169,20 @@ function galleryGroups(): array
 
         'Navigation' => [
             'Nav link' => [
-                ['default', '<x-fltc::nav.link href="#" theme="slate">Dashboard</x-fltc::nav.link>'],
+                ['default', '<x-fltc::nav.link href="#" theme="skin">Dashboard</x-fltc::nav.link>'],
             ],
             'Breadcrumbs' => [
-                ['default', '<x-fltc::nav.breadcrumbs :crumbs="$crumbs" theme="slate" />', ['crumbs' => [
+                ['default', '<x-fltc::nav.breadcrumbs :crumbs="$crumbs" theme="skin" />', ['crumbs' => [
                     ['label' => 'Home', 'href' => '#'],
                     ['label' => 'Library', 'href' => '#'],
                     ['label' => 'Data', 'href' => null],
                 ]]],
             ],
             'Pagination' => [
-                ['default', '<x-fltc::nav.pagination :currentPage="2" :totalPages="5" :start="1" :end="5" />'],
+                ['default', '<x-fltc::nav.pagination mainTheme="skin" accentTheme="skin" :currentPage="2" :totalPages="5" :start="1" :end="5" />'],
             ],
             'Stepper' => [
-                ['default', '<x-fltc::nav.stepper :steps="$steps" :stepIndex="2" theme="sky" />', ['steps' => [
+                ['default', '<x-fltc::nav.stepper :steps="$steps" :stepIndex="2" theme="skin" />', ['steps' => [
                     ['label' => 'Cart'], ['label' => 'Shipping'], ['label' => 'Payment'],
                 ]]],
             ],
@@ -197,19 +197,19 @@ function galleryGroups(): array
 
         'Overlays' => [
             'Drawer' => [
-                ['tabs on both sides (look at the screen edges)', '<x-fltc::drawer name="gallery-wiki" side="right" title="Wiki" label="Wiki" icon="book-open" theme="amber" offset="5rem" pinnable>
+                ['tabs on both sides (look at the screen edges)', '<x-fltc::drawer name="gallery-wiki" side="right" title="Wiki" label="Wiki" icon="book-open" theme="skin" offset="5rem" pinnable>
     Pinnable right drawer. Pin it, then click outside — it stays open.
 </x-fltc::drawer>
-<x-fltc::drawer name="gallery-notes" side="right" title="Notes" label="Notes" icon="note" theme="sky" offset="5rem" :order="1">
+<x-fltc::drawer name="gallery-notes" side="right" title="Notes" label="Notes" icon="note" theme="skin" offset="5rem" :order="1">
     Opening this closes the Wiki drawer first.
 </x-fltc::drawer>
-<x-fltc::drawer name="gallery-nav" side="left" title="Navigation" label="Menu" icon="list" theme="emerald" offset="5rem">
+<x-fltc::drawer name="gallery-nav" side="left" title="Navigation" label="Menu" icon="list" theme="skin" offset="5rem">
     Left drawer.
 </x-fltc::drawer>'],
-                ['without a tab, opened by event', '<x-fltc::drawer name="gallery-quiet" side="left" title="Filters" theme="violet" offset="5rem">
+                ['without a tab, opened by event', '<x-fltc::drawer name="gallery-quiet" side="left" title="Filters" theme="skin" offset="5rem">
     No activation tab — opened from a trigger.
 </x-fltc::drawer>
-<x-fltc::button theme="violet" icon="funnel" x-data x-on:click="$dispatch(\'fltc-drawer-toggle\', \'gallery-quiet\')" data-fltc-drawer-trigger>Filters</x-fltc::button>'],
+<x-fltc::button theme="skin" icon="funnel" x-data x-on:click="$dispatch(\'fltc-drawer-toggle\', \'gallery-quiet\')" data-fltc-drawer-trigger>Filters</x-fltc::button>'],
             ],
         ],
 
@@ -220,11 +220,14 @@ function galleryGroups(): array
                 ['sizes', '<span class="inline-flex items-baseline"><x-fltc::icon name="star" size="sm" after="2" /><x-fltc::icon name="star" size="lg" after="2" /><x-fltc::icon name="star" size="2xl" after="2" /><x-fltc::icon name="star" size="4xl" /></span>'],
             ],
             'Dark mode toggle' => [
-                ['default (segmented)', '<x-fltc::darkmode.toggle />'],
-                ['toggle', '<x-fltc::darkmode.toggle variant="toggle" />'],
+                ['default (segmented)', '<x-fltc::darkmode.toggle theme="skin" />'],
+                ['toggle', '<x-fltc::darkmode.toggle variant="toggle" theme="skin" themeOff="skin" />'],
+            ],
+            'Page container' => [
+                ['the gallery itself', '<div class="text-sm">This page\'s content column is an <code>x-fltc::container.page</code>: the drawer tabs on both edges sit in its gutters. Narrow the window and pin a drawer to see the gutters adapt.</div>'],
             ],
             'Container box' => [
-                ['default', '<x-fltc::container.box theme="slate" class="p-4 max-w-sm">Boxed content.</x-fltc::container.box>'],
+                ['default', '<x-fltc::container.box theme="skin" class="p-4 max-w-sm">Boxed content.</x-fltc::container.box>'],
             ],
         ],
     ];
@@ -233,7 +236,7 @@ function galleryGroups(): array
 function navbarExample(): string
 {
     return <<<'BLADE'
-        <x-fltc::nav.navbar theme="slate" class="rounded-xl border shadow-sm">
+        <x-fltc::nav.navbar theme="skin" class="rounded-xl border shadow-sm">
             <x-slot:left>
                 <x-fltc::nav.navbar.link href="#">Dashboard</x-fltc::nav.navbar.link>
                 <x-fltc::nav.navbar.link href="#">Projects</x-fltc::nav.navbar.link>
@@ -260,9 +263,9 @@ function navbarFooterExample(): string
     // wrapper uses translate-x-0 to create a containing block so the otherwise
     // viewport-`fixed` bar sits at the bottom of this preview box instead.
     return <<<'BLADE'
-        <div class="relative h-40 translate-x-0 overflow-hidden rounded-xl border border-slate-200 dark:border-slate-700">
-            <div class="p-4 text-sm text-slate-500 dark:text-slate-400">Page content…</div>
-            <x-fltc::nav.navbar theme="slate" stickyBottom>
+        <div class="relative h-40 translate-x-0 overflow-hidden rounded-xl border border-skin-200 dark:border-skin-700">
+            <div class="p-4 text-sm text-skin-500 dark:text-skin-400">Page content…</div>
+            <x-fltc::nav.navbar theme="skin" stickyBottom>
                 <x-slot:left>
                     <x-fltc::nav.navbar.link href="#">Home</x-fltc::nav.navbar.link>
                     <x-fltc::nav.navbar.link href="#">Pricing</x-fltc::nav.navbar.link>
@@ -278,7 +281,7 @@ function navbarFooterExample(): string
 function sidebarExample(): string
 {
     return <<<'BLADE'
-        <x-fltc::nav.sidebar theme="indigo" heightClass="h-96" class="rounded-xl border shadow-sm">
+        <x-fltc::nav.sidebar theme="skin" heightClass="h-96" class="rounded-xl border shadow-sm">
             <x-slot:brand>
                 <span class="text-base font-semibold">Acme Inc.</span>
             </x-slot:brand>
@@ -309,7 +312,7 @@ function tableExample(bool $floating): string
     $floatAttr = $floating ? ' floating' : '';
 
     return <<<BLADE
-        <x-fltc::table theme="gray"{$floatAttr} class="max-w-2xl">
+        <x-fltc::table theme="skin"{$floatAttr} class="max-w-2xl">
             <x-fltc::table.head>
                 <x-fltc::table.row>
                     <x-fltc::table.cell as="th">Brand</x-fltc::table.cell>
@@ -322,13 +325,13 @@ function tableExample(bool $floating): string
                 <x-fltc::table.cell>Apple</x-fltc::table.cell>
                 <x-fltc::table.cell>Technology</x-fltc::table.cell>
                 <x-fltc::table.cell numeric>200.00\$</x-fltc::table.cell>
-                <x-fltc::table.cell><x-fltc::badge theme="green">available</x-fltc::badge></x-fltc::table.cell>
+                <x-fltc::table.cell><x-fltc::badge theme="skin">available</x-fltc::badge></x-fltc::table.cell>
             </x-fltc::table.row>
             <x-fltc::table.row>
                 <x-fltc::table.cell>Realme</x-fltc::table.cell>
                 <x-fltc::table.cell>Technology</x-fltc::table.cell>
                 <x-fltc::table.cell numeric>200.00\$</x-fltc::table.cell>
-                <x-fltc::table.cell><x-fltc::badge theme="red">no stock</x-fltc::badge></x-fltc::table.cell>
+                <x-fltc::table.cell><x-fltc::badge theme="skin">no stock</x-fltc::badge></x-fltc::table.cell>
             </x-fltc::table.row>
         </x-fltc::table>
         BLADE;
@@ -339,9 +342,9 @@ function cardRowsExample(bool $floating): string
     $floatAttr = $floating ? ' floating' : '';
 
     return <<<BLADE
-        <x-fltc::card theme="slate" class="max-w-2xl">
-            <x-fltc::card.header class="px-4 py-3 font-semibold border-b border-slate-200 dark:border-slate-700">Products</x-fltc::card.header>
-            <x-fltc::card.rows theme="slate"{$floatAttr}>
+        <x-fltc::card theme="skin" class="max-w-2xl">
+            <x-fltc::card.header class="px-4 py-3 font-semibold border-b border-skin-200 dark:border-skin-700">Products</x-fltc::card.header>
+            <x-fltc::card.rows theme="skin"{$floatAttr}>
                 <x-slot:head>
                     <x-fltc::table.row>
                         <x-fltc::table.cell as="th">Brand</x-fltc::table.cell>
@@ -389,23 +392,23 @@ function renderGalleryHtml(array $groups): string
                 $source = htmlspecialchars(trim($code));
 
                 $variantLabel = $multi
-                    ? '<div class="mb-3 text-xs font-medium uppercase tracking-wide text-gray-400 dark:text-gray-500">'.htmlspecialchars($label).'</div>'
+                    ? '<div class="mb-3 text-xs font-medium uppercase tracking-wide text-skin-400 dark:text-skin-500">'.htmlspecialchars($label).'</div>'
                     : '';
 
                 $blocks .= <<<HTML
-                    <div class="border-t border-gray-100 dark:border-gray-700 first:border-t-0">
+                    <div class="border-t border-skin-100 dark:border-skin-700 first:border-t-0">
                         <div class="p-6">
                             {$variantLabel}
                             <div class="flex flex-wrap items-start gap-3 rounded-md p-4 bg-[repeating-conic-gradient(#0000_0_25%,#00000008_0_50%)] dark:bg-none">{$preview}</div>
                         </div>
-                        <pre class="m-0 px-6 py-4 text-sm leading-relaxed overflow-x-auto bg-gray-50 dark:bg-gray-900 text-gray-700 dark:text-gray-300 border-t border-gray-100 dark:border-gray-700"><code>{$source}</code></pre>
+                        <pre class="m-0 px-6 py-4 text-sm leading-relaxed overflow-x-auto bg-skin-50 dark:bg-skin-900 text-skin-700 dark:text-skin-300 border-t border-skin-100 dark:border-skin-700"><code>{$source}</code></pre>
                     </div>
                     HTML;
             }
 
             $cards .= <<<HTML
-                <div class="rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 overflow-hidden">
-                    <div class="px-6 py-3 text-sm font-semibold text-gray-700 dark:text-gray-200 border-b border-gray-100 dark:border-gray-700">{$componentName}</div>
+                <div class="rounded-lg border border-skin-200 dark:border-skin-700 bg-white dark:bg-skin-800 overflow-hidden">
+                    <div class="px-6 py-3 text-sm font-semibold text-skin-700 dark:text-skin-200 border-b border-skin-100 dark:border-skin-700">{$componentName}</div>
                     {$blocks}
                 </div>
                 HTML;
@@ -413,11 +416,18 @@ function renderGalleryHtml(array $groups): string
 
         $sections .= <<<HTML
             <section class="space-y-5">
-                <h2 class="text-lg font-bold text-gray-800 dark:text-gray-100">{$section}</h2>
+                <h2 class="text-lg font-bold text-skin-800 dark:text-skin-100">{$section}</h2>
                 <div class="space-y-5">{$cards}</div>
             </section>
             HTML;
     }
+
+    // The selectable skins come straight from the shipped stylesheet.
+    $skinCss = file_get_contents(dirname(__DIR__).'/resources/css/skins.css');
+    preg_match_all('/\[data-skin="([a-z0-9]+)"\]/', $skinCss, $m);
+    $skinOptions = implode('', array_map(fn ($s) => "<option value=\"{$s}\">{$s}</option>", $m[1]));
+
+    $main = Blade::render('<x-fltc::container.page width="5xl" class="space-y-12">{!! $sections !!}</x-fltc::container.page>', ['sections' => $sections]);
 
     return <<<HTML
         <!doctype html>
@@ -427,24 +437,48 @@ function renderGalleryHtml(array $groups): string
             <meta name="viewport" content="width=device-width, initial-scale=1">
             <title>fltc — component gallery</title>
             <script src="https://cdn.tailwindcss.com"></script>
-            <script>tailwind.config = { darkMode: 'class' };</script>
+            <script>
+                tailwind.config = {
+                    darkMode: 'class',
+                    theme: { extend: { colors: {
+                        skin: { 50: 'rgb(var(--fltc-skin-50) / <alpha-value>)', 100: 'rgb(var(--fltc-skin-100) / <alpha-value>)', 200: 'rgb(var(--fltc-skin-200) / <alpha-value>)', 300: 'rgb(var(--fltc-skin-300) / <alpha-value>)', 400: 'rgb(var(--fltc-skin-400) / <alpha-value>)', 500: 'rgb(var(--fltc-skin-500) / <alpha-value>)', 600: 'rgb(var(--fltc-skin-600) / <alpha-value>)', 700: 'rgb(var(--fltc-skin-700) / <alpha-value>)', 800: 'rgb(var(--fltc-skin-800) / <alpha-value>)', 900: 'rgb(var(--fltc-skin-900) / <alpha-value>)', 950: 'rgb(var(--fltc-skin-950) / <alpha-value>)' },
+                    } } },
+                };
+                // Restore the chosen skin before first paint.
+                try {
+                    const skin = localStorage.getItem('fltc-gallery-skin');
+                    if (skin) document.documentElement.dataset.skin = skin;
+                } catch (e) {}
+            </script>
+            <style>{$skinCss}</style>
             <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3/dist/cdn.min.js"></script>
             <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
             <link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Round" rel="stylesheet">
         </head>
-        <body class="min-h-screen bg-gray-100 dark:bg-gray-900">
-            <header class="sticky top-0 z-50 flex items-center justify-between px-6 py-4 bg-white/80 dark:bg-gray-800/80 backdrop-blur border-b border-gray-200 dark:border-gray-700">
+        <body class="min-h-screen bg-skin-100 dark:bg-skin-900">
+            <header class="sticky top-0 z-50 flex items-center justify-between px-6 py-4 bg-white/80 dark:bg-skin-800/80 backdrop-blur border-b border-skin-200 dark:border-skin-700">
                 <div>
-                    <h1 class="text-xl font-bold text-gray-900 dark:text-gray-100">fltc component gallery</h1>
-                    <p class="text-xs text-gray-500 dark:text-gray-400">Rendered through real Blade — regenerate with <code>./test.sh tests/GalleryTest.php</code></p>
+                    <h1 class="text-xl font-bold text-skin-900 dark:text-skin-100">fltc component gallery</h1>
+                    <p class="text-xs text-skin-500 dark:text-skin-400">Rendered through real Blade — regenerate with <code>./test.sh tests/GalleryTest.php</code></p>
                 </div>
+                <div class="flex items-center gap-3">
+                <label class="flex items-center gap-2 text-sm font-medium text-skin-700 dark:text-skin-200">
+                    Theme
+                    <select id="gallery-skin"
+                        onchange="document.documentElement.dataset.skin = this.value; try { localStorage.setItem('fltc-gallery-skin', this.value); } catch (e) {}"
+                        class="rounded-md border border-skin-300 dark:border-skin-600 bg-white dark:bg-skin-900 px-2 py-1.5 text-sm text-skin-900 dark:text-skin-100">
+                        {$skinOptions}
+                    </select>
+                </label>
                 <button onclick="document.documentElement.classList.toggle('dark')"
-                    class="rounded-md border border-gray-300 dark:border-gray-600 px-3 py-1.5 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">
+                    class="rounded-md border border-skin-300 dark:border-skin-600 px-3 py-1.5 text-sm font-medium text-skin-700 dark:text-skin-200 hover:bg-skin-100 dark:hover:bg-skin-700">
                     Toggle dark
                 </button>
+                </div>
             </header>
-            <main class="max-w-5xl mx-auto px-6 py-8 space-y-12">
-                {$sections}
+            <script>document.getElementById('gallery-skin').value = document.documentElement.dataset.skin || 'slate';</script>
+            <main class="py-8">
+                {$main}
             </main>
         </body>
         </html>

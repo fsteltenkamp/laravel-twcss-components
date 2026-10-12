@@ -45,6 +45,10 @@ class Card extends Component
             'mauve'   => ['border' => 'border-mauve-200 dark:border-mauve-900', 'text' => 'text-mauve-900 dark:text-mauve-100'],
             'mist'    => ['border' => 'border-mist-200 dark:border-mist-900', 'text' => 'text-mist-900 dark:text-mist-100'],
             'olive'   => ['border' => 'border-olive-200 dark:border-olive-900', 'text' => 'text-olive-900 dark:text-olive-100'],
+            'skin'    => ['border' => 'border-skin-200 dark:border-skin-900', 'text' => 'text-skin-900 dark:text-skin-100'],
+            'cyberpunk' => ['border' => 'border-cyberpunk-200 dark:border-cyberpunk-900', 'text' => 'text-cyberpunk-900 dark:text-cyberpunk-100'],
+            'fantasy' => ['border' => 'border-fantasy-200 dark:border-fantasy-900', 'text' => 'text-fantasy-900 dark:text-fantasy-100'],
+            'wh40k'   => ['border' => 'border-wh40k-200 dark:border-wh40k-900', 'text' => 'text-wh40k-900 dark:text-wh40k-100'],
         ];
 
         $themeClasses = $themeMap[$this->theme] ?? $themeMap['slate'];

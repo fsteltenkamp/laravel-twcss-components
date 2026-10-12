@@ -3,17 +3,21 @@
 namespace Fsteltenkamp\TwcssComponents\View\Components;
 
 use Closure;
+use Fsteltenkamp\TwcssComponents\Support\Shades;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
 class Text extends Component
 {
+    public string $classList;
+
     /**
-     * Create a new component instance.
+     * @param  string  $theme  Palette for the Primary Content text colour. Ignored when an
+     *                         explicit `color` attribute sets the colour instead.
      */
-    public function __construct()
+    public function __construct(public string $theme = 'slate')
     {
-        //
+        $this->classList = Shades::primary($theme);
     }
 
     /**

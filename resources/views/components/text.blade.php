@@ -1,11 +1,11 @@
 @php
-    // When no explicit `color` is given we fall back to the neutral Primary Content
+    // When no explicit `color` is given we fall back to the theme's Primary Content
     // shades (see README "Color shades") so the text flips automatically in dark mode
     // instead of staying locked to whatever it inherited.
     $color = $attributes->get('color');
 @endphp
 <span
-    @class(['text-slate-900 dark:text-slate-100' => blank($color)])
+    {{ $attributes->except(['ff', 'fs', 'fw', 'color', 'ta', 'lh', 'ls'])->class([$classList => blank($color)]) }}
     style="
         font-family:{{$attributes->get('ff') ?? 'inherit'}};
         font-size:{{$attributes->get('fs') ?? 'inherit'}}pt;

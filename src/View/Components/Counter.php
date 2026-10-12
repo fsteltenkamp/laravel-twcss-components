@@ -3,6 +3,7 @@
 namespace Fsteltenkamp\TwcssComponents\View\Components;
 
 use Closure;
+use Fsteltenkamp\TwcssComponents\Support\Shades;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
@@ -10,6 +11,8 @@ class Counter extends Component
 {
     public string $classList;
     public string $counterClasses;
+    public string $titleClasses;
+    public string $descriptionClasses;
 
     public function __construct(
         public string $theme = 'slate',
@@ -51,6 +54,10 @@ class Counter extends Component
             'mauve'   => ['bg' => 'bg-mauve-50 dark:bg-mauve-950', 'border' => 'border-mauve-200 dark:border-mauve-800', 'count' => 'text-mauve-700 dark:text-mauve-300'],
             'mist'    => ['bg' => 'bg-mist-50 dark:bg-mist-950', 'border' => 'border-mist-200 dark:border-mist-800', 'count' => 'text-mist-700 dark:text-mist-300'],
             'olive'   => ['bg' => 'bg-olive-50 dark:bg-olive-950', 'border' => 'border-olive-200 dark:border-olive-800', 'count' => 'text-olive-700 dark:text-olive-300'],
+            'skin'    => ['bg' => 'bg-skin-50 dark:bg-skin-950', 'border' => 'border-skin-200 dark:border-skin-800', 'count' => 'text-skin-700 dark:text-skin-300'],
+            'cyberpunk' => ['bg' => 'bg-cyberpunk-50 dark:bg-cyberpunk-950', 'border' => 'border-cyberpunk-200 dark:border-cyberpunk-800', 'count' => 'text-cyberpunk-700 dark:text-cyberpunk-300'],
+            'fantasy' => ['bg' => 'bg-fantasy-50 dark:bg-fantasy-950', 'border' => 'border-fantasy-200 dark:border-fantasy-800', 'count' => 'text-fantasy-700 dark:text-fantasy-300'],
+            'wh40k'   => ['bg' => 'bg-wh40k-50 dark:bg-wh40k-950', 'border' => 'border-wh40k-200 dark:border-wh40k-800', 'count' => 'text-wh40k-700 dark:text-wh40k-300'],
         ];
 
         $themeClasses = $themeMap[$this->theme] ?? $themeMap['slate'];
@@ -64,6 +71,8 @@ class Counter extends Component
         ]));
 
         $this->counterClasses = 'mt-3 text-3xl font-semibold tracking-tight '.$themeClasses['count'];
+        $this->titleClasses = 'text-sm font-medium '.Shades::secondary($this->theme);
+        $this->descriptionClasses = 'mt-1 text-xs '.Shades::tertiary($this->theme);
     }
 
     public function render(): View|Closure|string

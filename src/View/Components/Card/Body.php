@@ -43,6 +43,10 @@ class Body extends Component
             'mauve'   => 'bg-mauve-50 text-mauve-700 dark:bg-mauve-900 dark:text-mauve-200',
             'mist'    => 'bg-mist-50 text-mist-700 dark:bg-mist-900 dark:text-mist-200',
             'olive'   => 'bg-olive-50 text-olive-700 dark:bg-olive-900 dark:text-olive-200',
+            'skin'    => 'bg-skin-50 text-skin-700 dark:bg-skin-900 dark:text-skin-200',
+            'cyberpunk' => 'bg-cyberpunk-50 text-cyberpunk-700 dark:bg-cyberpunk-900 dark:text-cyberpunk-200',
+            'fantasy' => 'bg-fantasy-50 text-fantasy-700 dark:bg-fantasy-900 dark:text-fantasy-200',
+            'wh40k'   => 'bg-wh40k-50 text-wh40k-700 dark:bg-wh40k-900 dark:text-wh40k-200',
         ];
 
         $this->classList = 'px-4 py-4 ' . ($themeMap[$this->theme] ?? $themeMap['slate']);

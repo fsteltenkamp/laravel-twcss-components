@@ -43,6 +43,10 @@ class Header extends Component
             'mauve'   => 'bg-mauve-200 text-mauve-900 border-mauve-200 dark:bg-mauve-950 dark:text-mauve-100 dark:border-mauve-900',
             'mist'    => 'bg-mist-200 text-mist-900 border-mist-200 dark:bg-mist-950 dark:text-mist-100 dark:border-mist-900',
             'olive'   => 'bg-olive-200 text-olive-900 border-olive-200 dark:bg-olive-950 dark:text-olive-100 dark:border-olive-900',
+            'skin'    => 'bg-skin-200 text-skin-900 border-skin-200 dark:bg-skin-950 dark:text-skin-100 dark:border-skin-900',
+            'cyberpunk' => 'bg-cyberpunk-200 text-cyberpunk-900 border-cyberpunk-200 dark:bg-cyberpunk-950 dark:text-cyberpunk-100 dark:border-cyberpunk-900',
+            'fantasy' => 'bg-fantasy-200 text-fantasy-900 border-fantasy-200 dark:bg-fantasy-950 dark:text-fantasy-100 dark:border-fantasy-900',
+            'wh40k'   => 'bg-wh40k-200 text-wh40k-900 border-wh40k-200 dark:bg-wh40k-950 dark:text-wh40k-100 dark:border-wh40k-900',
         ];
 
         $this->classList = 'border-b px-4 py-3 ' . ($themeMap[$this->theme] ?? $themeMap['slate']);

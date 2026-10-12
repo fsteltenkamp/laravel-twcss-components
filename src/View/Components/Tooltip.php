@@ -47,6 +47,10 @@ class Tooltip extends Component
             'mauve'   => 'bg-mauve-600 text-mauve-50 dark:bg-mauve-500 dark:text-mauve-50',
             'mist'    => 'bg-mist-600 text-mist-50 dark:bg-mist-500 dark:text-mist-50',
             'olive'   => 'bg-olive-600 text-olive-50 dark:bg-olive-500 dark:text-olive-50',
+            'skin'    => 'bg-skin-600 text-skin-50 dark:bg-skin-500 dark:text-skin-50',
+            'cyberpunk' => 'bg-cyberpunk-600 text-cyberpunk-50 dark:bg-cyberpunk-500 dark:text-cyberpunk-50',
+            'fantasy' => 'bg-fantasy-600 text-fantasy-50 dark:bg-fantasy-500 dark:text-fantasy-50',
+            'wh40k'   => 'bg-wh40k-600 text-wh40k-50 dark:bg-wh40k-500 dark:text-wh40k-50',
         ];
 
         $this->classList = trim(implode(' ', [

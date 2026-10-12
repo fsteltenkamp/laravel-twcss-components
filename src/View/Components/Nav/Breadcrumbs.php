@@ -59,6 +59,10 @@ class Breadcrumbs extends Component
             'mauve'   => 'text-mauve-500 dark:text-mauve-400',
             'mist'    => 'text-mist-500 dark:text-mist-400',
             'olive'   => 'text-olive-500 dark:text-olive-400',
+            'skin'    => 'text-skin-500 dark:text-skin-400',
+            'cyberpunk' => 'text-cyberpunk-500 dark:text-cyberpunk-400',
+            'fantasy' => 'text-fantasy-500 dark:text-fantasy-400',
+            'wh40k'   => 'text-wh40k-500 dark:text-wh40k-400',
         ];
 
         $this->listClass = 'flex flex-wrap items-center gap-x-2 gap-y-2 text-sm ' . ($listTextMap[$this->theme] ?? $listTextMap['slate']);

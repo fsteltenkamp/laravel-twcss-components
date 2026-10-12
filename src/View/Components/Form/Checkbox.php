@@ -3,6 +3,7 @@
 namespace Fsteltenkamp\TwcssComponents\View\Components\Form;
 
 use Closure;
+use Fsteltenkamp\TwcssComponents\Support\Shades;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
@@ -69,6 +70,10 @@ class Checkbox extends Component
             'mauve'   => 'text-mauve-500 dark:text-mauve-400',
             'mist'    => 'text-mist-500 dark:text-mist-400',
             'olive'   => 'text-olive-500 dark:text-olive-400',
+            'skin'    => 'text-skin-500 dark:text-skin-400',
+            'cyberpunk' => 'text-cyberpunk-500 dark:text-cyberpunk-400',
+            'fantasy' => 'text-fantasy-500 dark:text-fantasy-400',
+            'wh40k'   => 'text-wh40k-500 dark:text-wh40k-400',
         ];
 
         $iconColorPeerCheckedMap = [
@@ -98,6 +103,10 @@ class Checkbox extends Component
             'mauve'   => 'peer-checked:text-mauve-500 dark:peer-checked:text-mauve-400',
             'mist'    => 'peer-checked:text-mist-500 dark:peer-checked:text-mist-400',
             'olive'   => 'peer-checked:text-olive-500 dark:peer-checked:text-olive-400',
+            'skin'    => 'peer-checked:text-skin-500 dark:peer-checked:text-skin-400',
+            'cyberpunk' => 'peer-checked:text-cyberpunk-500 dark:peer-checked:text-cyberpunk-400',
+            'fantasy' => 'peer-checked:text-fantasy-500 dark:peer-checked:text-fantasy-400',
+            'wh40k'   => 'peer-checked:text-wh40k-500 dark:peer-checked:text-wh40k-400',
         ];
 
         $iconColorUncheckedMap = [
@@ -127,6 +136,10 @@ class Checkbox extends Component
             'mauve'   => 'text-mauve-300 dark:text-mauve-700',
             'mist'    => 'text-mist-300 dark:text-mist-700',
             'olive'   => 'text-olive-300 dark:text-olive-700',
+            'skin'    => 'text-skin-300 dark:text-skin-700',
+            'cyberpunk' => 'text-cyberpunk-300 dark:text-cyberpunk-700',
+            'fantasy' => 'text-fantasy-300 dark:text-fantasy-700',
+            'wh40k'   => 'text-wh40k-300 dark:text-wh40k-700',
         ];
 
         $containerBorderMap = [
@@ -156,6 +169,10 @@ class Checkbox extends Component
             'mauve'   => 'border-mauve-200 dark:border-mauve-800',
             'mist'    => 'border-mist-200 dark:border-mist-800',
             'olive'   => 'border-olive-200 dark:border-olive-800',
+            'skin'    => 'border-skin-200 dark:border-skin-800',
+            'cyberpunk' => 'border-cyberpunk-200 dark:border-cyberpunk-800',
+            'fantasy' => 'border-fantasy-200 dark:border-fantasy-800',
+            'wh40k'   => 'border-wh40k-200 dark:border-wh40k-800',
         ];
 
         $rowBgMap = [
@@ -185,6 +202,10 @@ class Checkbox extends Component
             'mauve'   => 'bg-mauve-50/40 dark:bg-mauve-950/20',
             'mist'    => 'bg-mist-50/40 dark:bg-mist-950/20',
             'olive'   => 'bg-olive-50/40 dark:bg-olive-950/20',
+            'skin'    => 'bg-skin-50/40 dark:bg-skin-950/20',
+            'cyberpunk' => 'bg-cyberpunk-50/40 dark:bg-cyberpunk-950/20',
+            'fantasy' => 'bg-fantasy-50/40 dark:bg-fantasy-950/20',
+            'wh40k'   => 'bg-wh40k-50/40 dark:bg-wh40k-950/20',
         ];
 
         $rowBgCheckedHasMap = [
@@ -214,6 +235,10 @@ class Checkbox extends Component
             'mauve'   => 'has-[:checked]:bg-mauve-50 dark:has-[:checked]:bg-mauve-950/30',
             'mist'    => 'has-[:checked]:bg-mist-50 dark:has-[:checked]:bg-mist-950/30',
             'olive'   => 'has-[:checked]:bg-olive-50 dark:has-[:checked]:bg-olive-950/30',
+            'skin'    => 'has-[:checked]:bg-skin-50 dark:has-[:checked]:bg-skin-950/30',
+            'cyberpunk' => 'has-[:checked]:bg-cyberpunk-50 dark:has-[:checked]:bg-cyberpunk-950/30',
+            'fantasy' => 'has-[:checked]:bg-fantasy-50 dark:has-[:checked]:bg-fantasy-950/30',
+            'wh40k'   => 'has-[:checked]:bg-wh40k-50 dark:has-[:checked]:bg-wh40k-950/30',
         ];
 
         // Toggle ("switch") variant — separate on/off themes, sizes and icons.
@@ -244,6 +269,10 @@ class Checkbox extends Component
             'mauve'   => 'group-has-[:checked]/toggle:bg-mauve-500 dark:group-has-[:checked]/toggle:bg-mauve-600',
             'mist'    => 'group-has-[:checked]/toggle:bg-mist-500 dark:group-has-[:checked]/toggle:bg-mist-600',
             'olive'   => 'group-has-[:checked]/toggle:bg-olive-500 dark:group-has-[:checked]/toggle:bg-olive-600',
+            'skin'    => 'group-has-[:checked]/toggle:bg-skin-500 dark:group-has-[:checked]/toggle:bg-skin-600',
+            'cyberpunk' => 'group-has-[:checked]/toggle:bg-cyberpunk-500 dark:group-has-[:checked]/toggle:bg-cyberpunk-600',
+            'fantasy' => 'group-has-[:checked]/toggle:bg-fantasy-500 dark:group-has-[:checked]/toggle:bg-fantasy-600',
+            'wh40k'   => 'group-has-[:checked]/toggle:bg-wh40k-500 dark:group-has-[:checked]/toggle:bg-wh40k-600',
         ];
 
         $trackOffMap = [
@@ -273,6 +302,10 @@ class Checkbox extends Component
             'mauve'   => 'bg-mauve-200 dark:bg-mauve-800',
             'mist'    => 'bg-mist-200 dark:bg-mist-800',
             'olive'   => 'bg-olive-200 dark:bg-olive-800',
+            'skin'    => 'bg-skin-200 dark:bg-skin-800',
+            'cyberpunk' => 'bg-cyberpunk-200 dark:bg-cyberpunk-800',
+            'fantasy' => 'bg-fantasy-200 dark:bg-fantasy-800',
+            'wh40k'   => 'bg-wh40k-200 dark:bg-wh40k-800',
         ];
 
         $sizeMap = [
@@ -294,7 +327,7 @@ class Checkbox extends Component
         $this->iconColorUnchecked   = $iconColorUncheckedMap[$theme] ?? $iconColorUncheckedMap['sky'];
         $this->iconColorChecked     = $iconColorMap[$theme] ?? $iconColorMap['sky'];
         $this->iconColorCheckedPeer = $iconColorPeerCheckedMap[$theme] ?? $iconColorPeerCheckedMap['sky'];
-        $this->labelClasses         = 'cursor-pointer text-sm font-medium text-slate-700 dark:text-slate-300 select-none';
+        $this->labelClasses         = 'cursor-pointer text-sm font-medium select-none '.Shades::secondary($theme);
         $this->containerBorder      = $containerBorderMap[$theme] ?? $containerBorderMap['sky'];
         $this->rowBg                = $rowBgMap[$theme] ?? $rowBgMap['sky'];
         $this->rowBgCheckedHas      = $rowBgCheckedHasMap[$theme] ?? $rowBgCheckedHasMap['sky'];

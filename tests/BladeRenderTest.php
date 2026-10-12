@@ -554,3 +554,13 @@ it('emits the drawer script only once per page', function () {
 
     expect(substr_count($html, 'if (! window.fltcDrawers)'))->toBe(1);
 });
+
+it('keeps the page container clear of drawer rails and pinned drawers', function () {
+    $html = Blade::render('<x-fltc::container.page width="5xl" gutter="left" id="main">x</x-fltc::container.page>');
+
+    expect($html)
+        ->toContain('max-w-5xl')
+        ->toContain('sm:ps-[calc(var(--fltc-drawer-pin-left,0px)_+_3rem)]')
+        ->toContain('pe-4 sm:pe-6')
+        ->toContain('id="main"');
+});

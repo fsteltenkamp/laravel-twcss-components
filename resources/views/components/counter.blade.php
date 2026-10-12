@@ -5,7 +5,7 @@
 >
     <div class="flex items-start justify-between gap-3">
         @if (filled($title))
-            <span class="text-sm font-medium text-slate-600 dark:text-slate-400">{{ $title }}</span>
+            <span class="{{ $titleClasses }}">{{ $title }}</span>
         @endif
 
         @if (filled($icon))
@@ -16,6 +16,6 @@
     <div class="{{ $counterClasses }}">{{ filled($count) ? $count : $slot }}</div>
 
     @if (filled($description))
-        <p class="mt-1 text-xs text-slate-500 dark:text-slate-400">{{ $description }}</p>
+        <p class="{{ $descriptionClasses }}">{{ $description }}</p>
     @endif
 </{{ $tag }}>

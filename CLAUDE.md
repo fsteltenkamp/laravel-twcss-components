@@ -29,7 +29,9 @@ There is no linter or build step configured.
 behaviour (Alpine state, transitions, layout) cannot be verified directly. When something
 needs checking in a browser, add/update its demo in `tests/GalleryTest.php`, run `./test.sh`
 (which regenerates `gallery.html`), and ask the user to inspect `gallery.html` and report
-back — say exactly what to click and what to look for.
+back — say exactly what to click and what to look for. Gallery demos use `theme="skin"`
+so the Theme dropdown in the gallery header re-themes every component at once; don't add
+per-theme showcases.
 
 ## Architecture
 
@@ -101,7 +103,11 @@ renders them. Keep logic in the PHP class, markup in the Blade file.
 
 All components accept a `theme` prop spanning the full Tailwind palette plus extended
 neutrals (`taupe`, `mauve`, `mist`, `olive` — these require the host app's Tailwind
-config to define them). Table components share one large theme map via the abstract
+config to define them) and the custom themes `cyberpunk`, `fantasy`, `wh40k` (palettes
+shipped in `resources/css/themes.css` / `resources/js/themes.js`; every theme map needs
+an entry for them, enforced by `tests/CustomThemesTest.php`), plus `skin`, which follows
+the nearest `data-skin` attribute at runtime (`resources/css/skins.css`). Role colours
+outside a component's own maps come from `src/Support/Shades.php`. Table components share one large theme map via the abstract
 `src/View/Components/TableBase.php`; extend it rather than duplicating color tables.
 
 ### Tests

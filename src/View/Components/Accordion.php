@@ -43,6 +43,14 @@ class Accordion extends Component
             'fuchsia' => 'border-fuchsia-200 bg-white divide-fuchsia-200 dark:border-fuchsia-700 dark:bg-fuchsia-950/30 dark:divide-fuchsia-800',
             'pink'    => 'border-pink-200 bg-white divide-pink-200 dark:border-pink-700 dark:bg-pink-950/30 dark:divide-pink-800',
             'rose'    => 'border-rose-200 bg-white divide-rose-200 dark:border-rose-700 dark:bg-rose-950/30 dark:divide-rose-800',
+            'taupe'   => 'border-taupe-200 bg-white divide-taupe-200 dark:border-taupe-700 dark:bg-taupe-950/30 dark:divide-taupe-800',
+            'mauve'   => 'border-mauve-200 bg-white divide-mauve-200 dark:border-mauve-700 dark:bg-mauve-950/30 dark:divide-mauve-800',
+            'mist'    => 'border-mist-200 bg-white divide-mist-200 dark:border-mist-700 dark:bg-mist-950/30 dark:divide-mist-800',
+            'olive'   => 'border-olive-200 bg-white divide-olive-200 dark:border-olive-700 dark:bg-olive-950/30 dark:divide-olive-800',
+            'skin'    => 'border-skin-200 bg-white divide-skin-200 dark:border-skin-700 dark:bg-skin-950/30 dark:divide-skin-800',
+            'cyberpunk' => 'border-cyberpunk-200 bg-white divide-cyberpunk-200 dark:border-cyberpunk-700 dark:bg-cyberpunk-950/30 dark:divide-cyberpunk-800',
+            'fantasy' => 'border-fantasy-200 bg-white divide-fantasy-200 dark:border-fantasy-700 dark:bg-fantasy-950/30 dark:divide-fantasy-800',
+            'wh40k'   => 'border-wh40k-200 bg-white divide-wh40k-200 dark:border-wh40k-700 dark:bg-wh40k-950/30 dark:divide-wh40k-800',
         ];
 
         // Resolve to a known theme so the interpolated Primary Content classes below

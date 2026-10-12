@@ -14,6 +14,17 @@ For components with multiple class properties, name them according to placement 
 All components support the full color palette:
 - **Colors**: red, orange, amber, yellow, lime, green, emerald, teal, cyan, sky, blue, indigo, violet, purple, fuchsia, pink, rose
 - **Neutrals**: slate, gray, zinc, neutral, stone, taupe, mauve, mist, olive
+- **Custom themes**: cyberpunk, fantasy, wh40k — the readar skins, shipped as palettes in
+  `resources/css/themes.css` (Tailwind v4) and `resources/js/themes.js` (Tailwind v3). The
+  host app must load one of them, see the README "Custom themes" section.
+- **Runtime**: skin — follows whichever theme the nearest `data-skin` attribute selects,
+  so the page switches theme in the browser without re-rendering. Needs
+  `resources/css/skins.css`, see the README "Runtime theme switching" section.
+
+New components must add a map entry for every theme above — `tests/CustomThemesTest.php`
+fails when a file defines any theme fewer times than it defines `rose`. For a role colour
+outside a component's own maps (label text, icons, tracks), use
+`Fsteltenkamp\TwcssComponents\Support\Shades` instead of hardcoding a neutral palette.
 
 ### Color Shades
 
@@ -31,6 +42,22 @@ step darker than the page (surface vs. page Background) for context. See the
 [README "Color shades"](../README.md#color-shades) section for the full guide.
 
 ### Layout and Navigation
+
+**Page container** (`x-fltc::container.page`): the centred content column of a page. Its side
+gutters leave room for the drawer tabs (the 2.5rem rail plus a 0.5rem gap), so the tabs sit
+in the margin between the screen edge and the content instead of covering it. From `sm` up a
+gutter also grows by the width of a pinned drawer on that side and animates with it.
+- `width`: max content width — `sm` … `7xl` (default), `prose`, `full`. The width applies to
+  the content alone (`box-content`), so on wide screens the gutters sit outside it
+- `gutter`: sides that reserve drawer room — `both` (default), `left`, `right`, `none`;
+  the other sides get the usual `px-4 sm:px-6`
+- No theme: it sets no colours. `class` and passthrough attributes go on the root `<div>`
+
+```blade
+<x-fltc::container.page width="5xl" class="py-8">
+    ...page content...
+</x-fltc::container.page>
+```
 
 **Layouts**:
 - `x-app-layout`, `x-guest-layout`, `x-formular-layout`, `x-admin-layout`, `x-profile-layout`, `x-error-layout`, `x-editor-layout`
@@ -121,6 +148,11 @@ step darker than the page (surface vs. page Background) for context. See the
 Components:
 - `x-fltc::heading`
 - `x-fltc::subheading`
+- `x-fltc::text`
+
+**Text** (`x-fltc::text`): inline text in the theme's Primary Content colour.
+- `theme`: full palette (default: slate). Ignored when `color` is set
+- `color`, `ff`, `fs` (pt), `fw`, `ta`, `lh`, `ls`: inline font/colour overrides
 
 Use for section titles and supporting copy. Both use the neutral Primary/Tertiary Content
 roles so they flip cleanly in dark mode.
@@ -182,8 +214,8 @@ Behaviour:
   `fltc-drawer-pinned:{name}`). While pinned drawers are open, `<html>` gets a
   `data-fltc-drawer-pinned` attribute plus the CSS variables `--fltc-drawer-pin-left` /
   `--fltc-drawer-pin-right` (the pinned panel's width, `0px` otherwise), so a host can keep its
-  content clear of them, e.g.
-  `<main class="sm:ps-[var(--fltc-drawer-pin-left,0px)] sm:pe-[var(--fltc-drawer-pin-right,0px)] transition-[padding]">`.
+  content clear of them. `x-fltc::container.page` does this (and keeps clear of the tabs);
+  by hand: `<main class="sm:ps-[var(--fltc-drawer-pin-left,0px)] sm:pe-[var(--fltc-drawer-pin-right,0px)] transition-[padding]">`.
 
 Opening from elsewhere:
 - Alpine: `$dispatch('fltc-drawer-open', 'wiki')`, `fltc-drawer-close`, `fltc-drawer-toggle`
@@ -292,6 +324,9 @@ Default button text is white. Use color names for semantic meaning.
 - `navigate`: adds `wire:navigate` when true
 
 ### Forms
+
+**Label** (`x-fltc::form.label`) uses the theme's Secondary Content colour (`theme`, default
+slate). The inputs pass their own `theme` to their label, so a label matches its field.
 
 Components:
 - `x-fltc::form.label`

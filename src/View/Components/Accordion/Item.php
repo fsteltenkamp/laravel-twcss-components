@@ -54,6 +54,14 @@ class Item extends Component
             'fuchsia' => 'text-fuchsia-800 hover:bg-fuchsia-50 focus-visible:ring-fuchsia-400 dark:text-fuchsia-100 dark:hover:bg-fuchsia-900/60 dark:focus-visible:ring-fuchsia-600',
             'pink'    => 'text-pink-800 hover:bg-pink-50 focus-visible:ring-pink-400 dark:text-pink-100 dark:hover:bg-pink-900/60 dark:focus-visible:ring-pink-600',
             'rose'    => 'text-rose-800 hover:bg-rose-50 focus-visible:ring-rose-400 dark:text-rose-100 dark:hover:bg-rose-900/60 dark:focus-visible:ring-rose-600',
+            'taupe'   => 'text-taupe-800 hover:bg-taupe-50 focus-visible:ring-taupe-400 dark:text-taupe-100 dark:hover:bg-taupe-900/60 dark:focus-visible:ring-taupe-600',
+            'mauve'   => 'text-mauve-800 hover:bg-mauve-50 focus-visible:ring-mauve-400 dark:text-mauve-100 dark:hover:bg-mauve-900/60 dark:focus-visible:ring-mauve-600',
+            'mist'    => 'text-mist-800 hover:bg-mist-50 focus-visible:ring-mist-400 dark:text-mist-100 dark:hover:bg-mist-900/60 dark:focus-visible:ring-mist-600',
+            'olive'   => 'text-olive-800 hover:bg-olive-50 focus-visible:ring-olive-400 dark:text-olive-100 dark:hover:bg-olive-900/60 dark:focus-visible:ring-olive-600',
+            'skin'    => 'text-skin-800 hover:bg-skin-50 focus-visible:ring-skin-400 dark:text-skin-100 dark:hover:bg-skin-900/60 dark:focus-visible:ring-skin-600',
+            'cyberpunk' => 'text-cyberpunk-800 hover:bg-cyberpunk-50 focus-visible:ring-cyberpunk-400 dark:text-cyberpunk-100 dark:hover:bg-cyberpunk-900/60 dark:focus-visible:ring-cyberpunk-600',
+            'fantasy' => 'text-fantasy-800 hover:bg-fantasy-50 focus-visible:ring-fantasy-400 dark:text-fantasy-100 dark:hover:bg-fantasy-900/60 dark:focus-visible:ring-fantasy-600',
+            'wh40k'   => 'text-wh40k-800 hover:bg-wh40k-50 focus-visible:ring-wh40k-400 dark:text-wh40k-100 dark:hover:bg-wh40k-900/60 dark:focus-visible:ring-wh40k-600',
         ];
 
         $subtextThemeMap = [
@@ -79,6 +87,14 @@ class Item extends Component
             'fuchsia' => 'text-fuchsia-500 dark:text-fuchsia-300',
             'pink'    => 'text-pink-500 dark:text-pink-300',
             'rose'    => 'text-rose-500 dark:text-rose-300',
+            'taupe'   => 'text-taupe-500 dark:text-taupe-300',
+            'mauve'   => 'text-mauve-500 dark:text-mauve-300',
+            'mist'    => 'text-mist-500 dark:text-mist-300',
+            'olive'   => 'text-olive-500 dark:text-olive-300',
+            'skin'    => 'text-skin-500 dark:text-skin-300',
+            'cyberpunk' => 'text-cyberpunk-500 dark:text-cyberpunk-300',
+            'fantasy' => 'text-fantasy-500 dark:text-fantasy-300',
+            'wh40k'   => 'text-wh40k-500 dark:text-wh40k-300',
         ];
 
         $handleThemeMap = [
@@ -104,6 +120,14 @@ class Item extends Component
             'fuchsia' => 'text-fuchsia-400 hover:text-fuchsia-600 dark:text-fuchsia-500 dark:hover:text-fuchsia-300',
             'pink'    => 'text-pink-400 hover:text-pink-600 dark:text-pink-500 dark:hover:text-pink-300',
             'rose'    => 'text-rose-400 hover:text-rose-600 dark:text-rose-500 dark:hover:text-rose-300',
+            'taupe'   => 'text-taupe-400 hover:text-taupe-600 dark:text-taupe-500 dark:hover:text-taupe-300',
+            'mauve'   => 'text-mauve-400 hover:text-mauve-600 dark:text-mauve-500 dark:hover:text-mauve-300',
+            'mist'    => 'text-mist-400 hover:text-mist-600 dark:text-mist-500 dark:hover:text-mist-300',
+            'olive'   => 'text-olive-400 hover:text-olive-600 dark:text-olive-500 dark:hover:text-olive-300',
+            'skin'    => 'text-skin-400 hover:text-skin-600 dark:text-skin-500 dark:hover:text-skin-300',
+            'cyberpunk' => 'text-cyberpunk-400 hover:text-cyberpunk-600 dark:text-cyberpunk-500 dark:hover:text-cyberpunk-300',
+            'fantasy' => 'text-fantasy-400 hover:text-fantasy-600 dark:text-fantasy-500 dark:hover:text-fantasy-300',
+            'wh40k'   => 'text-wh40k-400 hover:text-wh40k-600 dark:text-wh40k-500 dark:hover:text-wh40k-300',
         ];
 
         $headerSurfaceMap = [
@@ -129,6 +153,14 @@ class Item extends Component
             'fuchsia' => 'bg-fuchsia-100/70 dark:bg-fuchsia-950/70',
             'pink'    => 'bg-pink-100/70 dark:bg-pink-950/70',
             'rose'    => 'bg-rose-100/70 dark:bg-rose-950/70',
+            'taupe'   => 'bg-taupe-100/70 dark:bg-taupe-950/70',
+            'mauve'   => 'bg-mauve-100/70 dark:bg-mauve-950/70',
+            'mist'    => 'bg-mist-100/70 dark:bg-mist-950/70',
+            'olive'   => 'bg-olive-100/70 dark:bg-olive-950/70',
+            'skin'    => 'bg-skin-100/70 dark:bg-skin-950/70',
+            'cyberpunk' => 'bg-cyberpunk-100/70 dark:bg-cyberpunk-950/70',
+            'fantasy' => 'bg-fantasy-100/70 dark:bg-fantasy-950/70',
+            'wh40k'   => 'bg-wh40k-100/70 dark:bg-wh40k-950/70',
         ];
 
         $bodySurfaceMap = [
@@ -154,6 +186,14 @@ class Item extends Component
             'fuchsia' => 'bg-fuchsia-50/40 dark:bg-fuchsia-950/45',
             'pink'    => 'bg-pink-50/40 dark:bg-pink-950/45',
             'rose'    => 'bg-rose-50/40 dark:bg-rose-950/45',
+            'taupe'   => 'bg-taupe-50/40 dark:bg-taupe-950/45',
+            'mauve'   => 'bg-mauve-50/40 dark:bg-mauve-950/45',
+            'mist'    => 'bg-mist-50/40 dark:bg-mist-950/45',
+            'olive'   => 'bg-olive-50/40 dark:bg-olive-950/45',
+            'skin'    => 'bg-skin-50/40 dark:bg-skin-950/45',
+            'cyberpunk' => 'bg-cyberpunk-50/40 dark:bg-cyberpunk-950/45',
+            'fantasy' => 'bg-fantasy-50/40 dark:bg-fantasy-950/45',
+            'wh40k'   => 'bg-wh40k-50/40 dark:bg-wh40k-950/45',
         ];
 
         $this->classList = trim(implode(' ', array_filter([

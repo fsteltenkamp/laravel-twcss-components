@@ -14,7 +14,7 @@
                 <span>{{ $displayCompleted }} von {{ $displayTotal }} Schritten abgeschlossen</span>
                 <span>{{ $displayPercent }}%</span>
             </div>
-            <div class="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-2.5 overflow-hidden">
+            <div class="w-full {{ $progressTrackColor }} rounded-full h-2.5 overflow-hidden">
                 <div
                     class="h-2.5 rounded-full transition-all duration-500
                         @if ($displayPercent === 100) bg-green-500

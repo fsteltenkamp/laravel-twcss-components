@@ -3,6 +3,7 @@
 namespace Fsteltenkamp\TwcssComponents\View\Components\Card;
 
 use Closure;
+use Fsteltenkamp\TwcssComponents\View\Components\Table;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\View as ViewFacade;
 use Illuminate\View\Component;
@@ -13,6 +14,18 @@ class Rows extends Component
      * Create a new component instance.
      */
     public string $classList;
+
+    // The inner <x-fltc::table>'s class strings, re-exposed here: rows and cells
+    // passed in through this component's slots are rendered while it is their
+    // nearest ancestor, before the inner table exists, so their @aware lookups
+    // stop here and would otherwise fall back to the gray defaults.
+    public string $headClasses;
+    public string $cellClasses;
+    public string $cellBorderClasses;
+    public string $footClasses;
+    public string $rowBorderClasses;
+    public string $stripeClasses;
+    public string $hoverClasses;
 
     public function __construct(
         public ?string $theme = null,
@@ -53,9 +66,28 @@ class Rows extends Component
             'mauve'   => 'bg-mauve-50 text-mauve-700 dark:bg-mauve-900 dark:text-mauve-200',
             'mist'    => 'bg-mist-50 text-mist-700 dark:bg-mist-900 dark:text-mist-200',
             'olive'   => 'bg-olive-50 text-olive-700 dark:bg-olive-900 dark:text-olive-200',
+            'skin'    => 'bg-skin-50 text-skin-700 dark:bg-skin-900 dark:text-skin-200',
+            'cyberpunk' => 'bg-cyberpunk-50 text-cyberpunk-700 dark:bg-cyberpunk-900 dark:text-cyberpunk-200',
+            'fantasy' => 'bg-fantasy-50 text-fantasy-700 dark:bg-fantasy-900 dark:text-fantasy-200',
+            'wh40k'   => 'bg-wh40k-50 text-wh40k-700 dark:bg-wh40k-900 dark:text-wh40k-200',
         ];
 
         $this->classList = 'px-0 py-0 ' . ($themeMap[$this->theme] ?? $themeMap['slate']);
+
+        $table = new Table(
+            theme: $this->theme,
+            radius: '0',
+            striped: $this->striped,
+            hover: $this->hover,
+            bordered: $this->bordered,
+            compact: $this->compact,
+            responsive: $this->responsive,
+            floating: $this->floating,
+        );
+
+        foreach (['headClasses', 'cellClasses', 'cellBorderClasses', 'footClasses', 'rowBorderClasses', 'stripeClasses', 'hoverClasses'] as $key) {
+            $this->{$key} = $table->{$key};
+        }
     }
 
     /**

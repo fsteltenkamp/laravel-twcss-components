@@ -231,6 +231,34 @@ class Toast extends Component
                 'close'   => 'text-olive-400 hover:text-olive-600 dark:text-olive-500 dark:hover:text-olive-300 transition-colors',
                 'desc'    => 'text-olive-500 dark:text-olive-400',
             ]),
+            'skin'  => array_fill_keys($v, [
+                'wrapper' => 'border border-skin-200 bg-skin-100 text-skin-700 dark:border-skin-800 dark:bg-skin-950 dark:text-skin-300',
+                'border'  => 'border-skin-200 dark:border-skin-800',
+                'icon'    => 'text-skin-500 dark:text-skin-400',
+                'close'   => 'text-skin-400 hover:text-skin-600 dark:text-skin-500 dark:hover:text-skin-300 transition-colors',
+                'desc'    => 'text-skin-500 dark:text-skin-400',
+            ]),
+            'cyberpunk' => array_fill_keys($v, [
+                'wrapper' => 'border border-cyberpunk-200 bg-cyberpunk-100 text-cyberpunk-700 dark:border-cyberpunk-800 dark:bg-cyberpunk-950 dark:text-cyberpunk-300',
+                'border'  => 'border-cyberpunk-200 dark:border-cyberpunk-800',
+                'icon'    => 'text-cyberpunk-500 dark:text-cyberpunk-400',
+                'close'   => 'text-cyberpunk-400 hover:text-cyberpunk-600 dark:text-cyberpunk-500 dark:hover:text-cyberpunk-300 transition-colors',
+                'desc'    => 'text-cyberpunk-500 dark:text-cyberpunk-400',
+            ]),
+            'fantasy' => array_fill_keys($v, [
+                'wrapper' => 'border border-fantasy-200 bg-fantasy-100 text-fantasy-700 dark:border-fantasy-800 dark:bg-fantasy-950 dark:text-fantasy-300',
+                'border'  => 'border-fantasy-200 dark:border-fantasy-800',
+                'icon'    => 'text-fantasy-500 dark:text-fantasy-400',
+                'close'   => 'text-fantasy-400 hover:text-fantasy-600 dark:text-fantasy-500 dark:hover:text-fantasy-300 transition-colors',
+                'desc'    => 'text-fantasy-500 dark:text-fantasy-400',
+            ]),
+            'wh40k' => array_fill_keys($v, [
+                'wrapper' => 'border border-wh40k-200 bg-wh40k-100 text-wh40k-700 dark:border-wh40k-800 dark:bg-wh40k-950 dark:text-wh40k-300',
+                'border'  => 'border-wh40k-200 dark:border-wh40k-800',
+                'icon'    => 'text-wh40k-500 dark:text-wh40k-400',
+                'close'   => 'text-wh40k-400 hover:text-wh40k-600 dark:text-wh40k-500 dark:hover:text-wh40k-300 transition-colors',
+                'desc'    => 'text-wh40k-500 dark:text-wh40k-400',
+            ]),
         ];
     }
 

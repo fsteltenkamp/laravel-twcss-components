@@ -5,7 +5,7 @@
 
 <div class="mb-4">
     @if ($label !== '')
-        <x-fltc::form.label :for="$id" :required="$required">
+        <x-fltc::form.label :for="$id" :required="$required" :theme="$theme">
             {{ $label }}
         </x-fltc::form.label>
     @endif

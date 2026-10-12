@@ -68,6 +68,10 @@ class Toggle extends Component
             'mauve'   => 'bg-mauve-100 dark:bg-mauve-950/50',
             'mist'    => 'bg-mist-100 dark:bg-mist-950/50',
             'olive'   => 'bg-olive-100 dark:bg-olive-950/50',
+            'skin'    => 'bg-skin-100 dark:bg-skin-950/50',
+            'cyberpunk' => 'bg-cyberpunk-100 dark:bg-cyberpunk-950/50',
+            'fantasy' => 'bg-fantasy-100 dark:bg-fantasy-950/50',
+            'wh40k'   => 'bg-wh40k-100 dark:bg-wh40k-950/50',
         ];
 
         // Inactive segment text — themed but muted, brightening on hover.
@@ -98,6 +102,10 @@ class Toggle extends Component
             'mauve'   => 'text-mauve-500 hover:text-mauve-800 dark:text-mauve-400 dark:hover:text-mauve-100',
             'mist'    => 'text-mist-500 hover:text-mist-800 dark:text-mist-400 dark:hover:text-mist-100',
             'olive'   => 'text-olive-500 hover:text-olive-800 dark:text-olive-400 dark:hover:text-olive-100',
+            'skin'    => 'text-skin-500 hover:text-skin-800 dark:text-skin-400 dark:hover:text-skin-100',
+            'cyberpunk' => 'text-cyberpunk-500 hover:text-cyberpunk-800 dark:text-cyberpunk-400 dark:hover:text-cyberpunk-100',
+            'fantasy' => 'text-fantasy-500 hover:text-fantasy-800 dark:text-fantasy-400 dark:hover:text-fantasy-100',
+            'wh40k'   => 'text-wh40k-500 hover:text-wh40k-800 dark:text-wh40k-400 dark:hover:text-wh40k-100',
         ];
 
         // Active segment colour for the segmented control. Literal strings so the host
@@ -129,6 +137,10 @@ class Toggle extends Component
             'mauve'   => 'bg-mauve-600 text-white shadow-sm dark:bg-mauve-500',
             'mist'    => 'bg-mist-600 text-white shadow-sm dark:bg-mist-500',
             'olive'   => 'bg-olive-600 text-white shadow-sm dark:bg-olive-500',
+            'skin'    => 'bg-skin-600 text-white shadow-sm dark:bg-skin-500',
+            'cyberpunk' => 'bg-cyberpunk-600 text-white shadow-sm dark:bg-cyberpunk-500',
+            'fantasy' => 'bg-fantasy-600 text-white shadow-sm dark:bg-fantasy-500',
+            'wh40k'   => 'bg-wh40k-600 text-white shadow-sm dark:bg-wh40k-500',
         ];
 
         $this->containerClasses = $containerMap[$theme] ?? $containerMap['sky'];

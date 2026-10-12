@@ -125,6 +125,22 @@ class TwoColRight extends Component
                 'shell' => 'border-olive-200 bg-white/95 dark:border-olive-800 dark:bg-olive-950/50',
                 'side' => 'border-olive-200 bg-olive-50 text-olive-900 dark:border-olive-800 dark:bg-olive-950 dark:text-olive-100',
             ],
+            'skin'  => [
+                'shell' => 'border-skin-200 bg-white/95 dark:border-skin-800 dark:bg-skin-950/50',
+                'side' => 'border-skin-200 bg-skin-50 text-skin-900 dark:border-skin-800 dark:bg-skin-950 dark:text-skin-100',
+            ],
+            'cyberpunk' => [
+                'shell' => 'border-cyberpunk-200 bg-white/95 dark:border-cyberpunk-800 dark:bg-cyberpunk-950/50',
+                'side' => 'border-cyberpunk-200 bg-cyberpunk-50 text-cyberpunk-900 dark:border-cyberpunk-800 dark:bg-cyberpunk-950 dark:text-cyberpunk-100',
+            ],
+            'fantasy' => [
+                'shell' => 'border-fantasy-200 bg-white/95 dark:border-fantasy-800 dark:bg-fantasy-950/50',
+                'side' => 'border-fantasy-200 bg-fantasy-50 text-fantasy-900 dark:border-fantasy-800 dark:bg-fantasy-950 dark:text-fantasy-100',
+            ],
+            'wh40k' => [
+                'shell' => 'border-wh40k-200 bg-white/95 dark:border-wh40k-800 dark:bg-wh40k-950/50',
+                'side' => 'border-wh40k-200 bg-wh40k-50 text-wh40k-900 dark:border-wh40k-800 dark:bg-wh40k-950 dark:text-wh40k-100',
+            ],
         ];
 
         $themeClasses = $themeMap[$this->theme] ?? $themeMap['slate'];

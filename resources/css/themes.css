@@ -1,0 +1,71 @@
+/*
+ * Custom theme palettes for fsteltenkamp/laravel-twcss-components (Tailwind v4).
+ *
+ * Import after Tailwind in the host app's main CSS file:
+ *     @import '../../vendor/fsteltenkamp/laravel-twcss-components/resources/css/themes.css';
+ *
+ * These are not single-hue scales: each is derived from one of readar's
+ * two-mode skins so the package's shade roles land on the right slot.
+ *   50 light page · 100 dark primary text / light surface · 300 dark secondary text
+ *   400–600 accent · 700 light secondary text · 900 dark surface / light primary text
+ *   950 dark page · 200/500/800 blends between their neighbours
+ */
+@theme {
+    /* cyberpunk — neon pink on ink, cyan text */
+    --color-cyberpunk-50: #f6f2fb;
+    --color-cyberpunk-100: #d8fbff;
+    --color-cyberpunk-200: #82fdf9;
+    --color-cyberpunk-300: #00fff0;
+    --color-cyberpunk-400: #ff2bd6;
+    --color-cyberpunk-500: #e216b2;
+    --color-cyberpunk-600: #c4008f;
+    --color-cyberpunk-700: #00707c;
+    --color-cyberpunk-800: #053b4a;
+    --color-cyberpunk-900: #0a0618;
+    --color-cyberpunk-950: #04020a;
+
+    /* fantasy — burnished gold, parchment & old libraries */
+    --color-fantasy-50: #f0e6cf;
+    --color-fantasy-100: #f3e9cf;
+    --color-fantasy-200: #eee2c2;
+    --color-fantasy-300: #e6d7ae;
+    --color-fantasy-400: #d98e32;
+    --color-fantasy-500: #b27422;
+    --color-fantasy-600: #8a5a12;
+    --color-fantasy-700: #503c1e;
+    --color-fantasy-800: #3a2b16;
+    --color-fantasy-900: #241a0e;
+    --color-fantasy-950: #140f08;
+
+    /* wh40k — grimdark gothic: gunmetal, bone & blood */
+    --color-wh40k-50: #e7e3d7;
+    --color-wh40k-100: #ded7c2;
+    --color-wh40k-200: #d6cfba;
+    --color-wh40k-300: #c9c2ad;
+    --color-wh40k-400: #bf2a1f;
+    --color-wh40k-500: #a7241a;
+    --color-wh40k-600: #8f1d14;
+    --color-wh40k-700: #3a3630;
+    --color-wh40k-800: #282626;
+    --color-wh40k-900: #17171b;
+    --color-wh40k-950: #0b0b0d;
+}
+
+/*
+ * skin — the palette selected at runtime through data-skin (see resources/css/skins.css,
+ * which must be imported too). `inline` makes utilities read the variables where they
+ * are used, so a data-skin on any element re-colours just that region.
+ */
+@theme inline {
+    --color-skin-50: rgb(var(--fltc-skin-50));
+    --color-skin-100: rgb(var(--fltc-skin-100));
+    --color-skin-200: rgb(var(--fltc-skin-200));
+    --color-skin-300: rgb(var(--fltc-skin-300));
+    --color-skin-400: rgb(var(--fltc-skin-400));
+    --color-skin-500: rgb(var(--fltc-skin-500));
+    --color-skin-600: rgb(var(--fltc-skin-600));
+    --color-skin-700: rgb(var(--fltc-skin-700));
+    --color-skin-800: rgb(var(--fltc-skin-800));
+    --color-skin-900: rgb(var(--fltc-skin-900));
+    --color-skin-950: rgb(var(--fltc-skin-950));
+}

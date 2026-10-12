@@ -74,6 +74,10 @@ class Stepper extends Component
             'mauve' => 'border-mauve-200 bg-mauve-50/70 dark:border-mauve-700 dark:bg-mauve-950/30',
             'mist' => 'border-mist-200 bg-mist-50/70 dark:border-mist-700 dark:bg-mist-950/30',
             'olive' => 'border-olive-200 bg-olive-50/70 dark:border-olive-700 dark:bg-olive-950/30',
+            'skin'  => 'border-skin-200 bg-skin-50/70 dark:border-skin-700 dark:bg-skin-950/30',
+            'cyberpunk' => 'border-cyberpunk-200 bg-cyberpunk-50/70 dark:border-cyberpunk-700 dark:bg-cyberpunk-950/30',
+            'fantasy' => 'border-fantasy-200 bg-fantasy-50/70 dark:border-fantasy-700 dark:bg-fantasy-950/30',
+            'wh40k' => 'border-wh40k-200 bg-wh40k-50/70 dark:border-wh40k-700 dark:bg-wh40k-950/30',
         ];
 
         $activeThemeMap = [
@@ -103,6 +107,10 @@ class Stepper extends Component
             'mauve'   => 'border-mauve-600 text-mauve-700 dark:border-mauve-400 dark:text-mauve-300',
             'mist'    => 'border-mist-600 text-mist-700 dark:border-mist-400 dark:text-mist-300',
             'olive'   => 'border-olive-600 text-olive-700 dark:border-olive-400 dark:text-olive-300',
+            'skin'    => 'border-skin-600 text-skin-700 dark:border-skin-400 dark:text-skin-300',
+            'cyberpunk' => 'border-cyberpunk-600 text-cyberpunk-700 dark:border-cyberpunk-400 dark:text-cyberpunk-300',
+            'fantasy' => 'border-fantasy-600 text-fantasy-700 dark:border-fantasy-400 dark:text-fantasy-300',
+            'wh40k'   => 'border-wh40k-600 text-wh40k-700 dark:border-wh40k-400 dark:text-wh40k-300',
         ];
 
         $tabsBorderThemeMap = [
@@ -132,6 +140,10 @@ class Stepper extends Component
             'mauve'   => 'border-mauve-200 dark:border-mauve-800',
             'mist'    => 'border-mist-200 dark:border-mist-800',
             'olive'   => 'border-olive-200 dark:border-olive-800',
+            'skin'    => 'border-skin-200 dark:border-skin-800',
+            'cyberpunk' => 'border-cyberpunk-200 dark:border-cyberpunk-800',
+            'fantasy' => 'border-fantasy-200 dark:border-fantasy-800',
+            'wh40k'   => 'border-wh40k-200 dark:border-wh40k-800',
         ];
 
         // inactive tab state is theme-neutral: transparent border, gray text, hover reveals border
@@ -164,6 +176,10 @@ class Stepper extends Component
             'mauve' => 'text-mauve-700 dark:text-mauve-200',
             'mist' => 'text-mist-700 dark:text-mist-200',
             'olive' => 'text-olive-700 dark:text-olive-200',
+            'skin'  => 'text-skin-700 dark:text-skin-200',
+            'cyberpunk' => 'text-cyberpunk-700 dark:text-cyberpunk-200',
+            'fantasy' => 'text-fantasy-700 dark:text-fantasy-200',
+            'wh40k' => 'text-wh40k-700 dark:text-wh40k-200',
         ];
 
         $selectedContainerTheme = $containerThemeMap[$this->theme] ?? $containerThemeMap['slate'];

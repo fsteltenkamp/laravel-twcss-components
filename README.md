@@ -62,7 +62,9 @@ Components are registered under the `fltc` namespace:
 ## Color shades
 
 Every component is themed by passing a `theme` (any Tailwind palette, e.g. `slate`,
-`blue`, `rose`, plus the extended neutrals `taupe`, `mauve`, `mist`, `olive`). Within a
+`blue`, `rose`, plus the extended neutrals `taupe`, `mauve`, `mist`, `olive` and the
+[custom themes](#custom-themes) `cyberpunk`, `fantasy`, `wh40k`, and `skin` for
+[runtime switching](#runtime-theme-switching)). Within a
 theme, each surface and piece of text is assigned one of a small, fixed set of **roles**.
 Sticking to these roles is what makes a component flip cleanly between light and dark mode
 — text and backgrounds are always defined as a *pair*, so nothing stays locked to the
@@ -89,6 +91,69 @@ Notes:
   the table surface reads as a *raised* panel rather than a darker one.
 - **Nesting stays shallow** — at most a surface on a page; there is no fourth background
   level to reason about.
+
+### Custom themes
+
+Three themes replicate the skins of the readar app: `cyberpunk` (neon pink on ink, cyan
+text), `fantasy` (gold and parchment) and `wh40k` (gunmetal, bone and blood). Use them
+like any other theme: `<x-fltc::button theme="fantasy">`.
+
+They are not in Tailwind, so the host app has to define them. **Tailwind v4**: import the
+shipped palette after Tailwind:
+
+```css
+@import '../../vendor/fsteltenkamp/laravel-twcss-components/resources/css/themes.css';
+```
+
+**Tailwind v3**: merge the palette into `tailwind.config.js`:
+
+```js
+const fltcThemes = require('./vendor/fsteltenkamp/laravel-twcss-components/resources/js/themes.js');
+
+module.exports = {
+    theme: { extend: { colors: fltcThemes } },
+};
+```
+
+Unlike the Tailwind palettes these scales change hue along the ladder, so each shade
+role picks up the matching part of the original skin — the page and surface shades are
+the skin's backgrounds, the content shades its text colours, and `400`–`600` its accent:
+
+| Shades | cyberpunk | fantasy | wh40k |
+| --- | --- | --- | --- |
+| `50` / `950` page | lavender / ink | parchment / dark leather | vellum / gunmetal |
+| `100` / `900` surface & primary text | pale cyan / deep violet | parchment / brown | bone / iron |
+| `300` / `700` secondary text | neon cyan / teal | parchment / sepia | bone / dark iron |
+| `400`–`600` accent | neon pink | burnished gold | blood red |
+
+The skins' fonts, corner rounding and glow effects are not part of the palettes.
+
+### Runtime theme switching
+
+`theme="skin"` renders a component in whichever theme the nearest `data-skin` attribute
+selects, so the page can change theme in the browser without re-rendering:
+
+```blade
+<html data-skin="fantasy">
+    ...
+    <x-fltc::button theme="skin">Read</x-fltc::button>
+```
+
+Change it with `document.documentElement.dataset.skin = 'rose'`. It also works on a region
+(`<div data-skin="rose">`), and without any `data-skin` the skin is `slate`. Every theme
+above can be a skin.
+
+Load `resources/css/skins.css` (plain CSS, one block of colour variables per theme) and
+define the `skin` palette: on **Tailwind v4** it is in `themes.css`, so import both files;
+on **Tailwind v3** it is in `themes.js` (see Custom themes above), plus the stylesheet:
+
+```css
+@import '../../vendor/fsteltenkamp/laravel-twcss-components/resources/css/themes.css';
+@import '../../vendor/fsteltenkamp/laravel-twcss-components/resources/css/skins.css';
+```
+
+The skin colours are Tailwind v3.4's palette; v4's palette differs from it very slightly.
+Saving the choice and applying it before the first paint is up to the host for now.
 
 ## Icons
 

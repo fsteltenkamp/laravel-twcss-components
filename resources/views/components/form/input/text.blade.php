@@ -5,7 +5,7 @@
 
 <div class="mb-4">
     @if ($label !== '')
-        <x-fltc::form.label :for="$id" :required="$required">
+        <x-fltc::form.label :for="$id" :required="$required" :theme="$theme">
             {{ $label }}
         </x-fltc::form.label>
     @endif
@@ -33,7 +33,7 @@
             @if ($hasError) aria-invalid="true" aria-describedby="{{ $fieldName }}-error" @endif
         />
         @if ($icon !== '')
-            <span class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400 dark:text-slate-500">
+            <span class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 {{ $iconClasses() }}">
                 <x-fltc::icon :name="$icon" :variant="$iconVariant" />
             </span>
         @endif
