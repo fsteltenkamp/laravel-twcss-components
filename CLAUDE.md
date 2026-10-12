@@ -25,6 +25,12 @@ container via the wrapper scripts. Always verify progress with `./test.sh`.
 
 There is no linter or build step configured.
 
+**Browser testing:** there is no browser in the dev environment, so JavaScript/interactive
+behaviour (Alpine state, transitions, layout) cannot be verified directly. When something
+needs checking in a browser, add/update its demo in `tests/GalleryTest.php`, run `./test.sh`
+(which regenerates `gallery.html`), and ask the user to inspect `gallery.html` and report
+back — say exactly what to click and what to look for.
+
 ## Architecture
 
 ### General Properties
