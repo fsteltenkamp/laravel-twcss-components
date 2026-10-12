@@ -195,6 +195,24 @@ function galleryGroups(): array
             ],
         ],
 
+        'Overlays' => [
+            'Drawer' => [
+                ['tabs on both sides (look at the screen edges)', '<x-fltc::drawer name="gallery-wiki" side="right" title="Wiki" label="Wiki" icon="book-open" theme="amber" offset="5rem" pinnable>
+    Pinnable right drawer. Pin it, then click outside — it stays open.
+</x-fltc::drawer>
+<x-fltc::drawer name="gallery-notes" side="right" title="Notes" label="Notes" icon="note" theme="sky" offset="5rem" :order="1">
+    Opening this closes the Wiki drawer first.
+</x-fltc::drawer>
+<x-fltc::drawer name="gallery-nav" side="left" title="Navigation" label="Menu" icon="list" theme="emerald" offset="5rem">
+    Left drawer.
+</x-fltc::drawer>'],
+                ['without a tab, opened by event', '<x-fltc::drawer name="gallery-quiet" side="left" title="Filters" theme="violet" offset="5rem">
+    No activation tab — opened from a trigger.
+</x-fltc::drawer>
+<x-fltc::button theme="violet" icon="funnel" x-data x-on:click="$dispatch(\'fltc-drawer-toggle\', \'gallery-quiet\')" data-fltc-drawer-trigger>Filters</x-fltc::button>'],
+            ],
+        ],
+
         'Utility' => [
             'Icon' => [
                 ['variants', '<span class="text-2xl"><x-fltc::icon name="heart" variant="thin" after="2" /><x-fltc::icon name="heart" variant="regular" after="2" /><x-fltc::icon name="heart" variant="bold" after="2" /><x-fltc::icon name="heart" variant="fill" after="2" /><x-fltc::icon name="heart" variant="duotone" /></span>'],

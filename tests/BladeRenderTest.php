@@ -484,3 +484,73 @@ it('passes the full theme map to Alpine via @js()', function () {
         ->toContain('bg-red-100')    // toast/baguette now use pill colors
         ->toContain('rounded-full'); // pill template in Alpine HTML
 });
+
+it('renders a right drawer with an activation tab teleported into the side rail', function () {
+    $html = Blade::render(
+        '<x-fltc::drawer name="wiki" title="Wiki" label="Wiki" icon="book-open" theme="amber" :order="2">content</x-fltc::drawer>'
+    );
+
+    expect($html)
+        ->toContain('content')
+        ->toContain('data-fltc-drawer="wiki"')
+        ->toContain('id="fltc-drawer-wiki"')
+        ->toContain('fltcDrawer(')
+        ->toContain('right-0 border-l')
+        ->toContain('translate-x-full')
+        ->toContain('inert')
+        ->toContain('x-teleport="[data-fltc-drawer-rail=\'right\']"')
+        ->toContain('data-fltc-drawer-tab="wiki"')
+        ->toContain('aria-controls="fltc-drawer-wiki"')
+        ->toContain('order: 2')
+        ->toContain('rotate-180')
+        ->toContain('ph ph-book-open')
+        ->toContain('bg-amber-600')
+        ->toContain('fltc-drawer-toggle.window')
+        ->toContain('window.fltcDrawers')
+        ->not->toContain('@assets')
+        ->not->toMatch('/data-fltc-drawer-pin\s/');
+});
+
+it('renders a left drawer starting open', function () {
+    $html = Blade::render('<x-fltc::drawer name="nav" side="left" label="Nav" open>x</x-fltc::drawer>');
+
+    expect($html)
+        ->toContain('left-0 border-r')
+        ->toContain('x-teleport="[data-fltc-drawer-rail=\'left\']"')
+        ->not->toMatch('/\\sclass="[^"]*-translate-x-full/')
+        ->not->toMatch('/<aside[^>]*\sinert[\s>]/');
+});
+
+it('omits the activation tab when the drawer has no label or icon', function () {
+    $html = Blade::render('<x-fltc::drawer name="quiet" title="Quiet">x</x-fltc::drawer>');
+
+    expect($html)
+        ->toContain('data-fltc-drawer="quiet"')
+        ->not->toContain('<template x-teleport')
+        ->not->toContain('data-fltc-drawer-tab=');
+});
+
+it('renders a pin button for pinnable drawers and an actions slot in the header', function () {
+    $html = Blade::render(<<<'BLADE'
+        <x-fltc::drawer name="notes" label="Notes" pinnable width="30rem" offset="4rem" class="custom-class" wire:key="notes">
+            <x-slot:actions><a href="/notes">all</a></x-slot:actions>
+            body
+        </x-fltc::drawer>
+        BLADE);
+
+    expect($html)
+        ->toContain('data-fltc-drawer-pin')
+        ->toContain('togglePin()')
+        ->toContain('<a href="/notes">all</a>')
+        ->toContain('custom-class')
+        ->toContain('wire:key="notes"')
+        ->toContain('top: 4rem; width: min(30rem, calc(100vw - 2.5rem));');
+});
+
+it('emits the drawer script only once per page', function () {
+    $html = Blade::render(
+        '<x-fltc::drawer name="a" label="A" /><x-fltc::drawer name="b" label="B" side="left" />'
+    );
+
+    expect(substr_count($html, 'if (! window.fltcDrawers)'))->toBe(1);
+});

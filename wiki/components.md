@@ -152,6 +152,68 @@ Props:
 The Alpine scope exposes a `close()` method, so any element inside the modal can close it
 with `x-on:click="close()"` (use this for a Cancel button — no separate close component needed).
 
+**Drawer** (`x-fltc::drawer`): a full-height side panel that slides in from the left or right
+screen edge. Requires Alpine (no Livewire needed); open and pinned state live in Alpine, so they
+survive Livewire morphs.
+
+```blade
+<x-fltc::drawer name="wiki" side="right" title="Wiki" label="Wiki" icon="book-open" theme="amber" pinnable offset="4rem">
+    <x-slot:actions>
+        <x-fltc::button.link href="/wiki" theme="amber">All</x-fltc::button.link>
+    </x-slot:actions>
+
+    …drawer content…
+</x-fltc::drawer>
+```
+
+Behaviour:
+- **Activation tabs**: when `label` and/or `icon` is set, the drawer adds a vertical tab to a
+  shared rail on its screen edge. Tabs on the same side stack top-to-bottom by `order`, and the
+  rail slides out beside the open panel so the tabs never cover it. Without `label` and `icon`
+  there is no tab — open the drawer through events (below).
+- **One active drawer**: opening a drawer first closes the drawer already open on the same side,
+  then slides in once that one has closed. A left and a right drawer can be open together on
+  desktop; below the `sm` breakpoint the panel is near full-width, so any open drawer closes
+  the others, whichever side they are on.
+- **Dismissal**: the close button, Escape, or a click outside every drawer closes unpinned
+  drawers. Closing a drawer also unpins it.
+- **Pinning** (`pinnable`): adds a pin button. A pinned drawer ignores outside clicks and Escape,
+  and its pin is restored on the next page load (localStorage key
+  `fltc-drawer-pinned:{name}`). While pinned drawers are open, `<html>` gets a
+  `data-fltc-drawer-pinned` attribute plus the CSS variables `--fltc-drawer-pin-left` /
+  `--fltc-drawer-pin-right` (the pinned panel's width, `0px` otherwise), so a host can keep its
+  content clear of them, e.g.
+  `<main class="sm:ps-[var(--fltc-drawer-pin-left,0px)] sm:pe-[var(--fltc-drawer-pin-right,0px)] transition-[padding]">`.
+
+Opening from elsewhere:
+- Alpine: `$dispatch('fltc-drawer-open', 'wiki')`, `fltc-drawer-close`, `fltc-drawer-toggle`
+  (the detail may also be `{ name: 'wiki' }`).
+- Plain JS: `window.fltcDrawers.open('wiki')` / `.close('wiki')` / `.toggle('wiki')`.
+- Add `data-fltc-drawer-trigger` to a custom trigger button. Otherwise the outside-click
+  handler closes the drawer on pointerdown and the click immediately re-opens it, so a toggle
+  button could never close it.
+
+Props:
+- `name`: stable key for events and the persisted pin (random when omitted — set it for pinnable
+  drawers)
+- `side`: `left` or `right` (default: right)
+- `title`: heading in the panel header
+- `label`: text on the activation tab (default: none → no tab)
+- `icon`: Phosphor icon on the activation tab, e.g. `book-open`
+- `order`: tab position within its side's rail (default: 0)
+- `theme`: full palette (default: slate) — panel surface, header, tab
+- `pinnable`: show the pin button (default: false)
+- `open`: initial open state (default: false)
+- `width`: panel width as a CSS length (default: `24rem`); always capped to leave room for the tab
+  rail on small screens
+- `offset`: distance from the viewport top as a CSS length, e.g. the height of a sticky navbar
+  (default: `0px`); the tab rail starts `1rem` below it
+- `class`: extra panel classes
+
+Slots:
+- default: the scrollable panel body
+- `actions`: extra header controls, rendered before the pin/close buttons
+
 ### Cards
 
 Components:
