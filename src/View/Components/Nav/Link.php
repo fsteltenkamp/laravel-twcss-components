@@ -42,7 +42,7 @@ class Link extends Component
             'mauve'   => 'text-mauve-700 hover:text-mauve-800 dark:text-mauve-300 dark:hover:text-mauve-200',
             'mist'    => 'text-mist-700 hover:text-mist-800 dark:text-mist-300 dark:hover:text-mist-200',
             'olive'   => 'text-olive-700 hover:text-olive-800 dark:text-olive-300 dark:hover:text-olive-200',
-            'skin'    => 'text-skin-700 hover:text-skin-800 dark:text-skin-300 dark:hover:text-skin-200',
+            'palette'    => 'text-palette-700 hover:text-palette-800 dark:text-palette-300 dark:hover:text-palette-200',
             'cyberpunk' => 'text-cyberpunk-700 hover:text-cyberpunk-800 dark:text-cyberpunk-300 dark:hover:text-cyberpunk-200',
             'fantasy' => 'text-fantasy-700 hover:text-fantasy-800 dark:text-fantasy-300 dark:hover:text-fantasy-200',
             'wh40k'   => 'text-wh40k-700 hover:text-wh40k-800 dark:text-wh40k-300 dark:hover:text-wh40k-200',

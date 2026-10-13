@@ -231,12 +231,12 @@ class Toast extends Component
                 'close'   => 'text-olive-400 hover:text-olive-600 dark:text-olive-500 dark:hover:text-olive-300 transition-colors',
                 'desc'    => 'text-olive-500 dark:text-olive-400',
             ]),
-            'skin'  => array_fill_keys($v, [
-                'wrapper' => 'border border-skin-200 bg-skin-100 text-skin-700 dark:border-skin-800 dark:bg-skin-950 dark:text-skin-300',
-                'border'  => 'border-skin-200 dark:border-skin-800',
-                'icon'    => 'text-skin-500 dark:text-skin-400',
-                'close'   => 'text-skin-400 hover:text-skin-600 dark:text-skin-500 dark:hover:text-skin-300 transition-colors',
-                'desc'    => 'text-skin-500 dark:text-skin-400',
+            'palette'  => array_fill_keys($v, [
+                'wrapper' => 'border border-palette-200 bg-palette-100 text-palette-700 dark:border-palette-800 dark:bg-palette-950 dark:text-palette-300',
+                'border'  => 'border-palette-200 dark:border-palette-800',
+                'icon'    => 'text-palette-500 dark:text-palette-400',
+                'close'   => 'text-palette-400 hover:text-palette-600 dark:text-palette-500 dark:hover:text-palette-300 transition-colors',
+                'desc'    => 'text-palette-500 dark:text-palette-400',
             ]),
             'cyberpunk' => array_fill_keys($v, [
                 'wrapper' => 'border border-cyberpunk-200 bg-cyberpunk-100 text-cyberpunk-700 dark:border-cyberpunk-800 dark:bg-cyberpunk-950 dark:text-cyberpunk-300',

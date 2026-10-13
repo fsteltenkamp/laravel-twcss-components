@@ -125,9 +125,9 @@ class TwoColRight extends Component
                 'shell' => 'border-olive-200 bg-white/95 dark:border-olive-800 dark:bg-olive-950/50',
                 'side' => 'border-olive-200 bg-olive-50 text-olive-900 dark:border-olive-800 dark:bg-olive-950 dark:text-olive-100',
             ],
-            'skin'  => [
-                'shell' => 'border-skin-200 bg-white/95 dark:border-skin-800 dark:bg-skin-950/50',
-                'side' => 'border-skin-200 bg-skin-50 text-skin-900 dark:border-skin-800 dark:bg-skin-950 dark:text-skin-100',
+            'palette'  => [
+                'shell' => 'border-palette-200 bg-white/95 dark:border-palette-800 dark:bg-palette-950/50',
+                'side' => 'border-palette-200 bg-palette-50 text-palette-900 dark:border-palette-800 dark:bg-palette-950 dark:text-palette-100',
             ],
             'cyberpunk' => [
                 'shell' => 'border-cyberpunk-200 bg-white/95 dark:border-cyberpunk-800 dark:bg-cyberpunk-950/50',

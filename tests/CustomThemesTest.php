@@ -12,7 +12,7 @@ const CUSTOM_THEMES = ['cyberpunk', 'fantasy', 'wh40k'];
 const ALL_THEMES = [
     'slate', 'gray', 'zinc', 'neutral', 'stone', 'red', 'orange', 'amber', 'yellow', 'lime',
     'green', 'emerald', 'teal', 'cyan', 'sky', 'blue', 'indigo', 'violet', 'purple', 'fuchsia',
-    'pink', 'rose', 'taupe', 'mauve', 'mist', 'olive', 'skin', 'cyberpunk', 'fantasy', 'wh40k',
+    'pink', 'rose', 'taupe', 'mauve', 'mist', 'olive', 'palette', 'cyberpunk', 'fantasy', 'wh40k',
 ];
 
 it('defines every theme in every theme map', function () {
@@ -33,11 +33,17 @@ it('defines every theme in every theme map', function () {
     }
 });
 
-it('defines a skin block for every theme except skin itself', function () {
-    $css = file_get_contents(__DIR__.'/../resources/css/skins.css');
-    preg_match_all('/\[data-skin="([a-z0-9]+)"\]/', $css, $m);
+it('defines a palette block with colour roles for every theme except palette itself', function () {
+    $css = file_get_contents(__DIR__.'/../resources/css/palettes.css');
+    preg_match_all('/\[data-palette="([a-z0-9]+)"\] \{(.*?)\}/s', $css, $m);
 
-    expect($m[1])->toEqualCanonicalizing(array_values(array_diff(ALL_THEMES, ['skin'])));
+    expect($m[1])->toEqualCanonicalizing(array_values(array_diff(ALL_THEMES, ['palette'])));
+
+    foreach ($m[2] as $i => $block) {
+        foreach (['accent', 'text', 'third', 'accent-dark', 'text-dark', 'third-dark'] as $role) {
+            expect($block)->toMatch("/--fltc-palette-{$role}: \\d+ \\d+ \\d+;/", "{$m[1][$i]} misses the {$role} role");
+        }
+    }
 });
 
 it('defines all eleven shades of every custom theme in the shipped palettes', function () {
@@ -60,7 +66,7 @@ it('renders components with a custom theme instead of falling back', function (s
         ->toContain("{$theme}-");
     expect(Blade::render("<x-fltc::card theme=\"{$theme}\"><x-fltc::card.body>x</x-fltc::card.body></x-fltc::card>"))
         ->toContain("text-{$theme}-900");
-})->with([...CUSTOM_THEMES, 'skin']);
+})->with([...CUSTOM_THEMES, 'palette']);
 
 it('themes rows and cells passed through card rows', function () {
     $html = Blade::render('<x-fltc::card theme="rose"><x-fltc::card.rows><x-fltc::table.row><x-fltc::table.cell>x</x-fltc::table.cell></x-fltc::table.row></x-fltc::card.rows></x-fltc::card>');

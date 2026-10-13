@@ -67,8 +67,9 @@ Components are registered under the `fltc` namespace:
 
 Every component is themed by passing a `theme` (any Tailwind palette, e.g. `slate`,
 `blue`, `rose`, plus the extended neutrals `taupe`, `mauve`, `mist`, `olive` and the
-[custom themes](#custom-themes) `cyberpunk`, `fantasy`, `wh40k`, and `skin` for
-[runtime switching](#runtime-theme-switching)). Within a
+[custom themes](#custom-themes) `cyberpunk`, `fantasy`, `wh40k`, and `palette` for
+[runtime switching](#runtime-colour-switching)). The colour is separate from the
+[skin](#skins), which is the look (fonts, corners, lines, glow). Within a
 theme, each surface and piece of text is assigned one of a small, fixed set of **roles**.
 Sticking to these roles is what makes a component flip cleanly between light and dark mode
 — text and backgrounds are always defined as a *pair*, so nothing stays locked to the
@@ -120,7 +121,7 @@ module.exports = {
 ```
 
 Unlike the Tailwind palettes these scales change hue along the ladder, so each shade
-role picks up the matching part of the original skin — the page and surface shades are
+role picks up the matching part of the original look — the page and surface shades are
 the skin's backgrounds, the content shades its text colours, and `400`–`600` its accent:
 
 | Shades | cyberpunk | fantasy | wh40k |
@@ -130,66 +131,74 @@ the skin's backgrounds, the content shades its text colours, and `400`–`600` i
 | `300` / `700` secondary text | neon cyan / teal | parchment / sepia | bone / dark iron |
 | `400`–`600` accent | neon pink | burnished gold | blood red |
 
-The skins' fonts, corner rounding and glow effects are not part of the palettes.
+The palettes are only colours: the matching looks (fonts, cut corners, glow) are the
+[skins](#skins), and work with any colour.
 
-### Runtime theme switching
+### Runtime colour switching
 
-`theme="skin"` renders a component in whichever theme the nearest `data-skin` attribute
-selects, so the page can change theme in the browser without re-rendering:
+`theme="palette"` renders a component in whichever colour the nearest `data-palette`
+attribute selects, so the page can change colour in the browser without re-rendering:
 
 ```blade
-<html data-skin="fantasy">
+<html data-palette="fantasy">
     ...
-    <x-fltc::button theme="skin">Read</x-fltc::button>
+    <x-fltc::button theme="palette">Read</x-fltc::button>
 ```
 
-Change it with `document.documentElement.dataset.skin = 'rose'`. It also works on a region
-(`<div data-skin="rose">`), and without any `data-skin` the skin is `slate`. Every theme
-above can be a skin.
+Change it with `document.documentElement.dataset.palette = 'rose'`. It also works on a
+region (`<div data-palette="rose">`), and without any `data-palette` the colour is `slate`.
+Every theme above can be a palette.
 
-Load `resources/css/skins.css` (plain CSS, one block of colour variables per theme) and
-define the `skin` palette: on **Tailwind v4** it is in `themes.css`, so import both files;
-on **Tailwind v3** it is in `themes.js` (see Custom themes above), plus the stylesheet:
+Load `resources/css/palettes.css` (plain CSS, one block of colour variables per theme) and
+define the `palette` colour: on **Tailwind v4** it is in `themes.css`, so import both
+files; on **Tailwind v3** it is in `themes.js` (see Custom themes above), plus the
+stylesheet:
 
 ```css
 @import '../../vendor/fsteltenkamp/laravel-twcss-components/resources/css/themes.css';
-@import '../../vendor/fsteltenkamp/laravel-twcss-components/resources/css/skins.css';
+@import '../../vendor/fsteltenkamp/laravel-twcss-components/resources/css/palettes.css';
 ```
 
-The skin colours are Tailwind v3.4's palette; v4's palette differs from it very slightly.
+The palette colours are Tailwind v3.4's palette; v4's palette differs from it very slightly.
 
-Let visitors choose with `<x-fltc::theme.picker>` (theme plus light/dark/system, saved in
-`localStorage`), and put `<x-fltc::theme.script />` in `<head>` so the saved choice applies
-before the first paint:
+### Skins
+
+A skin is the look, independent of colour: `default` (plain Tailwind), `cyberpunk`,
+`fantasy` and `wh40k`. Choose it with `data-skin` on `<html>` (or on a region); every
+component inside takes the skin **in its own colour**:
 
 ```blade
-<head>
-    <x-fltc::theme.script skin="slate" />
-    @vite('resources/css/app.css')
-</head>
-...
-<x-fltc::theme.picker :themes="['slate', 'cyberpunk', 'fantasy', 'wh40k']" theme="skin" />
+<html data-skin="cyberpunk" data-palette="slate">
+    ...
+    <x-fltc::button theme="palette">Save</x-fltc::button>   {{-- slate neon lines --}}
+    <x-fltc::button theme="green">Approve</x-fltc::button>  {{-- green neon lines --}}
+    <x-fltc::card theme="cyberpunk">…</x-fltc::card>         {{-- the classic pink/cyan --}}
 ```
 
-### Skin effects
+`resources/css/skin-effects.css` holds the skins: their fonts (Orbitron, Share Tech Mono,
+VT323, Cinzel, EB Garamond, Grenze Gotisch — shipped in `resources/fonts`, SIL Open Font
+License), corner rounding, glowing panels, buttons and focus rings, and page backgrounds —
+including cyberpunk's scanlines and grid. Cyberpunk also restyles the controls in the style
+of Cyberpunk 2077: buttons with cut corners, thin full-strength lines and a solid fill on
+hover; square inputs with the bottom-right corner cut that light up on focus (add the class
+`fltc-corner-tick` to an input for a filled corner tick instead), a drawn select arrow and
+calendar icon; square checkboxes and toggles; tag-style badges; framed drawer handles.
+Boxes, cards, tables, the checklist, stepper, dropdowns and the segmented dark-mode toggle
+get the same cut corners; navbar and sidebar turn square with an accent edge.
 
-`resources/css/skin-effects.css` adds the rest of each look to the three custom themes:
-their fonts (Orbitron, Share Tech Mono, VT323, Cinzel, EB Garamond, Grenze Gotisch —
-shipped in `resources/fonts`, SIL Open Font License), corner rounding, glowing panels,
-buttons and focus rings, and page backgrounds — including cyberpunk's scanlines and grid.
-Cyberpunk also restyles the controls in the style of Cyberpunk 2077: buttons with cut
-corners, thin full-strength lines and a solid fill on hover (pink for solid, cyan for
-outline); square inputs with the bottom-right corner cut that turn pink on focus (add the
-class `fltc-corner-tick` to an input for a filled corner tick instead), a drawn select
-arrow and calendar icon; square checkboxes and toggles; tag-style badges; framed drawer
-handles. Boxes, cards, tables, the checklist, stepper, dropdowns and the segmented
-dark-mode toggle get the same cut corners; navbar and sidebar turn square with a pink edge.
+Each colour gives the skin three roles to draw in: an accent (lines, fills, glow), a text
+colour and a third colour (gradients). For the Tailwind palettes they are shades
+`600`/`700`/`500` (`400`/`300`/`500` in dark mode); for `cyberpunk`, `fantasy` and `wh40k`
+they are those looks' signature colours (neon pink, cyan and violet for cyberpunk).
+Children inherit their parent's colour, as they inherit its theme. A theme alone never
+switches a look on: `theme="cyberpunk"` under the default skin is just pink and cyan
+Tailwind colours.
 
 Native popups stay native: the select's list is fully styled only in browsers with
 customizable selects (Chromium 135+), elsewhere it takes the option colours where the OS
 allows; the date picker's calendar only follows light/dark (`color-scheme`), which all
-inputs now set in dark mode, for every theme.
-`<x-fltc::heading glitch>` adds cyberpunk's glitching logo text.
+inputs set in dark mode. `<x-fltc::heading glitch>` adds cyberpunk's glitching logo text.
+Text glow shows in dark mode only.
 
 It is opt-in and plain CSS, so it works with Tailwind v3 and v4. Import it after Tailwind:
 
@@ -201,30 +210,54 @@ Vite bundles the fonts it references. Without a bundler, publish the stylesheets
 with `php artisan vendor:publish --tag=fltc-assets` and link
 `/vendor/fltc/css/skin-effects.css`.
 
-A component gets the effects when it is rendered with one of the three themes
-(`theme="fantasy"`), or with `theme="skin"` under `data-skin="fantasy"`. Page effects (body
-font, background, scanlines) apply under `data-skin`, or on `<x-fltc::body>` with one of the
-themes. Text glow shows in dark mode only.
+Page effects (body font, background, scanlines) apply to the `<body>` inside a skinned
+`<html>`, or to a `<body data-skin="…">`. Skin regions can sit on a default page; nesting a
+different skin inside a skinned region is not supported (the outer skin's rules still
+reach in).
 
-To give every component the look, not just `theme="skin"` ones, add `data-skin-shape="all"`
-next to `data-skin`:
+The skins target the neutral hook classes every component carries (`fltc-<tag>`,
+`fltc-theme-<theme>`, see the [wiki](wiki/components.md#hook-classes)), so a host can write
+its own skin the same way. The rules are not in a cascade layer: while a skin is active
+they win over Tailwind utilities, including a host's own `rounded-*` or `shadow-*` on a
+component.
 
-```html
-<html data-skin="cyberpunk" data-skin-shape="all">
+### Picking skin and colour
+
+Let visitors choose with `<x-fltc::theme.picker>` (a Skin select, a Colour select and
+light/dark/system, each saved in `localStorage`), and put `<x-fltc::theme.script />` in
+`<head>` so the saved choices apply before the first paint:
+
+```blade
+<head>
+    <x-fltc::theme.script skin="default" palette="slate" />
+    @vite('resources/css/app.css')
+</head>
+...
+<x-fltc::theme.picker :skins="['default', 'cyberpunk', 'fantasy', 'wh40k']" :palettes="['slate', 'rose', 'cyberpunk']" theme="palette" />
 ```
 
-Components in a colour theme then get the skin's shapes, fonts and controls in their own
-colour: `<x-fltc::button theme="green">` becomes a cyberpunk button with green lines that
-fills green on hover, and `<x-fltc::card theme="red">` a cut-corner card with red lines and
-glow (shades 600/700/500, 400/300/500 in dark mode). Children inherit that colour, as they
-inherit a parent's theme, except children with `theme="skin"`, which keep the skin's own
-colours. The body's theme does not recolour the page. It is opt-in because it also
-restyles components that use the default `slate` theme.
+Pass an empty list to hide a select (`:palettes="[]"` for a skin-only picker).
 
-The effects target the neutral hook classes every component carries (`fltc-<tag>`,
-`fltc-theme-<theme>`, see the [wiki](wiki/components.md#hook-classes)), so a host can write its
-own skin the same way. The rules are not in a cascade layer: while a skin is active they win
-over Tailwind utilities, including a host's own `rounded-*` or `shadow-*` on a component.
+### Migrating from `theme="skin"`
+
+Earlier versions mixed look and colour in one setting. Now:
+
+| Before | Now |
+| --- | --- |
+| `theme="skin"` | `theme="palette"` |
+| `bg-skin-500` etc. (host classes) | `bg-palette-500` |
+| `resources/css/skins.css` | `resources/css/palettes.css` |
+| `data-skin="rose"` (colour) | `data-palette="rose"` |
+| `data-skin="cyberpunk"` (colour + look) | `data-skin="cyberpunk" data-palette="cyberpunk"` |
+| `data-skin-shape="all"` | not needed: every component takes the skin |
+| `theme="cyberpunk"` switched the look on | it is only the colour; add `data-skin="cyberpunk"` |
+| `theme.picker :themes storageKey` | `theme.picker :skins :palettes skinStorageKey paletteStorageKey` |
+| `theme.script storageKey skin` | `theme.script skinStorageKey paletteStorageKey skin palette` |
+| `--fltc-skin-<shade>` variables | `--fltc-palette-<shade>` |
+
+The picker now stores the colour under `fltc-palette`, so a visitor's saved choice from
+before (`fltc-skin`) is read as a skin: an old value like `rose` is simply an unknown skin
+and shows the default look.
 
 ## Icons
 

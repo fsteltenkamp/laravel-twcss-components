@@ -5,7 +5,7 @@
  *     @import '../../vendor/fsteltenkamp/laravel-twcss-components/resources/css/themes.css';
  *
  * These are not single-hue scales: each is derived from one of the package's
- * two-mode skins so the package's shade roles land on the right slot.
+ * two-mode looks so the package's shade roles land on the right slot.
  *   50 light page · 100 dark primary text / light surface · 300 dark secondary text
  *   400–600 accent · 700 light secondary text · 900 dark surface / light primary text
  *   950 dark page · 200/500/800 blends between their neighbours
@@ -52,20 +52,21 @@
 }
 
 /*
- * skin — the palette selected at runtime through data-skin (see resources/css/skins.css,
- * which must be imported too). `inline` makes utilities read the variables where they
- * are used, so a data-skin on any element re-colours just that region.
+ * palette — the colour selected at runtime through data-palette (see
+ * resources/css/palettes.css, which must be imported too). `inline` makes utilities read
+ * the variables where they are used, so a data-palette on any element re-colours just
+ * that region.
  */
 @theme inline {
-    --color-skin-50: rgb(var(--fltc-skin-50));
-    --color-skin-100: rgb(var(--fltc-skin-100));
-    --color-skin-200: rgb(var(--fltc-skin-200));
-    --color-skin-300: rgb(var(--fltc-skin-300));
-    --color-skin-400: rgb(var(--fltc-skin-400));
-    --color-skin-500: rgb(var(--fltc-skin-500));
-    --color-skin-600: rgb(var(--fltc-skin-600));
-    --color-skin-700: rgb(var(--fltc-skin-700));
-    --color-skin-800: rgb(var(--fltc-skin-800));
-    --color-skin-900: rgb(var(--fltc-skin-900));
-    --color-skin-950: rgb(var(--fltc-skin-950));
+    --color-palette-50: rgb(var(--fltc-palette-50));
+    --color-palette-100: rgb(var(--fltc-palette-100));
+    --color-palette-200: rgb(var(--fltc-palette-200));
+    --color-palette-300: rgb(var(--fltc-palette-300));
+    --color-palette-400: rgb(var(--fltc-palette-400));
+    --color-palette-500: rgb(var(--fltc-palette-500));
+    --color-palette-600: rgb(var(--fltc-palette-600));
+    --color-palette-700: rgb(var(--fltc-palette-700));
+    --color-palette-800: rgb(var(--fltc-palette-800));
+    --color-palette-900: rgb(var(--fltc-palette-900));
+    --color-palette-950: rgb(var(--fltc-palette-950));
 }

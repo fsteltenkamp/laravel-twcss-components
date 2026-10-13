@@ -15,8 +15,9 @@ Every component also carries neutral **hook classes** on the element that receiv
 `$attributes` (the root, by convention). They have no styles of their own; skin stylesheets
 such as `resources/css/skin-effects.css` target them:
 - `fltc-<tag>`: the tag with dots as dashes — `<x-fltc::nav.navbar.link>` → `fltc-nav-navbar-link`
-- `fltc-theme-<theme>`: the component's `theme` prop, when it has one (`fltc-theme-skin` under
-  runtime switching). Components that inherit their parent's theme (navbar and sidebar
+- `fltc-theme-<theme>`: the component's `theme` prop, when it has one (`fltc-theme-palette`
+  under runtime switching). Skins match `[data-skin="…"] [class*="fltc-theme-"]` for the look
+  and read the colour roles each `fltc-theme-*` sets. Components that inherit their parent's theme (navbar and sidebar
   children) hook the inherited one; a component that resolves its theme some other way sets
   the protected `$hookTheme` in its constructor
 - Part hooks for regions a skin styles separately: `fltc-drawer-tab` / `-header` / `-body`,
@@ -62,15 +63,17 @@ parent, layout wrappers) — so give a new component its skin effects, or list i
 All components support the full color palette:
 - **Colors**: red, orange, amber, yellow, lime, green, emerald, teal, cyan, sky, blue, indigo, violet, purple, fuchsia, pink, rose
 - **Neutrals**: slate, gray, zinc, neutral, stone, taupe, mauve, mist, olive
-- **Custom themes**: cyberpunk, fantasy, wh40k — two-mode skins, shipped as palettes in
+- **Custom themes**: cyberpunk, fantasy, wh40k — colour palettes shipped in
   `resources/css/themes.css` (Tailwind v4) and `resources/js/themes.js` (Tailwind v3). The
   host app must load one of them, see the README "Custom themes" section.
-- **Runtime**: skin — follows whichever theme the nearest `data-skin` attribute selects,
-  so the page switches theme in the browser without re-rendering. Needs
-  `resources/css/skins.css`, see the README "Runtime theme switching" section.
+- **Runtime**: palette — follows whichever colour the nearest `data-palette` attribute
+  selects, so the page switches colour in the browser without re-rendering. Needs
+  `resources/css/palettes.css`, see the README "Runtime colour switching" section.
 
-The three custom themes also have optional **skin effects** (fonts, rounding, glow
-and page effects) in `resources/css/skin-effects.css`, see the README "Skin effects" section.
+A `theme` is only a colour. The look — fonts, cut corners, lines, glow, page effects — is
+the **skin**, chosen with `data-skin` (`default`, `cyberpunk`, `fantasy`, `wh40k`) from
+`resources/css/skin-effects.css`; every component inside a skin region takes the skin in
+its own colour, see the README "Skins" section.
 
 New components must add a map entry for every theme above — `tests/CustomThemesTest.php`
 fails when a file defines any theme fewer times than it defines `rose`. For a role colour
@@ -325,9 +328,9 @@ Props:
 
 The overlay is teleported, but the modal's wrapper stays where it is written: it holds the
 Alpine scope and the host's attributes (`id`, `wire:*`, `@close`), while `class` and the
-`fltc-*` hooks go on the overlay. A modal inside a `data-skin` region (other than `<html>`)
-copies that region's `data-skin` and `data-skin-shape` onto the overlay when it opens, so
-`theme="skin"` keeps working after the move.
+`fltc-*` hooks go on the overlay. A modal inside a `data-skin` or `data-palette` region (other
+than `<html>`) copies that region's attribute onto the overlay when it opens, so the skin and
+`theme="palette"` keep working after the move.
 
 The Alpine scope exposes a `close()` method, so any element inside the modal can close it
 with `x-on:click="close()"` (use this for a Cancel button — no separate close component needed).
@@ -941,7 +944,7 @@ re-render:
 ```
 
 - `state`: the initial state (default: `saved`)
-- `theme`: one theme for every state (e.g. `skin`) instead of the per-state ones
+- `theme`: one theme for every state (e.g. `palette`) instead of the per-state ones
 - `labels`, `themes`, `icons`: per-state overrides, e.g. `:labels="['error' => 'Offline']"`
 
 **Empty state** (`x-fltc::empty`): an icon, a title and a line of text for an empty list or
@@ -1040,21 +1043,29 @@ is built on it.
 - Option props: `value`, `label` (or the slot), `icon`, `iconVariant`, `disabled`
 
 **Theme script** (`x-fltc::theme.script`): put it in `<head>`. Before the first paint it sets
-`data-skin` on `<html>` from storage (the theme picker's choice) and the `dark` class from the
-light/dark/system mode the dark-mode toggle stores, so the page never flashes the wrong theme.
-- `storageKey`: where the theme is stored (default: `fltc-skin`; match the picker's)
-- `skin`: theme to use when nothing is stored (default: none — keeps the server's `data-skin`)
+`data-skin` and `data-palette` on `<html>` from storage (the theme picker's choices) and the
+`dark` class from the light/dark/system mode the dark-mode toggle stores, so the page never
+flashes the wrong look.
+- `skinStorageKey` (default: `fltc-skin`), `paletteStorageKey` (default: `fltc-palette`):
+  where the choices are stored; match the picker's
+- `skin`, `palette`: values to use when nothing is stored (default: none — keeps the
+  server's attributes)
 - `nonce`: for a Content Security Policy
 
-**Theme picker** (`x-fltc::theme.picker`): a theme select plus the light/dark/system control.
-Choosing a theme sets `data-skin` on `<html>` (re-colouring every `theme="skin"` component),
-saves it, and syncs other pickers on the page. The mode part is `x-fltc::darkmode.toggle`,
-which owns that storage and the OS-following system mode.
-- `themes`: theme names, or name => label (default: slate, cyberpunk, fantasy, wh40k)
-- `storageKey` (default: `fltc-skin`), `default`: theme when nothing is stored
-- `theme`: its own chrome (default: slate — `skin` to follow the choice)
+**Theme picker** (`x-fltc::theme.picker`): a Skin select, a Colour select and the
+light/dark/system control. Choosing a skin sets `data-skin` on `<html>` (the look of every
+component); choosing a colour sets `data-palette` (re-colouring every `theme="palette"`
+component). Each choice is saved under its own key and synced with other pickers on the
+page. The mode part is `x-fltc::darkmode.toggle`, which owns that storage and the
+OS-following system mode.
+- `skins`: skin names, or name => label (default: default, cyberpunk, fantasy, wh40k)
+- `palettes`: palette names, or name => label (default: slate, cyberpunk, fantasy, wh40k)
+- An empty `skins` or `palettes` list hides that select
+- `skinStorageKey` (default: `fltc-skin`), `paletteStorageKey` (default: `fltc-palette`)
+- `defaultSkin`, `defaultPalette`: when nothing is stored (default: the first option)
+- `theme`: its own chrome (default: slate — `palette` to follow the choice)
 - `mode` (default true): show the light/dark/system control
-- `stacked`: one above the other (e.g. in a drawer); `label`, `modeLabel`
+- `stacked`: one above the other (e.g. in a drawer); `skinLabel`, `paletteLabel`, `modeLabel`
 
 **Spinner** (`x-fltc::spinner`): an animated loading indicator (SVG, `role="status"`).
 Attributes pass through, so it pairs with Livewire's loading states:

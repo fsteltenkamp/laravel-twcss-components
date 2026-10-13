@@ -72,7 +72,7 @@ class Cover extends Component
             'mauve'     => 'border-mauve-200 bg-mauve-100 text-mauve-400 dark:border-mauve-700 dark:bg-mauve-800 dark:text-mauve-500',
             'mist'      => 'border-mist-200 bg-mist-100 text-mist-400 dark:border-mist-700 dark:bg-mist-800 dark:text-mist-500',
             'olive'     => 'border-olive-200 bg-olive-100 text-olive-400 dark:border-olive-700 dark:bg-olive-800 dark:text-olive-500',
-            'skin'      => 'border-skin-200 bg-skin-100 text-skin-400 dark:border-skin-700 dark:bg-skin-800 dark:text-skin-500',
+            'palette'      => 'border-palette-200 bg-palette-100 text-palette-400 dark:border-palette-700 dark:bg-palette-800 dark:text-palette-500',
             'cyberpunk' => 'border-cyberpunk-200 bg-cyberpunk-100 text-cyberpunk-400 dark:border-cyberpunk-700 dark:bg-cyberpunk-800 dark:text-cyberpunk-500',
             'fantasy'   => 'border-fantasy-200 bg-fantasy-100 text-fantasy-400 dark:border-fantasy-700 dark:bg-fantasy-800 dark:text-fantasy-500',
             'wh40k'     => 'border-wh40k-200 bg-wh40k-100 text-wh40k-400 dark:border-wh40k-700 dark:bg-wh40k-800 dark:text-wh40k-500',

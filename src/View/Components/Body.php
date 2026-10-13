@@ -39,7 +39,7 @@ class Body extends Component
             'mauve'   => 'bg-mauve-50 text-mauve-900 dark:bg-mauve-950 dark:text-mauve-100',
             'mist'    => 'bg-mist-50 text-mist-900 dark:bg-mist-950 dark:text-mist-100',
             'olive'   => 'bg-olive-50 text-olive-900 dark:bg-olive-950 dark:text-olive-100',
-            'skin'    => 'bg-skin-50 text-skin-900 dark:bg-skin-950 dark:text-skin-100',
+            'palette'    => 'bg-palette-50 text-palette-900 dark:bg-palette-950 dark:text-palette-100',
             'cyberpunk' => 'bg-cyberpunk-50 text-cyberpunk-900 dark:bg-cyberpunk-950 dark:text-cyberpunk-100',
             'fantasy' => 'bg-fantasy-50 text-fantasy-900 dark:bg-fantasy-950 dark:text-fantasy-100',
             'wh40k'   => 'bg-wh40k-50 text-wh40k-900 dark:bg-wh40k-950 dark:text-wh40k-100',

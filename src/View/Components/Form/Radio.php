@@ -73,7 +73,7 @@ class Radio extends Component
             'mauve'     => 'border-mauve-300 accent-mauve-600 focus-visible:ring-mauve-500 dark:border-mauve-600 dark:accent-mauve-400 dark:focus-visible:ring-mauve-400',
             'mist'      => 'border-mist-300 accent-mist-600 focus-visible:ring-mist-500 dark:border-mist-600 dark:accent-mist-400 dark:focus-visible:ring-mist-400',
             'olive'     => 'border-olive-300 accent-olive-600 focus-visible:ring-olive-500 dark:border-olive-600 dark:accent-olive-400 dark:focus-visible:ring-olive-400',
-            'skin'      => 'border-skin-300 accent-skin-600 focus-visible:ring-skin-500 dark:border-skin-600 dark:accent-skin-400 dark:focus-visible:ring-skin-400',
+            'palette'      => 'border-palette-300 accent-palette-600 focus-visible:ring-palette-500 dark:border-palette-600 dark:accent-palette-400 dark:focus-visible:ring-palette-400',
             'cyberpunk' => 'border-cyberpunk-300 accent-cyberpunk-600 focus-visible:ring-cyberpunk-500 dark:border-cyberpunk-600 dark:accent-cyberpunk-400 dark:focus-visible:ring-cyberpunk-400',
             'fantasy'   => 'border-fantasy-300 accent-fantasy-600 focus-visible:ring-fantasy-500 dark:border-fantasy-600 dark:accent-fantasy-400 dark:focus-visible:ring-fantasy-400',
             'wh40k'     => 'border-wh40k-300 accent-wh40k-600 focus-visible:ring-wh40k-500 dark:border-wh40k-600 dark:accent-wh40k-400 dark:focus-visible:ring-wh40k-400',

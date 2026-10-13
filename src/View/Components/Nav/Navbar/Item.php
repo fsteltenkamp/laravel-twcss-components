@@ -47,7 +47,7 @@ class Item extends Component
             'mauve'   => 'text-mauve-700 dark:text-mauve-300',
             'mist'    => 'text-mist-700 dark:text-mist-300',
             'olive'   => 'text-olive-700 dark:text-olive-300',
-            'skin'    => 'text-skin-700 dark:text-skin-300',
+            'palette'    => 'text-palette-700 dark:text-palette-300',
             'cyberpunk' => 'text-cyberpunk-700 dark:text-cyberpunk-300',
             'fantasy' => 'text-fantasy-700 dark:text-fantasy-300',
             'wh40k'   => 'text-wh40k-700 dark:text-wh40k-300',

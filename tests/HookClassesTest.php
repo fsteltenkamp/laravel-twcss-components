@@ -79,12 +79,12 @@ it('names hooks after the component tag', function () {
 });
 
 it('keeps host classes next to the hooks', function () {
-    $html = Blade::render('<x-fltc::badge theme="skin" class="ml-2" id="b">x</x-fltc::badge>');
+    $html = Blade::render('<x-fltc::badge theme="palette" class="ml-2" id="b">x</x-fltc::badge>');
 
     expect($html)
         ->toMatch('/class="[^"]*\bml-2\b[^"]*"/')
         ->toContain('fltc-badge')
-        ->toContain('fltc-theme-skin')
+        ->toContain('fltc-theme-palette')
         ->toContain('id="b"');
 });
 
@@ -201,22 +201,26 @@ it('styles the part hooks of the newer components', function () {
 
 it('puts the theme hook on the body and the box so skin effects apply', function () {
     expect(Blade::render('<x-fltc::body theme="cyberpunk">x</x-fltc::body>'))->toMatch('/<body class="[^"]*fltc-body fltc-theme-cyberpunk/')
-        ->and(Blade::render('<x-fltc::container.box theme="skin">x</x-fltc::container.box>'))->toContain('fltc-container-box fltc-theme-skin');
+        ->and(Blade::render('<x-fltc::container.box theme="palette">x</x-fltc::container.box>'))->toContain('fltc-container-box fltc-theme-palette');
 });
 
-it('lets data-skin-shape="all" style every themed component, keeping colour themes', function () {
+it('takes the look only from data-skin and the colour from every theme', function () {
     $css = file_get_contents(__DIR__.'/../resources/css/skin-effects.css');
 
-    // Every skin rule lists the opt-in region next to theme="skin".
-    preg_match_all('/\[data-skin="([a-z0-9]+)"\] \.fltc-theme-skin(, \[data-skin="\1"\]:where\(\[data-skin-shape="all"\]\))?/', $css, $m);
-    expect($m[0])->not->toBeEmpty();
-    foreach ($m[2] as $i => $alt) {
-        expect($alt)->not->toBe('', "{$m[0][$i]} misses the data-skin-shape alternative");
-    }
+    // A theme never switches a look on by itself (outside the COLOURS section, where
+    // cyberpunk, fantasy and wh40k are colours like any other), and the old runtime
+    // colour is gone.
+    $looks = preg_replace('#/\* =+ COLOURS =+ \*/.*?/\* =+ PAGE =+ \*/#s', '', $css);
+    expect($looks)->not->toBe($css);
+    expect($looks)
+        ->not->toMatch('/\.fltc-theme-(cyberpunk|fantasy|wh40k)(?![\w-])/')
+        ->not->toContain('fltc-theme-skin')
+        ->not->toContain('data-skin-shape')
+        ->toContain('[data-skin="cyberpunk"] [class*="fltc-theme-"]');
 
-    // Every palette theme in skins.css has colour roles, in light and dark mode.
-    preg_match_all('/\[data-skin="([a-z]+)"\]/', file_get_contents(__DIR__.'/../resources/css/skins.css'), $skins);
-    foreach (array_diff($skins[1], ['cyberpunk', 'fantasy', 'wh40k']) as $theme) {
-        expect(substr_count($css, ".fltc-theme-{$theme}:not(.fltc-body),\n"))->toBe(2, "{$theme} needs light and dark colour roles");
+    // Every theme sets the colour roles the skins draw in, in light and dark mode.
+    preg_match_all('/\[data-palette="([a-z0-9]+)"\]/', file_get_contents(__DIR__.'/../resources/css/palettes.css'), $palettes);
+    foreach ([...$palettes[1], 'palette'] as $theme) {
+        expect(substr_count($css, ".fltc-theme-{$theme},\n"))->toBe(2, "{$theme} needs light and dark colour roles");
     }
 });

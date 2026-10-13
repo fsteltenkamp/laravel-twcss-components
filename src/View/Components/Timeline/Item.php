@@ -58,7 +58,7 @@ class Item extends Component
             'mauve'     => 'ring-white dark:ring-mauve-950',
             'mist'      => 'ring-white dark:ring-mist-950',
             'olive'     => 'ring-white dark:ring-olive-950',
-            'skin'      => 'ring-white dark:ring-skin-950',
+            'palette'      => 'ring-white dark:ring-palette-950',
             'cyberpunk' => 'ring-white dark:ring-cyberpunk-950',
             'fantasy'   => 'ring-white dark:ring-fantasy-950',
             'wh40k'     => 'ring-white dark:ring-wh40k-950',

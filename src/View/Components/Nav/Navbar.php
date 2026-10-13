@@ -61,7 +61,7 @@ class Navbar extends Component
             'mauve'   => 'border-mauve-200 dark:border-mauve-700 bg-white dark:bg-mauve-900',
             'mist'    => 'border-mist-200 dark:border-mist-700 bg-white dark:bg-mist-900',
             'olive'   => 'border-olive-200 dark:border-olive-700 bg-white dark:bg-olive-900',
-            'skin'    => 'border-skin-200 dark:border-skin-700 bg-white dark:bg-skin-900',
+            'palette'    => 'border-palette-200 dark:border-palette-700 bg-white dark:bg-palette-900',
             'cyberpunk' => 'border-cyberpunk-200 dark:border-cyberpunk-700 bg-white dark:bg-cyberpunk-900',
             'fantasy' => 'border-fantasy-200 dark:border-fantasy-700 bg-white dark:bg-fantasy-900',
             'wh40k'   => 'border-wh40k-200 dark:border-wh40k-700 bg-white dark:bg-wh40k-900',

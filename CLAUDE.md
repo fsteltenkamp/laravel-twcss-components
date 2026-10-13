@@ -29,9 +29,9 @@ There is no linter or build step configured.
 behaviour (Alpine state, transitions, layout) cannot be verified directly. When something
 needs checking in a browser, add/update its demo in `tests/GalleryTest.php`, run `./test.sh`
 (which regenerates `gallery.html`), and ask the user to inspect `gallery.html` and report
-back — say exactly what to click and what to look for. Gallery demos use `theme="skin"`
-so the Theme dropdown in the gallery header re-themes every component at once; don't add
-per-theme showcases.
+back — say exactly what to click and what to look for. Gallery demos use `theme="palette"`
+so the Colour select in the gallery's Style drawer re-colours every component at once (the
+Skin select changes the look); don't add per-theme showcases.
 
 ## Architecture
 
@@ -115,8 +115,11 @@ All components accept a `theme` prop spanning the full Tailwind palette plus ext
 neutrals (`taupe`, `mauve`, `mist`, `olive` — these require the host app's Tailwind
 config to define them) and the custom themes `cyberpunk`, `fantasy`, `wh40k` (palettes
 shipped in `resources/css/themes.css` / `resources/js/themes.js`; every theme map needs
-an entry for them, enforced by `tests/CustomThemesTest.php`), plus `skin`, which follows
-the nearest `data-skin` attribute at runtime (`resources/css/skins.css`). Role colours
+an entry for them, enforced by `tests/CustomThemesTest.php`), plus `palette`, which follows
+the nearest `data-palette` attribute at runtime (`resources/css/palettes.css`). A theme is
+only a colour: the look is the skin (`data-skin`: default, cyberpunk, fantasy, wh40k), from
+`resources/css/skin-effects.css`, applied to every component inside a skin region in that
+component's own colour. Role colours
 outside a component's own maps come from `src/Support/Shades.php`. Table components share one large theme map via the abstract
 `src/View/Components/TableBase.php`; extend it rather than duplicating color tables.
 

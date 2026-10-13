@@ -67,7 +67,7 @@ class Modal extends Component
             'mauve'     => 'bg-mauve-950/50',
             'mist'      => 'bg-mist-950/50',
             'olive'     => 'bg-olive-950/50',
-            'skin'      => 'bg-skin-950/50',
+            'palette'      => 'bg-palette-950/50',
             'cyberpunk' => 'bg-cyberpunk-950/50',
             'fantasy'   => 'bg-fantasy-950/50',
             'wh40k'     => 'bg-wh40k-950/50',

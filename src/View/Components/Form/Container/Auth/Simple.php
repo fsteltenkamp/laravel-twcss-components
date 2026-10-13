@@ -45,7 +45,7 @@ class Simple extends Component
             'mauve' => 'border-mauve-200 bg-white dark:border-mauve-800 dark:bg-mauve-950/50',
             'mist' => 'border-mist-200 bg-white dark:border-mist-800 dark:bg-mist-950/50',
             'olive' => 'border-olive-200 bg-white dark:border-olive-800 dark:bg-olive-950/50',
-            'skin'  => 'border-skin-200 bg-white dark:border-skin-800 dark:bg-skin-950/50',
+            'palette'  => 'border-palette-200 bg-white dark:border-palette-800 dark:bg-palette-950/50',
             'cyberpunk' => 'border-cyberpunk-200 bg-white dark:border-cyberpunk-800 dark:bg-cyberpunk-950/50',
             'fantasy' => 'border-fantasy-200 bg-white dark:border-fantasy-800 dark:bg-fantasy-950/50',
             'wh40k' => 'border-wh40k-200 bg-white dark:border-wh40k-800 dark:bg-wh40k-950/50',

@@ -18,13 +18,13 @@
     host's attributes (wire:*, x-on:close, id), so events dispatched by close() reach
     them. The overlay is teleported to <body>, out of any transformed or clipped
     ancestor, and carries the classes (host classes and fltc-* hooks) and the
-    data-skin of the region the modal was written in.
+    data-skin and data-palette of the regions the modal was written in.
 --}}
 <div
     @if ($wireModel)
-        x-data="{ open: @entangle($wireModel), close() { if (! {{ $closeable ? 'true' : 'false' }}) return; this.open = false; this.$dispatch('close'); }, region(attr) { const r = this.$root.closest('[data-skin]'); return r && r !== document.documentElement ? r.getAttribute(attr) : null; } }"
+        x-data="{ open: @entangle($wireModel), close() { if (! {{ $closeable ? 'true' : 'false' }}) return; this.open = false; this.$dispatch('close'); }, region(attr) { const r = this.$root.closest('[' + attr + ']'); return r && r !== document.documentElement ? r.getAttribute(attr) : null; } }"
     @else
-        x-data="{ open: @js((bool) $open), close() { if (! {{ $closeable ? 'true' : 'false' }}) return; this.open = false; this.$dispatch('close'); }, region(attr) { const r = this.$root.closest('[data-skin]'); return r && r !== document.documentElement ? r.getAttribute(attr) : null; } }"
+        x-data="{ open: @js((bool) $open), close() { if (! {{ $closeable ? 'true' : 'false' }}) return; this.open = false; this.$dispatch('close'); }, region(attr) { const r = this.$root.closest('[' + attr + ']'); return r && r !== document.documentElement ? r.getAttribute(attr) : null; } }"
     @endif
     @if ($name)
         x-on:open-modal.window="if ([$event.detail, $event.detail?.name].includes('{{ $name }}')) open = true"
@@ -39,7 +39,7 @@
         x-cloak
         style="display: none;"
         x-bind:data-skin="open && region('data-skin')"
-        x-bind:data-skin-shape="open && region('data-skin-shape')"
+        x-bind:data-palette="open && region('data-palette')"
         class="{{ $attributes->get('class') }} fixed inset-0 z-50 flex items-center justify-center p-4"
     >
         <div

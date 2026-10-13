@@ -906,34 +906,43 @@ it('themes pagination with one theme and marks the current page as the solid but
 /*
  * Import plan, phase 1: runtime theme switching.
  */
-it('renders a head script that restores the stored skin and dark mode before paint', function () {
-    $html = Blade::render('<x-fltc::theme.script storageKey="app-skin" skin="fantasy" nonce="abc" />');
+it('renders a head script that restores the stored skin, palette and dark mode before paint', function () {
+    $html = Blade::render('<x-fltc::theme.script skinStorageKey="app-skin" paletteStorageKey="app-palette" skin="fantasy" palette="rose" nonce="abc" />');
 
     expect($html)
         ->toMatch('/<script\s+nonce="abc"\s*>/')
         ->toContain("localStorage.getItem('app-skin') || 'fantasy'")
         ->toContain("setAttribute('data-skin', skin)")
+        ->toContain("localStorage.getItem('app-palette') || 'rose'")
+        ->toContain("setAttribute('data-palette', palette)")
         ->toContain("localStorage.getItem('theme')")
         ->toContain("classList.toggle('dark', dark)");
 
-    expect(Blade::render('<x-fltc::theme.script />'))->toContain("'fltc-skin'")->toContain('|| null');
+    expect(Blade::render('<x-fltc::theme.script />'))->toContain("'fltc-skin'")->toContain("'fltc-palette'")->toContain('|| null');
 });
 
-it('renders a theme picker with the given themes and the shared dark-mode control', function () {
+it('renders a theme picker with a skin select, a colour select and the shared dark-mode control', function () {
     shareErrors();
-    $html = Blade::render('<x-fltc::theme.picker :themes="[\'slate\', \'wh40k\' => \'Grimdark\']" storageKey="app-skin" theme="rose" />');
+    $html = Blade::render('<x-fltc::theme.picker :skins="[\'default\', \'wh40k\' => \'Grimdark\']" :palettes="[\'slate\', \'rose\']" skinStorageKey="app-skin" paletteStorageKey="app-palette" theme="rose" />');
 
     expect($html)
         ->toContain('fltc-theme-picker')
-        ->toContain('x-model="skin"')
+        ->toContain('x-model="value"')
         ->toContain("key: 'app-skin'")
-        ->toContain('<option value="slate">Slate</option>')
+        ->toContain("key: 'app-palette'")
+        ->toContain('<option value="default">Default</option>')
         ->toContain('<option value="wh40k">Grimdark</option>')
+        ->toContain('<option value="rose">Rose</option>')
         ->toContain('fltc-skin-change')
+        ->toContain('fltc-palette-change')
         ->toContain('data-darkmode-group')
         ->toContain('border-rose-');
 
     expect(Blade::render('<x-fltc::theme.picker :mode="false" />'))->not->toContain('data-darkmode-group');
+
+    // An empty list hides that select.
+    expect(Blade::render('<x-fltc::theme.picker :palettes="[]" :mode="false" />'))
+        ->toContain('fltc-skin-change')->not->toContain('fltc-palette-change');
 });
 
 /*
@@ -1131,8 +1140,8 @@ it('renders every save state and shows the one named by data-state', function ()
         ->toContain('fltc-spinner')
         ->toContain('fltc-status-error fltc-theme-red');
 
-    expect(Blade::render('<x-fltc::status theme="skin" :labels="[\'saved\' => \'Stored\']" />'))
-        ->toContain('Stored')->toContain('fltc-status-live fltc-theme-skin')->not->toContain('fltc-theme-red');
+    expect(Blade::render('<x-fltc::status theme="palette" :labels="[\'saved\' => \'Stored\']" />'))
+        ->toContain('Stored')->toContain('fltc-status-live fltc-theme-palette')->not->toContain('fltc-theme-red');
 });
 
 /*

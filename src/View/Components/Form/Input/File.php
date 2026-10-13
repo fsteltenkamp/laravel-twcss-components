@@ -60,7 +60,7 @@ class File extends Input
             'mauve'     => 'file:bg-mauve-100 file:text-mauve-700 hover:file:bg-mauve-200 dark:file:bg-mauve-800 dark:file:text-mauve-200 dark:hover:file:bg-mauve-700',
             'mist'      => 'file:bg-mist-100 file:text-mist-700 hover:file:bg-mist-200 dark:file:bg-mist-800 dark:file:text-mist-200 dark:hover:file:bg-mist-700',
             'olive'     => 'file:bg-olive-100 file:text-olive-700 hover:file:bg-olive-200 dark:file:bg-olive-800 dark:file:text-olive-200 dark:hover:file:bg-olive-700',
-            'skin'      => 'file:bg-skin-100 file:text-skin-700 hover:file:bg-skin-200 dark:file:bg-skin-800 dark:file:text-skin-200 dark:hover:file:bg-skin-700',
+            'palette'      => 'file:bg-palette-100 file:text-palette-700 hover:file:bg-palette-200 dark:file:bg-palette-800 dark:file:text-palette-200 dark:hover:file:bg-palette-700',
             'cyberpunk' => 'file:bg-cyberpunk-100 file:text-cyberpunk-700 hover:file:bg-cyberpunk-200 dark:file:bg-cyberpunk-800 dark:file:text-cyberpunk-200 dark:hover:file:bg-cyberpunk-700',
             'fantasy'   => 'file:bg-fantasy-100 file:text-fantasy-700 hover:file:bg-fantasy-200 dark:file:bg-fantasy-800 dark:file:text-fantasy-200 dark:hover:file:bg-fantasy-700',
             'wh40k'     => 'file:bg-wh40k-100 file:text-wh40k-700 hover:file:bg-wh40k-200 dark:file:bg-wh40k-800 dark:file:text-wh40k-200 dark:hover:file:bg-wh40k-700',
