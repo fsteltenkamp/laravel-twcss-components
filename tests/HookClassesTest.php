@@ -48,6 +48,7 @@ it('renders its hook classes', function (string $tag, string $class) {
     $content = [
         'nav.navbar.dropdown' => '<x-slot:trigger>Menu</x-slot:trigger>',
         'dropdown' => '<x-slot:trigger>Menu</x-slot:trigger>',
+        'progress' => '',
     ];
 
     $html = Blade::render("<x-fltc::{$tag} theme=\"rose\">".($content[$tag] ?? 'x')."</x-fltc::{$tag}>");
@@ -168,7 +169,7 @@ const UNSKINNED_COMPONENTS = [
     'form.container.auth.two-col-right', 'nav.breadcrumbs.item', 'nav.link',
     'nav.navbar.dropdown.link', 'nav.navbar.dropdown.postlink', 'nav.navbar.item',
     'nav.navbar.toggle', 'nav.sidebar.footer', 'table.foot', 'tabs.panel', 'text',
-    'toast.container',
+    'toast.container', 'theme.picker', 'badge.cloud',
 ];
 
 it('styles every component in the skin effects stylesheet', function (string $tag, string $class) {

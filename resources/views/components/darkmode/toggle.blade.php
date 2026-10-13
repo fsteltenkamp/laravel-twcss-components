@@ -12,28 +12,27 @@
             />
         </span>
     @else
-        <div
-            role="group"
-            aria-label="Color theme"
+        <x-fltc::segmented
+            :theme="$theme"
+            :interactive="false"
+            label="Color theme"
             data-darkmode-group
-            data-storage-key="{{ $storageKey }}"
-            data-active-class="{{ $activeClasses }}"
-            data-inactive-class="{{ $inactiveClasses }}"
-            class="fltc-darkmode-toggle-group inline-flex items-center gap-1 rounded-lg p-1 {{ $containerClasses }}"
+            :data-storage-key="$storageKey"
+            :data-active-class="$activeClasses"
+            :data-inactive-class="$inactiveClasses"
+            class="fltc-darkmode-toggle-group"
         >
             @foreach ($options as $option)
-                <button
-                    type="button"
+                <x-fltc::segmented.option
+                    :value="$option['value']"
+                    :icon="$option['icon']"
+                    :label="$option['label']"
                     data-theme-option
-                    data-theme-value="{{ $option['value'] }}"
-                    aria-pressed="false"
-                    class="fltc-darkmode-toggle-option inline-flex items-center gap-1.5 rounded-md px-3 py-1.5 text-sm font-medium transition-colors cursor-pointer {{ $inactiveClasses }}"
-                >
-                    <x-fltc::icon :name="$option['icon']" class="leading-none" />
-                    <span>{{ $option['label'] }}</span>
-                </button>
+                    :data-theme-value="$option['value']"
+                    class="fltc-darkmode-toggle-option"
+                />
             @endforeach
-        </div>
+        </x-fltc::segmented>
     @endif
 
     <script>

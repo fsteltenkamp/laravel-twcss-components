@@ -46,15 +46,6 @@ abstract class Input extends Component
     protected string $baseClasses = 'block w-full rounded-md border py-2 pr-3 shadow-sm transition duration-150 focus:outline-none focus:ring-2 dark:[color-scheme:dark]';
     protected string $errorBaseClasses = 'border-red-500 placeholder-red-300 focus:border-red-500 focus:ring-red-500 dark:border-red-400 dark:placeholder-red-400 dark:focus:border-red-400 dark:focus:ring-red-400';
 
-    /**
-     * Wrapper around label, field and error. `inline` drops the bottom margin so the
-     * field lines up in a flex row (filter bars); `wrapperClass` sizes it there.
-     */
-    protected function getWrapperClasses(bool $inline, string $wrapperClass = ''): string
-    {
-        return trim(($inline ? '' : 'mb-4').' '.$wrapperClass);
-    }
-
     protected function leftPadding(): string
     {
         return property_exists($this, 'icon') && $this->icon !== '' ? 'pl-10' : 'pl-3';

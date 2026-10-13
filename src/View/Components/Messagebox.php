@@ -10,12 +10,26 @@ class Messagebox extends Component
 {
     public string $boxClasses = '';
     public string $titleClasses = '';
+    public string $detailsClasses = '';
 
     /**
-     * Create a new component instance.
+     * `variant="error"` is the error panel: red unless a theme is given, a warning
+     * icon, a default title, and room for technical `details` and retry `actions`.
      */
-    public function __construct(public string $theme = 'slate', public string $title = '')
-    {
+    public function __construct(
+        public ?string $theme = null,
+        public string $title = '',
+        public string $variant = 'default',
+        public string $icon = '',
+    ) {
+        $this->theme = $theme ?? ($variant === 'error' ? 'red' : 'slate');
+        $theme = $this->theme;
+
+        if ($variant === 'error') {
+            $this->title = $title !== '' ? $title : __('Something went wrong');
+            $this->icon = $icon !== '' ? $icon : 'warning-circle';
+        }
+
         $themeMap = [
             'slate'   => 'border-slate-200 bg-slate-50 text-slate-800 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200',
             'gray'    => 'border-gray-200 bg-gray-50 text-gray-800 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200',
@@ -117,9 +131,10 @@ class Messagebox extends Component
 
         $this->boxClasses = 'overflow-hidden rounded-md border text-sm';
         $this->boxClasses .= ' '.($themeMap[$theme] ?? $themeMap['slate']);
-        $this->titleClasses = 'border-b px-4 py-2 font-semibold';
+        $this->titleClasses = 'flex items-center gap-2 border-b px-4 py-2 font-semibold';
         $this->titleClasses .= ' '.($titleMap[$theme] ?? $titleMap['slate']);
         $this->titleClasses .= ' '.($titleBorderMap[$theme] ?? $titleBorderMap['slate']);
+        $this->detailsClasses = 'border-t px-4 py-2 '.($titleBorderMap[$theme] ?? $titleBorderMap['slate']);
     }
 
     /**

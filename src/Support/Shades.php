@@ -174,4 +174,86 @@ class Shades
 
         return $map[$theme] ?? $map['slate'];
     }
+
+    /**
+     * Filled part of a progress bar or meter, filled rating stars.
+     */
+    public static function fill(?string $theme): string
+    {
+        $map = [
+            'slate'     => 'bg-slate-500 dark:bg-slate-400',
+            'gray'      => 'bg-gray-500 dark:bg-gray-400',
+            'zinc'      => 'bg-zinc-500 dark:bg-zinc-400',
+            'neutral'   => 'bg-neutral-500 dark:bg-neutral-400',
+            'stone'     => 'bg-stone-500 dark:bg-stone-400',
+            'red'       => 'bg-red-500 dark:bg-red-400',
+            'orange'    => 'bg-orange-500 dark:bg-orange-400',
+            'amber'     => 'bg-amber-500 dark:bg-amber-400',
+            'yellow'    => 'bg-yellow-500 dark:bg-yellow-400',
+            'lime'      => 'bg-lime-500 dark:bg-lime-400',
+            'green'     => 'bg-green-500 dark:bg-green-400',
+            'emerald'   => 'bg-emerald-500 dark:bg-emerald-400',
+            'teal'      => 'bg-teal-500 dark:bg-teal-400',
+            'cyan'      => 'bg-cyan-500 dark:bg-cyan-400',
+            'sky'       => 'bg-sky-500 dark:bg-sky-400',
+            'blue'      => 'bg-blue-500 dark:bg-blue-400',
+            'indigo'    => 'bg-indigo-500 dark:bg-indigo-400',
+            'violet'    => 'bg-violet-500 dark:bg-violet-400',
+            'purple'    => 'bg-purple-500 dark:bg-purple-400',
+            'fuchsia'   => 'bg-fuchsia-500 dark:bg-fuchsia-400',
+            'pink'      => 'bg-pink-500 dark:bg-pink-400',
+            'rose'      => 'bg-rose-500 dark:bg-rose-400',
+            'taupe'     => 'bg-taupe-500 dark:bg-taupe-400',
+            'mauve'     => 'bg-mauve-500 dark:bg-mauve-400',
+            'mist'      => 'bg-mist-500 dark:bg-mist-400',
+            'olive'     => 'bg-olive-500 dark:bg-olive-400',
+            'skin'      => 'bg-skin-500 dark:bg-skin-400',
+            'cyberpunk' => 'bg-cyberpunk-500 dark:bg-cyberpunk-400',
+            'fantasy'   => 'bg-fantasy-500 dark:bg-fantasy-400',
+            'wh40k'     => 'bg-wh40k-500 dark:bg-wh40k-400',
+        ];
+
+        return $map[$theme] ?? $map['slate'];
+    }
+
+    /**
+     * Faint marks on a surface: empty rating stars, placeholder glyphs.
+     */
+    public static function faint(?string $theme): string
+    {
+        $map = [
+            'slate'     => 'text-slate-300 dark:text-slate-600',
+            'gray'      => 'text-gray-300 dark:text-gray-600',
+            'zinc'      => 'text-zinc-300 dark:text-zinc-600',
+            'neutral'   => 'text-neutral-300 dark:text-neutral-600',
+            'stone'     => 'text-stone-300 dark:text-stone-600',
+            'red'       => 'text-red-300 dark:text-red-600',
+            'orange'    => 'text-orange-300 dark:text-orange-600',
+            'amber'     => 'text-amber-300 dark:text-amber-600',
+            'yellow'    => 'text-yellow-300 dark:text-yellow-600',
+            'lime'      => 'text-lime-300 dark:text-lime-600',
+            'green'     => 'text-green-300 dark:text-green-600',
+            'emerald'   => 'text-emerald-300 dark:text-emerald-600',
+            'teal'      => 'text-teal-300 dark:text-teal-600',
+            'cyan'      => 'text-cyan-300 dark:text-cyan-600',
+            'sky'       => 'text-sky-300 dark:text-sky-600',
+            'blue'      => 'text-blue-300 dark:text-blue-600',
+            'indigo'    => 'text-indigo-300 dark:text-indigo-600',
+            'violet'    => 'text-violet-300 dark:text-violet-600',
+            'purple'    => 'text-purple-300 dark:text-purple-600',
+            'fuchsia'   => 'text-fuchsia-300 dark:text-fuchsia-600',
+            'pink'      => 'text-pink-300 dark:text-pink-600',
+            'rose'      => 'text-rose-300 dark:text-rose-600',
+            'taupe'     => 'text-taupe-300 dark:text-taupe-600',
+            'mauve'     => 'text-mauve-300 dark:text-mauve-600',
+            'mist'      => 'text-mist-300 dark:text-mist-600',
+            'olive'     => 'text-olive-300 dark:text-olive-600',
+            'skin'      => 'text-skin-300 dark:text-skin-600',
+            'cyberpunk' => 'text-cyberpunk-300 dark:text-cyberpunk-600',
+            'fantasy'   => 'text-fantasy-300 dark:text-fantasy-600',
+            'wh40k'     => 'text-wh40k-300 dark:text-wh40k-600',
+        ];
+
+        return $map[$theme] ?? $map['slate'];
+    }
 }

@@ -32,7 +32,14 @@ such as `resources/css/skin-effects.css` target them:
   (`fltc-dropdown-trigger` / `-menu`; items carry `fltc-dropdown-item`), the tabs
   (`fltc-tabs-list`; `fltc-tabs-tab` with `aria-selected` for the active one), the pagination
   summary (`fltc-nav-pagination-summary`) and the radio (`fltc-form-radio` on the `<input>`,
-  `fltc-form-radio-label`, `fltc-form-radio-group-legend`). The drawer tab
+  `fltc-form-radio-label`, `fltc-form-radio-group-legend`), the segmented control
+  (`fltc-segmented-option` with `aria-pressed`), chips (`fltc-badge-count` / `-remove`), the
+  progress bar (`fltc-progress-track` / `-fill` / `-label` / `-value` / `-legend`), the empty
+  state (`fltc-empty-icon` / `-title` / `-text` / `-actions`), the message box
+  (`fltc-messagebox-title` / `-details` / `-actions`), fields and sections
+  (`fltc-form-field-note`, `fltc-form-section-title` / `-hint`), star ratings
+  (`fltc-rating-star` / `-fill`, `fltc-form-rating-star` / `-fill`) and the save status (one
+  `fltc-status-<state>` part per state, each with its own `fltc-theme-*`). The drawer tab
   and the tooltip bubble are teleported out of their component, so they repeat the
   `fltc-theme-*` class themselves.
 
@@ -501,6 +508,8 @@ slate). The inputs pass their own `theme` to their label, so a label matches its
 
 Components:
 - `x-fltc::form.label`
+- `x-fltc::form.field`
+- `x-fltc::form.section`
 - `x-fltc::form.input.text`
 - `x-fltc::form.input.number`
 - `x-fltc::form.input.date`
@@ -514,6 +523,7 @@ Components:
 - `x-fltc::form.checkbox`
 - `x-fltc::form.radio`
 - `x-fltc::form.radio.group`
+- `x-fltc::form.rating`
 - `x-fltc::form.otp`
 - `x-fltc::form.container.auth.simple`
 - `x-fltc::form.container.auth.two-col-left`
@@ -524,6 +534,7 @@ Use for all standard form fields. They handle labels, errors, and theme styling.
 Common props:
 - `id` and `name`
 - `label`
+- `note`: help text under the control (linked with `aria-describedby`)
 - `placeholder`
 - `required`
 - `model`: Livewire binding target
@@ -543,6 +554,38 @@ Common props:
     <x-fltc::button icon="funnel">Filter</x-fltc::button>
 </div>
 ```
+
+**Field** (`x-fltc::form.field`): label, note and validation error around any control. The
+library's inputs render their own field through it, so use it for custom controls (a colour
+picker, a third-party widget) to make them look like the rest of the form.
+
+```blade
+<x-fltc::form.field label="Accent colour" note="Used for your profile header." for="accent" name="accent">
+    <input id="accent" name="accent" type="color" />
+</x-fltc::form.field>
+```
+
+- `label`, `note`, `required`
+- `for`: id of the control (the label's `for`, the note's id is `{for}-note`)
+- `name`: field name whose validation error to show (default: `for`; `name[]` and `name.*`
+  errors count too). The error's id is `{name}-error`
+- `theme`: full palette (default: slate); `inline`: no bottom margin
+- `class` and attributes go on the wrapper `<div>`
+
+**Settings section** (`x-fltc::form.section`): a titled group of fields with hint text, e.g.
+one block of a settings page. Consecutive sections are separated by a rule.
+
+```blade
+<x-fltc::form.section title="Profile" hint="Shown on your public page." split>
+    <x-fltc::form.input.text label="Display name" name="name" />
+    <x-slot:actions><x-fltc::button type="submit">Save</x-fltc::button></x-slot:actions>
+</x-fltc::form.section>
+```
+
+- `title`, `hint`
+- `split`: title and hint in a column beside the fields from `md` up (default: stacked)
+- `theme`: full palette (default: slate)
+- Slots: default (the fields), `actions` (right-aligned under the fields)
 
 **Typed inputs**: `number`, `date`, `time`, `datetime` (`datetime-local`), `email` and
 `password` are `form.input.text` with a different `type` and take the same props. Type
@@ -575,6 +618,22 @@ Group props:
 - `horizontal`: options in a wrapping row instead of a column
 - `theme`: full palette (default: slate); `inline`: no bottom margin
 - Shows the validation error for `name`
+
+**Star rating input** (`x-fltc::form.rating`): pick 1 to `max` stars by click or arrow keys;
+clicking the chosen star again clears it (`clearable`, default true). A `role="radiogroup"` of
+star buttons; hovering previews the value.
+
+```blade
+<x-fltc::form.rating name="score" label="Your rating" :value="$review->score" />
+<x-fltc::form.rating label="Your rating" model="score" />   {{-- Livewire --}}
+```
+
+- `name`: posts the value through a hidden input (empty when cleared); `old()` input wins
+- `value` (int, default 0), `max` (default 5)
+- `model` / `live`: Livewire binding; the value is also `x-modelable`, so `x-model` works
+- `label`, `note`, `required`, `disabled`, `clearable`, `size` (`sm`, `md`, `lg`)
+- `theme`: full palette (default: slate) — filled stars use its tertiary shade
+- `inline`, `wrapperClass` as for the other fields
 
 Radio props: `value`, `label` (or the default slot), `id`, `checked` (overrides the group's
 `value`), `disabled`, plus `name`, `model`, `live`, `required`, `theme` to override the
@@ -638,7 +697,110 @@ Components:
 - `x-fltc::toast`
 - `x-fltc::toast.container`
 
+- `x-fltc::badge.cloud`
+- `x-fltc::progress` (+ `x-fltc::progress.segment`)
+- `x-fltc::rating`
+- `x-fltc::status`
+- `x-fltc::empty`
+
 Use message boxes for alerts, empty-state notices, warnings, and selected-item summaries. Use alerts for simple inline messages with theme support. Badge is for compact labels and status chips.
+
+**Message box** (`x-fltc::messagebox`): a bordered box with an optional title bar.
+- `title`, `icon` (Phosphor, shown in the title bar)
+- `theme`: full palette (default: slate; red for the error variant)
+- `variant="error"`: the **error panel** — red, a warning icon and the title
+  `__('Something went wrong')` unless you give your own
+- Slots: default (the message), `details` (collapsible `<details>` with preformatted text, e.g.
+  a stack trace; its `summary` attribute is the toggle label, default `__('Details')`),
+  `actions` (right-aligned buttons, e.g. Retry)
+
+```blade
+<x-fltc::messagebox variant="error">
+    We could not load your chapters.
+    <x-slot:details summary="Technical details">{{ $exception->getMessage() }}</x-slot:details>
+    <x-slot:actions><x-fltc::button wire:click="reload">Retry</x-fltc::button></x-slot:actions>
+</x-fltc::messagebox>
+```
+
+**Badge / chip** (`x-fltc::badge`): a compact label. Variants:
+- plain (default): a `<span>`
+- `href`: a link chip
+- `variant="toggle"`: an on/off chip backed by a hidden checkbox — `name`, `value`, `checked`
+  post with a form; `wire:model` / `x-model` go on the checkbox, other attributes on the chip
+- `removable`: adds a ✕ button that dispatches a `badge-remove` browser event with `value`
+  (or the label) as detail: `x-on:badge-remove="$wire.removeTag($event.detail)"`.
+  `removeLabel`: its accessible name (default: `__('Remove')`)
+
+Other props: `icon`, `iconVariant`, `count` (a small number after the label, e.g. facet counts),
+`theme` (full palette, default: slate, or the surrounding chip cloud's).
+
+**Chip cloud** (`x-fltc::badge.cloud`): wrapping layout for tag and facet lists. Its `theme`
+(default: slate) is inherited by the chips inside; `gap`: `sm`, `md` (default), `lg`; `label`:
+accessible group name.
+
+```blade
+<x-fltc::badge.cloud label="Genres" theme="violet">
+    @foreach ($genres as $genre)
+        <x-fltc::badge variant="toggle" name="genres[]" :value="$genre->slug" :count="$genre->books_count" wire:model.live="genres">{{ $genre->name }}</x-fltc::badge>
+    @endforeach
+</x-fltc::badge.cloud>
+```
+
+**Progress** (`x-fltc::progress`): a progress bar (`role="progressbar"`).
+
+```blade
+<x-fltc::progress :value="$read" :max="$chapters" label="Progress" showValue />
+
+<x-fltc::progress :max="$total" legend>
+    <x-fltc::progress.segment :value="$read" theme="green" label="Read" />
+    <x-fltc::progress.segment :value="$reading" theme="amber" label="Reading" />
+</x-fltc::progress>
+
+<x-fltc::progress variant="meter" label="Storage" :value="4.3" :max="5" unit="GB" />
+```
+
+- `value`, `max` (default 100), `theme` (full palette, default: slate), `size` (`sm`, `md`, `lg`)
+- `label`; `showValue`: the percentage beside it
+- Segments (`x-fltc::progress.segment value theme label`) make a split bar, each `value` of
+  the bar's `max`; `legend` lists them under the bar with a swatch and their value
+- `variant="meter"`: label plus "used / limit" (with `unit`) above the bar; the fill turns
+  `warningTheme` (default amber) from `threshold` (fraction of max, default 0.8) and
+  `dangerTheme` (default red) at the limit and above
+
+**Star rating** (`x-fltc::rating`): read-only stars, rounded to half stars. `value`, `max`
+(default 5), `size` (`sm`, `md`, `lg`), `showValue` (the number after the stars), `theme` (full
+palette, default slate; filled stars use its tertiary shade), `label` (accessible name,
+default "3.5 out of 5 stars"). For a picker see `x-fltc::form.rating` under Forms.
+
+**Save status** (`x-fltc::status`): a chip for live / unsaved / saving / saved / error, each
+with an icon and its own theme (emerald, amber, sky, green, red). All five are rendered and
+CSS shows the one named by `data-state`, so the app can switch it from Alpine without a
+re-render:
+
+```blade
+<div x-data="{ status: 'saved' }" x-on:input.debounce="status = 'unsaved'">
+    <x-fltc::status x-bind:data-state="status" />
+</div>
+```
+
+- `state`: the initial state (default: `saved`)
+- `theme`: one theme for every state (e.g. `skin`) instead of the per-state ones
+- `labels`, `themes`, `icons`: per-state overrides, e.g. `:labels="['error' => 'Offline']"`
+
+**Empty state** (`x-fltc::empty`): an icon, a title and a line of text for an empty list or
+search, with optional actions.
+
+```blade
+<x-fltc::empty icon="books" title="No stories yet" bordered>
+    Start writing or import a manuscript.
+    <x-slot:actions><x-fltc::button icon="plus">New story</x-fltc::button></x-slot:actions>
+</x-fltc::empty>
+```
+
+- `icon` (Phosphor, default `tray`; empty for none), `title`
+- `bordered`: dashed frame; `size`: `sm`, `md` (default), `lg`
+- `theme`: full palette (default: slate)
+- Slots: default (the text), `actions`
 
 ### Toast Notifications
 
@@ -699,6 +861,43 @@ Components:
 - `x-fltc::icon`
 - `x-fltc::separator`
 - `x-fltc::spinner`
+- `x-fltc::segmented`
+- `x-fltc::theme.script`
+- `x-fltc::theme.picker`
+
+**Segmented toggle** (`x-fltc::segmented` + `x-fltc::segmented.option`): a row of mutually
+exclusive buttons, one active (`aria-pressed`) — view switches, filters. The dark-mode toggle
+is built on it.
+
+```blade
+<x-fltc::segmented name="layout" value="card" wire:model.live="layout">
+    <x-fltc::segmented.option value="card" icon="squares-four" label="Card" />
+    <x-fltc::segmented.option value="list" icon="list" label="List" />
+</x-fltc::segmented>
+```
+
+- The value is Alpine state and `x-modelable`: `x-model` / `wire:model` on the group bind it
+- `value`: initially active option; `name`: posts the value through a hidden input
+- `theme`: full palette (default: slate), inherited by the options; `label`: accessible name
+- `interactive` (default true): false renders the markup without Alpine, for your own script
+- Option props: `value`, `label` (or the slot), `icon`, `iconVariant`, `disabled`
+
+**Theme script** (`x-fltc::theme.script`): put it in `<head>`. Before the first paint it sets
+`data-skin` on `<html>` from storage (the theme picker's choice) and the `dark` class from the
+light/dark/system mode the dark-mode toggle stores, so the page never flashes the wrong theme.
+- `storageKey`: where the theme is stored (default: `fltc-skin`; match the picker's)
+- `skin`: theme to use when nothing is stored (default: none — keeps the server's `data-skin`)
+- `nonce`: for a Content Security Policy
+
+**Theme picker** (`x-fltc::theme.picker`): a theme select plus the light/dark/system control.
+Choosing a theme sets `data-skin` on `<html>` (re-colouring every `theme="skin"` component),
+saves it, and syncs other pickers on the page. The mode part is `x-fltc::darkmode.toggle`,
+which owns that storage and the OS-following system mode.
+- `themes`: theme names, or name => label (default: slate, cyberpunk, fantasy, wh40k)
+- `storageKey` (default: `fltc-skin`), `default`: theme when nothing is stored
+- `theme`: its own chrome (default: slate — `skin` to follow the choice)
+- `mode` (default true): show the light/dark/system control
+- `stacked`: one above the other (e.g. in a drawer); `label`, `modeLabel`
 
 **Spinner** (`x-fltc::spinner`): an animated loading indicator (SVG, `role="status"`).
 Attributes pass through, so it pairs with Livewire's loading states:

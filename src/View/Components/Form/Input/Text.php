@@ -19,7 +19,6 @@ class Text extends Input
 
     public string $normalClasses;
     public string $errorClasses;
-    public string $wrapperClasses;
 
     public function __construct(
         public string $id = '',
@@ -39,6 +38,7 @@ class Text extends Input
         public string $iconVariant = 'regular',
         public string $type = '',
         public bool $inline = false,
+        public string $note = '',
         public string $wrapperClass = '',
     ) {
         $this->type = $type !== '' ? $type : $this->defaultType;
@@ -49,7 +49,6 @@ class Text extends Input
 
         $this->normalClasses  = $this->getNormalClasses($theme, $class);
         $this->errorClasses   = $this->getErrorClasses($class);
-        $this->wrapperClasses = $this->getWrapperClasses($inline, $wrapperClass);
 
         if (empty($id)) {
             $this->id = $this->type . '-' . uniqid();

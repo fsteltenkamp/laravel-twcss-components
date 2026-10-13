@@ -157,7 +157,19 @@ on **Tailwind v3** it is in `themes.js` (see Custom themes above), plus the styl
 ```
 
 The skin colours are Tailwind v3.4's palette; v4's palette differs from it very slightly.
-Saving the choice and applying it before the first paint is up to the host for now.
+
+Let visitors choose with `<x-fltc::theme.picker>` (theme plus light/dark/system, saved in
+`localStorage`), and put `<x-fltc::theme.script />` in `<head>` so the saved choice applies
+before the first paint:
+
+```blade
+<head>
+    <x-fltc::theme.script skin="slate" />
+    @vite('resources/css/app.css')
+</head>
+...
+<x-fltc::theme.picker :themes="['slate', 'cyberpunk', 'fantasy', 'wh40k']" theme="skin" />
+```
 
 ### Skin effects
 

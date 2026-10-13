@@ -9,7 +9,6 @@ use Fsteltenkamp\TwcssComponents\View\Component;
 class Textarea extends Component
 {
     public string $classList;
-    public string $wrapperClasses;
 
     public function __construct(
         public string $id = '',
@@ -28,6 +27,7 @@ class Textarea extends Component
         public bool $readonly = false,
         public string $class = '',
         public bool $inline = false,
+        public string $note = '',
         public string $wrapperClass = '',
     ) {
         if ($this->name === '') {
@@ -104,8 +104,6 @@ class Textarea extends Component
             $themeMap[$theme] ?? $themeMap['slate'],
             $class,
         ])));
-
-        $this->wrapperClasses = trim(($inline ? '' : 'mb-4').' '.$wrapperClass);
 
         if (empty($id)) {
             $this->id = 'textarea-' . uniqid();

@@ -1,15 +1,11 @@
 @php
     $fieldName = $name !== '' ? $name : $id;
-    $hasError = $fieldName !== '' && $errors->has($fieldName);
+    $errorKey = rtrim($fieldName, '[]');
+    $hasError = $errorKey !== '' && ($errors->has($errorKey) || $errors->has($errorKey.'.*'));
+    $describedBy = \Fsteltenkamp\TwcssComponents\View\Components\Form\Field::describedBy($id, $note, $hasError, $errorKey);
 @endphp
 
-<div @class([$wrapperClasses])>
-    @if ($label !== '')
-        <x-fltc::form.label :for="$id" :required="$required" :theme="$theme">
-            {{ $label }}
-        </x-fltc::form.label>
-    @endif
-
+<x-fltc::form.field :label="$label" :note="$note" :for="$id" :name="$fieldName" :required="$required" :theme="$theme" :inline="$inline" :class="$wrapperClass">
     <div class="relative">
         <input
             {{ $attributes->class(trim($hasError ? $errorClasses : $normalClasses)) }}
@@ -30,7 +26,8 @@
             @required($required)
             @disabled($disabled)
             @if ($autofocus) autofocus @endif
-            @if ($hasError) aria-invalid="true" aria-describedby="{{ $fieldName }}-error" @endif
+            @if ($hasError) aria-invalid="true" @endif
+            @if ($describedBy !== '') aria-describedby="{{ $describedBy }}" @endif
         />
         @if ($icon !== '')
             <span class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 {{ $iconClasses() }}">
@@ -38,8 +35,4 @@
             </span>
         @endif
     </div>
-
-    @if ($hasError)
-        <p id="{{ $fieldName }}-error" class="mt-2 text-sm text-red-600 dark:text-red-400">{{ $errors->first($fieldName) }}</p>
-    @endif
-</div>
+</x-fltc::form.field>

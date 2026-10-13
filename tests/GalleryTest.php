@@ -88,6 +88,69 @@ function galleryGroups(): array
                 ['card — header + body', '<x-fltc::toast variant="card" theme="skin" title="Profile updated" message="Your changes have been saved successfully." />'],
                 ['baguette — centered 80% banner', '<div class="w-full py-2"><x-fltc::toast variant="baguette" theme="skin" title="Deploying to production…" message="This may take a moment." /></div>'],
             ],
+            'Chips' => [
+                ['link, icon and count', '<x-fltc::badge.cloud theme="skin" label="Tags">
+    <x-fltc::badge href="#" icon="tag" :count="12">fantasy</x-fltc::badge>
+    <x-fltc::badge href="#" icon="tag" :count="4">romance</x-fltc::badge>
+    <x-fltc::badge href="#" icon="tag" :count="31">mystery</x-fltc::badge>
+</x-fltc::badge.cloud>'],
+                ['toggle (facets)', '<x-fltc::badge.cloud theme="skin" label="Genres">
+    <x-fltc::badge variant="toggle" name="genres[]" value="scifi" checked>Sci-fi</x-fltc::badge>
+    <x-fltc::badge variant="toggle" name="genres[]" value="horror">Horror</x-fltc::badge>
+    <x-fltc::badge variant="toggle" name="genres[]" value="poetry" :count="3">Poetry</x-fltc::badge>
+</x-fltc::badge.cloud>'],
+                ['removable (✕ dispatches badge-remove)', '<div class="flex flex-wrap gap-2">
+    <span x-data="{ shown: true }" x-show="shown" x-on:badge-remove="shown = false"><x-fltc::badge theme="skin" removable value="draft">draft</x-fltc::badge></span>
+    <span x-data="{ shown: true }" x-show="shown" x-on:badge-remove="shown = false"><x-fltc::badge theme="skin" removable value="needs-edit">needs edit</x-fltc::badge></span>
+    <span x-data="{ shown: true }" x-show="shown" x-on:badge-remove="shown = false"><x-fltc::badge theme="skin" removable value="beta">beta</x-fltc::badge></span>
+</div>'],
+            ],
+            'Progress' => [
+                ['single bar', '<x-fltc::progress theme="skin" :value="64" label="Chapter 4 of 7" showValue class="max-w-md" />'],
+                ['split with legend', '<x-fltc::progress :max="40" legend class="max-w-md">
+    <x-fltc::progress.segment :value="22" theme="green" label="Read" />
+    <x-fltc::progress.segment :value="6" theme="amber" label="Reading" />
+    <x-fltc::progress.segment :value="4" theme="skin" label="Want to read" />
+</x-fltc::progress>'],
+                ['meter (ok / warning / over limit)', '<div class="max-w-md space-y-4">
+    <x-fltc::progress variant="meter" theme="skin" label="Storage" :value="1.2" :max="5" unit="GB" />
+    <x-fltc::progress variant="meter" theme="skin" label="Storage" :value="4.3" :max="5" unit="GB" />
+    <x-fltc::progress variant="meter" theme="skin" label="Storage" :value="5.4" :max="5" unit="GB" />
+</div>'],
+            ],
+            'Star rating' => [
+                ['half stars', '<span class="inline-flex flex-col gap-2"><x-fltc::rating theme="skin" value="3.5" showValue /><x-fltc::rating theme="skin" value="4.8" size="lg" /><x-fltc::rating theme="skin" value="1" size="sm" /></span>'],
+            ],
+            'Save status' => [
+                ['driven from Alpine', '<div x-data="{ status: \'saved\' }" class="flex flex-wrap items-center gap-3">
+    <x-fltc::status state="saved" x-bind:data-state="status" />
+    <x-fltc::segmented theme="skin" value="saved" label="State" x-model="status">
+        <x-fltc::segmented.option value="live" label="live" />
+        <x-fltc::segmented.option value="unsaved" label="unsaved" />
+        <x-fltc::segmented.option value="saving" label="saving" />
+        <x-fltc::segmented.option value="saved" label="saved" />
+        <x-fltc::segmented.option value="error" label="error" />
+    </x-fltc::segmented>
+</div>'],
+                ['theme="skin" for every state', '<x-fltc::status theme="skin" state="unsaved" />'],
+            ],
+            'Empty state' => [
+                ['bordered with actions', '<x-fltc::empty theme="skin" icon="books" title="No stories yet" bordered>
+    Your library is empty. Start writing or import a manuscript.
+    <x-slot:actions>
+        <x-fltc::button theme="skin" icon="plus">New story</x-fltc::button>
+        <x-fltc::button theme="skin" variant="outline" icon="upload-simple">Import</x-fltc::button>
+    </x-slot:actions>
+</x-fltc::empty>'],
+            ],
+            'Error panel' => [
+                ['messagebox variant="error"', '<x-fltc::messagebox variant="error" class="max-w-xl">
+    We could not load your chapters. Check your connection and try again.
+    <x-slot:details summary="Technical details">GET /api/chapters → 503 Service Unavailable
+request id 7f3a9c</x-slot:details>
+    <x-slot:actions><x-fltc::button theme="red" icon="arrow-clockwise">Retry</x-fltc::button></x-slot:actions>
+</x-fltc::messagebox>'],
+            ],
         ],
 
         'Cards' => [
@@ -194,6 +257,25 @@ function galleryGroups(): array
             'Label' => [
                 ['default', '<x-fltc::form.label theme="skin" for="x" required description="Shown to other members">Display name</x-fltc::form.label>'],
             ],
+            'Field wrapper' => [
+                ['custom control with note', '<x-fltc::form.field theme="skin" label="Accent colour" note="Used for your profile header." for="gallery-colour" class="max-w-sm">
+    <input id="gallery-colour" type="color" value="#f472b6" class="h-10 w-20 cursor-pointer rounded border" />
+</x-fltc::form.field>'],
+                ['input with note', '<x-fltc::form.input.email theme="skin" label="Email" note="We never share it." icon="envelope" class="max-w-sm" />'],
+            ],
+            'Settings section' => [
+                ['split', '<x-fltc::form.section theme="skin" title="Profile" hint="Shown on your public page." split>
+    <x-fltc::form.input.text theme="skin" label="Display name" value="Jane Doe" />
+    <x-fltc::form.textarea theme="skin" label="Bio" rows="2" />
+    <x-slot:actions><x-fltc::button theme="skin">Save</x-fltc::button></x-slot:actions>
+</x-fltc::form.section>
+<x-fltc::form.section theme="skin" title="Notifications" hint="What we email you about." split>
+    <x-fltc::form.checkbox theme="skin" label="New followers" checked />
+</x-fltc::form.section>'],
+            ],
+            'Star rating input' => [
+                ['click / arrow keys', '<x-fltc::form.rating theme="skin" name="gallery-score" label="Your rating" :value="3" note="Click the chosen star again to clear it." />'],
+            ],
             'Checklist' => [
                 ['default', '<x-fltc::form.checklist :items="$items" theme="skin" showProgress />', ['items' => [
                     ['label' => 'Create account', 'status' => 'completed'],
@@ -213,6 +295,16 @@ function galleryGroups(): array
                     ['label' => 'Library', 'href' => '#'],
                     ['label' => 'Data', 'href' => null],
                 ]]],
+            ],
+            'Segmented toggle' => [
+                ['icons and labels', '<div x-data="{ layout: \'card\' }" class="space-y-2">
+    <x-fltc::segmented theme="skin" name="layout" value="card" label="Layout" x-model="layout">
+        <x-fltc::segmented.option value="card" icon="squares-four" label="Card" />
+        <x-fltc::segmented.option value="compact" icon="rows" label="Compact" />
+        <x-fltc::segmented.option value="list" icon="list" label="List" />
+    </x-fltc::segmented>
+    <x-fltc::text theme="skin" class="block text-xs">x-model value: <code x-text="layout"></code></x-fltc::text>
+</div>'],
             ],
             'Tabs' => [
                 ['panels', '<x-fltc::tabs theme="skin" active="profile" class="max-w-xl">
@@ -285,15 +377,13 @@ function galleryGroups(): array
 </x-fltc::dropdown></div>'],
             ],
             'Drawer' => [
-                ['tabs on both sides (look at the screen edges)', '<x-fltc::drawer name="gallery-wiki" side="right" title="Wiki" label="Wiki" icon="book-open" theme="skin" offset="5rem" pinnable>
+                ['right-edge tabs (the Menu tab on the left edge is the gallery\'s own contents drawer)', '<x-fltc::drawer name="gallery-wiki" side="right" title="Wiki" label="Wiki" icon="book-open" theme="skin" offset="5rem" pinnable>
     Pinnable right drawer. Pin it, then click outside — it stays open.
 </x-fltc::drawer>
 <x-fltc::drawer name="gallery-notes" side="right" title="Notes" label="Notes" icon="note" theme="skin" offset="5rem" :order="1">
     Opening this closes the Wiki drawer first.
 </x-fltc::drawer>
-<x-fltc::drawer name="gallery-nav" side="left" title="Navigation" label="Menu" icon="list" theme="skin" offset="5rem">
-    Left drawer.
-</x-fltc::drawer>'],
+'],
                 ['without a tab, opened by event', '<x-fltc::drawer name="gallery-quiet" side="left" title="Filters" theme="skin" offset="5rem">
     No activation tab — opened from a trigger.
 </x-fltc::drawer>
@@ -302,6 +392,9 @@ function galleryGroups(): array
         ],
 
         'Utility' => [
+            'Theme picker' => [
+                ['theme + mode (also in the Style drawer)', '<x-fltc::theme.picker :themes="[\'slate\', \'rose\', \'cyberpunk\', \'fantasy\', \'wh40k\']" storageKey="fltc-gallery-skin" theme="skin" />'],
+            ],
             'Spinner' => [
                 ['sizes', '<span class="inline-flex items-center gap-4"><x-fltc::spinner theme="skin" size="xs" /><x-fltc::spinner theme="skin" size="sm" /><x-fltc::spinner theme="skin" /><x-fltc::spinner theme="skin" size="lg" /><x-fltc::spinner theme="skin" size="xl" /></span>'],
                 ['in a button (theme="current")', '<x-fltc::button theme="skin" x-data="{ busy: false }" x-on:click="busy = true; setTimeout(() => busy = false, 1500)"><x-fltc::spinner theme="current" size="sm" class="mr-2" x-show="busy" x-cloak />Save</x-fltc::button>'],
@@ -459,11 +552,16 @@ function cardRowsExample(bool $floating): string
 function renderGalleryHtml(array $groups): string
 {
     $sections = '';
+    $nav = [];
 
     foreach ($groups as $section => $components) {
         $cards = '';
+        $sectionId = 'section-'.\Illuminate\Support\Str::slug($section);
+        $nav[$section] = ['id' => $sectionId, 'items' => []];
 
         foreach ($components as $componentName => $variants) {
+            $cardId = \Illuminate\Support\Str::slug($section.' '.$componentName);
+            $nav[$section]['items'][$cardId] = $componentName;
             $multi = count($variants) > 1;
             $blocks = '';
 
@@ -499,7 +597,7 @@ function renderGalleryHtml(array $groups): string
             }
 
             $cards .= <<<HTML
-                <div class="rounded-lg border border-skin-200 dark:border-skin-700 bg-white dark:bg-skin-800 overflow-hidden">
+                <div id="{$cardId}" class="scroll-mt-24 rounded-lg border border-skin-200 dark:border-skin-700 bg-white dark:bg-skin-800 overflow-hidden">
                     <div class="px-6 py-3 text-sm font-semibold text-skin-700 dark:text-skin-200 border-b border-skin-100 dark:border-skin-700">{$componentName}</div>
                     {$blocks}
                 </div>
@@ -507,7 +605,7 @@ function renderGalleryHtml(array $groups): string
         }
 
         $sections .= <<<HTML
-            <section class="space-y-5">
+            <section id="{$sectionId}" class="scroll-mt-24 space-y-5">
                 <h2 class="text-lg font-bold text-skin-800 dark:text-skin-100">{$section}</h2>
                 <div class="space-y-5">{$cards}</div>
             </section>
@@ -517,7 +615,7 @@ function renderGalleryHtml(array $groups): string
     // The selectable skins come straight from the shipped stylesheet.
     $skinCss = file_get_contents(dirname(__DIR__).'/resources/css/skins.css');
     preg_match_all('/\[data-skin="([a-z0-9]+)"\]/', $skinCss, $m);
-    $skinOptions = implode('', array_map(fn ($s) => "<option value=\"{$s}\">{$s}</option>", $m[1]));
+    $skins = $m[1];
 
     // The style controls live in a drawer (first tab on the right edge) so the header
     // stays one line on small screens. They are library components too, so they follow
@@ -525,14 +623,7 @@ function renderGalleryHtml(array $groups): string
     $controls = Blade::render(<<<'BLADE'
         <x-fltc::drawer name="gallery-style" side="right" title="Style" label="Style" icon="palette" theme="skin" offset="5rem" :order="-1" pinnable>
             <div class="space-y-6">
-                <x-fltc::form.input.select theme="skin" id="gallery-skin" label="Theme" icon="palette"
-                    onchange="document.documentElement.dataset.skin = this.value; try { localStorage.setItem('fltc-gallery-skin', this.value); } catch (e) {}">
-                    {!! $skinOptions !!}
-                </x-fltc::form.input.select>
-                <div class="space-y-2">
-                    <x-fltc::form.label theme="skin">Mode</x-fltc::form.label>
-                    <x-fltc::darkmode.toggle theme="skin" />
-                </div>
+                <x-fltc::theme.picker :themes="$skins" storageKey="fltc-gallery-skin" theme="skin" stacked />
                 <div class="space-y-2">
                     <x-fltc::form.label theme="skin" for="gallery-fx">Skin effects</x-fltc::form.label>
                     <x-fltc::form.checkbox theme="skin" themeOff="skin" variant="toggle" id="gallery-fx" label="Fonts, rounding and glow" checked
@@ -541,7 +632,29 @@ function renderGalleryHtml(array $groups): string
                 </div>
             </div>
         </x-fltc::drawer>
-        BLADE, ['skinOptions' => $skinOptions]);
+        BLADE, ['skins' => $skins]);
+    $themeScript = Blade::render('<x-fltc::theme.script storageKey="fltc-gallery-skin" />');
+
+    // Contents: a link to every section and card, filterable. Links close the drawer
+    // unless it is pinned (they run inside the drawer's Alpine scope).
+    $contents = Blade::render(<<<'BLADE'
+        <x-fltc::drawer name="gallery-nav" side="left" title="Contents" label="Menu" icon="list" theme="skin" offset="5rem" width="18rem" pinnable>
+            <div x-data="{ q: '' }" class="space-y-4">
+                <x-fltc::form.input.text theme="skin" id="gallery-nav-filter" type="search" placeholder="Filter components…" icon="magnifying-glass" x-model="q" inline autocomplete="off" />
+                @foreach ($nav as $section => $entry)
+                    @php($terms = mb_strtolower($section.' '.implode(' ', $entry['items'])))
+                    <div x-show="q === '' || @js($terms).includes(q.toLowerCase())">
+                        <a href="#{{ $entry['id'] }}" x-on:click="if (! pinned) hide()" class="mb-1 block px-3 text-xs font-semibold uppercase tracking-wide text-skin-500 hover:text-skin-800 dark:text-skin-400 dark:hover:text-skin-100">{{ $section }}</a>
+                        @foreach ($entry['items'] as $id => $name)
+                            <div x-show="q === '' || @js(mb_strtolower($section.' '.$name)).includes(q.toLowerCase())">
+                                <x-fltc::nav.sidebar.link theme="skin" href="#{{ $id }}" :active="false" x-on:click="if (! pinned) hide()">{{ $name }}</x-fltc::nav.sidebar.link>
+                            </div>
+                        @endforeach
+                    </div>
+                @endforeach
+            </div>
+        </x-fltc::drawer>
+        BLADE, ['nav' => $nav]);
 
     $main = Blade::render('<x-fltc::container.page width="5xl" class="space-y-12">{!! $sections !!}</x-fltc::container.page>', ['sections' => $sections]);
 
@@ -560,12 +673,9 @@ function renderGalleryHtml(array $groups): string
                         skin: { 50: 'rgb(var(--fltc-skin-50) / <alpha-value>)', 100: 'rgb(var(--fltc-skin-100) / <alpha-value>)', 200: 'rgb(var(--fltc-skin-200) / <alpha-value>)', 300: 'rgb(var(--fltc-skin-300) / <alpha-value>)', 400: 'rgb(var(--fltc-skin-400) / <alpha-value>)', 500: 'rgb(var(--fltc-skin-500) / <alpha-value>)', 600: 'rgb(var(--fltc-skin-600) / <alpha-value>)', 700: 'rgb(var(--fltc-skin-700) / <alpha-value>)', 800: 'rgb(var(--fltc-skin-800) / <alpha-value>)', 900: 'rgb(var(--fltc-skin-900) / <alpha-value>)', 950: 'rgb(var(--fltc-skin-950) / <alpha-value>)' },
                     } } },
                 };
-                // Restore the chosen skin before first paint.
-                try {
-                    const skin = localStorage.getItem('fltc-gallery-skin');
-                    if (skin) document.documentElement.dataset.skin = skin;
-                } catch (e) {}
             </script>
+            <!-- restores the chosen skin and dark mode before first paint -->
+            {$themeScript}
             <style>{$skinCss}</style>
             <!-- skin effects; relative to gallery.html so the fonts resolve from the repo -->
             <link id="fltc-fx" rel="stylesheet" href="resources/css/skin-effects.css">
@@ -584,8 +694,8 @@ function renderGalleryHtml(array $groups): string
                 </div>
             </header>
             {$controls}
+            {$contents}
             <script>
-                document.getElementById('gallery-skin').value = document.documentElement.dataset.skin || 'slate';
                 document.getElementById('gallery-fx').checked = ! document.getElementById('fltc-fx').disabled;
             </script>
             <main class="py-8">

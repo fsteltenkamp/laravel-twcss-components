@@ -614,10 +614,10 @@ it('pads the input for the icon only when there is one', function () {
 it('drops the bottom margin of inline fields and sizes their wrapper', function (string $tag) {
     shareErrors();
 
-    expect(Blade::render("<x-fltc::{$tag} id=\"a\" />"))->toMatch('/^\s*<div class="mb-4">/');
+    expect(Blade::render("<x-fltc::{$tag} id=\"a\" />"))->toMatch('/^\s*<div class="mb-4 fltc-form-field[^"]*">/');
 
     $inline = Blade::render("<x-fltc::{$tag} id=\"a\" inline wrapperClass=\"w-48\" />");
-    expect($inline)->toMatch('/^\s*<div class="w-48">/')->not->toContain('mb-4');
+    expect($inline)->toMatch('/^\s*<div class="fltc-form-field fltc-theme-slate w-48">/')->not->toContain('mb-4');
 })->with(['form.input.text', 'form.input.number', 'form.input.select', 'form.input.file', 'form.textarea']);
 
 it('renders a themed file input with accept, multiple and a Livewire model', function () {
@@ -885,4 +885,236 @@ it('themes pagination with one theme and marks the current page as the solid but
     // The old names still work.
     expect(Blade::render('<x-fltc::nav.pagination :currentPage="2" :totalPages="3" :start="1" :end="3" mainTheme="amber" accentTheme="sky" />'))
         ->toContain('fltc-theme-amber')->toContain('bg-sky-');
+});
+
+/*
+ * Import plan, phase 1: runtime theme switching.
+ */
+it('renders a head script that restores the stored skin and dark mode before paint', function () {
+    $html = Blade::render('<x-fltc::theme.script storageKey="app-skin" skin="fantasy" nonce="abc" />');
+
+    expect($html)
+        ->toMatch('/<script\s+nonce="abc"\s*>/')
+        ->toContain("localStorage.getItem('app-skin') || 'fantasy'")
+        ->toContain("setAttribute('data-skin', skin)")
+        ->toContain("localStorage.getItem('theme')")
+        ->toContain("classList.toggle('dark', dark)");
+
+    expect(Blade::render('<x-fltc::theme.script />'))->toContain("'fltc-skin'")->toContain('|| null');
+});
+
+it('renders a theme picker with the given themes and the shared dark-mode control', function () {
+    shareErrors();
+    $html = Blade::render('<x-fltc::theme.picker :themes="[\'slate\', \'wh40k\' => \'Grimdark\']" storageKey="app-skin" theme="rose" />');
+
+    expect($html)
+        ->toContain('fltc-theme-picker')
+        ->toContain('x-model="skin"')
+        ->toContain("key: 'app-skin'")
+        ->toContain('<option value="slate">Slate</option>')
+        ->toContain('<option value="wh40k">Grimdark</option>')
+        ->toContain('fltc-skin-change')
+        ->toContain('data-darkmode-group')
+        ->toContain('border-rose-');
+
+    expect(Blade::render('<x-fltc::theme.picker :mode="false" />'))->not->toContain('data-darkmode-group');
+});
+
+/*
+ * Phase 2: primitives.
+ */
+it('renders a segmented control with Alpine state, a hidden input and themed options', function () {
+    $html = Blade::render('<x-fltc::segmented name="layout" value="list" theme="rose" x-model="layout"><x-fltc::segmented.option value="card" icon="squares-four" label="Card" /><x-fltc::segmented.option value="list" icon="list">List</x-fltc::segmented.option><x-fltc::segmented.option value="x" label="Off" disabled /></x-fltc::segmented>');
+
+    expect($html)
+        ->toContain('role="group"')
+        ->toContain('x-modelable="value"')
+        ->toContain('x-model="layout"')
+        ->toContain('<input type="hidden" name="layout" value="list" x-bind:value="value" />')
+        ->toMatch('/data-value="list"\s+aria-pressed="true"/')
+        ->toMatch('/data-value="card"\s+aria-pressed="false"/')
+        ->toContain('x-on:click="value = \'card\'"')
+        ->toMatch('/class="[^"]*fltc-segmented-option fltc-theme-rose/')
+        ->toMatch('/data-value="x"[^>]*disabled/s');
+});
+
+it('renders the dark-mode toggle through the segmented control without Alpine', function () {
+    $html = Blade::render('<x-fltc::darkmode.toggle theme="rose" />');
+
+    expect($html)
+        ->toContain('fltc-segmented')
+        ->toContain('fltc-darkmode-toggle-group')
+        ->toContain('data-darkmode-group')
+        ->toContain('data-theme-value="system"')
+        ->not->toContain('x-data');
+});
+
+it('renders link, toggle and removable chips with a count', function () {
+    $link = Blade::render('<x-fltc::badge href="/tags/php" icon="tag" :count="12" theme="rose">php</x-fltc::badge>');
+    expect($link)->toMatch('/^<a [^>]*href="\/tags\/php"/')->toContain('ph-tag')->toContain('fltc-badge-count')->toContain('>12</span>');
+
+    $toggle = Blade::render('<x-fltc::badge variant="toggle" name="genres[]" value="scifi" checked wire:model.live="genres" class="ml-1" theme="rose">Sci-fi</x-fltc::badge>');
+    expect($toggle)
+        ->toMatch('/^<label [^>]*class="[^"]*ml-1/')
+        ->toMatch('/<input wire:model.live="genres" type="checkbox" class="peer sr-only"\s+name="genres\[\]"\s+value="scifi" checked/')
+        ->toContain('has-[:checked]:bg-rose-600');
+
+    $removable = Blade::render('<x-fltc::badge removable value="7">Draft</x-fltc::badge>');
+    expect($removable)->toContain('fltc-badge-remove')->toContain('aria-label="Remove"')->toContain("badge-remove', '7'");
+});
+
+it('passes the chip cloud theme to its chips', function () {
+    $html = Blade::render('<x-fltc::badge.cloud theme="rose" label="Tags"><x-fltc::badge>a</x-fltc::badge><x-fltc::badge theme="amber">b</x-fltc::badge></x-fltc::badge.cloud><x-fltc::badge>after</x-fltc::badge>');
+
+    expect($html)
+        ->toContain('flex flex-wrap')
+        ->toContain('aria-label="Tags"')
+        ->toMatch('/fltc-badge fltc-theme-rose[^>]*>\s*a/')
+        ->toMatch('/fltc-badge fltc-theme-amber[^>]*>\s*b/')
+        ->toMatch('/fltc-badge fltc-theme-slate[^>]*>\s*after/');
+});
+
+it('renders a single progress bar', function () {
+    $html = Blade::render('<x-fltc::progress :value="30" :max="120" theme="rose" label="Upload" showValue />');
+
+    expect($html)
+        ->toContain('role="progressbar"')
+        ->toContain('aria-valuenow="30"')
+        ->toContain('aria-valuemax="120"')
+        ->toContain('style="width: 25%"')
+        ->toContain('bg-rose-500')
+        ->toContain('Upload')
+        ->toContain('25%');
+});
+
+it('renders a split progress bar with a legend', function () {
+    $html = Blade::render('<x-fltc::progress :max="10" legend><x-fltc::progress.segment :value="5" theme="green" label="Read" /><x-fltc::progress.segment :value="2.5" theme="amber" label="Reading" /></x-fltc::progress>');
+
+    expect($html)
+        ->toContain('aria-valuenow="7.5"')
+        ->toMatch('/bg-green-500[^"]*fltc-progress-segment[^"]*" style="width: 50%"/')
+        ->toMatch('/bg-amber-500[^"]*fltc-progress-segment[^"]*" style="width: 25%"/')
+        ->toContain('fltc-progress-legend')
+        ->toContain('Reading')
+        ->toContain('2.5');
+});
+
+it('switches a meter to the warning and danger themes at its threshold and limit', function () {
+    $ok = Blade::render('<x-fltc::progress variant="meter" label="Storage" :value="40" :max="100" unit="MB" theme="sky" />');
+    $warn = Blade::render('<x-fltc::progress variant="meter" label="Storage" :value="85" :max="100" unit="MB" theme="sky" />');
+    $full = Blade::render('<x-fltc::progress variant="meter" label="Storage" :value="120" :max="100" unit="MB" theme="sky" />');
+
+    expect($ok)->toContain('40 MB / 100 MB')->toContain('bg-sky-500')
+        ->and($warn)->toContain('bg-amber-500')->not->toContain('bg-sky-500')
+        ->and($full)->toContain('bg-red-500')->toContain('style="width: 100%"');
+});
+
+it('renders an empty state with icon, title, text and actions', function () {
+    $html = Blade::render('<x-fltc::empty icon="books" title="No stories yet" theme="rose" bordered>Write your first one.<x-slot:actions><x-fltc::button>New story</x-fltc::button></x-slot:actions></x-fltc::empty>');
+
+    expect($html)
+        ->toContain('fltc-empty fltc-theme-rose')
+        ->toContain('border-dashed')
+        ->toContain('ph-books')
+        ->toContain('No stories yet')
+        ->toContain('Write your first one.')
+        ->toContain('fltc-empty-actions')
+        ->toContain('New story');
+});
+
+it('renders the error panel variant of the message box', function () {
+    $html = Blade::render('<x-fltc::messagebox variant="error">The import failed.<x-slot:details summary="Stack trace">at line 3</x-slot:details><x-slot:actions><x-fltc::button>Retry</x-fltc::button></x-slot:actions></x-fltc::messagebox>');
+
+    expect($html)
+        ->toContain('role="alert"')
+        ->toContain('fltc-theme-red')
+        ->toContain('Something went wrong')
+        ->toContain('ph-warning-circle')
+        ->toContain('<details')
+        ->toContain('Stack trace')
+        ->toContain('at line 3')
+        ->toContain('Retry');
+
+    expect(Blade::render('<x-fltc::messagebox title="Note">x</x-fltc::messagebox>'))->toContain('fltc-theme-slate')->not->toContain('<details');
+});
+
+/*
+ * Phase 3: form helpers and status.
+ */
+it('wraps a custom control in a field with label, note and error', function () {
+    shareErrors(['color' => ['Pick a colour.']]);
+    $html = Blade::render('<x-fltc::form.field label="Colour" note="Used for your profile." for="color" required theme="rose"><input id="color" type="color" /></x-fltc::form.field>');
+
+    expect($html)
+        ->toContain('fltc-form-field')
+        ->toContain('for="color"')
+        ->toContain('<input id="color" type="color" />')
+        ->toContain('id="color-note"')
+        ->toContain('Used for your profile.')
+        ->toContain('id="color-error"')
+        ->toContain('Pick a colour.');
+});
+
+it('renders a note under inputs and points aria-describedby at it', function () {
+    shareErrors(['email' => ['Taken.']]);
+    $html = Blade::render('<x-fltc::form.input.email id="email" note="We never share it." />');
+
+    expect($html)->toContain('We never share it.')->toContain('aria-describedby="email-note email-error"')->toContain('Taken.');
+});
+
+it('renders a settings section with title, hint and actions', function () {
+    $html = Blade::render('<x-fltc::form.section title="Profile" hint="Shown to readers." split theme="rose">fields<x-slot:actions><x-fltc::button>Save</x-fltc::button></x-slot:actions></x-fltc::form.section>');
+
+    expect($html)
+        ->toContain('<section')
+        ->toContain('md:grid-cols-3')
+        ->toContain('md:col-span-2')
+        ->toContain('Profile')
+        ->toContain('Shown to readers.')
+        ->toContain('text-rose-900')
+        ->toContain('fltc-form-section-actions');
+});
+
+it('renders a star rating with half stars and an accessible label', function () {
+    $html = Blade::render('<x-fltc::rating value="3.4" theme="amber" showValue />');
+
+    expect($html)
+        ->toContain('role="img"')
+        ->toContain('aria-label="3.5 out of 5 stars"')
+        ->and(substr_count($html, 'data-star="full"'))->toBe(3)
+        ->and(substr_count($html, 'data-star="half"'))->toBe(1)
+        ->and(substr_count($html, 'data-star="empty"'))->toBe(1)
+        ->and($html)->toContain('clip-path: inset(0 50% 0 0)')->toContain('text-amber-500')->toContain('>3.5</span>');
+});
+
+it('renders a star rating picker with a hidden input and Livewire model', function () {
+    shareErrors();
+    $html = Blade::render('<x-fltc::form.rating name="score" label="Your rating" :value="2" model="score" theme="amber" />');
+
+    expect($html)
+        ->toContain('role="radiogroup"')
+        ->toContain('x-modelable="value"')
+        ->toContain('wire:model="score"')
+        ->toContain('<input type="hidden" name="score" value="2"')
+        ->and(substr_count($html, 'role="radio"'))->toBe(5)
+        ->and($html)->toMatch('/aria-label="2 stars"\s+aria-checked="true"/')
+        ->toContain('aria-label="1 star"')
+        ->toContain('x-on:keydown.arrow-right.prevent="step(1)"');
+});
+
+it('renders every save state and shows the one named by data-state', function () {
+    $html = Blade::render('<x-fltc::status state="saving" x-bind:data-state="status" />');
+
+    expect($html)
+        ->toContain('data-state="saving"')
+        ->toContain('x-bind:data-state="status"')
+        ->toContain('group/status')
+        ->toContain('group-data-[state=saving]/status:inline-flex')
+        ->toContain('Unsaved changes')
+        ->toContain('Saved')
+        ->toContain('fltc-spinner')
+        ->toContain('fltc-status-error fltc-theme-red');
+
+    expect(Blade::render('<x-fltc::status theme="skin" :labels="[\'saved\' => \'Stored\']" />'))
+        ->toContain('Stored')->toContain('fltc-status-live fltc-theme-skin')->not->toContain('fltc-theme-red');
 });

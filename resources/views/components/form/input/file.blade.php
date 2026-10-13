@@ -3,16 +3,10 @@
     // A multiple upload posts as name[]: its errors are keyed name / name.0, name.1, …
     $errorKey = rtrim($fieldName, '[]');
     $hasError = $errorKey !== '' && ($errors->has($errorKey) || $errors->has($errorKey.'.*'));
-    $errorMessage = $errors->first($errorKey) ?: $errors->first($errorKey.'.*');
+    $describedBy = \Fsteltenkamp\TwcssComponents\View\Components\Form\Field::describedBy($id, $note, $hasError, $errorKey);
 @endphp
 
-<div @class([$wrapperClasses])>
-    @if ($label !== '')
-        <x-fltc::form.label :for="$id" :required="$required" :theme="$theme">
-            {{ $label }}
-        </x-fltc::form.label>
-    @endif
-
+<x-fltc::form.field :label="$label" :note="$note" :for="$id" :name="$fieldName" :required="$required" :theme="$theme" :inline="$inline" :class="$wrapperClass">
     <input
         {{ $attributes->class(trim($hasError ? $errorClasses : $normalClasses)) }}
         type="file"
@@ -27,10 +21,7 @@
         @endif
         @required($required)
         @disabled($disabled)
-        @if ($hasError) aria-invalid="true" aria-describedby="{{ $errorKey }}-error" @endif
+        @if ($hasError) aria-invalid="true" @endif
+        @if ($describedBy !== '') aria-describedby="{{ $describedBy }}" @endif
     />
-
-    @if ($hasError)
-        <p id="{{ $errorKey }}-error" class="mt-2 text-sm text-red-600 dark:text-red-400">{{ $errorMessage }}</p>
-    @endif
-</div>
+</x-fltc::form.field>

@@ -1,15 +1,10 @@
 @php
     $fieldName = $name !== '' ? $name : $id;
     $hasError = $fieldName !== '' && $errors->has($fieldName);
+    $describedBy = \Fsteltenkamp\TwcssComponents\View\Components\Form\Field::describedBy($id, $note, $hasError, $fieldName);
 @endphp
 
-<div @class([$wrapperClasses])>
-    @if ($label !== '')
-        <x-fltc::form.label :for="$id" :required="$required" :theme="$theme">
-            {{ $label }}
-        </x-fltc::form.label>
-    @endif
-
+<x-fltc::form.field :label="$label" :note="$note" :for="$id" :name="$fieldName" :required="$required" :theme="$theme" :inline="$inline" :class="$wrapperClass">
     <textarea
         {{ $attributes->class($classList) }}
         id="{{ $id }}"
@@ -25,10 +20,7 @@
         @readonly($readonly)
         rows="{{ $rows }}"
         placeholder="{{ $placeholder }}"
-        @if ($hasError) aria-invalid="true" aria-describedby="{{ $fieldName }}-error" @endif
+        @if ($hasError) aria-invalid="true" @endif
+        @if ($describedBy !== '') aria-describedby="{{ $describedBy }}" @endif
     >{{ $slot->isNotEmpty() ? $slot : $value }}</textarea>
-
-    @if ($hasError)
-        <p id="{{ $fieldName }}-error" class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $errors->first($fieldName) }}</p>
-    @endif
-</div>
+</x-fltc::form.field>

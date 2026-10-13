@@ -14,7 +14,6 @@ class File extends Input
 {
     public string $normalClasses;
     public string $errorClasses;
-    public string $wrapperClasses;
 
     // The input has no text padding of its own: the "Choose file" button (the
     // ::file-selector-button, styled with file:) fills the left edge.
@@ -31,6 +30,7 @@ class File extends Input
         public string $class = '',
         public string $label = '',
         public bool $inline = false,
+        public string $note = '',
         public string $wrapperClass = '',
     ) {
         $buttonMap = [
@@ -74,7 +74,6 @@ class File extends Input
 
         $this->normalClasses  = $this->getNormalClasses($theme, trim($button.' '.$class));
         $this->errorClasses   = $this->getErrorClasses(trim($button.' '.$class));
-        $this->wrapperClasses = $this->getWrapperClasses($inline, $wrapperClass);
 
         if (empty($id)) {
             $this->id = 'file-' . uniqid();
