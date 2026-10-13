@@ -7,3 +7,6 @@ composer.lock
 .pest.cache
 gallery.html
 /examples/dist
+
+# local planning notes
+IMPORT_PLAN.md

@@ -4,7 +4,7 @@ namespace Fsteltenkamp\TwcssComponents\View\Components\Nav\Navbar;
 
 use Closure;
 use Illuminate\Contracts\View\View;
-use Illuminate\View\Component;
+use Fsteltenkamp\TwcssComponents\View\Component;
 
 class Toggle extends Component
 {
@@ -25,6 +25,7 @@ class Toggle extends Component
         ?string $theme = null,
     ) {
         $resolvedTheme = $theme ?? (app('view')->getShared()['navbarTheme'] ?? 'slate');
+        $this->hookTheme = $resolvedTheme;
 
         $themeMap = [
             'slate'   => 'text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800 focus-visible:ring-slate-400 dark:focus-visible:ring-slate-600',

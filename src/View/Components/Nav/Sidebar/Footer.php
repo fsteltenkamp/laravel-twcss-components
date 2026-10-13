@@ -5,7 +5,7 @@ namespace Fsteltenkamp\TwcssComponents\View\Components\Nav\Sidebar;
 use Closure;
 use Fsteltenkamp\TwcssComponents\Support\SidebarTheme;
 use Illuminate\Contracts\View\View;
-use Illuminate\View\Component;
+use Fsteltenkamp\TwcssComponents\View\Component;
 
 class Footer extends Component
 {
@@ -19,6 +19,7 @@ class Footer extends Component
         string $class = '',
     ) {
         $resolvedTheme = $theme ?? (app('view')->getShared()['sidebarTheme'] ?? 'slate');
+        $this->hookTheme = $resolvedTheme;
 
         $this->classList = trim(implode(' ', array_filter([
             'mt-auto shrink-0 space-y-1 border-t px-3 py-3',

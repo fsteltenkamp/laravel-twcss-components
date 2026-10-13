@@ -19,7 +19,7 @@
             data-storage-key="{{ $storageKey }}"
             data-active-class="{{ $activeClasses }}"
             data-inactive-class="{{ $inactiveClasses }}"
-            class="inline-flex items-center gap-1 rounded-lg p-1 {{ $containerClasses }}"
+            class="fltc-darkmode-toggle-group inline-flex items-center gap-1 rounded-lg p-1 {{ $containerClasses }}"
         >
             @foreach ($options as $option)
                 <button
@@ -27,7 +27,7 @@
                     data-theme-option
                     data-theme-value="{{ $option['value'] }}"
                     aria-pressed="false"
-                    class="inline-flex items-center gap-1.5 rounded-md px-3 py-1.5 text-sm font-medium transition-colors cursor-pointer {{ $inactiveClasses }}"
+                    class="fltc-darkmode-toggle-option inline-flex items-center gap-1.5 rounded-md px-3 py-1.5 text-sm font-medium transition-colors cursor-pointer {{ $inactiveClasses }}"
                 >
                     <x-fltc::icon :name="$option['icon']" class="leading-none" />
                     <span>{{ $option['label'] }}</span>

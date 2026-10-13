@@ -2,7 +2,7 @@
 
 namespace Fsteltenkamp\TwcssComponents\View\Components;
 
-use Illuminate\View\Component;
+use Fsteltenkamp\TwcssComponents\View\Component;
 
 abstract class TableBase extends Component
 {

@@ -9,17 +9,47 @@ All components support:
 
 For components with multiple class properties, name them according to placement (e.g., `headerClasses`, `bodyClasses`).
 
+### Hook classes
+
+Every component also carries neutral **hook classes** on the element that receives
+`$attributes` (the root, by convention). They have no styles of their own; skin stylesheets
+such as `resources/css/skin-effects.css` target them:
+- `fltc-<tag>`: the tag with dots as dashes — `<x-fltc::nav.navbar.link>` → `fltc-nav-navbar-link`
+- `fltc-theme-<theme>`: the component's `theme` prop, when it has one (`fltc-theme-skin` under
+  runtime switching). Components that inherit their parent's theme (navbar and sidebar
+  children) hook the inherited one; a component that resolves its theme some other way sets
+  the protected `$hookTheme` in its constructor
+- Part hooks for regions a skin styles separately: `fltc-drawer-tab` / `-header` / `-body`,
+  `fltc-modal-panel`, `fltc-nav-navbar-dropdown-menu`, `fltc-tooltip-bubble`, the button variant
+  (`fltc-button-solid` / `fltc-button-outline`), and the checkbox's visible parts
+  (`fltc-form-checkbox-control` on the label, `-track` / `-knob` for the toggle; the
+  `fltc-form-checkbox` hooks sit on the hidden `<input>`, so style the parts with `~`),
+  the table's scroll wrapper (`fltc-table-scroll`, with its own `fltc-theme-*` and
+  `fltc-table-floating` for the floating variant), the stepper (`fltc-nav-stepper-panel` /
+  `-tabs` / `-step`), the checklist (`fltc-form-checklist-list` / `-row` / `-track` / `-fill`)
+  the segmented dark-mode toggle (`fltc-darkmode-toggle-group` / `-option`) and the sidebar
+  profile (`fltc-nav-sidebar-profile-trigger` / `-avatar` / `-menu`). The drawer tab
+  and the tooltip bubble are teleported out of their component, so they repeat the
+  `fltc-theme-*` class themselves.
+
+Class-backed components get them from `Fsteltenkamp\TwcssComponents\View\Component`, the base
+class every component extends; anonymous components add theirs in the view.
+`tests/HookClassesTest.php` fails when a component is missing its hooks.
+
 ### Supported Themes
 
 All components support the full color palette:
 - **Colors**: red, orange, amber, yellow, lime, green, emerald, teal, cyan, sky, blue, indigo, violet, purple, fuchsia, pink, rose
 - **Neutrals**: slate, gray, zinc, neutral, stone, taupe, mauve, mist, olive
-- **Custom themes**: cyberpunk, fantasy, wh40k — the readar skins, shipped as palettes in
+- **Custom themes**: cyberpunk, fantasy, wh40k — two-mode skins, shipped as palettes in
   `resources/css/themes.css` (Tailwind v4) and `resources/js/themes.js` (Tailwind v3). The
   host app must load one of them, see the README "Custom themes" section.
 - **Runtime**: skin — follows whichever theme the nearest `data-skin` attribute selects,
   so the page switches theme in the browser without re-rendering. Needs
   `resources/css/skins.css`, see the README "Runtime theme switching" section.
+
+The three custom themes also have optional **skin effects** (fonts, rounding, glow
+and page effects) in `resources/css/skin-effects.css`, see the README "Skin effects" section.
 
 New components must add a map entry for every theme above — `tests/CustomThemesTest.php`
 fails when a file defines any theme fewer times than it defines `rose`. For a role colour
@@ -160,6 +190,8 @@ roles so they flip cleanly in dark mode.
 **Heading** (`x-fltc::heading`):
 - `size`: `sm`, `base` (default), `lg`, `xl`, `2xl`
 - `level`: heading level `1`–`6`, renders the matching `<h1>`–`<h6>` tag (default: `2`)
+- `glitch`: opt into a skin's glitch effect (cyberpunk in `skin-effects.css`); copies the
+  text into `data-text` for the effect layers. No visible change without such a skin
 - `class`, `id`, etc.: passed through and merged
 
 **Subheading** (`x-fltc::subheading`): muted secondary line rendered as a `<p>`.

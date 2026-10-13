@@ -5,7 +5,7 @@ namespace Fsteltenkamp\TwcssComponents\View\Components\Toast;
 use Closure;
 use Fsteltenkamp\TwcssComponents\View\Components\Toast;
 use Illuminate\Contracts\View\View;
-use Illuminate\View\Component;
+use Fsteltenkamp\TwcssComponents\View\Component;
 
 class Container extends Component
 {

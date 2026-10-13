@@ -48,7 +48,7 @@
     x-show="open"
     x-cloak
     style="display: none;"
-    {{ $attributes->whereDoesntStartWith('wire:model')->class('fixed inset-0 z-50 flex items-center justify-center p-4') }}
+    {{ $attributes->whereDoesntStartWith('wire:model')->class('fltc-modal fixed inset-0 z-50 flex items-center justify-center p-4') }}
 >
     <div
         class="fixed inset-0 bg-zinc-900/50 backdrop-blur-sm"
@@ -62,7 +62,7 @@
         x-transition
         role="dialog"
         aria-modal="true"
-        class="relative max-h-[90vh] w-full {{ $panelWidth }} overflow-y-auto rounded-xl border border-zinc-200 bg-white p-6 shadow-xl dark:border-zinc-700 dark:bg-zinc-900"
+        class="fltc-modal-panel relative max-h-[90vh] w-full {{ $panelWidth }} overflow-y-auto rounded-xl border border-zinc-200 bg-white p-6 shadow-xl dark:border-zinc-700 dark:bg-zinc-900"
     >
         {{ $slot }}
     </div>

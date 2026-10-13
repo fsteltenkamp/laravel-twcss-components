@@ -14,7 +14,7 @@
         </svg>
     </button>
 
-    <div class="{{ $menuClass }}" data-dropdown-menu>
+    <div class="fltc-nav-navbar-dropdown-menu {{ $menuClass }}" data-dropdown-menu>
         <div class="p-1.5">
             {{ $slot }}
         </div>

@@ -40,7 +40,7 @@
             }
         },
     }"
-    {{ $attributes->only('class')->class('flex items-center justify-center gap-2') }}
+    {{ $attributes->only('class')->class(['fltc-form-otp', 'fltc-theme-'.$theme, 'flex items-center justify-center gap-2']) }}
 >
     @for ($i = 0; $i < $length; $i++)
         <input

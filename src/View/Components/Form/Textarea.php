@@ -4,7 +4,7 @@ namespace Fsteltenkamp\TwcssComponents\View\Components\Form;
 
 use Closure;
 use Illuminate\Contracts\View\View;
-use Illuminate\View\Component;
+use Fsteltenkamp\TwcssComponents\View\Component;
 
 class Textarea extends Component
 {
@@ -92,7 +92,7 @@ class Textarea extends Component
             'screen' => 'w-screen',
         ];
 
-        $baseClasses = 'block resize-y rounded-lg border p-3 font-mono text-xs leading-5 shadow-sm transition focus:outline-none focus:ring-2 focus:ring-offset-2 dark:focus:ring-offset-slate-950';
+        $baseClasses = 'dark:[color-scheme:dark] block resize-y rounded-lg border p-3 font-mono text-xs leading-5 shadow-sm transition focus:outline-none focus:ring-2 focus:ring-offset-2 dark:focus:ring-offset-slate-950';
 
         $this->classList = trim(implode(' ', array_filter([
             $baseClasses,

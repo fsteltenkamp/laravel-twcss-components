@@ -5,7 +5,7 @@ namespace Fsteltenkamp\TwcssComponents\View\Components\Nav\Sidebar;
 use Closure;
 use Fsteltenkamp\TwcssComponents\Support\SidebarTheme;
 use Illuminate\Contracts\View\View;
-use Illuminate\View\Component;
+use Fsteltenkamp\TwcssComponents\View\Component;
 
 class Link extends Component
 {
@@ -31,6 +31,7 @@ class Link extends Component
     ) {
         $this->href = $href;
         $resolvedTheme = $theme ?? (app('view')->getShared()['sidebarTheme'] ?? 'slate');
+        $this->hookTheme = $resolvedTheme;
 
         $this->isActive = $active ?? $this->matchesCurrentUrl($href, $activePattern);
 

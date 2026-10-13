@@ -7,7 +7,7 @@ use Fsteltenkamp\TwcssComponents\Support\DrawerTheme;
 use Fsteltenkamp\TwcssComponents\Support\SidebarTheme;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Str;
-use Illuminate\View\Component;
+use Fsteltenkamp\TwcssComponents\View\Component;
 
 class Drawer extends Component
 {
@@ -81,9 +81,10 @@ class Drawer extends Component
             $this->class,
         ])));
 
-        $this->headerClasses = 'flex shrink-0 items-center justify-between gap-2 border-b px-4 py-3 '.SidebarTheme::divider($this->theme);
+        // Part hooks (fltc-drawer-*) for skin stylesheets, next to the root's fltc-drawer.
+        $this->headerClasses = 'fltc-drawer-header flex shrink-0 items-center justify-between gap-2 border-b px-4 py-3 '.SidebarTheme::divider($this->theme);
         $this->titleClasses = 'min-w-0 truncate text-sm font-semibold';
-        $this->bodyClasses = 'flex-1 overflow-y-auto p-4';
+        $this->bodyClasses = 'fltc-drawer-body flex-1 overflow-y-auto p-4';
 
         $buttonBase = 'inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-md transition focus:outline-none focus-visible:ring-2';
         $this->buttonClasses = $buttonBase.' '.SidebarTheme::inactive($this->theme);
@@ -97,10 +98,12 @@ class Drawer extends Component
         // Right-side tabs are rotated 180° so the borderless (attached) edge
         // faces the screen edge; the icon is counter-rotated to stay upright.
         $this->tabClasses = trim(implode(' ', [
-            'pointer-events-auto flex items-center gap-2 border border-l-0 rounded-r-md px-2 py-3 shadow-md',
+            'fltc-drawer-tab pointer-events-auto flex items-center gap-2 border border-l-0 rounded-r-md px-2 py-3 shadow-md',
             'text-xs font-semibold uppercase tracking-widest transition-colors focus:outline-none focus-visible:ring-2',
             '[writing-mode:vertical-rl] w-10',
             $isLeft ? '' : 'rotate-180',
+            // Teleported into the edge rail, outside the root's hooks, so it carries its own.
+            'fltc-theme-'.$this->theme,
         ]));
         $this->tabRestingClasses = DrawerTheme::tab($this->theme);
         $this->tabActiveClasses = DrawerTheme::tabActive($this->theme);

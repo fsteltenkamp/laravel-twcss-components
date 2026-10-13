@@ -1,4 +1,4 @@
-<div class="{{$boxClasses}}" role="alert">
+<div {{ $attributes->class([$boxClasses])->merge(['role' => 'alert']) }}>
     @if($title)
         <div class=" {{$titleClasses}}">{{$title}}</div>
     @endif

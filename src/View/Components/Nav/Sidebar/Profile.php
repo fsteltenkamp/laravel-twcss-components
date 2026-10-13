@@ -6,7 +6,7 @@ use Closure;
 use Fsteltenkamp\TwcssComponents\Support\SidebarTheme;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Str;
-use Illuminate\View\Component;
+use Fsteltenkamp\TwcssComponents\View\Component;
 
 class Profile extends Component
 {
@@ -34,19 +34,21 @@ class Profile extends Component
         string $class = '',
     ) {
         $resolvedTheme = $theme ?? (app('view')->getShared()['sidebarTheme'] ?? 'slate');
+        $this->hookTheme = $resolvedTheme;
 
         $this->initials = $initials ?? $this->deriveInitials($name);
 
         $this->triggerClass = trim(implode(' ', array_filter([
-            'nav-link flex w-full items-center gap-3 rounded-lg px-2 py-2 text-sm transition focus:outline-none focus-visible:ring-2',
+            // Part hooks (fltc-nav-sidebar-profile-*) for skin stylesheets.
+            'fltc-nav-sidebar-profile-trigger nav-link flex w-full items-center gap-3 rounded-lg px-2 py-2 text-sm transition focus:outline-none focus-visible:ring-2',
             SidebarTheme::inactive($resolvedTheme),
             $class,
         ])));
 
         // Reuse the active fill for the initials avatar badge.
-        $this->avatarClass = trim('flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-full text-xs font-semibold '.SidebarTheme::active($resolvedTheme));
+        $this->avatarClass = trim('fltc-nav-sidebar-profile-avatar flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-full text-xs font-semibold '.SidebarTheme::active($resolvedTheme));
 
-        $this->menuClass = trim('absolute bottom-full left-0 right-0 z-20 mb-2 hidden overflow-hidden rounded-xl border '.SidebarTheme::menu($resolvedTheme));
+        $this->menuClass = trim('fltc-nav-sidebar-profile-menu absolute bottom-full left-0 right-0 z-20 mb-2 hidden overflow-hidden rounded-xl border '.SidebarTheme::menu($resolvedTheme));
     }
 
     /**

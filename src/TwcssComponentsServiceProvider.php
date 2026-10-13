@@ -33,6 +33,13 @@ class TwcssComponentsServiceProvider extends ServiceProvider
             $this->publishes([
                 __DIR__.'/../resources/views' => resource_path('views/vendor/fltc'),
             ], 'fltc-components-views');
+
+            // Stylesheets and fonts for hosts that link them instead of bundling them.
+            // The relative font URLs in skin-effects.css keep working under public/.
+            $this->publishes([
+                __DIR__.'/../resources/css' => public_path('vendor/fltc/css'),
+                __DIR__.'/../resources/fonts' => public_path('vendor/fltc/fonts'),
+            ], 'fltc-assets');
         }
     }
 }

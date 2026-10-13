@@ -94,7 +94,7 @@ Notes:
 
 ### Custom themes
 
-Three themes replicate the skins of the readar app: `cyberpunk` (neon pink on ink, cyan
+Three custom themes ship with the package: `cyberpunk` (neon pink on ink, cyan
 text), `fantasy` (gold and parchment) and `wh40k` (gunmetal, bone and blood). Use them
 like any other theme: `<x-fltc::button theme="fantasy">`.
 
@@ -154,6 +154,46 @@ on **Tailwind v3** it is in `themes.js` (see Custom themes above), plus the styl
 
 The skin colours are Tailwind v3.4's palette; v4's palette differs from it very slightly.
 Saving the choice and applying it before the first paint is up to the host for now.
+
+### Skin effects
+
+`resources/css/skin-effects.css` adds the rest of each look to the three custom themes:
+their fonts (Orbitron, Share Tech Mono, VT323, Cinzel, EB Garamond, Grenze Gotisch —
+shipped in `resources/fonts`, SIL Open Font License), corner rounding, glowing panels,
+buttons and focus rings, and page backgrounds — including cyberpunk's scanlines and grid.
+Cyberpunk also restyles the controls in the style of Cyberpunk 2077: buttons with cut
+corners, thin full-strength lines and a solid fill on hover (pink for solid, cyan for
+outline); square inputs with the bottom-right corner cut that turn pink on focus (add the
+class `fltc-corner-tick` to an input for a filled corner tick instead), a drawn select
+arrow and calendar icon; square checkboxes and toggles; tag-style badges; framed drawer
+handles. Boxes, cards, tables, the checklist, stepper, dropdowns and the segmented
+dark-mode toggle get the same cut corners; navbar and sidebar turn square with a pink edge.
+
+Native popups stay native: the select's list is fully styled only in browsers with
+customizable selects (Chromium 135+), elsewhere it takes the option colours where the OS
+allows; the date picker's calendar only follows light/dark (`color-scheme`), which all
+inputs now set in dark mode, for every theme.
+`<x-fltc::heading glitch>` adds cyberpunk's glitching logo text.
+
+It is opt-in and plain CSS, so it works with Tailwind v3 and v4. Import it after Tailwind:
+
+```css
+@import '../../vendor/fsteltenkamp/laravel-twcss-components/resources/css/skin-effects.css';
+```
+
+Vite bundles the fonts it references. Without a bundler, publish the stylesheets and fonts
+with `php artisan vendor:publish --tag=fltc-assets` and link
+`/vendor/fltc/css/skin-effects.css`.
+
+A component gets the effects when it is rendered with one of the three themes
+(`theme="fantasy"`), or with `theme="skin"` under `data-skin="fantasy"`. Page effects (body
+font, background, scanlines) apply under `data-skin`, or on `<x-fltc::body>` with one of the
+themes. Text glow shows in dark mode only.
+
+The effects target the neutral hook classes every component carries (`fltc-<tag>`,
+`fltc-theme-<theme>`, see the [wiki](wiki/components.md#hook-classes)), so a host can write its
+own skin the same way. The rules are not in a cascade layer: while a skin is active they win
+over Tailwind utilities, including a host's own `rounded-*` or `shadow-*` on a component.
 
 ## Icons
 

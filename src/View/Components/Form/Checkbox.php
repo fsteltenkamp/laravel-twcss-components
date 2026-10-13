@@ -5,7 +5,7 @@ namespace Fsteltenkamp\TwcssComponents\View\Components\Form;
 use Closure;
 use Fsteltenkamp\TwcssComponents\Support\Shades;
 use Illuminate\Contracts\View\View;
-use Illuminate\View\Component;
+use Fsteltenkamp\TwcssComponents\View\Component;
 
 class Checkbox extends Component
 {

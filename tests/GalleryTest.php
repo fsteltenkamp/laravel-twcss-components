@@ -36,6 +36,13 @@ function galleryGroups(): array
 {
     return [
         'Typography' => [
+            'Heading' => [
+                ['default', '<x-fltc::heading size="2xl">Chapter 12 — The Archive</x-fltc::heading>'],
+                ['glitch (cyberpunk skin effect)', '<x-fltc::heading size="2xl" glitch>SYSTEM ONLINE</x-fltc::heading>'],
+            ],
+            'Subheading' => [
+                ['default', '<x-fltc::subheading>// 42 volumes in the library</x-fltc::subheading>'],
+            ],
             'Text' => [
                 ['default', '<x-fltc::text theme="skin">The quick brown fox jumps over the lazy dog.</x-fltc::text>'],
             ],
@@ -427,6 +434,30 @@ function renderGalleryHtml(array $groups): string
     preg_match_all('/\[data-skin="([a-z0-9]+)"\]/', $skinCss, $m);
     $skinOptions = implode('', array_map(fn ($s) => "<option value=\"{$s}\">{$s}</option>", $m[1]));
 
+    // The style controls live in a drawer (first tab on the right edge) so the header
+    // stays one line on small screens. They are library components too, so they follow
+    // the theme and the skin effects like everything else on the page.
+    $controls = Blade::render(<<<'BLADE'
+        <x-fltc::drawer name="gallery-style" side="right" title="Style" label="Style" icon="palette" theme="skin" offset="5rem" :order="-1" pinnable>
+            <div class="space-y-6">
+                <x-fltc::form.input.select theme="skin" id="gallery-skin" label="Theme" icon="palette"
+                    onchange="document.documentElement.dataset.skin = this.value; try { localStorage.setItem('fltc-gallery-skin', this.value); } catch (e) {}">
+                    {!! $skinOptions !!}
+                </x-fltc::form.input.select>
+                <div class="space-y-2">
+                    <x-fltc::form.label theme="skin">Mode</x-fltc::form.label>
+                    <x-fltc::darkmode.toggle theme="skin" />
+                </div>
+                <div class="space-y-2">
+                    <x-fltc::form.label theme="skin" for="gallery-fx">Skin effects</x-fltc::form.label>
+                    <x-fltc::form.checkbox theme="skin" themeOff="skin" variant="toggle" id="gallery-fx" label="Fonts, rounding and glow" checked
+                        onchange="document.getElementById('fltc-fx').disabled = ! this.checked; try { localStorage.setItem('fltc-gallery-fx', this.checked ? 'on' : 'off'); } catch (e) {}" />
+                    <x-fltc::text theme="skin" class="block text-xs opacity-75">Fonts, rounding and glow for cyberpunk, fantasy and wh40k; no change for other themes.</x-fltc::text>
+                </div>
+            </div>
+        </x-fltc::drawer>
+        BLADE, ['skinOptions' => $skinOptions]);
+
     $main = Blade::render('<x-fltc::container.page width="5xl" class="space-y-12">{!! $sections !!}</x-fltc::container.page>', ['sections' => $sections]);
 
     return <<<HTML
@@ -451,6 +482,11 @@ function renderGalleryHtml(array $groups): string
                 } catch (e) {}
             </script>
             <style>{$skinCss}</style>
+            <!-- skin effects; relative to gallery.html so the fonts resolve from the repo -->
+            <link id="fltc-fx" rel="stylesheet" href="resources/css/skin-effects.css">
+            <script>
+                try { document.getElementById('fltc-fx').disabled = localStorage.getItem('fltc-gallery-fx') === 'off'; } catch (e) {}
+            </script>
             <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3/dist/cdn.min.js"></script>
             <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
             <link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Round" rel="stylesheet">
@@ -461,22 +497,12 @@ function renderGalleryHtml(array $groups): string
                     <h1 class="text-xl font-bold text-skin-900 dark:text-skin-100">fltc component gallery</h1>
                     <p class="text-xs text-skin-500 dark:text-skin-400">Rendered through real Blade — regenerate with <code>./test.sh tests/GalleryTest.php</code></p>
                 </div>
-                <div class="flex items-center gap-3">
-                <label class="flex items-center gap-2 text-sm font-medium text-skin-700 dark:text-skin-200">
-                    Theme
-                    <select id="gallery-skin"
-                        onchange="document.documentElement.dataset.skin = this.value; try { localStorage.setItem('fltc-gallery-skin', this.value); } catch (e) {}"
-                        class="rounded-md border border-skin-300 dark:border-skin-600 bg-white dark:bg-skin-900 px-2 py-1.5 text-sm text-skin-900 dark:text-skin-100">
-                        {$skinOptions}
-                    </select>
-                </label>
-                <button onclick="document.documentElement.classList.toggle('dark')"
-                    class="rounded-md border border-skin-300 dark:border-skin-600 px-3 py-1.5 text-sm font-medium text-skin-700 dark:text-skin-200 hover:bg-skin-100 dark:hover:bg-skin-700">
-                    Toggle dark
-                </button>
-                </div>
             </header>
-            <script>document.getElementById('gallery-skin').value = document.documentElement.dataset.skin || 'slate';</script>
+            {$controls}
+            <script>
+                document.getElementById('gallery-skin').value = document.documentElement.dataset.skin || 'slate';
+                document.getElementById('gallery-fx').checked = ! document.getElementById('fltc-fx').disabled;
+            </script>
             <main class="py-8">
                 {$main}
             </main>

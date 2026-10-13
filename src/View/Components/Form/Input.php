@@ -3,7 +3,7 @@
 namespace Fsteltenkamp\TwcssComponents\View\Components\Form;
 
 use Fsteltenkamp\TwcssComponents\Support\Shades;
-use Illuminate\View\Component;
+use Fsteltenkamp\TwcssComponents\View\Component;
 
 abstract class Input extends Component
 {
@@ -40,7 +40,9 @@ abstract class Input extends Component
         'wh40k'    => 'border-wh40k-300 placeholder-wh40k-400 focus:border-wh40k-500 focus:ring-wh40k-500 dark:border-wh40k-600 dark:placeholder-wh40k-500 dark:focus:border-wh40k-400 dark:focus:ring-wh40k-400',
     ];
 
-    protected string $baseClasses = 'block w-full rounded-md border py-2 pl-10 pr-3 shadow-sm transition duration-150 focus:outline-none focus:ring-2';
+    // dark:[color-scheme:dark] makes native parts (date picker icon and popup, select
+    // list) render for a dark background instead of black-on-dark.
+    protected string $baseClasses = 'block w-full rounded-md border py-2 pl-10 pr-3 shadow-sm transition duration-150 focus:outline-none focus:ring-2 dark:[color-scheme:dark]';
     protected string $errorBaseClasses = 'border-red-500 placeholder-red-300 focus:border-red-500 focus:ring-red-500 dark:border-red-400 dark:placeholder-red-400 dark:focus:border-red-400 dark:focus:ring-red-400';
 
     /**

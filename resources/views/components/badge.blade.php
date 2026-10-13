@@ -1,3 +1,3 @@
-<span class="{{$classList}}">
+<span {{ $attributes->class([$classList]) }}>
     {{$slot}}
 </span>

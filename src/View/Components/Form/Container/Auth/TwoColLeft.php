@@ -4,7 +4,7 @@ namespace Fsteltenkamp\TwcssComponents\View\Components\Form\Container\Auth;
 
 use Closure;
 use Illuminate\Contracts\View\View;
-use Illuminate\View\Component;
+use Fsteltenkamp\TwcssComponents\View\Component;
 
 class TwoColLeft extends Component
 {

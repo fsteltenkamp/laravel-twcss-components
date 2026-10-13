@@ -5,7 +5,7 @@ namespace Fsteltenkamp\TwcssComponents\View\Components\Nav\Sidebar;
 use Closure;
 use Fsteltenkamp\TwcssComponents\Support\SidebarTheme;
 use Illuminate\Contracts\View\View;
-use Illuminate\View\Component;
+use Fsteltenkamp\TwcssComponents\View\Component;
 
 class Postlink extends Component
 {
@@ -26,6 +26,7 @@ class Postlink extends Component
     ) {
         $this->action = $action;
         $resolvedTheme = $theme ?? (app('view')->getShared()['sidebarTheme'] ?? 'slate');
+        $this->hookTheme = $resolvedTheme;
 
         $this->classList = trim(implode(' ', array_filter([
             'nav-link cursor-pointer flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition focus:outline-none focus-visible:ring-2',

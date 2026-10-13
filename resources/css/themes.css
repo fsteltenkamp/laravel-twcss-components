@@ -4,7 +4,7 @@
  * Import after Tailwind in the host app's main CSS file:
  *     @import '../../vendor/fsteltenkamp/laravel-twcss-components/resources/css/themes.css';
  *
- * These are not single-hue scales: each is derived from one of readar's
+ * These are not single-hue scales: each is derived from one of the package's
  * two-mode skins so the package's shade roles land on the right slot.
  *   50 light page · 100 dark primary text / light surface · 300 dark secondary text
  *   400–600 accent · 700 light secondary text · 900 dark surface / light primary text

@@ -12,5 +12,5 @@
 <div
     role="separator"
     aria-orientation="{{ $vertical ? 'vertical' : 'horizontal' }}"
-    {{ $attributes->class([$orientation, $color]) }}
+    {{ $attributes->class(['fltc-separator', $orientation, $color]) }}
 ></div>

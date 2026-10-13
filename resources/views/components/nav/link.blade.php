@@ -1,1 +1,1 @@
-<a href="{{$href}}" class="{{$classList}}">{{$slot}}</a>
+<a href="{{$href}}" {{ $attributes->class([$classList]) }}>{{$slot}}</a>

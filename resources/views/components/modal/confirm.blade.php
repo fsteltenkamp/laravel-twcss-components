@@ -5,7 +5,7 @@
     'maxWidth' => 'md',
 ])
 
-<x-fltc::modal :name="$name" :maxWidth="$maxWidth" {{ $attributes->except(['name', 'maxWidth']) }}>
+<x-fltc::modal :name="$name" :maxWidth="$maxWidth" {{ $attributes->except(['name', 'maxWidth'])->class('fltc-modal-confirm') }}>
     <div class="space-y-6">
         <div class="space-y-2">
             <x-fltc::heading level="2" size="lg">{{ $title }}</x-fltc::heading>

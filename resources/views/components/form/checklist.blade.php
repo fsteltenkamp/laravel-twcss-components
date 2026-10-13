@@ -1,4 +1,4 @@
-<div class="space-y-4">
+<div {{ $attributes->class(['space-y-4']) }}>
     @if ($label !== '')
         <h3 class="text-sm font-semibold {{ $headingColor }}">{{ $label }}</h3>
     @endif
@@ -14,9 +14,9 @@
                 <span>{{ $displayCompleted }} von {{ $displayTotal }} Schritten abgeschlossen</span>
                 <span>{{ $displayPercent }}%</span>
             </div>
-            <div class="w-full {{ $progressTrackColor }} rounded-full h-2.5 overflow-hidden">
+            <div class="fltc-form-checklist-track w-full {{ $progressTrackColor }} rounded-full h-2.5 overflow-hidden">
                 <div
-                    class="h-2.5 rounded-full transition-all duration-500
+                    class="fltc-form-checklist-fill h-2.5 rounded-full transition-all duration-500
                         @if ($displayPercent === 100) bg-green-500
                         @else {{ $progressBarColor }}
                         @endif"
@@ -27,14 +27,14 @@
     @endif
 
     @if (!empty($normalizedItems))
-        <div class="divide-y {{ $divider }} border {{ $containerBorder }} rounded-lg overflow-hidden">
+        <div class="fltc-form-checklist-list divide-y {{ $divider }} border {{ $containerBorder }} rounded-lg overflow-hidden">
             @foreach ($normalizedItems as $key => $item)
                 @php $status = $item['status']; $itemId = $idPrefix . '-' . $key; @endphp
 
                 @if ($manual)
                     <label
                         for="{{ $itemId }}"
-                        class="flex items-center gap-3 px-4 py-2.5 transition-colors cursor-pointer {{ $rowBgPending }} hover:bg-slate-50 dark:hover:bg-slate-800/50 {{ $rowBgCompletedHas }}"
+                        class="fltc-form-checklist-row flex items-center gap-3 px-4 py-2.5 transition-colors cursor-pointer {{ $rowBgPending }} hover:bg-slate-50 dark:hover:bg-slate-800/50 {{ $rowBgCompletedHas }}"
                     >
                         <input
                             type="checkbox"
@@ -60,7 +60,7 @@
                         </span>
                     </label>
                 @else
-                    <div class="flex items-center gap-3 px-4 py-2.5
+                    <div class="fltc-form-checklist-row flex items-center gap-3 px-4 py-2.5
                         @if ($status === 'completed') {{ $rowBgCompleted }}
                         @elseif ($status === 'failed') {{ $rowBgFailed }}
                         @elseif ($status === 'in_progress') {{ $rowBgInProgress }}

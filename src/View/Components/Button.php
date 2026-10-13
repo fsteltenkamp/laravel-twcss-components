@@ -4,7 +4,7 @@ namespace Fsteltenkamp\TwcssComponents\View\Components;
 
 use Closure;
 use Illuminate\Contracts\View\View;
-use Illuminate\View\Component;
+use Fsteltenkamp\TwcssComponents\View\Component;
 
 class Button extends Component
 {
@@ -125,9 +125,12 @@ class Button extends Component
         ];
 
         $selectedVariant = strtolower(trim($variant));
-        $selectedThemeMap = $variantMap[$selectedVariant] ?? $solidThemeMap;
+        $selectedVariant = isset($variantMap[$selectedVariant]) ? $selectedVariant : 'solid';
+        $selectedThemeMap = $variantMap[$selectedVariant];
 
         $this->classList = trim(implode(' ', [
+            // Variant part hook (fltc-button-solid / fltc-button-outline) for skin stylesheets.
+            'fltc-button-'.$selectedVariant,
             $selectedThemeMap[$theme] ?? $selectedThemeMap['gray'],
             $widthMap[$width] ?? $widthMap['fit'],
             $heightClasses,

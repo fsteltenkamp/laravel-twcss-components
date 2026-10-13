@@ -4,7 +4,7 @@ namespace Fsteltenkamp\TwcssComponents\View\Components\Nav;
 
 use Closure;
 use Illuminate\Contracts\View\View;
-use Illuminate\View\Component;
+use Fsteltenkamp\TwcssComponents\View\Component;
 
 class Stepper extends Component
 {
@@ -192,11 +192,12 @@ class Stepper extends Component
             $this->class,
         ])));
 
-        $this->tabsListClass = 'w-full border-b ' . $selectedTabsBorder;
+        // Part hooks (fltc-nav-stepper-*) for skin stylesheets.
+        $this->tabsListClass = 'fltc-nav-stepper-tabs w-full border-b ' . $selectedTabsBorder;
         $this->tabsNavClass = '-mb-px flex justify-center overflow-x-auto';
 
         $this->panelClass = trim(implode(' ', array_filter([
-            'flex flex-col gap-4 rounded-2xl border p-4 sm:flex-row sm:items-center sm:justify-between',
+            'fltc-nav-stepper-panel flex flex-col gap-4 rounded-2xl border p-4 sm:flex-row sm:items-center sm:justify-between',
             $selectedContainerTheme,
         ])));
 
@@ -205,8 +206,8 @@ class Stepper extends Component
             $selectedSummaryTheme,
         ])));
 
-        $this->stepBaseClass = 'inline-flex items-center gap-2 whitespace-nowrap border-b-2 px-4 py-3 text-sm font-medium transition';
-        $this->stepIconOnlyClass = 'inline-flex items-center justify-center whitespace-nowrap border-b-2 px-3 py-3 text-sm transition';
+        $this->stepBaseClass = 'fltc-nav-stepper-step inline-flex items-center gap-2 whitespace-nowrap border-b-2 px-4 py-3 text-sm font-medium transition';
+        $this->stepIconOnlyClass = 'fltc-nav-stepper-step inline-flex items-center justify-center whitespace-nowrap border-b-2 px-3 py-3 text-sm transition';
         $this->activeStepClass = $selectedActiveTheme;
         $this->inactiveStepClass = $selectedInactiveTheme;
         $this->controlClass = 'inline-flex items-center gap-1.5 whitespace-nowrap border-b-2 border-transparent px-3 py-3 text-sm font-medium text-gray-400 transition hover:border-gray-300 hover:text-gray-600 dark:text-gray-500 dark:hover:border-gray-600 dark:hover:text-gray-300';

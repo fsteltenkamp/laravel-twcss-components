@@ -6,7 +6,7 @@ use Closure;
 use Fsteltenkamp\TwcssComponents\Support\SidebarTheme;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Str;
-use Illuminate\View\Component;
+use Fsteltenkamp\TwcssComponents\View\Component;
 
 class Group extends Component
 {
@@ -34,6 +34,7 @@ class Group extends Component
         string $class = '',
     ) {
         $resolvedTheme = $theme ?? (app('view')->getShared()['sidebarTheme'] ?? 'slate');
+        $this->hookTheme = $resolvedTheme;
 
         $isActive = $activeWhen !== null && request()->is($activeWhen);
         $this->isOpen = $open ?? $isActive;

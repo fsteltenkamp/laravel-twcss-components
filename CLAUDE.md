@@ -44,6 +44,13 @@ All components support:
 
 For components with multiple class properties, name them according to placement (e.g., `headerClasses`, `bodyClasses`).
 
+**Hook classes**: every class-backed component extends
+`Fsteltenkamp\TwcssComponents\View\Component` (not `Illuminate\View\Component`), which adds
+`fltc-<tag>` and `fltc-theme-<theme>` to the attribute bag. Anonymous components add their
+`fltc-<tag>` hook in the view. Skin stylesheets (`resources/css/skin-effects.css`) style
+those hooks — never put skin-specific classes into a component's class strings.
+`tests/HookClassesTest.php` enforces the hooks.
+
 ### Rules
 
 1. **Prefer existing components** before adding new raw markup

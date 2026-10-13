@@ -4,7 +4,7 @@ namespace Fsteltenkamp\TwcssComponents\View\Components\Container;
 
 use Closure;
 use Illuminate\Contracts\View\View;
-use Illuminate\View\Component;
+use Fsteltenkamp\TwcssComponents\View\Component;
 
 /**
  * Centred page-content column that keeps clear of drawer tabs.

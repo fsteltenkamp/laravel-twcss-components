@@ -5,7 +5,7 @@ namespace Fsteltenkamp\TwcssComponents\View\Components\Nav;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\View as ViewFacade;
-use Illuminate\View\Component;
+use Fsteltenkamp\TwcssComponents\View\Component;
 
 class Navbar extends Component
 {

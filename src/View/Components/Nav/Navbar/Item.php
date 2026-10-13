@@ -4,7 +4,7 @@ namespace Fsteltenkamp\TwcssComponents\View\Components\Nav\Navbar;
 
 use Closure;
 use Illuminate\Contracts\View\View;
-use Illuminate\View\Component;
+use Fsteltenkamp\TwcssComponents\View\Component;
 
 class Item extends Component
 {
@@ -18,6 +18,7 @@ class Item extends Component
         ?string $theme = null,
     ) {
         $resolvedTheme = $theme ?? (app('view')->getShared()['navbarTheme'] ?? 'slate');
+        $this->hookTheme = $resolvedTheme;
 
         $themeMap = [
             'slate'   => 'text-slate-700 dark:text-slate-300',

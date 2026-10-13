@@ -4,7 +4,7 @@ namespace Fsteltenkamp\TwcssComponents\View\Components;
 
 use Closure;
 use Illuminate\Contracts\View\View;
-use Illuminate\View\Component;
+use Fsteltenkamp\TwcssComponents\View\Component;
 
 class Tooltip extends Component
 {
@@ -61,6 +61,8 @@ class Tooltip extends Component
         $this->tooltipClassList = trim(implode(' ', [
             'pointer-events-none fixed left-0 top-0 z-[2147483647] w-max max-w-64 -translate-x-1/2 -translate-y-full rounded-md px-3 py-1.5 text-xs font-medium shadow-lg',
             $themeMap[$theme] ?? $themeMap['gray'],
+            // Teleported to <body>, outside the root's hooks, so it carries its own.
+            'fltc-theme-'.$theme,
         ]));
     }
 

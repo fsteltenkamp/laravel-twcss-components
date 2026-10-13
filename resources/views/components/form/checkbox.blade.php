@@ -1,10 +1,10 @@
 @if ($variant === 'toggle')
 <label
     for="{{ $id }}"
-    class="group/toggle inline-flex items-center gap-3 select-none {{ $disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer' }} {{ $class }}"
+    class="fltc-form-checkbox-control group/toggle inline-flex items-center gap-3 select-none {{ $disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer' }} {{ $class }}"
 >
     <input
-        {{ $attributes }}
+        {{ $attributes->class(['peer sr-only']) }}
         type="checkbox"
         id="{{ $id }}"
         name="{{ $name }}"
@@ -18,11 +18,10 @@
         @endif
         @checked($checked)
         @disabled($disabled)
-        class="peer sr-only"
     />
 
-    <span class="relative inline-flex flex-shrink-0 items-center rounded-full transition-colors duration-300 {{ $trackSize }} {{ $trackOff }} {{ $trackOn }}">
-        <span class="absolute left-0.5 top-0.5 inline-flex items-center justify-center rounded-full bg-white shadow transform transition-transform duration-300 {{ $knobSize }} {{ $knobTranslate }}">
+    <span class="fltc-form-checkbox-track relative inline-flex flex-shrink-0 items-center rounded-full transition-colors duration-300 {{ $trackSize }} {{ $trackOff }} {{ $trackOn }}">
+        <span class="fltc-form-checkbox-knob absolute left-0.5 top-0.5 inline-flex items-center justify-center rounded-full bg-white shadow transform transition-transform duration-300 {{ $knobSize }} {{ $knobTranslate }}">
             @if ($iconUnchecked)
                 <x-fltc::icon :name="$iconUnchecked" class="leading-none {{ $knobIconSize }} {{ $iconColorOff }} group-has-[:checked]/toggle:hidden" />
             @endif
@@ -39,12 +38,12 @@
 @else
 <label
     for="{{ $id }}"
-    class="inline-flex items-center gap-3 px-4 py-2.5 transition-colors {{ $disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer' }}
+    class="fltc-form-checkbox-control inline-flex items-center gap-3 px-4 py-2.5 transition-colors {{ $disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer' }}
         @if ($bordered) border {{ $containerBorder }} rounded-lg {{ $rowBg }} {{ $rowBgCheckedHas }} @endif
         {{ $class }}"
 >
     <input
-        {{ $attributes }}
+        {{ $attributes->class(['peer sr-only']) }}
         type="checkbox"
         id="{{ $id }}"
         name="{{ $name }}"
@@ -58,7 +57,6 @@
         @endif
         @checked($checked)
         @disabled($disabled)
-        class="peer sr-only"
     />
 
     <x-fltc::icon :name="$iconUnchecked" class="text-lg leading-none flex-shrink-0 transition-colors {{ $iconColorUnchecked }} peer-checked:hidden" />

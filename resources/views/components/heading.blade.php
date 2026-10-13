@@ -1,6 +1,7 @@
 @props([
     'size' => 'base',
     'level' => 2,
+    'glitch' => false,
 ])
 @php
     $sizes = [
@@ -16,4 +17,6 @@
     // Primary Content role (see README "Color shades") so the heading flips in dark mode.
     $classList = trim(($sizes[$size] ?? $sizes['base']) . ' font-semibold tracking-tight text-zinc-900 dark:text-white');
 @endphp
-<{{ $tag }} {{ $attributes->class($classList) }}>{{ $slot }}</{{ $tag }}>
+{{-- `fltc-heading` is the neutral hook for skin stylesheets. `glitch` opts into a skin's
+     glitch effect, which redraws the text from data-text (see skin-effects.css). --}}
+<{{ $tag }} {{ $attributes->class(['fltc-heading', 'fltc-glitch' => $glitch, $classList])->merge($glitch ? ['data-text' => trim(strip_tags($slot))] : []) }}>{{ $slot }}</{{ $tag }}>

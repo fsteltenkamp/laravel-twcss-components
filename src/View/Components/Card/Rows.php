@@ -6,7 +6,7 @@ use Closure;
 use Fsteltenkamp\TwcssComponents\View\Components\Table;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\View as ViewFacade;
-use Illuminate\View\Component;
+use Fsteltenkamp\TwcssComponents\View\Component;
 
 class Rows extends Component
 {
