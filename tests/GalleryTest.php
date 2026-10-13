@@ -151,8 +151,37 @@ function galleryGroups(): array
     <option value="us">United States</option>
 </x-fltc::form.input.select>'],
             ],
-            'Datetime' => [
-                ['default', '<x-fltc::form.input.datetime theme="skin" label="Starts at" class="max-w-sm" />'],
+            'Number input' => [
+                ['min / max / step', '<x-fltc::form.input.number theme="skin" label="Quantity" min="0" max="10" step="1" value="3" icon="hash" class="max-w-sm" />'],
+            ],
+            'Date, time and datetime' => [
+                ['date', '<x-fltc::form.input.date theme="skin" label="Due on" class="max-w-sm" />'],
+                ['time', '<x-fltc::form.input.time theme="skin" label="Reminder at" class="max-w-sm" />'],
+                ['datetime', '<x-fltc::form.input.datetime theme="skin" label="Starts at" class="max-w-sm" />'],
+            ],
+            'File input' => [
+                ['single', '<x-fltc::form.input.file theme="skin" label="Avatar" accept="image/*" wrapperClass="max-w-sm" />'],
+                ['multiple', '<x-fltc::form.input.file theme="skin" label="Attachments" name="files[]" multiple wrapperClass="max-w-sm" />'],
+            ],
+            'Inline fields (filter bar)' => [
+                ['flex items-end', '<div class="flex flex-wrap items-end gap-3">
+    <x-fltc::form.input.text theme="skin" label="Search" placeholder="Name or email" icon="magnifying-glass" inline wrapperClass="w-64" />
+    <x-fltc::form.input.select theme="skin" label="Status" inline wrapperClass="w-40"><option>Active</option><option>Archived</option></x-fltc::form.input.select>
+    <x-fltc::form.input.date theme="skin" label="Since" inline wrapperClass="w-44" />
+    <x-fltc::button theme="skin" icon="funnel">Filter</x-fltc::button>
+</div>'],
+            ],
+            'Radio group' => [
+                ['vertical', '<x-fltc::form.radio.group theme="skin" name="gallery-plan" label="Plan" value="pro" required>
+    <x-fltc::form.radio value="free" label="Free" />
+    <x-fltc::form.radio value="pro" label="Pro" />
+    <x-fltc::form.radio value="team" label="Team" disabled />
+</x-fltc::form.radio.group>'],
+                ['horizontal', '<x-fltc::form.radio.group theme="skin" name="gallery-size" label="Size" value="m" horizontal>
+    <x-fltc::form.radio value="s" label="Small" />
+    <x-fltc::form.radio value="m" label="Medium" />
+    <x-fltc::form.radio value="l" label="Large" />
+</x-fltc::form.radio.group>'],
             ],
             'Textarea' => [
                 ['default', '<x-fltc::form.textarea theme="skin" label="Notes" rows="3" placeholder="Write something…" class="max-w-sm" />'],
@@ -185,8 +214,27 @@ function galleryGroups(): array
                     ['label' => 'Data', 'href' => null],
                 ]]],
             ],
+            'Tabs' => [
+                ['panels', '<x-fltc::tabs theme="skin" active="profile" class="max-w-xl">
+    <x-slot:list>
+        <x-fltc::tabs.tab name="profile" icon="user">Profile</x-fltc::tabs.tab>
+        <x-fltc::tabs.tab name="security" icon="lock">Security</x-fltc::tabs.tab>
+        <x-fltc::tabs.tab name="billing" disabled>Billing</x-fltc::tabs.tab>
+    </x-slot:list>
+    <x-fltc::tabs.panel name="profile">Profile panel.</x-fltc::tabs.panel>
+    <x-fltc::tabs.panel name="security">Security panel.</x-fltc::tabs.panel>
+    <x-fltc::tabs.panel name="billing">Billing panel.</x-fltc::tabs.panel>
+</x-fltc::tabs>'],
+                ['links', '<x-fltc::tabs theme="skin" class="max-w-xl">
+    <x-slot:list>
+        <x-fltc::tabs.tab href="#" current>Overview</x-fltc::tabs.tab>
+        <x-fltc::tabs.tab href="#">Activity</x-fltc::tabs.tab>
+    </x-slot:list>
+</x-fltc::tabs>'],
+            ],
             'Pagination' => [
-                ['default', '<x-fltc::nav.pagination mainTheme="skin" accentTheme="skin" :currentPage="2" :totalPages="5" :start="1" :end="5" />'],
+                ['paginator (links + summary)', '<x-fltc::nav.pagination :paginator="$paginator" theme="skin" />', ['paginator' => new \Illuminate\Pagination\LengthAwarePaginator(range(31, 40), 157, 10, 4, ['path' => '#'])]],
+                ['integers (Livewire gotoPage)', '<x-fltc::nav.pagination theme="skin" :currentPage="2" :totalPages="5" :start="1" :end="5" />'],
             ],
             'Stepper' => [
                 ['default', '<x-fltc::nav.stepper :steps="$steps" :stepIndex="2" theme="skin" />', ['steps' => [
@@ -203,6 +251,39 @@ function galleryGroups(): array
         ],
 
         'Overlays' => [
+            'Modal' => [
+                ['default', '<x-fltc::button theme="skin" x-data x-on:click="$dispatch(\'open-modal\', \'gallery-modal\')">Open modal</x-fltc::button>
+<x-fltc::modal name="gallery-modal" theme="skin">
+    <div class="space-y-4">
+        <x-fltc::heading level="2" size="lg" theme="skin">Edit profile</x-fltc::heading>
+        <x-fltc::subheading theme="skin">Changes are saved when you press Save.</x-fltc::subheading>
+        <x-fltc::form.input.text theme="skin" label="Display name" value="Jane Doe" />
+        <div class="flex justify-end gap-2">
+            <x-fltc::button theme="skin" variant="outline" x-on:click="close()">Close</x-fltc::button>
+            <x-fltc::button theme="skin" x-on:click="close()">Save</x-fltc::button>
+        </div>
+    </div>
+</x-fltc::modal>'],
+                ['confirm', '<x-fltc::button theme="skin" variant="outline" icon="trash" x-data x-on:click="$dispatch(\'open-modal\', \'gallery-confirm\')">Delete…</x-fltc::button>
+<x-fltc::modal.confirm name="gallery-confirm" theme="skin" title="Delete this post?" description="This cannot be undone.">
+    <x-fltc::button theme="red" x-on:click="close()">Delete</x-fltc::button>
+</x-fltc::modal.confirm>'],
+            ],
+            'Dropdown' => [
+                ['actions menu', '<x-fltc::dropdown theme="skin">
+    <x-slot:trigger><x-fltc::button theme="skin" icon="dots-three" iconPosition="after">Actions</x-fltc::button></x-slot:trigger>
+    <x-fltc::dropdown.item href="#" icon="pencil-simple">Edit</x-fltc::dropdown.item>
+    <x-fltc::dropdown.item icon="copy" x-on:click="console.log(\'duplicate\')">Duplicate</x-fltc::dropdown.item>
+    <x-fltc::dropdown.item icon="archive" disabled>Archive (disabled)</x-fltc::dropdown.item>
+    <x-fltc::separator class="my-1" />
+    <x-fltc::dropdown.item href="#" method="delete" icon="trash" theme="red">Delete</x-fltc::dropdown.item>
+</x-fltc::dropdown>'],
+                ['right-aligned, opens upward', '<div class="flex justify-end pt-48"><x-fltc::dropdown theme="skin" align="right" position="top" width="sm">
+    <x-slot:trigger><x-fltc::button theme="skin" variant="outline" icon="gear" /></x-slot:trigger>
+    <x-fltc::dropdown.item href="#">Settings</x-fltc::dropdown.item>
+    <x-fltc::dropdown.item href="#">Sign out</x-fltc::dropdown.item>
+</x-fltc::dropdown></div>'],
+            ],
             'Drawer' => [
                 ['tabs on both sides (look at the screen edges)', '<x-fltc::drawer name="gallery-wiki" side="right" title="Wiki" label="Wiki" icon="book-open" theme="skin" offset="5rem" pinnable>
     Pinnable right drawer. Pin it, then click outside — it stays open.
@@ -221,6 +302,10 @@ function galleryGroups(): array
         ],
 
         'Utility' => [
+            'Spinner' => [
+                ['sizes', '<span class="inline-flex items-center gap-4"><x-fltc::spinner theme="skin" size="xs" /><x-fltc::spinner theme="skin" size="sm" /><x-fltc::spinner theme="skin" /><x-fltc::spinner theme="skin" size="lg" /><x-fltc::spinner theme="skin" size="xl" /></span>'],
+                ['in a button (theme="current")', '<x-fltc::button theme="skin" x-data="{ busy: false }" x-on:click="busy = true; setTimeout(() => busy = false, 1500)"><x-fltc::spinner theme="current" size="sm" class="mr-2" x-show="busy" x-cloak />Save</x-fltc::button>'],
+            ],
             'Icon' => [
                 ['variants', '<span class="text-2xl"><x-fltc::icon name="heart" variant="thin" after="2" /><x-fltc::icon name="heart" variant="regular" after="2" /><x-fltc::icon name="heart" variant="bold" after="2" /><x-fltc::icon name="heart" variant="fill" after="2" /><x-fltc::icon name="heart" variant="duotone" /></span>'],
                 ['colors', '<span class="text-2xl"><x-fltc::icon name="circle" color="red" after="2" /><x-fltc::icon name="circle" color="amber" after="2" /><x-fltc::icon name="circle" color="emerald" after="2" /><x-fltc::icon name="circle" color="sky" after="2" /><x-fltc::icon name="circle" color="violet" /></span>'],

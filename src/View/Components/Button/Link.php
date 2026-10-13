@@ -11,7 +11,7 @@ class Link extends Button
     public function __construct(
         public string $href = '#',
         public bool $navigate = false,
-        string $theme = 'gray',
+        string $theme = 'slate',
         string $width = 'fit',
         string $height = 'md',
         string $tooltip = '',

@@ -3,7 +3,7 @@
     $hasError = $fieldName !== '' && $errors->has($fieldName);
 @endphp
 
-<div class="mb-4">
+<div @class([$wrapperClasses])>
     @if ($label !== '')
         <x-fltc::form.label :for="$id" :required="$required" :theme="$theme">
             {{ $label }}
@@ -13,7 +13,7 @@
     <div class="relative">
         <input
             {{ $attributes->class(trim($hasError ? $errorClasses : $normalClasses)) }}
-            type="text"
+            type="{{ $type }}"
             id="{{ $id }}"
             name="{{ $fieldName }}"
             @if ($model !== '')
@@ -25,7 +25,7 @@
             @else
                 value="{{ old($fieldName, $value) }}"
             @endif
-            placeholder="{{ $placeholder }}"
+            @if ($placeholder !== '') placeholder="{{ $placeholder }}" @endif
             @if ($autocomplete !== '') autocomplete="{{ $autocomplete }}" @endif
             @required($required)
             @disabled($disabled)

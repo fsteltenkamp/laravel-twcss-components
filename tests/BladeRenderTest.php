@@ -564,3 +564,325 @@ it('keeps the page container clear of drawer rails and pinned drawers', function
         ->toContain('pe-4 sm:pe-6')
         ->toContain('id="main"');
 });
+
+/*
+ * Form fields: typed inputs, inline mode, file, radio.
+ */
+function shareErrors(array $messages = []): void
+{
+    \Illuminate\Support\Facades\View::share('errors', (new \Illuminate\Support\ViewErrorBag)->put('default', new \Illuminate\Support\MessageBag($messages)));
+}
+
+it('renders exactly one type attribute on every typed input', function (string $tag, string $type) {
+    shareErrors();
+    $html = Blade::render("<x-fltc::form.input.{$tag} id=\"f\" />");
+
+    expect(preg_match_all('/\stype="/', $html))->toBe(1)
+        ->and($html)->toContain("type=\"{$type}\"")
+        ->and($html)->toContain("fltc-form-input-{$tag}");
+})->with([
+    ['text', 'text'],
+    ['number', 'number'],
+    ['date', 'date'],
+    ['time', 'time'],
+    ['datetime', 'datetime-local'],
+    ['email', 'email'],
+    ['password', 'password'],
+]);
+
+it('takes the input type from the type prop instead of duplicating it', function () {
+    shareErrors();
+    $html = Blade::render('<x-fltc::form.input.text type="search" id="q" />');
+
+    expect(preg_match_all('/\stype="/', $html))->toBe(1)->and($html)->toContain('type="search"');
+});
+
+it('passes min, max and step through to a number input', function () {
+    shareErrors();
+    $html = Blade::render('<x-fltc::form.input.number id="qty" min="0" max="10" step="2" value="4" />');
+
+    expect($html)->toContain('min="0"')->toContain('max="10"')->toContain('step="2"')->toContain('value="4"');
+});
+
+it('pads the input for the icon only when there is one', function () {
+    shareErrors();
+
+    expect(Blade::render('<x-fltc::form.input.text id="a" />'))->toContain(' pl-3 ')->not->toContain('pl-10')
+        ->and(Blade::render('<x-fltc::form.input.text id="a" icon="user" />'))->toContain('pl-10');
+});
+
+it('drops the bottom margin of inline fields and sizes their wrapper', function (string $tag) {
+    shareErrors();
+
+    expect(Blade::render("<x-fltc::{$tag} id=\"a\" />"))->toMatch('/^\s*<div class="mb-4">/');
+
+    $inline = Blade::render("<x-fltc::{$tag} id=\"a\" inline wrapperClass=\"w-48\" />");
+    expect($inline)->toMatch('/^\s*<div class="w-48">/')->not->toContain('mb-4');
+})->with(['form.input.text', 'form.input.number', 'form.input.select', 'form.input.file', 'form.textarea']);
+
+it('renders a themed file input with accept, multiple and a Livewire model', function () {
+    shareErrors();
+    $html = Blade::render('<x-fltc::form.input.file id="photos" name="photos[]" label="Photos" accept="image/*" multiple model="photos" theme="rose" />');
+
+    expect($html)
+        ->toContain('type="file"')
+        ->toContain('name="photos[]"')
+        ->toContain('accept="image/*"')
+        ->toContain('multiple')
+        ->toContain('wire:model="photos"')
+        ->toContain('file:bg-rose-100')
+        ->toContain('fltc-form-input-file')
+        ->not->toContain('value=');
+});
+
+it('shows errors of each file of a multiple upload', function () {
+    shareErrors(['photos.1' => ['The second photo is too large.']]);
+    $html = Blade::render('<x-fltc::form.input.file id="photos" name="photos[]" />');
+
+    expect($html)->toContain('The second photo is too large.')->toContain('aria-invalid="true"');
+});
+
+it('renders a radio group whose options share its name, model and theme', function () {
+    shareErrors();
+    $html = Blade::render(<<<'BLADE'
+        <x-fltc::form.radio.group name="plan" label="Plan" value="pro" theme="rose" horizontal required>
+            <x-fltc::form.radio value="free" label="Free" />
+            <x-fltc::form.radio value="pro">Pro</x-fltc::form.radio>
+        </x-fltc::form.radio.group>
+        <x-fltc::form.radio value="x" label="Standalone" />
+        BLADE);
+
+    expect($html)
+        ->toContain('<fieldset')
+        ->toContain('<legend')
+        ->toContain('Plan')
+        ->toContain('flex flex-wrap')
+        ->and(substr_count($html, 'name="plan"'))->toBe(2)
+        ->and(substr_count($html, 'accent-rose-600'))->toBe(2)
+        ->and(substr_count($html, ' required'))->toBe(2)
+        ->and($html)->toMatch('/value="pro"\s+checked/')
+        ->not->toMatch('/value="free"\s+checked/')
+        ->toContain('Pro</span>');
+
+    // The standalone radio after the group must not inherit the group's name.
+    expect(substr($html, strrpos($html, '<label')))->not->toContain('name="plan"');
+});
+
+it('binds radios to the group model instead of checking them server-side', function () {
+    shareErrors();
+    $html = Blade::render('<x-fltc::form.radio.group name="plan" model="plan" live><x-fltc::form.radio value="a" label="A" /></x-fltc::form.radio.group>');
+
+    expect($html)->toContain('wire:model.live="plan"')->not->toContain('checked');
+});
+
+it('shows the radio group validation error', function () {
+    shareErrors(['plan' => ['Pick a plan.']]);
+
+    expect(Blade::render('<x-fltc::form.radio.group name="plan"><x-fltc::form.radio value="a" /></x-fltc::form.radio.group>'))
+        ->toContain('Pick a plan.')->toContain('aria-describedby="plan-error"');
+});
+
+/*
+ * Spinner, dropdown, tabs, pagination, confirm modal.
+ */
+it('renders a themed spinner that passes wire:loading through', function () {
+    $html = Blade::render('<x-fltc::spinner theme="rose" size="lg" wire:loading wire:target="save" />');
+
+    expect($html)
+        ->toContain('<svg')
+        ->toContain('animate-spin')
+        ->toContain('h-8 w-8')
+        ->toContain('text-rose-500')
+        ->toContain('wire:loading')
+        ->toContain('wire:target="save"')
+        ->toContain('role="status"')
+        ->toContain('aria-label="Loading"');
+
+    expect(Blade::render('<x-fltc::spinner theme="current" />'))->toContain('text-current');
+});
+
+it('renders a dropdown whose items are links, buttons and method forms', function () {
+    $html = Blade::render(<<<'BLADE'
+        <x-fltc::dropdown theme="rose" align="right"><x-slot:trigger><x-fltc::button>Actions</x-fltc::button></x-slot:trigger><x-fltc::dropdown.item href="/edit" icon="pencil">Edit</x-fltc::dropdown.item><x-fltc::dropdown.item wire:click="archive">Archive</x-fltc::dropdown.item><x-fltc::dropdown.item href="/posts/1" method="delete" theme="red">Delete</x-fltc::dropdown.item><x-fltc::dropdown.item disabled>Locked</x-fltc::dropdown.item></x-fltc::dropdown>
+        BLADE);
+
+    expect($html)
+        ->toContain('x-data=')
+        ->toContain('role="menu"')
+        ->toContain('right-0')
+        ->toContain('fltc-dropdown-menu')
+        ->toContain('Actions')
+        ->toMatch('/<a[^>]*href="\/edit"[^>]*role="menuitem"/s')
+        ->toContain('ph-pencil')
+        ->toMatch('/<button[^>]*wire:click="archive"[^>]*type="button"/s')
+        ->toContain('action="/posts/1"')
+        ->toContain('name="_method" value="DELETE"')
+        ->toContain('name="_token"')
+        ->toContain('text-red-700')
+        ->toMatch('/<button[^>]*disabled[^>]*>\s*Locked/s');
+
+    // Items without a theme of their own take the dropdown's.
+    expect($html)->toMatch('/class="[^"]*fltc-dropdown-item fltc-theme-rose/');
+});
+
+it('renders tabs with panels shown by the active tab', function () {
+    $html = Blade::render(<<<'BLADE'
+        <x-fltc::tabs active="security" theme="rose" id="settings" wire:model="tab"><x-slot:list><x-fltc::tabs.tab name="general">General</x-fltc::tabs.tab><x-fltc::tabs.tab name="security" icon="lock">Security</x-fltc::tabs.tab><x-fltc::tabs.tab name="billing" disabled>Billing</x-fltc::tabs.tab></x-slot:list><x-fltc::tabs.panel name="general">General panel</x-fltc::tabs.panel><x-fltc::tabs.panel name="security">Security panel</x-fltc::tabs.panel></x-fltc::tabs>
+        BLADE);
+
+    expect($html)
+        ->toContain('x-modelable="active"')
+        ->toContain('wire:model="tab"')
+        ->toContain('id="settings"')
+        ->toContain('role="tablist"')
+        ->toContain('border-rose-200')
+        ->toMatch('/id="settings-tab-security"[^>]*aria-selected="true"/s')
+        ->toMatch('/id="settings-tab-general"[^>]*aria-selected="false"/s')
+        ->toMatch('/data-tab="billing"[^>]*disabled/s')
+        ->toMatch('/id="settings-panel-general"[^>]*style="display: none;"/s')
+        ->not->toMatch('/id="settings-panel-security"[^>]*style="display: none;"/s')
+        ->toContain('aria-labelledby="settings-tab-security"')
+        ->toContain('ph-lock')
+        ->toContain('border-rose-500');
+});
+
+it('cloaks the panels until Alpine picks the first tab when no tab is active', function () {
+    $html = Blade::render('<x-fltc::tabs><x-slot:list><x-fltc::tabs.tab name="a">A</x-fltc::tabs.tab></x-slot:list><x-fltc::tabs.panel name="a">A panel</x-fltc::tabs.panel></x-fltc::tabs>');
+
+    expect($html)->toContain('x-cloak')->not->toContain('display: none');
+});
+
+it('renders link tabs and marks the current one', function () {
+    $html = Blade::render('<x-fltc::tabs><x-slot:list><x-fltc::tabs.tab href="/a" current>A</x-fltc::tabs.tab><x-fltc::tabs.tab href="/b">B</x-fltc::tabs.tab></x-slot:list></x-fltc::tabs>');
+
+    expect($html)
+        ->toMatch('/<a[^>]*href="\/a"[^>]*aria-current="page"/s')
+        ->toMatch('/<a[^>]*href="\/b"[^>]*aria-selected="false"/s')
+        ->not->toContain('x-on:click');
+});
+
+function fakePaginator(int $page, int $total = 57, int $perPage = 10): \Illuminate\Pagination\LengthAwarePaginator
+{
+    $items = collect(range(1, $total))->forPage($page, $perPage)->values();
+
+    return new \Illuminate\Pagination\LengthAwarePaginator($items, $total, $perPage, $page, ['path' => '/customers']);
+}
+
+it('renders a paginator as links with a "showing x–y of z" summary', function () {
+    $html = Blade::render('<x-fltc::nav.pagination :paginator="$p" class="mt-4" />', ['p' => fakePaginator(3)]);
+
+    expect($html)
+        ->toContain('<nav')
+        ->toContain('mt-4')
+        ->toMatch('/Showing\s*<span class="font-medium">21<\/span>–<span class="font-medium">30<\/span>\s*of\s*<span class="font-medium">57<\/span>/')
+        ->toContain('href="/customers?page=1"')
+        ->toContain('href="/customers?page=5"')
+        ->toContain('href="/customers?page=6"')
+        ->toContain('aria-current="page"')
+        ->not->toContain('wire:click');
+});
+
+it('disables first and previous on the first page of a paginator', function () {
+    $html = Blade::render('<x-fltc::nav.pagination :paginator="$p" />', ['p' => fakePaginator(1)]);
+
+    expect($html)
+        ->toMatch('/<button[^>]*disabled[^>]*aria-label="First page"/s')
+        ->toMatch('/<button[^>]*disabled[^>]*aria-label="Previous page"/s')
+        ->toContain('href="/customers?page=2"');
+});
+
+it('renders a paginator as Livewire gotoPage calls with the page name', function () {
+    $html = Blade::render('<x-fltc::nav.pagination :paginator="$p" livewire />', ['p' => fakePaginator(2)]);
+
+    expect($html)
+        ->toContain('wire:click="gotoPage(3, &#039;page&#039;)"')
+        ->toContain('wire:key="page_link_3"')
+        ->not->toContain('href=');
+});
+
+it('renders paginators through the shipped pagination views', function () {
+    expect((string) fakePaginator(2)->links('fltc::pagination.links'))->toContain('href="/customers?page=3"')
+        ->and((string) fakePaginator(2)->links('fltc::pagination.livewire'))->toContain('gotoPage(3, &#039;page&#039;)');
+});
+
+it('renders only the summary when a paginator has a single page', function () {
+    $html = Blade::render('<x-fltc::nav.pagination :paginator="$p" />', ['p' => fakePaginator(1, 4)]);
+
+    expect($html)->toContain('Showing')->not->toContain('<button')->not->toContain('href=');
+});
+
+it('renders prev/next only for a simple paginator', function () {
+    $p = new \Illuminate\Pagination\Paginator(range(1, 11), 10, 2, ['path' => '/feed']);
+    $html = Blade::render('<x-fltc::nav.pagination :paginator="$p" />', ['p' => $p]);
+
+    expect($html)
+        ->toContain('aria-label="Previous page"')
+        ->toContain('aria-label="Next page"')
+        ->not->toContain('First page')
+        ->not->toContain(' of ');
+});
+
+it('keeps the integer pagination API on Livewire gotoPage calls', function () {
+    $html = Blade::render('<x-fltc::nav.pagination :currentPage="2" :totalPages="5" :start="1" :end="5" />');
+
+    expect($html)
+        ->toContain('wire:click="gotoPage(1)"')
+        ->toContain('wire:click="gotoPage(5)"')
+        ->not->toContain('Showing');
+});
+
+it('themes the confirm modal cancel button instead of hardcoding zinc', function () {
+    expect(Blade::render('<x-fltc::modal.confirm name="c" title="Sure?" theme="rose">x</x-fltc::modal.confirm>'))
+        ->toContain('border-rose-')->not->toContain('zinc-300')
+        ->and(Blade::render('<x-fltc::modal.confirm name="c" title="Sure?" cancelTheme="amber" cancelLabel="Keep">x</x-fltc::modal.confirm>'))
+        ->toContain('border-amber-')->toContain('Keep');
+});
+
+it('themes the modal panel and backdrop', function () {
+    $html = Blade::render('<x-fltc::modal name="m" theme="rose" maxWidth="2xl">x</x-fltc::modal>');
+
+    expect($html)
+        ->toMatch('/class="[^"]*fltc-modal fltc-theme-rose/')
+        ->toMatch('/class="fltc-modal-panel [^"]*max-w-2xl[^"]*border-rose-200[^"]*"/')
+        ->toContain('bg-rose-950/50')
+        ->not->toContain('zinc');
+
+    expect(Blade::render('<x-fltc::modal name="m">x</x-fltc::modal>'))->toContain('border-slate-200')->toContain('bg-slate-950/50');
+});
+
+it('passes the confirm modal theme to its panel, title and description', function () {
+    $html = Blade::render('<x-fltc::modal.confirm name="c" title="Sure?" description="Really." theme="rose">x</x-fltc::modal.confirm>');
+
+    expect($html)
+        ->toContain('border-rose-200')
+        ->toMatch('/<h2[^>]*text-rose-900/')
+        ->toMatch('/<p[^>]*fltc-subheading[^"]*text-rose-500/')
+        ->not->toContain('zinc');
+});
+
+it('keeps the neutral heading colour when no theme is given', function () {
+    expect(Blade::render('<x-fltc::heading>x</x-fltc::heading>'))->toContain('text-zinc-900')->not->toContain('fltc-theme-');
+});
+
+it('renders a select without a built-in placeholder option', function () {
+    shareErrors();
+    $html = Blade::render('<x-fltc::form.input.select id="s"><option value="a">A</option></x-fltc::form.input.select>');
+
+    expect(substr_count($html, '<option'))->toBe(1)->and($html)->not->toContain('Bitte');
+    expect(Blade::render('<x-fltc::form.input.select id="s" placeholder="Choose…"><option value="a">A</option></x-fltc::form.input.select>'))
+        ->toContain('<option value="" disabled selected>Choose…</option>');
+});
+
+it('themes pagination with one theme and marks the current page as the solid button', function () {
+    $html = Blade::render('<x-fltc::nav.pagination :paginator="$p" theme="rose" />', ['p' => fakePaginator(3)]);
+
+    expect($html)
+        ->toContain('fltc-theme-rose')
+        ->not->toContain('-sky-')
+        ->toMatch('/fltc-button-solid[^"]*"[^>]*aria-current="page"/s')
+        ->and(substr_count($html, 'fltc-button-solid'))->toBe(1);
+
+    // The old names still work.
+    expect(Blade::render('<x-fltc::nav.pagination :currentPage="2" :totalPages="3" :start="1" :end="3" mainTheme="amber" accentTheme="sky" />'))
+        ->toContain('fltc-theme-amber')->toContain('bg-sky-');
+});

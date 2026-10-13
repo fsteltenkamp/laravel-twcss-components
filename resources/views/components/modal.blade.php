@@ -1,9 +1,3 @@
-@props([
-    'name' => null,
-    'open' => false,
-    'maxWidth' => 'lg',
-    'closeable' => true,
-])
 @php
     // Open state can be driven three ways:
     //   1. wire:model="prop"      — entangled with a Livewire boolean
@@ -18,21 +12,6 @@
             break;
         }
     }
-
-    $widthMap = [
-        'sm'   => 'max-w-sm',
-        'md'   => 'max-w-md',
-        'lg'   => 'max-w-lg',
-        'xl'   => 'max-w-xl',
-        '2xl'  => 'max-w-2xl',
-        '3xl'  => 'max-w-3xl',
-        '4xl'  => 'max-w-4xl',
-        '5xl'  => 'max-w-5xl',
-        '6xl'  => 'max-w-6xl',
-        '7xl'  => 'max-w-7xl',
-        'full' => 'max-w-full',
-    ];
-    $panelWidth = $widthMap[$maxWidth] ?? $widthMap['lg'];
 @endphp
 <div
     @if ($wireModel)
@@ -48,10 +27,10 @@
     x-show="open"
     x-cloak
     style="display: none;"
-    {{ $attributes->whereDoesntStartWith('wire:model')->class('fltc-modal fixed inset-0 z-50 flex items-center justify-center p-4') }}
+    {{ $attributes->whereDoesntStartWith('wire:model')->class('fixed inset-0 z-50 flex items-center justify-center p-4') }}
 >
     <div
-        class="fixed inset-0 bg-zinc-900/50 backdrop-blur-sm"
+        class="fltc-modal-backdrop {{ $backdropClasses }}"
         x-show="open"
         x-transition.opacity
         x-on:click="close()"
@@ -62,7 +41,7 @@
         x-transition
         role="dialog"
         aria-modal="true"
-        class="fltc-modal-panel relative max-h-[90vh] w-full {{ $panelWidth }} overflow-y-auto rounded-xl border border-zinc-200 bg-white p-6 shadow-xl dark:border-zinc-700 dark:bg-zinc-900"
+        class="fltc-modal-panel {{ $panelClasses }}"
     >
         {{ $slot }}
     </div>

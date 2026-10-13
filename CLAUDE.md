@@ -49,7 +49,10 @@ For components with multiple class properties, name them according to placement 
 `fltc-<tag>` and `fltc-theme-<theme>` to the attribute bag. Anonymous components add their
 `fltc-<tag>` hook in the view. Skin stylesheets (`resources/css/skin-effects.css`) style
 those hooks — never put skin-specific classes into a component's class strings.
-`tests/HookClassesTest.php` enforces the hooks.
+`tests/HookClassesTest.php` enforces the hooks, and that every component's hook appears in
+`skin-effects.css` (or in its `UNSKINNED_COMPONENTS` allowlist): a new component needs its
+hook added to the shared `:is(...)` lists there (shape, panels, controls) and, for
+cyberpunk, rules of its own where its markup differs (cut corners, neon lines).
 
 ### Rules
 
@@ -131,6 +134,13 @@ files inconsistently:
 
 When adding a class-backed component, place the class and the matching Blade file at
 mirrored paths and use the `fltc::components.*` view name, or these tests break.
+Exception: the typed inputs (`Form/Input/Number`, `Date`, `Time`, `Datetime`, `Email`,
+`Password`) only override `$defaultType` on `Form/Input/Text` and share its
+`form/input/text.blade.php` view — add new input types the same way.
+
+Default theme is `slate` everywhere (constructor defaults and `?? $map['slate']`
+fallbacks); child components that inherit a parent theme default to `null`.
+`CustomThemesTest.php` enforces both.
 
 ## Publishing
 

@@ -14,7 +14,7 @@ class Messagebox extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct(public string $theme = 'gray', public string $title = '')
+    public function __construct(public string $theme = 'slate', public string $title = '')
     {
         $themeMap = [
             'slate'   => 'border-slate-200 bg-slate-50 text-slate-800 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200',
@@ -116,10 +116,10 @@ class Messagebox extends Component
         ];
 
         $this->boxClasses = 'overflow-hidden rounded-md border text-sm';
-        $this->boxClasses .= ' '.$themeMap[$theme] ?? $themeMap['gray'];
+        $this->boxClasses .= ' '.($themeMap[$theme] ?? $themeMap['slate']);
         $this->titleClasses = 'border-b px-4 py-2 font-semibold';
-        $this->titleClasses .= ' '.$titleMap[$theme] ?? $titleMap['gray'];
-        $this->titleClasses .= ' '.$titleBorderMap[$theme] ?? $titleBorderMap['gray'];
+        $this->titleClasses .= ' '.($titleMap[$theme] ?? $titleMap['slate']);
+        $this->titleClasses .= ' '.($titleBorderMap[$theme] ?? $titleBorderMap['slate']);
     }
 
     /**

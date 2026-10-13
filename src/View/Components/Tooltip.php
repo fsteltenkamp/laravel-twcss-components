@@ -16,7 +16,7 @@ class Tooltip extends Component
      */
     public function __construct(
         public string $text = '',
-        public string $theme = 'gray',
+        public string $theme = 'slate',
         string $class = ''
     )
     {
@@ -60,7 +60,7 @@ class Tooltip extends Component
 
         $this->tooltipClassList = trim(implode(' ', [
             'pointer-events-none fixed left-0 top-0 z-[2147483647] w-max max-w-64 -translate-x-1/2 -translate-y-full rounded-md px-3 py-1.5 text-xs font-medium shadow-lg',
-            $themeMap[$theme] ?? $themeMap['gray'],
+            $themeMap[$theme] ?? $themeMap['slate'],
             // Teleported to <body>, outside the root's hooks, so it carries its own.
             'fltc-theme-'.$theme,
         ]));

@@ -12,7 +12,7 @@ class Badge extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct(public string $theme = 'gray')
+    public function __construct(public string $theme = 'slate')
     {
         $themeMap = [
             'slate'   => 'border-slate-200 bg-slate-50 text-slate-700 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300',
@@ -48,7 +48,7 @@ class Badge extends Component
         ];
 
         $this->classList = 'inline-flex items-center rounded-md border px-2.5 py-1 text-xs font-medium ';
-        $this->classList .= $themeMap[$theme] ?? $themeMap['gray'];
+        $this->classList .= $themeMap[$theme] ?? $themeMap['slate'];
     }
 
     /**

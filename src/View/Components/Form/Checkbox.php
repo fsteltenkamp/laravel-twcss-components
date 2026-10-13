@@ -34,7 +34,7 @@ class Checkbox extends Component
         public bool $live = false,
         public bool $checked = false,
         public bool $disabled = false,
-        public string $theme = 'sky',
+        public string $theme = 'slate',
         public string $class = '',
         public string $iconChecked = 'ph ph-check-circle',
         public string $iconUnchecked = 'ph ph-circle',
@@ -315,22 +315,22 @@ class Checkbox extends Component
         ];
         $sizeSet = $sizeMap[$size] ?? $sizeMap['md'];
 
-        $this->trackOn       = $trackOnMap[$theme] ?? $trackOnMap['sky'];
+        $this->trackOn       = $trackOnMap[$theme] ?? $trackOnMap['slate'];
         $this->trackOff      = $trackOffMap[$themeOff] ?? $trackOffMap['slate'];
         $this->trackSize     = $sizeSet['track'];
         $this->knobSize      = $sizeSet['knob'];
         $this->knobTranslate = $sizeSet['translate'];
         $this->knobIconSize  = $sizeSet['icon'];
-        $this->iconColorOn   = $iconColorMap[$theme] ?? $iconColorMap['sky'];
+        $this->iconColorOn   = $iconColorMap[$theme] ?? $iconColorMap['slate'];
         $this->iconColorOff  = $iconColorMap[$themeOff] ?? $iconColorMap['slate'];
 
-        $this->iconColorUnchecked   = $iconColorUncheckedMap[$theme] ?? $iconColorUncheckedMap['sky'];
-        $this->iconColorChecked     = $iconColorMap[$theme] ?? $iconColorMap['sky'];
-        $this->iconColorCheckedPeer = $iconColorPeerCheckedMap[$theme] ?? $iconColorPeerCheckedMap['sky'];
+        $this->iconColorUnchecked   = $iconColorUncheckedMap[$theme] ?? $iconColorUncheckedMap['slate'];
+        $this->iconColorChecked     = $iconColorMap[$theme] ?? $iconColorMap['slate'];
+        $this->iconColorCheckedPeer = $iconColorPeerCheckedMap[$theme] ?? $iconColorPeerCheckedMap['slate'];
         $this->labelClasses         = 'cursor-pointer text-sm font-medium select-none '.Shades::secondary($theme);
-        $this->containerBorder      = $containerBorderMap[$theme] ?? $containerBorderMap['sky'];
-        $this->rowBg                = $rowBgMap[$theme] ?? $rowBgMap['sky'];
-        $this->rowBgCheckedHas      = $rowBgCheckedHasMap[$theme] ?? $rowBgCheckedHasMap['sky'];
+        $this->containerBorder      = $containerBorderMap[$theme] ?? $containerBorderMap['slate'];
+        $this->rowBg                = $rowBgMap[$theme] ?? $rowBgMap['slate'];
+        $this->rowBgCheckedHas      = $rowBgCheckedHasMap[$theme] ?? $rowBgCheckedHasMap['slate'];
 
         if (empty($id)) {
             $this->id = 'checkbox-' . uniqid();

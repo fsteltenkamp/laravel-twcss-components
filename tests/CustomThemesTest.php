@@ -70,3 +70,47 @@ it('themes rows and cells passed through card rows', function () {
         ->toContain('odd:bg-rose-200/70')
         ->not->toContain('text-gray-700');
 });
+
+/*
+ * One default theme everywhere: a component used without `theme` must look like its
+ * neighbours. Child components that inherit their parent's theme default to null.
+ */
+it('defaults every theme prop to slate', function () {
+    $root = realpath(__DIR__.'/../src/View/Components');
+
+    foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator($root)) as $file) {
+        if ($file->getExtension() !== 'php') {
+            continue;
+        }
+
+        $class = 'Fsteltenkamp\\TwcssComponents\\View\\Components\\'.str_replace('/', '\\', substr($file->getRealPath(), strlen($root) + 1, -4));
+        $constructor = (new ReflectionClass($class))->getConstructor();
+
+        foreach ($constructor?->getParameters() ?? [] as $param) {
+            if (! in_array($param->getName(), ['theme', 'mainTheme'], true) || ! $param->isDefaultValueAvailable()) {
+                continue;
+            }
+
+            // null inherits the parent's theme; the icon's '' inherits the text colour.
+            expect($param->getDefaultValue())->toBeIn(['slate', null, ''], "{$class}: \${$param->getName()} should default to slate");
+        }
+    }
+
+    foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator(__DIR__.'/../resources/views')) as $file) {
+        if (preg_match_all("/'theme'\s*=>\s*'([a-z0-9]+)'/", (string) @file_get_contents($file->getPathname()), $m)) {
+            expect(array_unique($m[1]))->toBe(['slate'], "{$file->getFilename()}: theme prop should default to slate");
+        }
+    }
+});
+
+it('falls back to slate for an unknown theme', function () {
+    $files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator(__DIR__.'/../src'));
+    $others = implode('|', array_diff(ALL_THEMES, ['slate']));
+
+    foreach ($files as $file) {
+        if ($file->getExtension() === 'php') {
+            expect(file_get_contents($file->getPathname()))
+                ->not->toMatch("/\\?\\?\\s*\\\$[a-zA-Z>-]+\\['({$others})'\\]/", "{$file->getFilename()} falls back to a theme other than slate");
+        }
+    }
+});

@@ -40,7 +40,7 @@ class Checklist extends Component
         public string $name = '',
         public string $idPrefix = '',
         public string $label = '',
-        public string $theme = 'sky',
+        public string $theme = 'slate',
         public bool $showProgress = false,
         public bool $strikeThroughChecked = true,
         public ?int $completedSteps = null,
@@ -352,19 +352,19 @@ class Checklist extends Component
         $this->iconColorFailed        = 'text-red-500 dark:text-red-400';
         $this->iconColorInProgress    = 'text-blue-500 dark:text-blue-400';
         $this->iconColorPending       = 'text-slate-300 dark:text-slate-600';
-        $this->containerBorder        = $containerBorderMap[$theme] ?? $containerBorderMap['sky'];
-        $this->divider                = $dividerMap[$theme] ?? $dividerMap['sky'];
-        $this->rowBgPending           = $rowBgPendingMap[$theme] ?? $rowBgPendingMap['sky'];
-        $this->iconColorPendingThemed = $iconColorPendingMap[$theme] ?? $iconColorPendingMap['sky'];
-        $this->labelColorPendingThemed = $labelPendingMap[$theme] ?? $labelPendingMap['sky'];
-        $this->headingColor           = $headingColorMap[$theme] ?? $headingColorMap['sky'];
-        $this->iconColorChecked     = $iconColorMap[$theme] ?? $iconColorMap['sky'];
-        $this->iconColorCheckedPeer = $iconColorPeerCheckedMap[$theme] ?? $iconColorPeerCheckedMap['sky'];
+        $this->containerBorder        = $containerBorderMap[$theme] ?? $containerBorderMap['slate'];
+        $this->divider                = $dividerMap[$theme] ?? $dividerMap['slate'];
+        $this->rowBgPending           = $rowBgPendingMap[$theme] ?? $rowBgPendingMap['slate'];
+        $this->iconColorPendingThemed = $iconColorPendingMap[$theme] ?? $iconColorPendingMap['slate'];
+        $this->labelColorPendingThemed = $labelPendingMap[$theme] ?? $labelPendingMap['slate'];
+        $this->headingColor           = $headingColorMap[$theme] ?? $headingColorMap['slate'];
+        $this->iconColorChecked     = $iconColorMap[$theme] ?? $iconColorMap['slate'];
+        $this->iconColorCheckedPeer = $iconColorPeerCheckedMap[$theme] ?? $iconColorPeerCheckedMap['slate'];
         $this->rowBgCompleted       = 'bg-green-50 dark:bg-green-950/30';
         $this->rowBgCompletedHas    = 'has-[:checked]:bg-green-50 dark:has-[:checked]:bg-green-950/30';
         $this->rowBgFailed          = 'bg-red-50 dark:bg-red-950/30';
         $this->rowBgInProgress      = 'bg-blue-50 dark:bg-blue-950/30';
-        $this->progressBarColor     = $progressBarMap[$theme] ?? $progressBarMap['sky'];
+        $this->progressBarColor     = $progressBarMap[$theme] ?? $progressBarMap['slate'];
         $this->progressTrackColor   = Shades::track($theme);
 
         if (empty($idPrefix)) {

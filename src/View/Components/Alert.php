@@ -13,7 +13,7 @@ class Alert extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct(public string $theme = 'gray')
+    public function __construct(public string $theme = 'slate')
     {
         $map = [
             'slate'   => 'border-slate-200 bg-slate-50 text-slate-700 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300',
@@ -48,7 +48,7 @@ class Alert extends Component
             'wh40k'   => 'border-wh40k-200 bg-wh40k-50 text-wh40k-700 dark:border-wh40k-800 dark:bg-wh40k-950 dark:text-wh40k-300',
         ];
 
-        $this->alertClasses = $map[$this->theme] ?? $map['gray'];
+        $this->alertClasses = $map[$this->theme] ?? $map['slate'];
     }
 
     /**

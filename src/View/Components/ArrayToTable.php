@@ -15,7 +15,7 @@ class ArrayToTable extends TableBase
     public string $hoverClasses;
 
     public function __construct(
-        public string $theme = 'gray',
+        public string $theme = 'slate',
         public string $prefix = '',
         public string $idPrefix = '',
         public string $idSuffix = '',

@@ -25,7 +25,7 @@ class Toggle extends Component
      */
     public function __construct(
         public string $variant = 'default',
-        public string $theme = 'sky',
+        public string $theme = 'slate',
         public string $themeOff = 'slate',
         public string $size = 'md',
     ) {
@@ -143,9 +143,9 @@ class Toggle extends Component
             'wh40k'   => 'bg-wh40k-600 text-white shadow-sm dark:bg-wh40k-500',
         ];
 
-        $this->containerClasses = $containerMap[$theme] ?? $containerMap['sky'];
-        $this->activeClasses    = $activeMap[$theme] ?? $activeMap['sky'];
-        $this->inactiveClasses  = $inactiveMap[$theme] ?? $inactiveMap['sky'];
+        $this->containerClasses = $containerMap[$theme] ?? $containerMap['slate'];
+        $this->activeClasses    = $activeMap[$theme] ?? $activeMap['slate'];
+        $this->inactiveClasses  = $inactiveMap[$theme] ?? $inactiveMap['slate'];
     }
 
     /**

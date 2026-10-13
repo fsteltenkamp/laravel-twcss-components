@@ -73,19 +73,19 @@
         },
 
         wrapperClasses(toast) {
-            return (this.themeMap[toast.theme]?.[toast.variant] ?? this.themeMap.gray?.toast)?.wrapper ?? '';
+            return (this.themeMap[toast.theme]?.[toast.variant] ?? this.themeMap.slate?.toast)?.wrapper ?? '';
         },
 
         iconClasses(toast) {
-            return (this.themeMap[toast.theme]?.[toast.variant] ?? this.themeMap.gray?.toast)?.icon ?? '';
+            return (this.themeMap[toast.theme]?.[toast.variant] ?? this.themeMap.slate?.toast)?.icon ?? '';
         },
 
         closeClasses(toast) {
-            return (this.themeMap[toast.theme]?.[toast.variant] ?? this.themeMap.gray?.toast)?.close ?? '';
+            return (this.themeMap[toast.theme]?.[toast.variant] ?? this.themeMap.slate?.toast)?.close ?? '';
         },
 
         descClasses(toast) {
-            return (this.themeMap[toast.theme]?.[toast.variant] ?? this.themeMap.gray?.toast)?.desc ?? '';
+            return (this.themeMap[toast.theme]?.[toast.variant] ?? this.themeMap.slate?.toast)?.desc ?? '';
         },
     }"
     {{ $attributes->class([$classList]) }}

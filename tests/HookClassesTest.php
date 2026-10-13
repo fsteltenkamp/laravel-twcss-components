@@ -42,10 +42,13 @@ it('extends the hook-class base component', function (string $tag, string $class
 })->with(classBackedComponents());
 
 it('renders its hook classes', function (string $tag, string $class) {
-    // Content some components require to render at all. The dropdown gets only its
-    // trigger: with default-slot content as well it leaves an output buffer open
-    // (a known, separate issue that marks the test risky).
-    $content = ['nav.navbar.dropdown' => '<x-slot:trigger>Menu</x-slot:trigger>'];
+    // Content some components require to render at all. The dropdowns get only their
+    // trigger: bare text after a named slot leaves an output buffer open under
+    // Blade::render (any component does it, card too), which marks the test risky.
+    $content = [
+        'nav.navbar.dropdown' => '<x-slot:trigger>Menu</x-slot:trigger>',
+        'dropdown' => '<x-slot:trigger>Menu</x-slot:trigger>',
+    ];
 
     $html = Blade::render("<x-fltc::{$tag} theme=\"rose\">".($content[$tag] ?? 'x')."</x-fltc::{$tag}>");
 
@@ -152,4 +155,39 @@ it('hooks the theme that navbar and sidebar children inherit', function () {
         ->toContain('fltc-nav-sidebar-profile-trigger')
         ->toContain('fltc-nav-sidebar-profile-avatar')
         ->toContain('fltc-nav-sidebar-profile-menu');
+});
+
+/*
+ * Every component either gets skin effects or is listed here on purpose: a new
+ * component that skin-effects.css never mentions would look plain under cyberpunk.
+ * These are structural parts styled through their parent, or layout wrappers.
+ */
+const UNSKINNED_COMPONENTS = [
+    'accordion.item', 'array-to-table', 'body', 'card.body', 'card.footer', 'card.rows',
+    'container.page', 'form.container.auth.simple', 'form.container.auth.two-col-left',
+    'form.container.auth.two-col-right', 'nav.breadcrumbs.item', 'nav.link',
+    'nav.navbar.dropdown.link', 'nav.navbar.dropdown.postlink', 'nav.navbar.item',
+    'nav.navbar.toggle', 'nav.sidebar.footer', 'table.foot', 'tabs.panel', 'text',
+    'toast.container',
+];
+
+it('styles every component in the skin effects stylesheet', function (string $tag, string $class) {
+    $css = file_get_contents(__DIR__.'/../resources/css/skin-effects.css');
+    // Components whose effects target the part that carries their look.
+    $hook = ['table' => 'fltc-table-scroll', 'tooltip' => 'fltc-tooltip-bubble', 'modal' => 'fltc-modal-panel'][$tag] ?? $class::hookName();
+    $styled = preg_match('/\.'.preg_quote($hook, '/').'(?![\w-])/', $css) === 1;
+
+    expect($styled || in_array($tag, UNSKINNED_COMPONENTS, true))
+        ->toBeTrue("{$class::hookName()} has no rules in skin-effects.css; style it or add '{$tag}' to UNSKINNED_COMPONENTS");
+})->with(classBackedComponents());
+
+it('styles the part hooks of the newer components', function () {
+    $css = file_get_contents(__DIR__.'/../resources/css/skin-effects.css');
+
+    foreach (['fltc-dropdown-menu', 'fltc-dropdown-item', 'fltc-tabs-list', 'fltc-tabs-tab', 'fltc-nav-pagination-summary', 'fltc-form-radio-label', 'fltc-form-radio-group-legend', 'fltc-form-input-number', 'fltc-form-input-date', 'fltc-form-input-time', 'fltc-form-input-file', 'fltc-spinner'] as $hook) {
+        expect($css)->toMatch('/\.'.$hook.'(?![\w-])/', "{$hook} is not styled");
+    }
+
+    expect(Blade::render('<x-fltc::form.radio.group label="L"><x-fltc::form.radio value="a" label="A" /></x-fltc::form.radio.group>'))
+        ->toContain('fltc-form-radio-group-legend')->toContain('fltc-form-radio-label');
 });

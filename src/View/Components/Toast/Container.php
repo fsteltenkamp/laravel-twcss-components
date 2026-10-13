@@ -14,7 +14,7 @@ class Container extends Component
 
     public function __construct(
         public string $position = 'bottom-right',
-        public string $theme = 'gray',
+        public string $theme = 'slate',
         public string $variant = 'toast',
         public int $duration = 4000,
         public string $width = 'w-80',

@@ -6,10 +6,20 @@ use Fsteltenkamp\TwcssComponents\View\Components\Form\Input;
 use Closure;
 use Illuminate\Contracts\View\View;
 
+/**
+ * Single-line <input>. Also the base of the typed inputs (number, date, time,
+ * datetime, email, password): they only change $defaultType and share this view.
+ */
 class Text extends Input
 {
+    /**
+     * `type` attribute when the `type` prop is not given.
+     */
+    protected string $defaultType = 'text';
+
     public string $normalClasses;
     public string $errorClasses;
+    public string $wrapperClasses;
 
     public function __construct(
         public string $id = '',
@@ -22,21 +32,27 @@ class Text extends Input
         public bool $required = false,
         public bool $autofocus = false,
         public bool $disabled = false,
-        public string $theme = 'sky',
+        public string $theme = 'slate',
         public string $class = '',
         public string $label = '',
         public string $icon = '',
         public string $iconVariant = 'regular',
+        public string $type = '',
+        public bool $inline = false,
+        public string $wrapperClass = '',
     ) {
+        $this->type = $type !== '' ? $type : $this->defaultType;
+
         if ($this->name === '') {
             $this->name = $this->id;
         }
 
-        $this->normalClasses = $this->getNormalClasses($theme, $class);
-        $this->errorClasses = $this->getErrorClasses($class);
+        $this->normalClasses  = $this->getNormalClasses($theme, $class);
+        $this->errorClasses   = $this->getErrorClasses($class);
+        $this->wrapperClasses = $this->getWrapperClasses($inline, $wrapperClass);
 
         if (empty($id)) {
-            $this->id = 'text-' . uniqid();
+            $this->id = $this->type . '-' . uniqid();
         }
     }
 

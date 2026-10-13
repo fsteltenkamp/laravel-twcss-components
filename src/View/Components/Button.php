@@ -12,7 +12,7 @@ class Button extends Component
     public string $heightStyle;
 
     public function __construct(
-        public string $theme = 'gray',
+        public string $theme = 'slate',
         public string $width = 'fit',
         public string $height = 'md',
         public string $tooltip = '',
@@ -131,7 +131,7 @@ class Button extends Component
         $this->classList = trim(implode(' ', [
             // Variant part hook (fltc-button-solid / fltc-button-outline) for skin stylesheets.
             'fltc-button-'.$selectedVariant,
-            $selectedThemeMap[$theme] ?? $selectedThemeMap['gray'],
+            $selectedThemeMap[$theme] ?? $selectedThemeMap['slate'],
             $widthMap[$width] ?? $widthMap['fit'],
             $heightClasses,
             'cursor-pointer inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-semibold transition focus:outline-none focus:ring-2 focus:ring-offset-2 dark:focus:ring-offset-gray-900',

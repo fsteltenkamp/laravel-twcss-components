@@ -2,6 +2,7 @@
     'size' => 'base',
     'level' => 2,
     'glitch' => false,
+    'theme' => null,
 ])
 @php
     $sizes = [
@@ -15,8 +16,10 @@
     $tag = 'h' . (int) $level;
 
     // Primary Content role (see README "Color shades") so the heading flips in dark mode.
-    $classList = trim(($sizes[$size] ?? $sizes['base']) . ' font-semibold tracking-tight text-zinc-900 dark:text-white');
+    // Without a theme it keeps its original neutral zinc/white.
+    $colour = $theme ? \Fsteltenkamp\TwcssComponents\Support\Shades::primary($theme) : 'text-zinc-900 dark:text-white';
+    $classList = trim(($sizes[$size] ?? $sizes['base']) . ' font-semibold tracking-tight ' . $colour);
 @endphp
 {{-- `fltc-heading` is the neutral hook for skin stylesheets. `glitch` opts into a skin's
      glitch effect, which redraws the text from data-text (see skin-effects.css). --}}
-<{{ $tag }} {{ $attributes->class(['fltc-heading', 'fltc-glitch' => $glitch, $classList])->merge($glitch ? ['data-text' => trim(strip_tags($slot))] : []) }}>{{ $slot }}</{{ $tag }}>
+<{{ $tag }} {{ $attributes->class(['fltc-heading', 'fltc-theme-'.$theme => $theme, 'fltc-glitch' => $glitch, $classList])->merge($glitch ? ['data-text' => trim(strip_tags($slot))] : []) }}>{{ $slot }}</{{ $tag }}>

@@ -1,5 +1,6 @@
 @props([
     'size' => 'sm',
+    'theme' => null,
 ])
 @php
     $sizes = [
@@ -10,6 +11,8 @@
     ];
 
     // Tertiary Content role (see README "Color shades") — muted supporting copy.
-    $classList = trim(($sizes[$size] ?? $sizes['sm']) . ' text-zinc-500 dark:text-zinc-400');
+    // Without a theme it keeps its original neutral zinc.
+    $colour = $theme ? \Fsteltenkamp\TwcssComponents\Support\Shades::tertiary($theme) : 'text-zinc-500 dark:text-zinc-400';
+    $classList = trim(($sizes[$size] ?? $sizes['sm']) . ' ' . $colour);
 @endphp
-<p {{ $attributes->class(['fltc-subheading', $classList]) }}>{{ $slot }}</p>
+<p {{ $attributes->class(['fltc-subheading', 'fltc-theme-'.$theme => $theme, $classList]) }}>{{ $slot }}</p>

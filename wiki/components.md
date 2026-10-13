@@ -28,13 +28,20 @@ such as `resources/css/skin-effects.css` target them:
   `fltc-table-floating` for the floating variant), the stepper (`fltc-nav-stepper-panel` /
   `-tabs` / `-step`), the checklist (`fltc-form-checklist-list` / `-row` / `-track` / `-fill`)
   the segmented dark-mode toggle (`fltc-darkmode-toggle-group` / `-option`) and the sidebar
-  profile (`fltc-nav-sidebar-profile-trigger` / `-avatar` / `-menu`). The drawer tab
+  profile (`fltc-nav-sidebar-profile-trigger` / `-avatar` / `-menu`), the dropdown
+  (`fltc-dropdown-trigger` / `-menu`; items carry `fltc-dropdown-item`), the tabs
+  (`fltc-tabs-list`; `fltc-tabs-tab` with `aria-selected` for the active one), the pagination
+  summary (`fltc-nav-pagination-summary`) and the radio (`fltc-form-radio` on the `<input>`,
+  `fltc-form-radio-label`, `fltc-form-radio-group-legend`). The drawer tab
   and the tooltip bubble are teleported out of their component, so they repeat the
   `fltc-theme-*` class themselves.
 
 Class-backed components get them from `Fsteltenkamp\TwcssComponents\View\Component`, the base
 class every component extends; anonymous components add theirs in the view.
 `tests/HookClassesTest.php` fails when a component is missing its hooks.
+It also fails when `skin-effects.css` has no rules for a component's hook, unless the
+component is listed in `UNSKINNED_COMPONENTS` there (structural parts styled through their
+parent, layout wrappers) — so give a new component its skin effects, or list it on purpose.
 
 ### Supported Themes
 
@@ -115,6 +122,80 @@ gutter also grows by the width of a pinned drawer on that side and animates with
 - `onclick`: JavaScript prefix before legacy `util.stepperPreviousStep/NextStep` calls
 - `class`: extra wrapper classes
 
+**Tabs** (`x-fltc::tabs`, `x-fltc::tabs.tab`, `x-fltc::tabs.panel`): a tab strip and the
+panels it switches between. The tabs go in the `list` slot, the panels in the default slot;
+a tab and its panel share a `name`. Requires Alpine.
+
+```blade
+<x-fltc::tabs active="profile" theme="slate" wire:model="tab">
+    <x-slot:list>
+        <x-fltc::tabs.tab name="profile" icon="user">Profile</x-fltc::tabs.tab>
+        <x-fltc::tabs.tab name="security">Security</x-fltc::tabs.tab>
+        <x-fltc::tabs.tab name="billing" disabled>Billing</x-fltc::tabs.tab>
+    </x-slot:list>
+
+    <x-fltc::tabs.panel name="profile">…</x-fltc::tabs.panel>
+    <x-fltc::tabs.panel name="security">…</x-fltc::tabs.panel>
+</x-fltc::tabs>
+```
+
+- The active tab is Alpine state (`active`) and is `x-modelable`, so `x-model="…"` or
+  `wire:model="…"` on `x-fltc::tabs` binds it both ways
+- Arrow Left/Right moves between tabs; the strip is `role="tablist"` with matching
+  `aria-controls` / `aria-labelledby` ids
+
+`x-fltc::tabs` props:
+- `active`: initially active tab name. When set, the other panels render hidden, so the right
+  panel shows before Alpine starts; when empty, Alpine activates the first enabled tab and the
+  panels are `x-cloak`ed until then (the host needs the usual `[x-cloak] { display: none }`)
+- `theme`: full palette (default: slate) — inherited by the tabs
+- `id`: base for the tab and panel ids (random when omitted)
+
+`x-fltc::tabs.tab` props:
+- `name`: the panel it activates
+- `href`: render a link instead of a button (navigation tabs; panels are optional then). Mark
+  the current page with `current`
+- `current`: active state of a link tab
+- `disabled`
+- `icon`, `iconVariant`: Phosphor icon before the label
+- `theme`: overrides the inherited theme
+
+`x-fltc::tabs.panel` props: `name`. Panels get `pt-4`; pass `class` to change it.
+
+**Pagination** (`x-fltc::nav.pagination`): first / previous / page numbers / next / last
+buttons, plus a "Showing x–y of z" summary. Feed it a Laravel paginator, or integers:
+
+```blade
+{{-- a paginator: links to its URLs --}}
+<x-fltc::nav.pagination :paginator="$customers" theme="slate" />
+
+{{-- in a Livewire component (WithPagination): gotoPage() calls --}}
+<x-fltc::nav.pagination :paginator="$customers" livewire />
+
+{{-- or through the paginator's links(): --}}
+{{ $customers->links('fltc::pagination.livewire') }}   {{-- or 'fltc::pagination.links' --}}
+```
+
+To make it the default for a Livewire component, return the view from `paginationView()`:
+`public function paginationView() { return 'fltc::pagination.livewire'; }`.
+
+Props:
+- `paginator`: a `LengthAwarePaginator` (page numbers, first/last, total in the summary) or a
+  simple `Paginator` (previous/next only, no total). Cursor paginators are not supported.
+  With a single page only the summary renders
+- `livewire`: render `wire:click="gotoPage(n, 'pageName')"` buttons instead of links. Default:
+  false with a paginator, true without one
+- `showSummary`: show "Showing x–y of z" (default: true; paginator only). Translatable via the
+  `Showing` and `of` strings
+- `window`: page numbers shown either side of the current one (default: 2)
+- `theme`: full palette (default: slate) — buttons and summary. The current page is the one
+  solid button among outline ones
+- `accentTheme`: a different theme for the current page's button (default: `theme`)
+- `mainTheme`: the old name of `theme`, still accepted
+- Without a paginator: `currentPage`, `totalPages`, `start`, `end` (integers) — renders
+  `gotoPage(n)` buttons for a Livewire component, as before
+- `class` and passthrough attributes go on the root `<nav>`
+
 **Navbar** (`x-fltc::nav.navbar`): a horizontal top/bottom bar.
 - `theme`: full palette (default: slate) — shared with all navbar children (which inherit it unless given their own `theme`)
 - `containerClass`: inner container width/padding (default: `w-full px-4 sm:px-6 lg:px-8`)
@@ -192,10 +273,14 @@ roles so they flip cleanly in dark mode.
 - `level`: heading level `1`–`6`, renders the matching `<h1>`–`<h6>` tag (default: `2`)
 - `glitch`: opt into a skin's glitch effect (cyberpunk in `skin-effects.css`); copies the
   text into `data-text` for the effect layers. No visible change without such a skin
+- `theme`: full palette — the theme's Primary Content colour. Default: none, which keeps
+  the neutral zinc/white
 - `class`, `id`, etc.: passed through and merged
 
 **Subheading** (`x-fltc::subheading`): muted secondary line rendered as a `<p>`.
 - `size`: `xs`, `sm` (default), `base`, `lg`
+- `theme`: full palette — the theme's Tertiary Content colour. Default: none, which keeps
+  the neutral zinc
 
 ### Overlays
 
@@ -212,9 +297,63 @@ Props:
 - `open`: initial open state (default: false)
 - `maxWidth`: `sm`, `md`, `lg` (default), `xl`, `2xl`, `3xl`, `4xl`, `5xl`, `6xl`, `7xl`, `full`
 - `closeable`: allow closing via backdrop/Escape (default: true)
+- `theme`: full palette (default: slate) — panel surface, border and text, and the tint of
+  the dimmed backdrop. Pass the same `theme` to headings and buttons inside it
 
 The Alpine scope exposes a `close()` method, so any element inside the modal can close it
 with `x-on:click="close()"` (use this for a Cancel button — no separate close component needed).
+
+**Confirm modal** (`x-fltc::modal.confirm`): a modal with a title, an optional description and
+a Cancel button that closes it. The default slot holds the confirming action(s), rendered after
+Cancel.
+
+```blade
+<x-fltc::modal.confirm name="delete-post" title="Delete this post?" description="This cannot be undone." theme="slate">
+    <x-fltc::button theme="red" wire:click="delete">Delete</x-fltc::button>
+</x-fltc::modal.confirm>
+```
+
+Props: everything `x-fltc::modal` takes, plus
+- `title` (required), `description`
+- `theme`: full palette (default: slate) — the panel, title, description and Cancel button
+- `cancelTheme`: overrides the Cancel button's theme only (default: `theme`)
+- `cancelLabel`: Cancel button text (default: `__('Cancel')`)
+
+**Dropdown** (`x-fltc::dropdown` + `x-fltc::dropdown.item`): a menu that opens from any
+trigger — row actions, a user menu, a "more" button. Unlike `nav.navbar.dropdown` it is not
+tied to the navbar. Requires Alpine. Closes on an item click, a click outside and Escape;
+Arrow Down from the trigger opens it and Arrow Up/Down move between items.
+
+```blade
+<x-fltc::dropdown align="right">
+    <x-slot:trigger>
+        <x-fltc::button icon="dots-three" />
+    </x-slot:trigger>
+
+    <x-fltc::dropdown.item href="{{ route('posts.edit', $post) }}" icon="pencil-simple">Edit</x-fltc::dropdown.item>
+    <x-fltc::dropdown.item wire:click="duplicate({{ $post->id }})" icon="copy">Duplicate</x-fltc::dropdown.item>
+    <x-fltc::separator class="my-1" />
+    <x-fltc::dropdown.item href="{{ route('posts.destroy', $post) }}" method="delete" theme="red">Delete</x-fltc::dropdown.item>
+</x-fltc::dropdown>
+```
+
+`x-fltc::dropdown` props:
+- `theme`: full palette (default: slate) — menu surface; inherited by the items
+- `align`: `left` (default) or `right` — which trigger edge the menu lines up with
+- `position`: `bottom` (default) or `top` (opens upward)
+- `width`: `sm` (10rem), `md` (14rem, default), `lg` (18rem), `auto` (fits the content, at
+  least the trigger's width)
+
+Slots: `trigger` (required; any button or element — the wrapper handles the click), default
+(items; separate groups with `x-fltc::separator class="my-1"`).
+
+`x-fltc::dropdown.item` props:
+- `href`: renders a link. With `method` other than `get` it renders a form submit instead
+  (POST with `@csrf`, plus `@method` for PUT/PATCH/DELETE)
+- no `href`: renders a `<button type="button">` — use `wire:click` / `x-on:click`
+- `icon`, `iconVariant`: Phosphor icon before the label
+- `disabled`
+- `theme`: overrides the inherited theme (e.g. `red` for a destructive action)
 
 **Drawer** (`x-fltc::drawer`): a full-height side panel that slides in from the left or right
 screen edge. Requires Alpine (no Livewire needed); open and pinned state live in Alpine, so they
@@ -363,11 +502,18 @@ slate). The inputs pass their own `theme` to their label, so a label matches its
 Components:
 - `x-fltc::form.label`
 - `x-fltc::form.input.text`
-- `x-fltc::form.input.select`
-- `x-fltc::form.input.password`
+- `x-fltc::form.input.number`
+- `x-fltc::form.input.date`
+- `x-fltc::form.input.time`
+- `x-fltc::form.input.datetime`
 - `x-fltc::form.input.email`
+- `x-fltc::form.input.password`
+- `x-fltc::form.input.file`
+- `x-fltc::form.input.select`
 - `x-fltc::form.textarea`
 - `x-fltc::form.checkbox`
+- `x-fltc::form.radio`
+- `x-fltc::form.radio.group`
 - `x-fltc::form.otp`
 - `x-fltc::form.container.auth.simple`
 - `x-fltc::form.container.auth.two-col-left`
@@ -384,15 +530,64 @@ Common props:
 - `live`: use `wire:model.live` when true
 - `icon`: a Phosphor icon name (e.g. `user`, `envelope`) on the text/email/password/select inputs. Rendered internally through `x-fltc::icon` — the host app only needs the Phosphor icon stylesheet loaded.
 - `iconVariant`: Phosphor weight for the input icon (default: `regular`) — see Icon below
+- `theme`: full palette (default: slate)
+- `inline`: drop the wrapper's bottom margin (`mb-4`) so the field lines up in a flex row,
+  e.g. a filter bar with `flex items-end` (text-family inputs, select, file, textarea, radio group)
+- `wrapperClass`: classes for the wrapper `<div>` (label + field + error), e.g. `w-64` or
+  `flex-1` to size an inline field. `class` and other attributes go on the control itself
+
+```blade
+<div class="flex flex-wrap items-end gap-3">
+    <x-fltc::form.input.text label="Search" icon="magnifying-glass" wire:model.live="search" inline wrapperClass="w-64" />
+    <x-fltc::form.input.date label="Since" wire:model.live="since" inline />
+    <x-fltc::button icon="funnel">Filter</x-fltc::button>
+</div>
+```
+
+**Typed inputs**: `number`, `date`, `time`, `datetime` (`datetime-local`), `email` and
+`password` are `form.input.text` with a different `type` and take the same props. Type
+specific attributes (`min`, `max`, `step`, `inputmode`, `pattern`, …) pass through to the
+`<input>`. `form.input.text` also takes a `type` prop for any other type
+(`<x-fltc::form.input.text type="search" />`, `tel`, `url`, …) — use it rather than a `type`
+attribute, which the component used to duplicate.
+
+**File input** (`x-fltc::form.input.file`): a native file picker with a themed "Choose file"
+button. Props: `id`, `name`, `label`, `required`, `disabled`, `model`/`live` (Livewire file
+uploads with `WithFileUploads`), `theme`, `inline`, `wrapperClass`. `accept` and `multiple`
+pass through as attributes. For a multiple upload use `name="files[]"`; errors on
+`files` and `files.*` are both shown. (A drop-zone upload control is planned separately.)
+
+**Radio** (`x-fltc::form.radio`) and **Radio group** (`x-fltc::form.radio.group`): native
+radio buttons, coloured with the theme's accent colour. Inside a group the radios take the
+group's `name`, `model`, `live`, `required` and `theme` unless they set their own.
+
+```blade
+<x-fltc::form.radio.group name="plan" label="Plan" :value="$user->plan" horizontal>
+    <x-fltc::form.radio value="free" label="Free" />
+    <x-fltc::form.radio value="pro" label="Pro" />
+</x-fltc::form.radio.group>
+```
+
+Group props:
+- `name`, `label` (rendered as the `<legend>`), `required`
+- `value`: the selected option for plain forms; `old()` input wins after a failed validation
+- `model` / `live`: Livewire binding for every option (then `wire:model` decides the checked one)
+- `horizontal`: options in a wrapping row instead of a column
+- `theme`: full palette (default: slate); `inline`: no bottom margin
+- Shows the validation error for `name`
+
+Radio props: `value`, `label` (or the default slot), `id`, `checked` (overrides the group's
+`value`), `disabled`, plus `name`, `model`, `live`, `required`, `theme` to override the
+group. Attributes go on the `<input>`.
 
 **Checkbox** (`x-fltc::form.checkbox`): a CSS-only checkbox backed by a real
 `<input type="checkbox">`, so it works with plain forms and `wire:model` without any
 JavaScript. Two visual variants:
 - `variant="default"` (default): a bordered row that swaps `iconUnchecked` → `iconChecked`
   (Phosphor names) when checked. Props: `bordered` (default: true), `theme` (full palette,
-  default `sky`), `iconChecked`, `iconUnchecked`.
+  default `slate`), `iconChecked`, `iconUnchecked`.
 - `variant="toggle"`: a pill-style switch (the "darkmode toggle" look) with a sliding knob.
-  - `theme`: track color while **on** (checked) — full palette, default `sky`
+  - `theme`: track color while **on** (checked) — full palette, default `slate`
   - `themeOff`: track color while **off** (unchecked) — full palette, default `slate`
   - `size`: `sm`, `md` (default), or `lg` — sets track, knob and icon sizes
   - `iconChecked` / `iconUnchecked`: optional Phosphor icons shown inside the knob for the
@@ -452,7 +647,7 @@ Components:
 - `x-fltc::toast.container` — dynamic Alpine container; listens for `fltc:toast` events
 
 **Static toast** (`x-fltc::toast`): renders a single, self-dismissing toast in-place.
-- `theme`: full palette (default: `gray`)
+- `theme`: full palette (default: `slate`)
 - `variant`: `simple` (pill, default), `card` (rounded box with separate description row), `baguette` (wide solid-fill horizontal bar)
 - `message`: primary text (falls back to the default slot)
 - `description`: optional secondary line
@@ -464,7 +659,7 @@ Components:
 
 Props:
 - `position`: `top-left`, `top-center`, `top-right`, `bottom-left`, `bottom-center`, `bottom-right` (default: `bottom-right`)
-- `theme`: default theme applied to toasts that don't specify their own (default: `gray`)
+- `theme`: default theme applied to toasts that don't specify their own (default: `slate`)
 - `variant`: default variant for incoming toasts (default: `simple`)
 - `duration`: default auto-dismiss delay in ms (default: `4000`)
 - `width`: Tailwind width class for the container column (default: `w-80`; use `w-full max-w-2xl` for baguette-only setups)
@@ -503,6 +698,22 @@ Components:
 - `x-fltc::tooltip`
 - `x-fltc::icon`
 - `x-fltc::separator`
+- `x-fltc::spinner`
+
+**Spinner** (`x-fltc::spinner`): an animated loading indicator (SVG, `role="status"`).
+Attributes pass through, so it pairs with Livewire's loading states:
+
+```blade
+<x-fltc::button wire:click="save">
+    <x-fltc::spinner theme="current" size="sm" class="mr-2" wire:loading wire:target="save" />
+    Save
+</x-fltc::button>
+```
+
+- `theme`: full palette (default: slate; tertiary content shade), or `current` to take the
+  surrounding text colour (inside buttons)
+- `size`: `xs`, `sm`, `md` (default), `lg`, `xl`
+- `label`: accessible name (default: `__('Loading')`)
 
 **Separator** (`x-fltc::separator`): a thin divider rule.
 - `vertical`: render a vertical rule instead of horizontal (default: false)
@@ -534,7 +745,7 @@ Props:
 
 **Tooltip** props:
 - `text`: tooltip body content
-- `theme`: full palette (default: gray)
+- `theme`: full palette (default: slate)
 - `class`: extra wrapper classes
 
 Use tooltip for short helper text around interactive elements. Keep content brief and non-essential.
@@ -549,9 +760,9 @@ and state is re-applied after `livewire:navigated`. Two variants:
   **System** — with the active segment highlighted.
   - `theme`: accent colour of the whole control — the track background plus the active
     segment fill and the muted/hover text of the inactive segments (full palette, default
-    `sky`)
+    `slate`)
 - `variant="toggle"`: the classic pill switch, built on the
   `x-fltc::form.checkbox` toggle (checked = dark). Forwards:
-  - `theme`: track colour while dark/on (full palette, default `sky`)
+  - `theme`: track colour while dark/on (full palette, default `slate`)
   - `themeOff`: track colour while light/off (full palette, default `slate`)
   - `size`: `sm`, `md` (default), or `lg`

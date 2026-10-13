@@ -92,6 +92,6 @@
 
     <x-fltc::card.footer :theme="$theme" class="flex flex-col items-center justify-between gap-3 sm:flex-row">
         <span class="text-xs opacity-70">Showing 1–5 of 128</span>
-        <x-fltc::nav.pagination :currentPage="1" :totalPages="26" :start="1" :end="5" mainTheme="slate" :accentTheme="$theme" />
+        <x-fltc::nav.pagination :currentPage="1" :totalPages="26" :start="1" :end="5" theme="slate" :accentTheme="$theme" />
     </x-fltc::card.footer>
 </x-fltc::card>

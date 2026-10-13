@@ -15,7 +15,7 @@ class Toast extends Component
     public string $descClasses;
 
     public function __construct(
-        public string $theme = 'gray',
+        public string $theme = 'slate',
         public string $variant = 'toast',
         public string $title = '',
         public ?string $message = null,
@@ -24,7 +24,7 @@ class Toast extends Component
         public bool $dismissible = true,
     ) {
         $map   = static::themeMap();
-        $entry = $map[$this->theme][$this->variant] ?? $map['gray']['toast'];
+        $entry = $map[$this->theme][$this->variant] ?? $map['slate']['toast'];
 
         $this->classList    = $entry['wrapper'];
         $this->borderClasses = $entry['border'];

@@ -380,8 +380,8 @@ abstract class TableBase extends Component
     /**
      * Get theme colors for the specified theme name
      */
-    protected function getThemeColors(string $theme = 'gray'): array
+    protected function getThemeColors(string $theme = 'slate'): array
     {
-        return $this->themeMap[$theme] ?? $this->themeMap['gray'];
+        return $this->themeMap[$theme] ?? $this->themeMap['slate'];
     }
 }

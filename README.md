@@ -22,11 +22,14 @@ files or component styling will be silently missing from the compiled CSS.
 ```css
 @source '../../vendor/fsteltenkamp/laravel-twcss-components/resources/views/components/';
 @source '../../vendor/fsteltenkamp/laravel-twcss-components/src/View/Components/';
+@source '../../vendor/fsteltenkamp/laravel-twcss-components/src/Support/';
 ```
 
-(Paths are relative to the CSS file; adjust for your app's directory layout.) Both paths
-are needed — the Blade views hold most of the class strings, while class-backed
-components (e.g. `Button.php`, `TableBase.php`) build parts of their `classList` in PHP.
+(Paths are relative to the CSS file; adjust for your app's directory layout.) All three
+paths are needed — the Blade views hold most of the class strings, class-backed
+components (e.g. `Button.php`, `TableBase.php`) build parts of their `classList` in PHP,
+and `src/Support/` (`Shades.php`, `SidebarTheme.php`, `DrawerTheme.php`) holds the
+shared role colours several components pull in.
 
 **Tailwind v3** (`tailwind.config.js`) — add the same paths to `content`:
 
@@ -35,6 +38,7 @@ content: [
     // ...
     './vendor/fsteltenkamp/laravel-twcss-components/resources/views/components/**/*.blade.php',
     './vendor/fsteltenkamp/laravel-twcss-components/src/View/Components/**/*.php',
+    './vendor/fsteltenkamp/laravel-twcss-components/src/Support/**/*.php',
 ],
 ```
 

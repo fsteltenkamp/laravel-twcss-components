@@ -19,7 +19,7 @@ class Table extends TableBase
     public string $hoverClasses;
 
     public function __construct(
-        public string $theme = 'gray',
+        public string $theme = 'slate',
         ?string $color = null,
         public string $radius = 'xl',
         public bool $striped = false,

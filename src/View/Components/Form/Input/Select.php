@@ -10,6 +10,7 @@ class Select extends Input
 {
     public string $normalClasses;
     public string $errorClasses;
+    public string $wrapperClasses;
 
     public function __construct(
         public string $id = '',
@@ -20,11 +21,13 @@ class Select extends Input
         public string $placeholder = '',
         public bool $required = false,
         public bool $disabled = false,
-        public string $theme = 'sky',
+        public string $theme = 'slate',
         public string $class = '',
         public string $label = '',
         public string $icon = '',
         public string $iconVariant = 'regular',
+        public bool $inline = false,
+        public string $wrapperClass = '',
     ) {
         if ($this->name === '') {
             $this->name = $this->id;
@@ -32,6 +35,7 @@ class Select extends Input
 
         $this->normalClasses = $this->getNormalClasses($theme, $class);
         $this->errorClasses = $this->getErrorClasses($class);
+        $this->wrapperClasses = $this->getWrapperClasses($inline, $wrapperClass);
 
         if (empty($id)) {
             $this->id = 'select-' . uniqid();

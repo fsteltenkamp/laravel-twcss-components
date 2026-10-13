@@ -3,7 +3,7 @@
     $hasError = $fieldName !== '' && $errors->has($fieldName);
 @endphp
 
-<div class="mb-4">
+<div @class([$wrapperClasses])>
     @if ($label !== '')
         <x-fltc::form.label :for="$id" :required="$required" :theme="$theme">
             {{ $label }}
@@ -29,7 +29,6 @@
             @if ($placeholder !== '')
                 <option value="" disabled selected>{{ $placeholder }}</option>
             @endif
-            <option>----- Bitte Wählen -----</option>
             {{ $slot }}
         </select>
         @if ($icon !== '')
