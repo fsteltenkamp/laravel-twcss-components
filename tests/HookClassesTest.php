@@ -193,3 +193,24 @@ it('styles the part hooks of the newer components', function () {
     expect(Blade::render('<x-fltc::form.radio.group label="L"><x-fltc::form.radio value="a" label="A" /></x-fltc::form.radio.group>'))
         ->toContain('fltc-form-radio-group-legend')->toContain('fltc-form-radio-label');
 });
+
+it('puts the theme hook on the body so page effects apply', function () {
+    expect(Blade::render('<x-fltc::body theme="cyberpunk">x</x-fltc::body>'))->toMatch('/<body class="[^"]*fltc-body fltc-theme-cyberpunk/');
+});
+
+it('lets data-skin-shape="all" style every themed component, keeping colour themes', function () {
+    $css = file_get_contents(__DIR__.'/../resources/css/skin-effects.css');
+
+    // Every skin rule lists the opt-in region next to theme="skin".
+    preg_match_all('/\[data-skin="([a-z0-9]+)"\] \.fltc-theme-skin(, \[data-skin="\1"\]:where\(\[data-skin-shape="all"\]\))?/', $css, $m);
+    expect($m[0])->not->toBeEmpty();
+    foreach ($m[2] as $i => $alt) {
+        expect($alt)->not->toBe('', "{$m[0][$i]} misses the data-skin-shape alternative");
+    }
+
+    // Every palette theme in skins.css has colour roles, in light and dark mode.
+    preg_match_all('/\[data-skin="([a-z]+)"\]/', file_get_contents(__DIR__.'/../resources/css/skins.css'), $skins);
+    foreach (array_diff($skins[1], ['cyberpunk', 'fantasy', 'wh40k']) as $theme) {
+        expect(substr_count($css, ".fltc-theme-{$theme}:not(.fltc-body),\n"))->toBe(2, "{$theme} needs light and dark colour roles");
+    }
+});

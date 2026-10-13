@@ -850,6 +850,22 @@ it('themes the modal panel and backdrop', function () {
     expect(Blade::render('<x-fltc::modal name="m">x</x-fltc::modal>'))->toContain('border-slate-200')->toContain('bg-slate-950/50');
 });
 
+it('teleports the modal overlay to the body unless told not to', function () {
+    $html = Blade::render('<x-fltc::modal name="m" theme="rose" id="m1" class="z-[60]" x-on:close="done = true">x</x-fltc::modal>');
+
+    // Attributes stay on the wrapper, which holds the Alpine scope that dispatches
+    // `close`; classes and hooks travel with the overlay, so skin selectors still match.
+    expect($html)
+        ->toMatch('/<div[^>]*id="m1"[^>]*>\s*<template x-teleport="body">/')
+        ->toContain('x-on:close="done = true"')
+        ->toMatch('/<template x-teleport="body">\s*<div[^>]*class="fltc-modal fltc-theme-rose z-\[60\] fixed inset-0/')
+        ->toContain("region('data-skin')");
+
+    expect(Blade::render('<x-fltc::modal name="m" :teleport="false">x</x-fltc::modal>'))->not->toContain('x-teleport')
+        ->and(Blade::render('<x-fltc::modal.confirm name="c" title="Sure?" :teleport="false">x</x-fltc::modal.confirm>'))->not->toContain('x-teleport')
+        ->and(Blade::render('<x-fltc::modal.confirm name="c" title="Sure?">x</x-fltc::modal.confirm>'))->toContain('x-teleport="body"');
+});
+
 it('passes the confirm modal theme to its panel, title and description', function () {
     $html = Blade::render('<x-fltc::modal.confirm name="c" title="Sure?" description="Really." theme="rose">x</x-fltc::modal.confirm>');
 

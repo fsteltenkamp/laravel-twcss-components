@@ -13,36 +13,51 @@
         }
     }
 @endphp
+{{--
+    The wrapper stays where the modal is written and holds the Alpine state and the
+    host's attributes (wire:*, x-on:close, id), so events dispatched by close() reach
+    them. The overlay is teleported to <body>, out of any transformed or clipped
+    ancestor, and carries the classes (host classes and fltc-* hooks) and the
+    data-skin of the region the modal was written in.
+--}}
 <div
     @if ($wireModel)
-        x-data="{ open: @entangle($wireModel), close() { if (! {{ $closeable ? 'true' : 'false' }}) return; this.open = false; this.$dispatch('close'); } }"
+        x-data="{ open: @entangle($wireModel), close() { if (! {{ $closeable ? 'true' : 'false' }}) return; this.open = false; this.$dispatch('close'); }, region(attr) { const r = this.$root.closest('[data-skin]'); return r && r !== document.documentElement ? r.getAttribute(attr) : null; } }"
     @else
-        x-data="{ open: @js((bool) $open), close() { if (! {{ $closeable ? 'true' : 'false' }}) return; this.open = false; this.$dispatch('close'); } }"
+        x-data="{ open: @js((bool) $open), close() { if (! {{ $closeable ? 'true' : 'false' }}) return; this.open = false; this.$dispatch('close'); }, region(attr) { const r = this.$root.closest('[data-skin]'); return r && r !== document.documentElement ? r.getAttribute(attr) : null; } }"
     @endif
     @if ($name)
         x-on:open-modal.window="if ([$event.detail, $event.detail?.name].includes('{{ $name }}')) open = true"
         x-on:close-modal.window="if ([$event.detail, $event.detail?.name].includes('{{ $name }}')) close()"
     @endif
     x-on:keydown.escape.window="if (open) close()"
-    x-show="open"
-    x-cloak
-    style="display: none;"
-    {{ $attributes->whereDoesntStartWith('wire:model')->class('fixed inset-0 z-50 flex items-center justify-center p-4') }}
+    {{ $attributes->whereDoesntStartWith('wire:model')->except('class') }}
 >
-    <div
-        class="fltc-modal-backdrop {{ $backdropClasses }}"
-        x-show="open"
-        x-transition.opacity
-        x-on:click="close()"
-    ></div>
-
+    @if ($teleport)<template x-teleport="body">@endif
     <div
         x-show="open"
-        x-transition
-        role="dialog"
-        aria-modal="true"
-        class="fltc-modal-panel {{ $panelClasses }}"
+        x-cloak
+        style="display: none;"
+        x-bind:data-skin="open && region('data-skin')"
+        x-bind:data-skin-shape="open && region('data-skin-shape')"
+        class="{{ $attributes->get('class') }} fixed inset-0 z-50 flex items-center justify-center p-4"
     >
-        {{ $slot }}
+        <div
+            class="fltc-modal-backdrop {{ $backdropClasses }}"
+            x-show="open"
+            x-transition.opacity
+            x-on:click="close()"
+        ></div>
+
+        <div
+            x-show="open"
+            x-transition
+            role="dialog"
+            aria-modal="true"
+            class="fltc-modal-panel {{ $panelClasses }}"
+        >
+            {{ $slot }}
+        </div>
     </div>
+    @if ($teleport)</template>@endif
 </div>

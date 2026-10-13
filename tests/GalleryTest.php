@@ -54,6 +54,8 @@ function galleryGroups(): array
                 ['outline', '<x-fltc::button theme="skin" variant="outline">Delete</x-fltc::button>'],
                 ['disabled', '<x-fltc::button theme="skin" disabled>Disabled</x-fltc::button>'],
                 ['with icon', '<x-fltc::button theme="skin" icon="floppy-disk">Save</x-fltc::button> <x-fltc::button theme="skin" icon="arrow-right" iconPosition="after">Next</x-fltc::button> <x-fltc::button theme="skin" icon="trash" />'],
+                // Fixed colours on purpose: with "Shape every theme" on, they take the skin's shape in their own colour.
+                ['colour themes', '<x-fltc::button theme="green" icon="check">Approve</x-fltc::button> <x-fltc::button theme="red" icon="x">Reject</x-fltc::button> <x-fltc::button theme="green" variant="outline">Draft</x-fltc::button> <x-fltc::button theme="red" variant="outline">Discard</x-fltc::button>'],
             ],
             'Button link' => [
                 ['default', '<x-fltc::button.link href="#" theme="skin">Go somewhere</x-fltc::button.link>'],
@@ -164,6 +166,14 @@ request id 7f3a9c</x-slot:details>
     <x-fltc::card.header class="px-4 py-3 font-semibold border-b border-skin-200 dark:border-skin-900">Deployment</x-fltc::card.header>
     <x-fltc::card.body class="p-4">Sections inherit the card theme automatically.</x-fltc::card.body>
 </x-fltc::card>'],
+                // Fixed colours on purpose, like the button demo: shown under "Shape every theme".
+                ['colour themes', '<div class="grid gap-4 sm:grid-cols-2"><x-fltc::card theme="green">
+    <x-fltc::card.header class="px-4 py-3 font-semibold">Paid</x-fltc::card.header>
+    <x-fltc::card.body class="p-4 space-y-3"><p>A green card.</p><x-fltc::button theme="skin">Skin button</x-fltc::button></x-fltc::card.body>
+</x-fltc::card><x-fltc::card theme="red">
+    <x-fltc::card.header class="px-4 py-3 font-semibold">Overdue</x-fltc::card.header>
+    <x-fltc::card.body class="p-4 space-y-3"><p>A red card.</p><x-fltc::button theme="red" variant="outline">Remind</x-fltc::button></x-fltc::card.body>
+</x-fltc::card></div>'],
             ],
             'Card content' => [
                 ['header + body only', '<x-fltc::card theme="skin" class="max-w-sm">
@@ -195,6 +205,28 @@ request id 7f3a9c</x-slot:details>
             'Table' => [
                 ['default (bordered grid)', tableExample(false)],
                 ['floating', tableExample(true)],
+                ['with form controls', '<x-fltc::table theme="skin" class="max-w-2xl">
+    <x-fltc::table.head>
+        <x-fltc::table.row>
+            <x-fltc::table.cell as="th">Item</x-fltc::table.cell>
+            <x-fltc::table.cell as="th">Qty</x-fltc::table.cell>
+            <x-fltc::table.cell as="th">Unit</x-fltc::table.cell>
+            <x-fltc::table.cell as="th"></x-fltc::table.cell>
+        </x-fltc::table.row>
+    </x-fltc::table.head>
+    <x-fltc::table.row>
+        <x-fltc::table.cell><x-fltc::form.input.text theme="skin" id="gallery-row-1" value="Consulting" /></x-fltc::table.cell>
+        <x-fltc::table.cell><x-fltc::form.input.number theme="skin" id="gallery-qty-1" value="3" /></x-fltc::table.cell>
+        <x-fltc::table.cell><x-fltc::form.input.select theme="skin" id="gallery-unit-1"><option value="h">hours</option><option value="d">days</option></x-fltc::form.input.select></x-fltc::table.cell>
+        <x-fltc::table.cell><x-fltc::button theme="red" icon="trash" /></x-fltc::table.cell>
+    </x-fltc::table.row>
+    <x-fltc::table.row>
+        <x-fltc::table.cell><x-fltc::form.input.text theme="skin" id="gallery-row-2" value="Travel" /></x-fltc::table.cell>
+        <x-fltc::table.cell><x-fltc::form.input.number theme="skin" id="gallery-qty-2" value="1" /></x-fltc::table.cell>
+        <x-fltc::table.cell><x-fltc::form.input.select theme="skin" id="gallery-unit-2"><option value="h">hours</option><option value="d">days</option></x-fltc::form.input.select></x-fltc::table.cell>
+        <x-fltc::table.cell><x-fltc::button theme="green" icon="plus" /></x-fltc::table.cell>
+    </x-fltc::table.row>
+</x-fltc::table>'],
             ],
         ],
 
@@ -524,6 +556,7 @@ request id 7f3a9c</x-slot:details>
             ],
             'Container box' => [
                 ['default', '<x-fltc::container.box theme="skin" class="p-4 max-w-sm">Boxed content.</x-fltc::container.box>'],
+                ['colour themes', '<div class="flex flex-wrap gap-4"><x-fltc::container.box theme="green" class="p-4">Green box.</x-fltc::container.box><x-fltc::container.box theme="red" class="p-4">Red box.</x-fltc::container.box></div>'],
             ],
         ],
     ];
@@ -740,6 +773,9 @@ function renderGalleryHtml(array $groups): string
                     <x-fltc::form.checkbox theme="skin" themeOff="skin" variant="toggle" id="gallery-fx" label="Fonts, rounding and glow" checked
                         onchange="document.getElementById('fltc-fx').disabled = ! this.checked; try { localStorage.setItem('fltc-gallery-fx', this.checked ? 'on' : 'off'); } catch (e) {}" />
                     <x-fltc::text theme="skin" class="block text-xs opacity-75">Fonts, rounding and glow for cyberpunk, fantasy and wh40k; no change for other themes.</x-fltc::text>
+                    <x-fltc::form.checkbox theme="skin" themeOff="skin" variant="toggle" id="gallery-shape" label="Shape every theme"
+                        onchange="if (this.checked) { document.documentElement.dataset.skinShape = 'all'; } else { delete document.documentElement.dataset.skinShape; } try { localStorage.setItem('fltc-gallery-shape', this.checked ? 'all' : ''); } catch (e) {}" />
+                    <x-fltc::text theme="skin" class="block text-xs opacity-75">Sets data-skin-shape="all": components in colour themes (e.g. the green and red buttons) get the skin's look too, in their own colour.</x-fltc::text>
                 </div>
             </div>
         </x-fltc::drawer>
@@ -792,6 +828,7 @@ function renderGalleryHtml(array $groups): string
             <link id="fltc-fx" rel="stylesheet" href="resources/css/skin-effects.css">
             <script>
                 try { document.getElementById('fltc-fx').disabled = localStorage.getItem('fltc-gallery-fx') === 'off'; } catch (e) {}
+                try { if (localStorage.getItem('fltc-gallery-shape') === 'all') document.documentElement.dataset.skinShape = 'all'; } catch (e) {}
             </script>
             <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3/dist/cdn.min.js"></script>
             <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
@@ -808,6 +845,7 @@ function renderGalleryHtml(array $groups): string
             {$contents}
             <script>
                 document.getElementById('gallery-fx').checked = ! document.getElementById('fltc-fx').disabled;
+                document.getElementById('gallery-shape').checked = document.documentElement.dataset.skinShape === 'all';
             </script>
             <main class="py-8">
                 {$main}

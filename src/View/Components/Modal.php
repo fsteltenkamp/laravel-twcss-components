@@ -10,7 +10,8 @@ use Illuminate\Contracts\View\View;
 /**
  * Alpine dialog with a dimmed backdrop. Open state comes from wire:model, the
  * open-modal / close-modal events (by `name`) or the initial `open` prop; the view
- * reads wire:model off the attribute bag.
+ * reads wire:model off the attribute bag. The overlay is teleported to <body> unless
+ * `teleport` is false.
  */
 class Modal extends Component
 {
@@ -23,6 +24,7 @@ class Modal extends Component
         public string $maxWidth = 'lg',
         public bool $closeable = true,
         public string $theme = 'slate',
+        public bool $teleport = true,
     ) {
         $widthMap = [
             'sm'   => 'max-w-sm',

@@ -313,6 +313,14 @@ Props:
 - `closeable`: allow closing via backdrop/Escape (default: true)
 - `theme`: full palette (default: slate) — panel surface, border and text, and the tint of
   the dimmed backdrop. Pass the same `theme` to headings and buttons inside it
+- `teleport`: move the overlay to `<body>` (default: true), so a transformed, filtered or
+  clipped ancestor can't trap it. Pass `:teleport="false"` to render it in place
+
+The overlay is teleported, but the modal's wrapper stays where it is written: it holds the
+Alpine scope and the host's attributes (`id`, `wire:*`, `@close`), while `class` and the
+`fltc-*` hooks go on the overlay. A modal inside a `data-skin` region (other than `<html>`)
+copies that region's `data-skin` and `data-skin-shape` onto the overlay when it opens, so
+`theme="skin"` keeps working after the move.
 
 The Alpine scope exposes a `close()` method, so any element inside the modal can close it
 with `x-on:click="close()"` (use this for a Cancel button — no separate close component needed).
@@ -332,6 +340,7 @@ Props: everything `x-fltc::modal` takes, plus
 - `theme`: full palette (default: slate) — the panel, title, description and Cancel button
 - `cancelTheme`: overrides the Cancel button's theme only (default: `theme`)
 - `cancelLabel`: Cancel button text (default: `__('Cancel')`)
+- `teleport`: as on `x-fltc::modal` (default: true)
 
 **Dropdown** (`x-fltc::dropdown` + `x-fltc::dropdown.item`): a menu that opens from any
 trigger — row actions, a user menu, a "more" button. Unlike `nav.navbar.dropdown` it is not

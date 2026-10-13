@@ -10,7 +10,7 @@ class Body extends Component
 {
     public string $classList;
 
-    public function __construct(string $theme = 'slate')
+    public function __construct(public string $theme = 'slate')
     {
         $themeMap = [
             'slate'   => 'bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100',

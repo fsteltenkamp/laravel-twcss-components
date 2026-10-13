@@ -206,6 +206,21 @@ A component gets the effects when it is rendered with one of the three themes
 font, background, scanlines) apply under `data-skin`, or on `<x-fltc::body>` with one of the
 themes. Text glow shows in dark mode only.
 
+To give every component the look, not just `theme="skin"` ones, add `data-skin-shape="all"`
+next to `data-skin`:
+
+```html
+<html data-skin="cyberpunk" data-skin-shape="all">
+```
+
+Components in a colour theme then get the skin's shapes, fonts and controls in their own
+colour: `<x-fltc::button theme="green">` becomes a cyberpunk button with green lines that
+fills green on hover, and `<x-fltc::card theme="red">` a cut-corner card with red lines and
+glow (shades 600/700/500, 400/300/500 in dark mode). Children inherit that colour, as they
+inherit a parent's theme, except children with `theme="skin"`, which keep the skin's own
+colours. The body's theme does not recolour the page. It is opt-in because it also
+restyles components that use the default `slate` theme.
+
 The effects target the neutral hook classes every component carries (`fltc-<tag>`,
 `fltc-theme-<theme>`, see the [wiki](wiki/components.md#hook-classes)), so a host can write its
 own skin the same way. The rules are not in a cascade layer: while a skin is active they win
