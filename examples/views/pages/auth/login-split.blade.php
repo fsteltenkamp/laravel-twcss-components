@@ -1,12 +1,12 @@
 {{-- Login — Split variant: a marketing panel beside the form (panel hides on mobile). --}}
 @php($theme = 'indigo')
 
-<x-ex::layout title="Sign in" theme="slate">
+<x-ex::layout title="Sign in" color="slate">
     <div class="relative flex min-h-screen items-center justify-center px-4 py-12">
         <div class="absolute right-4 top-4"><x-fltc::darkmode.toggle /></div>
 
         <div class="w-full max-w-4xl">
-            <x-fltc::form.container.auth.two-col-right :theme="$theme">
+            <x-fltc::form.container.auth.two-col-right :color="$theme">
                 {{-- Decorative / marketing side (left) --}}
                 <x-slot:side>
                     <div class="flex h-full flex-col">
@@ -39,17 +39,17 @@
 
                     <form class="mt-6">
                         <x-fltc::form.input.email id="email" label="Email address" placeholder="you@example.com"
-                            icon="envelope" autocomplete="email" :theme="$theme" required autofocus />
+                            icon="envelope" autocomplete="email" :color="$theme" required autofocus />
 
                         <x-fltc::form.input.password id="password" label="Password" placeholder="••••••••"
-                            icon="lock" autocomplete="current-password" :theme="$theme" required />
+                            icon="lock" autocomplete="current-password" :color="$theme" required />
 
                         <div class="mb-4 flex items-center justify-between">
-                            <x-fltc::form.checkbox id="remember" label="Remember me" :theme="$theme" :bordered="false" class="!px-0" />
+                            <x-fltc::form.checkbox id="remember" label="Remember me" :color="$theme" :bordered="false" class="!px-0" />
                             <a href="#" class="text-sm font-medium text-{{ $theme }}-600 hover:underline dark:text-{{ $theme }}-400">Forgot password?</a>
                         </div>
 
-                        <x-fltc::button :theme="$theme" width="full" type="submit">Sign in</x-fltc::button>
+                        <x-fltc::button :color="$theme" width="full" type="submit">Sign in</x-fltc::button>
                     </form>
 
                     <p class="mt-6 text-sm opacity-70">

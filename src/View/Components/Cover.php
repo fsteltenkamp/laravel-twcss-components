@@ -24,7 +24,7 @@ class Cover extends Component
         public string $fallback = 'NO COVER',
         public string $fallbackIcon = 'image',
         public string $size = 'full',
-        public string $theme = 'slate',
+        public string $color = 'base',
     ) {
         // Literal aspect classes for the common ratios; any other "w/h" goes inline.
         $ratioMap = [
@@ -72,10 +72,14 @@ class Cover extends Component
             'mauve'     => 'border-mauve-200 bg-mauve-100 text-mauve-400 dark:border-mauve-700 dark:bg-mauve-800 dark:text-mauve-500',
             'mist'      => 'border-mist-200 bg-mist-100 text-mist-400 dark:border-mist-700 dark:bg-mist-800 dark:text-mist-500',
             'olive'     => 'border-olive-200 bg-olive-100 text-olive-400 dark:border-olive-700 dark:bg-olive-800 dark:text-olive-500',
-            'palette'      => 'border-palette-200 bg-palette-100 text-palette-400 dark:border-palette-700 dark:bg-palette-800 dark:text-palette-500',
-            'cyberpunk' => 'border-cyberpunk-200 bg-cyberpunk-100 text-cyberpunk-400 dark:border-cyberpunk-700 dark:bg-cyberpunk-800 dark:text-cyberpunk-500',
-            'fantasy'   => 'border-fantasy-200 bg-fantasy-100 text-fantasy-400 dark:border-fantasy-700 dark:bg-fantasy-800 dark:text-fantasy-500',
-            'wh40k'     => 'border-wh40k-200 bg-wh40k-100 text-wh40k-400 dark:border-wh40k-700 dark:bg-wh40k-800 dark:text-wh40k-500',
+            'primary'      => 'border-primary-200 bg-primary-100 text-primary-400 dark:border-primary-700 dark:bg-primary-800 dark:text-primary-500',
+            'secondary'    => 'border-secondary-200 bg-secondary-100 text-secondary-400 dark:border-secondary-700 dark:bg-secondary-800 dark:text-secondary-500',
+            'accent'       => 'border-accent-200 bg-accent-100 text-accent-400 dark:border-accent-700 dark:bg-accent-800 dark:text-accent-500',
+            'base'         => 'border-base-200 bg-base-100 text-base-400 dark:border-base-700 dark:bg-base-800 dark:text-base-500',
+            'info'         => 'border-info-200 bg-info-100 text-info-400 dark:border-info-700 dark:bg-info-800 dark:text-info-500',
+            'success'      => 'border-success-200 bg-success-100 text-success-400 dark:border-success-700 dark:bg-success-800 dark:text-success-500',
+            'warning'      => 'border-warning-200 bg-warning-100 text-warning-400 dark:border-warning-700 dark:bg-warning-800 dark:text-warning-500',
+            'danger'       => 'border-danger-200 bg-danger-100 text-danger-400 dark:border-danger-700 dark:bg-danger-800 dark:text-danger-500',
         ];
 
         if (! isset($ratioMap[$ratio]) && preg_match('/^\d+(\.\d+)?\/\d+(\.\d+)?$/', $ratio)) {
@@ -88,7 +92,7 @@ class Cover extends Component
             $sizeMap[$size] ?? $sizeMap['full'],
         ]));
 
-        $this->fallbackClasses = 'absolute inset-0 flex flex-col items-center justify-center gap-1 border p-2 text-center [&[hidden]]:hidden '.($fallbackMap[$theme] ?? $fallbackMap['slate']);
+        $this->fallbackClasses = 'absolute inset-0 flex flex-col items-center justify-center gap-1 border p-2 text-center [&[hidden]]:hidden '.($fallbackMap[$color] ?? $fallbackMap['base']);
     }
 
     public function render(): View|Closure|string

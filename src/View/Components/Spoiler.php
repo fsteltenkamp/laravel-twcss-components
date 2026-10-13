@@ -28,7 +28,7 @@ class Spoiler extends Component
         public string $reveal = 'click',
         public string $title = '',
         public string $buttonLabel = '',
-        public string $theme = 'slate',
+        public string $color = 'base',
     ) {
         $this->variant = $variant === 'gate' ? 'gate' : 'inline';
         $this->reveal = $reveal === 'hover' ? 'hover' : 'click';
@@ -36,16 +36,16 @@ class Spoiler extends Component
         if ($this->variant === 'inline') {
             $this->classList = 'rounded px-0.5 transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-current';
             // Hidden: a solid bar in the theme's fill colour, text and children invisible.
-            $this->hiddenClasses = 'cursor-pointer select-none text-transparent [&_*]:invisible '.Shades::fill($theme);
-            $this->shownClasses = Shades::track($theme);
+            $this->hiddenClasses = 'cursor-pointer select-none text-transparent [&_*]:invisible '.Shades::fill($color);
+            $this->shownClasses = Shades::track($color);
         } else {
-            $this->classList = 'relative block overflow-hidden rounded-lg border '.SidebarTheme::divider($theme);
+            $this->classList = 'relative block overflow-hidden rounded-lg border '.SidebarTheme::divider($color);
             $this->hiddenClasses = 'pointer-events-none select-none blur-md';
             $this->shownClasses = '';
         }
 
         $this->overlayClasses = 'absolute inset-0 z-10 flex flex-col items-center justify-center gap-3 bg-white/50 p-6 text-center backdrop-blur-sm dark:bg-black/40';
-        $this->messageClasses = 'max-w-md text-sm '.Shades::primary($theme);
+        $this->messageClasses = 'max-w-md text-sm '.Shades::primary($color);
 
         if ($this->title === '' && $this->variant === 'gate') {
             $this->title = __('Spoiler');

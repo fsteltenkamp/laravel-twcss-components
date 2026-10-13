@@ -17,11 +17,11 @@ class Dropdown extends Component
      */
     public function __construct(
         public string $class = '',
-        ?string $theme = null,
+        ?string $color = null,
         public bool $hover = false,
     ) {
-        $this->resolvedTheme = $theme ?? (app('view')->getShared()['navbarTheme'] ?? 'slate');
-        $this->hookTheme = $this->resolvedTheme;
+        $this->resolvedTheme = $color ?? (app('view')->getShared()['navbarColor'] ?? 'base');
+        $this->hookColor = $this->resolvedTheme;
 
         $buttonThemeMap = [
             'slate'   => 'text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800 focus-visible:bg-slate-100 focus-visible:ring-slate-400 dark:focus-visible:bg-slate-800 dark:focus-visible:ring-slate-600',
@@ -50,10 +50,14 @@ class Dropdown extends Component
             'mauve'   => 'text-mauve-700 hover:bg-mauve-100 dark:text-mauve-200 dark:hover:bg-mauve-800 focus-visible:bg-mauve-100 focus-visible:ring-mauve-400 dark:focus-visible:bg-mauve-800 dark:focus-visible:ring-mauve-600',
             'mist'    => 'text-mist-700 hover:bg-mist-100 dark:text-mist-200 dark:hover:bg-mist-800 focus-visible:bg-mist-100 focus-visible:ring-mist-400 dark:focus-visible:bg-mist-800 dark:focus-visible:ring-mist-600',
             'olive'   => 'text-olive-700 hover:bg-olive-100 dark:text-olive-200 dark:hover:bg-olive-800 focus-visible:bg-olive-100 focus-visible:ring-olive-400 dark:focus-visible:bg-olive-800 dark:focus-visible:ring-olive-600',
-            'palette'    => 'text-palette-700 hover:bg-palette-100 dark:text-palette-200 dark:hover:bg-palette-800 focus-visible:bg-palette-100 focus-visible:ring-palette-400 dark:focus-visible:bg-palette-800 dark:focus-visible:ring-palette-600',
-            'cyberpunk' => 'text-cyberpunk-700 hover:bg-cyberpunk-100 dark:text-cyberpunk-200 dark:hover:bg-cyberpunk-800 focus-visible:bg-cyberpunk-100 focus-visible:ring-cyberpunk-400 dark:focus-visible:bg-cyberpunk-800 dark:focus-visible:ring-cyberpunk-600',
-            'fantasy' => 'text-fantasy-700 hover:bg-fantasy-100 dark:text-fantasy-200 dark:hover:bg-fantasy-800 focus-visible:bg-fantasy-100 focus-visible:ring-fantasy-400 dark:focus-visible:bg-fantasy-800 dark:focus-visible:ring-fantasy-600',
-            'wh40k'   => 'text-wh40k-700 hover:bg-wh40k-100 dark:text-wh40k-200 dark:hover:bg-wh40k-800 focus-visible:bg-wh40k-100 focus-visible:ring-wh40k-400 dark:focus-visible:bg-wh40k-800 dark:focus-visible:ring-wh40k-600',
+            'primary'    => 'text-primary-700 hover:bg-primary-100 dark:text-primary-200 dark:hover:bg-primary-800 focus-visible:bg-primary-100 focus-visible:ring-primary-400 dark:focus-visible:bg-primary-800 dark:focus-visible:ring-primary-600',
+            'secondary'  => 'text-secondary-700 hover:bg-secondary-100 dark:text-secondary-200 dark:hover:bg-secondary-800 focus-visible:bg-secondary-100 focus-visible:ring-secondary-400 dark:focus-visible:bg-secondary-800 dark:focus-visible:ring-secondary-600',
+            'accent'     => 'text-accent-700 hover:bg-accent-100 dark:text-accent-200 dark:hover:bg-accent-800 focus-visible:bg-accent-100 focus-visible:ring-accent-400 dark:focus-visible:bg-accent-800 dark:focus-visible:ring-accent-600',
+            'base'       => 'text-base-700 hover:bg-base-100 dark:text-base-200 dark:hover:bg-base-800 focus-visible:bg-base-100 focus-visible:ring-base-400 dark:focus-visible:bg-base-800 dark:focus-visible:ring-base-600',
+            'info'       => 'text-info-700 hover:bg-info-100 dark:text-info-200 dark:hover:bg-info-800 focus-visible:bg-info-100 focus-visible:ring-info-400 dark:focus-visible:bg-info-800 dark:focus-visible:ring-info-600',
+            'success'    => 'text-success-700 hover:bg-success-100 dark:text-success-200 dark:hover:bg-success-800 focus-visible:bg-success-100 focus-visible:ring-success-400 dark:focus-visible:bg-success-800 dark:focus-visible:ring-success-600',
+            'warning'    => 'text-warning-700 hover:bg-warning-100 dark:text-warning-200 dark:hover:bg-warning-800 focus-visible:bg-warning-100 focus-visible:ring-warning-400 dark:focus-visible:bg-warning-800 dark:focus-visible:ring-warning-600',
+            'danger'     => 'text-danger-700 hover:bg-danger-100 dark:text-danger-200 dark:hover:bg-danger-800 focus-visible:bg-danger-100 focus-visible:ring-danger-400 dark:focus-visible:bg-danger-800 dark:focus-visible:ring-danger-600',
         ];
 
         $menuThemeMap = [
@@ -83,14 +87,18 @@ class Dropdown extends Component
             'mauve'   => 'border-mauve-200 dark:border-mauve-700 bg-white shadow-lg shadow-mauve-900/5 ring-1 ring-black/5 dark:bg-mauve-900 dark:shadow-mauve-950/40 dark:ring-white/10',
             'mist'    => 'border-mist-200 dark:border-mist-700 bg-white shadow-lg shadow-mist-900/5 ring-1 ring-black/5 dark:bg-mist-900 dark:shadow-mist-950/40 dark:ring-white/10',
             'olive'   => 'border-olive-200 dark:border-olive-700 bg-white shadow-lg shadow-olive-900/5 ring-1 ring-black/5 dark:bg-olive-900 dark:shadow-olive-950/40 dark:ring-white/10',
-            'palette'    => 'border-palette-200 dark:border-palette-700 bg-white shadow-lg shadow-palette-900/5 ring-1 ring-black/5 dark:bg-palette-900 dark:shadow-palette-950/40 dark:ring-white/10',
-            'cyberpunk' => 'border-cyberpunk-200 dark:border-cyberpunk-700 bg-white shadow-lg shadow-cyberpunk-900/5 ring-1 ring-black/5 dark:bg-cyberpunk-900 dark:shadow-cyberpunk-950/40 dark:ring-white/10',
-            'fantasy' => 'border-fantasy-200 dark:border-fantasy-700 bg-white shadow-lg shadow-fantasy-900/5 ring-1 ring-black/5 dark:bg-fantasy-900 dark:shadow-fantasy-950/40 dark:ring-white/10',
-            'wh40k'   => 'border-wh40k-200 dark:border-wh40k-700 bg-white shadow-lg shadow-wh40k-900/5 ring-1 ring-black/5 dark:bg-wh40k-900 dark:shadow-wh40k-950/40 dark:ring-white/10',
+            'primary'    => 'border-primary-200 dark:border-primary-700 bg-white shadow-lg shadow-primary-900/5 ring-1 ring-black/5 dark:bg-primary-900 dark:shadow-primary-950/40 dark:ring-white/10',
+            'secondary'  => 'border-secondary-200 dark:border-secondary-700 bg-white shadow-lg shadow-secondary-900/5 ring-1 ring-black/5 dark:bg-secondary-900 dark:shadow-secondary-950/40 dark:ring-white/10',
+            'accent'     => 'border-accent-200 dark:border-accent-700 bg-white shadow-lg shadow-accent-900/5 ring-1 ring-black/5 dark:bg-accent-900 dark:shadow-accent-950/40 dark:ring-white/10',
+            'base'       => 'border-base-200 dark:border-base-700 bg-white shadow-lg shadow-base-900/5 ring-1 ring-black/5 dark:bg-base-900 dark:shadow-base-950/40 dark:ring-white/10',
+            'info'       => 'border-info-200 dark:border-info-700 bg-white shadow-lg shadow-info-900/5 ring-1 ring-black/5 dark:bg-info-900 dark:shadow-info-950/40 dark:ring-white/10',
+            'success'    => 'border-success-200 dark:border-success-700 bg-white shadow-lg shadow-success-900/5 ring-1 ring-black/5 dark:bg-success-900 dark:shadow-success-950/40 dark:ring-white/10',
+            'warning'    => 'border-warning-200 dark:border-warning-700 bg-white shadow-lg shadow-warning-900/5 ring-1 ring-black/5 dark:bg-warning-900 dark:shadow-warning-950/40 dark:ring-white/10',
+            'danger'     => 'border-danger-200 dark:border-danger-700 bg-white shadow-lg shadow-danger-900/5 ring-1 ring-black/5 dark:bg-danger-900 dark:shadow-danger-950/40 dark:ring-white/10',
         ];
 
-        $buttonThemeClasses = $buttonThemeMap[$this->resolvedTheme] ?? $buttonThemeMap['slate'];
-        $menuThemeClasses = $menuThemeMap[$this->resolvedTheme] ?? $menuThemeMap['slate'];
+        $buttonThemeClasses = $buttonThemeMap[$this->resolvedTheme] ?? $buttonThemeMap['base'];
+        $menuThemeClasses = $menuThemeMap[$this->resolvedTheme] ?? $menuThemeMap['base'];
 
         $this->buttonClass = trim(implode(' ', array_filter([
             'cursor-pointer nav-link inline-flex h-full items-center gap-1 rounded-md px-3 transition focus:outline-none focus-visible:ring-2',

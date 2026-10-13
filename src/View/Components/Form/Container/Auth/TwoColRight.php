@@ -16,7 +16,7 @@ class TwoColRight extends Component
      * Create a new component instance.
      */
     public function __construct(
-        public string $theme = 'slate',
+        public string $color = 'base',
         public string $class = '',
         public ?string $id = null,
     ) {
@@ -125,25 +125,41 @@ class TwoColRight extends Component
                 'shell' => 'border-olive-200 bg-white/95 dark:border-olive-800 dark:bg-olive-950/50',
                 'side' => 'border-olive-200 bg-olive-50 text-olive-900 dark:border-olive-800 dark:bg-olive-950 dark:text-olive-100',
             ],
-            'palette'  => [
-                'shell' => 'border-palette-200 bg-white/95 dark:border-palette-800 dark:bg-palette-950/50',
-                'side' => 'border-palette-200 bg-palette-50 text-palette-900 dark:border-palette-800 dark:bg-palette-950 dark:text-palette-100',
+            'primary'  => [
+                'shell' => 'border-primary-200 bg-white/95 dark:border-primary-800 dark:bg-primary-950/50',
+                'side' => 'border-primary-200 bg-primary-50 text-primary-900 dark:border-primary-800 dark:bg-primary-950 dark:text-primary-100',
             ],
-            'cyberpunk' => [
-                'shell' => 'border-cyberpunk-200 bg-white/95 dark:border-cyberpunk-800 dark:bg-cyberpunk-950/50',
-                'side' => 'border-cyberpunk-200 bg-cyberpunk-50 text-cyberpunk-900 dark:border-cyberpunk-800 dark:bg-cyberpunk-950 dark:text-cyberpunk-100',
+            'secondary' => [
+                'shell' => 'border-secondary-200 bg-white/95 dark:border-secondary-800 dark:bg-secondary-950/50',
+                'side' => 'border-secondary-200 bg-secondary-50 text-secondary-900 dark:border-secondary-800 dark:bg-secondary-950 dark:text-secondary-100',
             ],
-            'fantasy' => [
-                'shell' => 'border-fantasy-200 bg-white/95 dark:border-fantasy-800 dark:bg-fantasy-950/50',
-                'side' => 'border-fantasy-200 bg-fantasy-50 text-fantasy-900 dark:border-fantasy-800 dark:bg-fantasy-950 dark:text-fantasy-100',
+            'accent'   => [
+                'shell' => 'border-accent-200 bg-white/95 dark:border-accent-800 dark:bg-accent-950/50',
+                'side' => 'border-accent-200 bg-accent-50 text-accent-900 dark:border-accent-800 dark:bg-accent-950 dark:text-accent-100',
             ],
-            'wh40k' => [
-                'shell' => 'border-wh40k-200 bg-white/95 dark:border-wh40k-800 dark:bg-wh40k-950/50',
-                'side' => 'border-wh40k-200 bg-wh40k-50 text-wh40k-900 dark:border-wh40k-800 dark:bg-wh40k-950 dark:text-wh40k-100',
+            'base'     => [
+                'shell' => 'border-base-200 bg-white/95 dark:border-base-800 dark:bg-base-950/50',
+                'side' => 'border-base-200 bg-base-50 text-base-900 dark:border-base-800 dark:bg-base-950 dark:text-base-100',
+            ],
+            'info'     => [
+                'shell' => 'border-info-200 bg-white/95 dark:border-info-800 dark:bg-info-950/50',
+                'side' => 'border-info-200 bg-info-50 text-info-900 dark:border-info-800 dark:bg-info-950 dark:text-info-100',
+            ],
+            'success'  => [
+                'shell' => 'border-success-200 bg-white/95 dark:border-success-800 dark:bg-success-950/50',
+                'side' => 'border-success-200 bg-success-50 text-success-900 dark:border-success-800 dark:bg-success-950 dark:text-success-100',
+            ],
+            'warning'  => [
+                'shell' => 'border-warning-200 bg-white/95 dark:border-warning-800 dark:bg-warning-950/50',
+                'side' => 'border-warning-200 bg-warning-50 text-warning-900 dark:border-warning-800 dark:bg-warning-950 dark:text-warning-100',
+            ],
+            'danger'   => [
+                'shell' => 'border-danger-200 bg-white/95 dark:border-danger-800 dark:bg-danger-950/50',
+                'side' => 'border-danger-200 bg-danger-50 text-danger-900 dark:border-danger-800 dark:bg-danger-950 dark:text-danger-100',
             ],
         ];
 
-        $themeClasses = $themeMap[$this->theme] ?? $themeMap['slate'];
+        $themeClasses = $themeMap[$this->color] ?? $themeMap['base'];
 
         $this->classList = trim(implode(' ', [
             'overflow-hidden rounded-2xl border shadow-2xl backdrop-blur',

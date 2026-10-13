@@ -22,7 +22,7 @@ class ActionBar extends Component
         public bool $sticky = false,
         public string $offset = '0px',
         public bool $quiet = false,
-        public string $theme = 'slate',
+        public string $color = 'base',
     ) {
             $loudMap = [
                 'slate'     => 'border-slate-300 bg-slate-100 text-slate-900 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100',
@@ -51,10 +51,14 @@ class ActionBar extends Component
                 'mauve'     => 'border-mauve-300 bg-mauve-100 text-mauve-900 dark:border-mauve-700 dark:bg-mauve-900 dark:text-mauve-100',
                 'mist'      => 'border-mist-300 bg-mist-100 text-mist-900 dark:border-mist-700 dark:bg-mist-900 dark:text-mist-100',
                 'olive'     => 'border-olive-300 bg-olive-100 text-olive-900 dark:border-olive-700 dark:bg-olive-900 dark:text-olive-100',
-                'palette'      => 'border-palette-300 bg-palette-100 text-palette-900 dark:border-palette-700 dark:bg-palette-900 dark:text-palette-100',
-                'cyberpunk' => 'border-cyberpunk-300 bg-cyberpunk-100 text-cyberpunk-900 dark:border-cyberpunk-700 dark:bg-cyberpunk-900 dark:text-cyberpunk-100',
-                'fantasy'   => 'border-fantasy-300 bg-fantasy-100 text-fantasy-900 dark:border-fantasy-700 dark:bg-fantasy-900 dark:text-fantasy-100',
-                'wh40k'     => 'border-wh40k-300 bg-wh40k-100 text-wh40k-900 dark:border-wh40k-700 dark:bg-wh40k-900 dark:text-wh40k-100',
+                'primary'      => 'border-primary-300 bg-primary-100 text-primary-900 dark:border-primary-700 dark:bg-primary-900 dark:text-primary-100',
+                'secondary'    => 'border-secondary-300 bg-secondary-100 text-secondary-900 dark:border-secondary-700 dark:bg-secondary-900 dark:text-secondary-100',
+                'accent'       => 'border-accent-300 bg-accent-100 text-accent-900 dark:border-accent-700 dark:bg-accent-900 dark:text-accent-100',
+                'base'         => 'border-base-300 bg-base-100 text-base-900 dark:border-base-700 dark:bg-base-900 dark:text-base-100',
+                'info'         => 'border-info-300 bg-info-100 text-info-900 dark:border-info-700 dark:bg-info-900 dark:text-info-100',
+                'success'      => 'border-success-300 bg-success-100 text-success-900 dark:border-success-700 dark:bg-success-900 dark:text-success-100',
+                'warning'      => 'border-warning-300 bg-warning-100 text-warning-900 dark:border-warning-700 dark:bg-warning-900 dark:text-warning-100',
+                'danger'       => 'border-danger-300 bg-danger-100 text-danger-900 dark:border-danger-700 dark:bg-danger-900 dark:text-danger-100',
             ];
 
             $quietMap = [
@@ -84,16 +88,20 @@ class ActionBar extends Component
                 'mauve'     => 'border-dashed border-mauve-300 bg-white/70 text-mauve-700 dark:border-mauve-600 dark:bg-mauve-950/70 dark:text-mauve-300',
                 'mist'      => 'border-dashed border-mist-300 bg-white/70 text-mist-700 dark:border-mist-600 dark:bg-mist-950/70 dark:text-mist-300',
                 'olive'     => 'border-dashed border-olive-300 bg-white/70 text-olive-700 dark:border-olive-600 dark:bg-olive-950/70 dark:text-olive-300',
-                'palette'      => 'border-dashed border-palette-300 bg-white/70 text-palette-700 dark:border-palette-600 dark:bg-palette-950/70 dark:text-palette-300',
-                'cyberpunk' => 'border-dashed border-cyberpunk-300 bg-white/70 text-cyberpunk-700 dark:border-cyberpunk-600 dark:bg-cyberpunk-950/70 dark:text-cyberpunk-300',
-                'fantasy'   => 'border-dashed border-fantasy-300 bg-white/70 text-fantasy-700 dark:border-fantasy-600 dark:bg-fantasy-950/70 dark:text-fantasy-300',
-                'wh40k'     => 'border-dashed border-wh40k-300 bg-white/70 text-wh40k-700 dark:border-wh40k-600 dark:bg-wh40k-950/70 dark:text-wh40k-300',
+                'primary'      => 'border-dashed border-primary-300 bg-white/70 text-primary-700 dark:border-primary-600 dark:bg-primary-950/70 dark:text-primary-300',
+                'secondary'    => 'border-dashed border-secondary-300 bg-white/70 text-secondary-700 dark:border-secondary-600 dark:bg-secondary-950/70 dark:text-secondary-300',
+                'accent'       => 'border-dashed border-accent-300 bg-white/70 text-accent-700 dark:border-accent-600 dark:bg-accent-950/70 dark:text-accent-300',
+                'base'         => 'border-dashed border-base-300 bg-white/70 text-base-700 dark:border-base-600 dark:bg-base-950/70 dark:text-base-300',
+                'info'         => 'border-dashed border-info-300 bg-white/70 text-info-700 dark:border-info-600 dark:bg-info-950/70 dark:text-info-300',
+                'success'      => 'border-dashed border-success-300 bg-white/70 text-success-700 dark:border-success-600 dark:bg-success-950/70 dark:text-success-300',
+                'warning'      => 'border-dashed border-warning-300 bg-white/70 text-warning-700 dark:border-warning-600 dark:bg-warning-950/70 dark:text-warning-300',
+                'danger'       => 'border-dashed border-danger-300 bg-white/70 text-danger-700 dark:border-danger-600 dark:bg-danger-950/70 dark:text-danger-300',
             ];
 
         $this->classList = trim(implode(' ', [
             'flex flex-wrap items-center gap-x-4 gap-y-2 rounded-lg border px-4 py-3 text-sm',
             $sticky ? 'sticky z-30 shadow-sm backdrop-blur' : '',
-            $quiet ? ($quietMap[$theme] ?? $quietMap['slate']) : ($loudMap[$theme] ?? $loudMap['slate']),
+            $quiet ? ($quietMap[$color] ?? $quietMap['base']) : ($loudMap[$color] ?? $loudMap['base']),
         ]));
 
         if ($sticky) {

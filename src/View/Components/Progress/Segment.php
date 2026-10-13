@@ -17,15 +17,15 @@ class Segment extends Component
 
     public function __construct(
         public float $value = 0,
-        public ?string $theme = null,
+        public ?string $color = null,
         public string $label = '',
     ) {
         $bar = ViewFacade::shared('fltcProgress');
         $segment = $bar
-            ? $bar->addSegment($value, $theme, $label)
-            : ['percent' => max(0, min(100, $value)), 'theme' => $theme ?? 'slate', 'fillClasses' => ''];
+            ? $bar->addSegment($value, $color, $label)
+            : ['percent' => max(0, min(100, $value)), 'color' => $color ?? 'base', 'fillClasses' => ''];
 
-        $this->theme = $segment['theme'];
+        $this->color = $segment['color'];
         $this->percent = $segment['percent'];
         $this->classList = $segment['fillClasses'];
     }

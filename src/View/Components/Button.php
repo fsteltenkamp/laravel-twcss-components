@@ -12,7 +12,7 @@ class Button extends Component
     public string $heightStyle;
 
     public function __construct(
-        public string $theme = 'slate',
+        public string $color = 'base',
         public string $width = 'fit',
         public string $height = 'md',
         public string $tooltip = '',
@@ -51,10 +51,14 @@ class Button extends Component
             'mauve'   => 'bg-mauve-400 text-white hover:bg-mauve-500 focus:ring-mauve-300 dark:bg-mauve-600 dark:hover:bg-mauve-500 dark:focus:ring-mauve-500',
             'mist'    => 'bg-mist-400 text-white hover:bg-mist-500 focus:ring-mist-300 dark:bg-mist-600 dark:hover:bg-mist-500 dark:focus:ring-mist-500',
             'olive'   => 'bg-olive-400 text-white hover:bg-olive-500 focus:ring-olive-300 dark:bg-olive-600 dark:hover:bg-olive-500 dark:focus:ring-olive-500',
-            'palette'    => 'bg-palette-400 text-white hover:bg-palette-500 focus:ring-palette-300 dark:bg-palette-600 dark:hover:bg-palette-500 dark:focus:ring-palette-500',
-            'cyberpunk' => 'bg-cyberpunk-400 text-white hover:bg-cyberpunk-500 focus:ring-cyberpunk-300 dark:bg-cyberpunk-600 dark:hover:bg-cyberpunk-500 dark:focus:ring-cyberpunk-500',
-            'fantasy' => 'bg-fantasy-400 text-white hover:bg-fantasy-500 focus:ring-fantasy-300 dark:bg-fantasy-600 dark:hover:bg-fantasy-500 dark:focus:ring-fantasy-500',
-            'wh40k'   => 'bg-wh40k-400 text-white hover:bg-wh40k-500 focus:ring-wh40k-300 dark:bg-wh40k-600 dark:hover:bg-wh40k-500 dark:focus:ring-wh40k-500',
+            'primary'    => 'bg-primary-400 text-white hover:bg-primary-500 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-500 dark:focus:ring-primary-500',
+            'secondary'  => 'bg-secondary-400 text-white hover:bg-secondary-500 focus:ring-secondary-300 dark:bg-secondary-600 dark:hover:bg-secondary-500 dark:focus:ring-secondary-500',
+            'accent'     => 'bg-accent-400 text-white hover:bg-accent-500 focus:ring-accent-300 dark:bg-accent-600 dark:hover:bg-accent-500 dark:focus:ring-accent-500',
+            'base'       => 'bg-base-400 text-white hover:bg-base-500 focus:ring-base-300 dark:bg-base-600 dark:hover:bg-base-500 dark:focus:ring-base-500',
+            'info'       => 'bg-info-400 text-white hover:bg-info-500 focus:ring-info-300 dark:bg-info-600 dark:hover:bg-info-500 dark:focus:ring-info-500',
+            'success'    => 'bg-success-400 text-white hover:bg-success-500 focus:ring-success-300 dark:bg-success-600 dark:hover:bg-success-500 dark:focus:ring-success-500',
+            'warning'    => 'bg-warning-400 text-white hover:bg-warning-500 focus:ring-warning-300 dark:bg-warning-600 dark:hover:bg-warning-500 dark:focus:ring-warning-500',
+            'danger'     => 'bg-danger-400 text-white hover:bg-danger-500 focus:ring-danger-300 dark:bg-danger-600 dark:hover:bg-danger-500 dark:focus:ring-danger-500',
         ];
 
         $outlineThemeMap = [
@@ -84,10 +88,14 @@ class Button extends Component
             'mauve'   => 'border-2 border-mauve-300 bg-mauve-50/60 text-mauve-600 hover:bg-mauve-100 focus:ring-mauve-200 dark:border-mauve-500 dark:bg-mauve-950/40 dark:text-mauve-200 dark:hover:bg-mauve-900/60 dark:focus:ring-mauve-500',
             'mist'    => 'border-2 border-mist-300 bg-mist-50/60 text-mist-600 hover:bg-mist-100 focus:ring-mist-200 dark:border-mist-500 dark:bg-mist-950/40 dark:text-mist-200 dark:hover:bg-mist-900/60 dark:focus:ring-mist-500',
             'olive'   => 'border-2 border-olive-300 bg-olive-50/60 text-olive-600 hover:bg-olive-100 focus:ring-olive-200 dark:border-olive-500 dark:bg-olive-950/40 dark:text-olive-200 dark:hover:bg-olive-900/60 dark:focus:ring-olive-500',
-            'palette'    => 'border-2 border-palette-300 bg-palette-50/60 text-palette-600 hover:bg-palette-100 focus:ring-palette-200 dark:border-palette-500 dark:bg-palette-950/40 dark:text-palette-200 dark:hover:bg-palette-900/60 dark:focus:ring-palette-500',
-            'cyberpunk' => 'border-2 border-cyberpunk-300 bg-cyberpunk-50/60 text-cyberpunk-600 hover:bg-cyberpunk-100 focus:ring-cyberpunk-200 dark:border-cyberpunk-500 dark:bg-cyberpunk-950/40 dark:text-cyberpunk-200 dark:hover:bg-cyberpunk-900/60 dark:focus:ring-cyberpunk-500',
-            'fantasy' => 'border-2 border-fantasy-300 bg-fantasy-50/60 text-fantasy-600 hover:bg-fantasy-100 focus:ring-fantasy-200 dark:border-fantasy-500 dark:bg-fantasy-950/40 dark:text-fantasy-200 dark:hover:bg-fantasy-900/60 dark:focus:ring-fantasy-500',
-            'wh40k'   => 'border-2 border-wh40k-300 bg-wh40k-50/60 text-wh40k-600 hover:bg-wh40k-100 focus:ring-wh40k-200 dark:border-wh40k-500 dark:bg-wh40k-950/40 dark:text-wh40k-200 dark:hover:bg-wh40k-900/60 dark:focus:ring-wh40k-500',
+            'primary'    => 'border-2 border-primary-300 bg-primary-50/60 text-primary-600 hover:bg-primary-100 focus:ring-primary-200 dark:border-primary-500 dark:bg-primary-950/40 dark:text-primary-200 dark:hover:bg-primary-900/60 dark:focus:ring-primary-500',
+            'secondary'  => 'border-2 border-secondary-300 bg-secondary-50/60 text-secondary-600 hover:bg-secondary-100 focus:ring-secondary-200 dark:border-secondary-500 dark:bg-secondary-950/40 dark:text-secondary-200 dark:hover:bg-secondary-900/60 dark:focus:ring-secondary-500',
+            'accent'     => 'border-2 border-accent-300 bg-accent-50/60 text-accent-600 hover:bg-accent-100 focus:ring-accent-200 dark:border-accent-500 dark:bg-accent-950/40 dark:text-accent-200 dark:hover:bg-accent-900/60 dark:focus:ring-accent-500',
+            'base'       => 'border-2 border-base-300 bg-base-50/60 text-base-600 hover:bg-base-100 focus:ring-base-200 dark:border-base-500 dark:bg-base-950/40 dark:text-base-200 dark:hover:bg-base-900/60 dark:focus:ring-base-500',
+            'info'       => 'border-2 border-info-300 bg-info-50/60 text-info-600 hover:bg-info-100 focus:ring-info-200 dark:border-info-500 dark:bg-info-950/40 dark:text-info-200 dark:hover:bg-info-900/60 dark:focus:ring-info-500',
+            'success'    => 'border-2 border-success-300 bg-success-50/60 text-success-600 hover:bg-success-100 focus:ring-success-200 dark:border-success-500 dark:bg-success-950/40 dark:text-success-200 dark:hover:bg-success-900/60 dark:focus:ring-success-500',
+            'warning'    => 'border-2 border-warning-300 bg-warning-50/60 text-warning-600 hover:bg-warning-100 focus:ring-warning-200 dark:border-warning-500 dark:bg-warning-950/40 dark:text-warning-200 dark:hover:bg-warning-900/60 dark:focus:ring-warning-500',
+            'danger'     => 'border-2 border-danger-300 bg-danger-50/60 text-danger-600 hover:bg-danger-100 focus:ring-danger-200 dark:border-danger-500 dark:bg-danger-950/40 dark:text-danger-200 dark:hover:bg-danger-900/60 dark:focus:ring-danger-500',
         ];
 
         $widthMap = [
@@ -131,7 +139,7 @@ class Button extends Component
         $this->classList = trim(implode(' ', [
             // Variant part hook (fltc-button-solid / fltc-button-outline) for skin stylesheets.
             'fltc-button-'.$selectedVariant,
-            $selectedThemeMap[$theme] ?? $selectedThemeMap['slate'],
+            $selectedThemeMap[$color] ?? $selectedThemeMap['base'],
             $widthMap[$width] ?? $widthMap['fit'],
             $heightClasses,
             'cursor-pointer inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-semibold transition focus:outline-none focus:ring-2 focus:ring-offset-2 dark:focus:ring-offset-gray-900',

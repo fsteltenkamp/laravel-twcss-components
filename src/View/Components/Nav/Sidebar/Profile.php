@@ -30,11 +30,11 @@ class Profile extends Component
         public ?string $avatar = null,
         ?string $initials = null,
         public ?string $href = null,
-        ?string $theme = null,
+        ?string $color = null,
         string $class = '',
     ) {
-        $resolvedTheme = $theme ?? (app('view')->getShared()['sidebarTheme'] ?? 'slate');
-        $this->hookTheme = $resolvedTheme;
+        $resolvedTheme = $color ?? (app('view')->getShared()['sidebarColor'] ?? 'base');
+        $this->hookColor = $resolvedTheme;
 
         $this->initials = $initials ?? $this->deriveInitials($name);
 

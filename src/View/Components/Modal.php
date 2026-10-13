@@ -23,7 +23,7 @@ class Modal extends Component
         public bool $open = false,
         public string $maxWidth = 'lg',
         public bool $closeable = true,
-        public string $theme = 'slate',
+        public string $color = 'base',
         public bool $teleport = true,
     ) {
         $widthMap = [
@@ -67,20 +67,24 @@ class Modal extends Component
             'mauve'     => 'bg-mauve-950/50',
             'mist'      => 'bg-mist-950/50',
             'olive'     => 'bg-olive-950/50',
-            'palette'      => 'bg-palette-950/50',
-            'cyberpunk' => 'bg-cyberpunk-950/50',
-            'fantasy'   => 'bg-fantasy-950/50',
-            'wh40k'     => 'bg-wh40k-950/50',
+            'primary'      => 'bg-primary-950/50',
+            'secondary'    => 'bg-secondary-950/50',
+            'accent'       => 'bg-accent-950/50',
+            'base'         => 'bg-base-950/50',
+            'info'         => 'bg-info-950/50',
+            'success'      => 'bg-success-950/50',
+            'warning'      => 'bg-warning-950/50',
+            'danger'       => 'bg-danger-950/50',
         ];
 
         // Panel: the floating-surface shades the sidebar and dropdown menus use.
         $this->panelClasses = trim(implode(' ', [
             'relative max-h-[90vh] w-full overflow-y-auto rounded-xl border p-6 shadow-xl',
             $widthMap[$maxWidth] ?? $widthMap['lg'],
-            SidebarTheme::surface($theme),
+            SidebarTheme::surface($color),
         ]));
 
-        $this->backdropClasses = 'fixed inset-0 backdrop-blur-sm '.($backdropMap[$theme] ?? $backdropMap['slate']);
+        $this->backdropClasses = 'fixed inset-0 backdrop-blur-sm '.($backdropMap[$color] ?? $backdropMap['base']);
     }
 
     public function render(): View|Closure|string

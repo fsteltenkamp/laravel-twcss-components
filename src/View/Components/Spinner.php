@@ -9,7 +9,7 @@ use Illuminate\Contracts\View\View;
 
 /**
  * Loading indicator. Pair it with wire:loading / wire:target (or x-show) to show it
- * while a request runs; theme="current" takes the surrounding text colour, e.g.
+ * while a request runs; color="current" takes the surrounding text colour, e.g.
  * inside a button.
  */
 class Spinner extends Component
@@ -17,7 +17,7 @@ class Spinner extends Component
     public string $classList;
 
     public function __construct(
-        public string $theme = 'slate',
+        public string $color = 'base',
         public string $size = 'md',
         public string $label = '',
     ) {
@@ -32,7 +32,7 @@ class Spinner extends Component
         $this->classList = trim(implode(' ', [
             'inline-block shrink-0 animate-spin',
             $sizeMap[$size] ?? $sizeMap['md'],
-            $theme === 'current' ? 'text-current' : Shades::tertiary($theme),
+            $color === 'current' ? 'text-current' : Shades::tertiary($color),
         ]));
 
         if ($this->label === '') {

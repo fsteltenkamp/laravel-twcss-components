@@ -29,24 +29,25 @@ There is no linter or build step configured.
 behaviour (Alpine state, transitions, layout) cannot be verified directly. When something
 needs checking in a browser, add/update its demo in `tests/GalleryTest.php`, run `./test.sh`
 (which regenerates `gallery.html`), and ask the user to inspect `gallery.html` and report
-back — say exactly what to click and what to look for. Gallery demos use `theme="palette"`
-so the Colour select in the gallery's Style drawer re-colours every component at once (the
-Skin select changes the look); don't add per-theme showcases.
+back — say exactly what to click and what to look for. Gallery demos use role colours
+(`color="primary"`, `color="base"`) so the Theme select in the gallery's Style drawer
+re-colours every component at once (the Skin select changes the look); don't add
+per-theme showcases.
 
 ## Architecture
 
 ### General Properties
 
 All components support:
-- **theme**: See supported themes below
+- **color**: See Theming below
 - **$attributes**: Every component view must render `$attributes` on its root element so passthrough attributes like `wire:*`, `id`, and `class` always work
-- **classList**: Classes must be provided to the view in the "classList" variable and merged with `$attributes->class(...)`. Build `classList` in the component class by combining default classes and theme classes
+- **classList**: Classes must be provided to the view in the "classList" variable and merged with `$attributes->class(...)`. Build `classList` in the component class by combining default classes and colour classes
 
 For components with multiple class properties, name them according to placement (e.g., `headerClasses`, `bodyClasses`).
 
 **Hook classes**: every class-backed component extends
 `Fsteltenkamp\TwcssComponents\View\Component` (not `Illuminate\View\Component`), which adds
-`fltc-<tag>` and `fltc-theme-<theme>` to the attribute bag. Anonymous components add their
+`fltc-<tag>` and `fltc-color-<color>` to the attribute bag. Anonymous components add their
 `fltc-<tag>` hook in the view. Skin stylesheets (`resources/css/skin-effects.css`) style
 those hooks — never put skin-specific classes into a component's class strings.
 `tests/HookClassesTest.php` enforces the hooks, and that every component's hook appears in
@@ -60,8 +61,8 @@ cyberpunk, rules of its own where its markup differs (cut corners, neon lines).
 2. **Look for reusable components first** when patterns repeat (forms, cards, tables, actions)
 3. **Update the wiki files** when creating new components or changing public component APIs
 4. **Document immediately** when changing props, slots, or usage conventions
-5. **Support all themes** - any theme property must support all themes listed above
-6. **Inherit parent themes** - child components should inherit parent theme by default when no explicit child theme provided
+5. **Support all colours** - any colour property must support every role and palette listed below
+6. **Inherit parent colours** - child components should inherit the parent's colour by default when no explicit child colour is provided
 7. **Implement general properties** - all components must implement requirements listed in General Properties section
 8. **Document new sections** - when a card gains new section component, document the section and its intended use
 9. **Inspect before editing** - when in doubt, inspect component classes and Blade templates before editing a view
@@ -107,20 +108,28 @@ renders them. Keep logic in the PHP class, markup in the Blade file.
   `{{ $attributes->class([$classList])->merge([...]) }}`. Always render `$attributes`
   on the root element.
 - Props use sensible defaults and fall back gracefully on unknown values — see
-  `Button.php`: `$themeMap[$theme] ?? $themeMap['gray']`.
+  `Button.php`: `$themeMap[$color] ?? $themeMap['base']`.
 
 ### Theming
 
-All components accept a `theme` prop spanning the full Tailwind palette plus extended
-neutrals (`taupe`, `mauve`, `mist`, `olive` — these require the host app's Tailwind
-config to define them) and the custom themes `cyberpunk`, `fantasy`, `wh40k` (palettes
-shipped in `resources/css/themes.css` / `resources/js/themes.js`; every theme map needs
-an entry for them, enforced by `tests/CustomThemesTest.php`), plus `palette`, which follows
-the nearest `data-palette` attribute at runtime (`resources/css/palettes.css`). A theme is
-only a colour: the look is the skin (`data-skin`: default, cyberpunk, fantasy, wh40k), from
-`resources/css/skin-effects.css`, applied to every component inside a skin region in that
-component's own colour. Role colours
-outside a component's own maps come from `src/Support/Shades.php`. Table components share one large theme map via the abstract
+Three separate settings (README "Colours, themes and skins"):
+
+- **Colour** — every component's `color` prop: one of the eight theme roles (`primary`,
+  `secondary`, `accent`, `base`, `info`, `success`, `warning`, `danger`; Tailwind colours
+  `bg-primary-500` etc. backed by CSS variables) or a fixed Tailwind palette (the full
+  palette plus `taupe`, `mauve`, `mist`, `olive`, which the host's Tailwind config must
+  define). Every colour map needs an entry for all of them — build role entries from the
+  same class strings as the palettes — enforced by `tests/CustomThemesTest.php`.
+- **Theme** — `data-theme` (default, cyberpunk, fantasy, wh40k, dracula, nord, catppuccin,
+  solarized, gruvbox, custom): which palette each role uses. `resources/css/themes.css`,
+  `colors.css` and `resources/js/colors.js` are **generated** by `tools/themes.py`; edit the
+  themes there and rerun `python3 tools/themes.py`, never the generated files.
+- **Skin** — `data-skin` (default, cyberpunk, fantasy, wh40k): the look, from
+  `resources/css/skin-effects.css`, applied to every component inside a skin region in that
+  component's own colour.
+
+Shade roles outside a component's own maps come from `src/Support/Shades.php`. Table
+components share one large colour map via the abstract
 `src/View/Components/TableBase.php`; extend it rather than duplicating color tables.
 
 ### Tests
@@ -141,8 +150,8 @@ Exception: the typed inputs (`Form/Input/Number`, `Date`, `Time`, `Datetime`, `E
 `Password`) only override `$defaultType` on `Form/Input/Text` and share its
 `form/input/text.blade.php` view — add new input types the same way.
 
-Default theme is `slate` everywhere (constructor defaults and `?? $map['slate']`
-fallbacks); child components that inherit a parent theme default to `null`.
+Default colour is `base` everywhere (constructor defaults and `?? $map['base']`
+fallbacks); child components that inherit a parent colour default to `null`.
 `CustomThemesTest.php` enforces both.
 
 ## Publishing

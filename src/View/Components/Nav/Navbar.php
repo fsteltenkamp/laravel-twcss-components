@@ -16,7 +16,7 @@ class Navbar extends Component
      */
     public function __construct(
         public string $class = '',
-        public string $theme = 'slate',
+        public string $color = 'base',
         public string $containerClass = 'w-full px-4 sm:px-6 lg:px-8',
         public bool $stickyTop = false,
         public bool $stickyBottom = false,
@@ -61,13 +61,17 @@ class Navbar extends Component
             'mauve'   => 'border-mauve-200 dark:border-mauve-700 bg-white dark:bg-mauve-900',
             'mist'    => 'border-mist-200 dark:border-mist-700 bg-white dark:bg-mist-900',
             'olive'   => 'border-olive-200 dark:border-olive-700 bg-white dark:bg-olive-900',
-            'palette'    => 'border-palette-200 dark:border-palette-700 bg-white dark:bg-palette-900',
-            'cyberpunk' => 'border-cyberpunk-200 dark:border-cyberpunk-700 bg-white dark:bg-cyberpunk-900',
-            'fantasy' => 'border-fantasy-200 dark:border-fantasy-700 bg-white dark:bg-fantasy-900',
-            'wh40k'   => 'border-wh40k-200 dark:border-wh40k-700 bg-white dark:bg-wh40k-900',
+            'primary'    => 'border-primary-200 dark:border-primary-700 bg-white dark:bg-primary-900',
+            'secondary'  => 'border-secondary-200 dark:border-secondary-700 bg-white dark:bg-secondary-900',
+            'accent'     => 'border-accent-200 dark:border-accent-700 bg-white dark:bg-accent-900',
+            'base'       => 'border-base-200 dark:border-base-700 bg-white dark:bg-base-900',
+            'info'       => 'border-info-200 dark:border-info-700 bg-white dark:bg-info-900',
+            'success'    => 'border-success-200 dark:border-success-700 bg-white dark:bg-success-900',
+            'warning'    => 'border-warning-200 dark:border-warning-700 bg-white dark:bg-warning-900',
+            'danger'     => 'border-danger-200 dark:border-danger-700 bg-white dark:bg-danger-900',
         ];
 
-        $themeClasses = $themeMap[$this->theme] ?? $themeMap['slate'];
+        $themeClasses = $themeMap[$this->color] ?? $themeMap['base'];
 
         $this->classList = trim(implode(' ', array_filter([
             'w-full',
@@ -78,7 +82,7 @@ class Navbar extends Component
         ])));
 
         // Share the navbar theme with child components
-        ViewFacade::share(['navbarTheme' => $this->theme]);
+        ViewFacade::share(['navbarColor' => $this->color]);
     }
 
     /**
@@ -86,6 +90,6 @@ class Navbar extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('fltc::components.nav.navbar')->with('theme', $this->theme);
+        return view('fltc::components.nav.navbar')->with('color', $this->color);
     }
 }

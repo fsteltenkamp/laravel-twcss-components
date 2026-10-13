@@ -15,7 +15,7 @@ class Toast extends Component
     public string $descClasses;
 
     public function __construct(
-        public string $theme = 'slate',
+        public string $color = 'base',
         public string $variant = 'toast',
         public string $title = '',
         public ?string $message = null,
@@ -24,7 +24,7 @@ class Toast extends Component
         public bool $dismissible = true,
     ) {
         $map   = static::themeMap();
-        $entry = $map[$this->theme][$this->variant] ?? $map['slate']['toast'];
+        $entry = $map[$this->color][$this->variant] ?? $map['base']['toast'];
 
         $this->classList    = $entry['wrapper'];
         $this->borderClasses = $entry['border'];
@@ -231,33 +231,61 @@ class Toast extends Component
                 'close'   => 'text-olive-400 hover:text-olive-600 dark:text-olive-500 dark:hover:text-olive-300 transition-colors',
                 'desc'    => 'text-olive-500 dark:text-olive-400',
             ]),
-            'palette'  => array_fill_keys($v, [
-                'wrapper' => 'border border-palette-200 bg-palette-100 text-palette-700 dark:border-palette-800 dark:bg-palette-950 dark:text-palette-300',
-                'border'  => 'border-palette-200 dark:border-palette-800',
-                'icon'    => 'text-palette-500 dark:text-palette-400',
-                'close'   => 'text-palette-400 hover:text-palette-600 dark:text-palette-500 dark:hover:text-palette-300 transition-colors',
-                'desc'    => 'text-palette-500 dark:text-palette-400',
+            'primary'  => array_fill_keys($v, [
+                'wrapper' => 'border border-primary-200 bg-primary-100 text-primary-700 dark:border-primary-800 dark:bg-primary-950 dark:text-primary-300',
+                'border'  => 'border-primary-200 dark:border-primary-800',
+                'icon'    => 'text-primary-500 dark:text-primary-400',
+                'close'   => 'text-primary-400 hover:text-primary-600 dark:text-primary-500 dark:hover:text-primary-300 transition-colors',
+                'desc'    => 'text-primary-500 dark:text-primary-400',
             ]),
-            'cyberpunk' => array_fill_keys($v, [
-                'wrapper' => 'border border-cyberpunk-200 bg-cyberpunk-100 text-cyberpunk-700 dark:border-cyberpunk-800 dark:bg-cyberpunk-950 dark:text-cyberpunk-300',
-                'border'  => 'border-cyberpunk-200 dark:border-cyberpunk-800',
-                'icon'    => 'text-cyberpunk-500 dark:text-cyberpunk-400',
-                'close'   => 'text-cyberpunk-400 hover:text-cyberpunk-600 dark:text-cyberpunk-500 dark:hover:text-cyberpunk-300 transition-colors',
-                'desc'    => 'text-cyberpunk-500 dark:text-cyberpunk-400',
+            'secondary' => array_fill_keys($v, [
+                'wrapper' => 'border border-secondary-200 bg-secondary-100 text-secondary-700 dark:border-secondary-800 dark:bg-secondary-950 dark:text-secondary-300',
+                'border'  => 'border-secondary-200 dark:border-secondary-800',
+                'icon'    => 'text-secondary-500 dark:text-secondary-400',
+                'close'   => 'text-secondary-400 hover:text-secondary-600 dark:text-secondary-500 dark:hover:text-secondary-300 transition-colors',
+                'desc'    => 'text-secondary-500 dark:text-secondary-400',
             ]),
-            'fantasy' => array_fill_keys($v, [
-                'wrapper' => 'border border-fantasy-200 bg-fantasy-100 text-fantasy-700 dark:border-fantasy-800 dark:bg-fantasy-950 dark:text-fantasy-300',
-                'border'  => 'border-fantasy-200 dark:border-fantasy-800',
-                'icon'    => 'text-fantasy-500 dark:text-fantasy-400',
-                'close'   => 'text-fantasy-400 hover:text-fantasy-600 dark:text-fantasy-500 dark:hover:text-fantasy-300 transition-colors',
-                'desc'    => 'text-fantasy-500 dark:text-fantasy-400',
+            'accent'   => array_fill_keys($v, [
+                'wrapper' => 'border border-accent-200 bg-accent-100 text-accent-700 dark:border-accent-800 dark:bg-accent-950 dark:text-accent-300',
+                'border'  => 'border-accent-200 dark:border-accent-800',
+                'icon'    => 'text-accent-500 dark:text-accent-400',
+                'close'   => 'text-accent-400 hover:text-accent-600 dark:text-accent-500 dark:hover:text-accent-300 transition-colors',
+                'desc'    => 'text-accent-500 dark:text-accent-400',
             ]),
-            'wh40k' => array_fill_keys($v, [
-                'wrapper' => 'border border-wh40k-200 bg-wh40k-100 text-wh40k-700 dark:border-wh40k-800 dark:bg-wh40k-950 dark:text-wh40k-300',
-                'border'  => 'border-wh40k-200 dark:border-wh40k-800',
-                'icon'    => 'text-wh40k-500 dark:text-wh40k-400',
-                'close'   => 'text-wh40k-400 hover:text-wh40k-600 dark:text-wh40k-500 dark:hover:text-wh40k-300 transition-colors',
-                'desc'    => 'text-wh40k-500 dark:text-wh40k-400',
+            'base'     => array_fill_keys($v, [
+                'wrapper' => 'border border-base-200 bg-base-100 text-base-700 dark:border-base-800 dark:bg-base-950 dark:text-base-300',
+                'border'  => 'border-base-200 dark:border-base-800',
+                'icon'    => 'text-base-500 dark:text-base-400',
+                'close'   => 'text-base-400 hover:text-base-600 dark:text-base-500 dark:hover:text-base-300 transition-colors',
+                'desc'    => 'text-base-500 dark:text-base-400',
+            ]),
+            'info'     => array_fill_keys($v, [
+                'wrapper' => 'border border-info-200 bg-info-100 text-info-700 dark:border-info-800 dark:bg-info-950 dark:text-info-300',
+                'border'  => 'border-info-200 dark:border-info-800',
+                'icon'    => 'text-info-500 dark:text-info-400',
+                'close'   => 'text-info-400 hover:text-info-600 dark:text-info-500 dark:hover:text-info-300 transition-colors',
+                'desc'    => 'text-info-500 dark:text-info-400',
+            ]),
+            'success'  => array_fill_keys($v, [
+                'wrapper' => 'border border-success-200 bg-success-100 text-success-700 dark:border-success-800 dark:bg-success-950 dark:text-success-300',
+                'border'  => 'border-success-200 dark:border-success-800',
+                'icon'    => 'text-success-500 dark:text-success-400',
+                'close'   => 'text-success-400 hover:text-success-600 dark:text-success-500 dark:hover:text-success-300 transition-colors',
+                'desc'    => 'text-success-500 dark:text-success-400',
+            ]),
+            'warning'  => array_fill_keys($v, [
+                'wrapper' => 'border border-warning-200 bg-warning-100 text-warning-700 dark:border-warning-800 dark:bg-warning-950 dark:text-warning-300',
+                'border'  => 'border-warning-200 dark:border-warning-800',
+                'icon'    => 'text-warning-500 dark:text-warning-400',
+                'close'   => 'text-warning-400 hover:text-warning-600 dark:text-warning-500 dark:hover:text-warning-300 transition-colors',
+                'desc'    => 'text-warning-500 dark:text-warning-400',
+            ]),
+            'danger'   => array_fill_keys($v, [
+                'wrapper' => 'border border-danger-200 bg-danger-100 text-danger-700 dark:border-danger-800 dark:bg-danger-950 dark:text-danger-300',
+                'border'  => 'border-danger-200 dark:border-danger-800',
+                'icon'    => 'text-danger-500 dark:text-danger-400',
+                'close'   => 'text-danger-400 hover:text-danger-600 dark:text-danger-500 dark:hover:text-danger-300 transition-colors',
+                'desc'    => 'text-danger-500 dark:text-danger-400',
             ]),
         ];
     }

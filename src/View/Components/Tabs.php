@@ -20,7 +20,7 @@ class Tabs extends Component
 
     public function __construct(
         public string $active = '',
-        public string $theme = 'slate',
+        public string $color = 'base',
         public string $id = '',
     ) {
         $listMap = [
@@ -50,22 +50,26 @@ class Tabs extends Component
             'mauve'     => 'border-mauve-200 dark:border-mauve-700',
             'mist'      => 'border-mist-200 dark:border-mist-700',
             'olive'     => 'border-olive-200 dark:border-olive-700',
-            'palette'      => 'border-palette-200 dark:border-palette-700',
-            'cyberpunk' => 'border-cyberpunk-200 dark:border-cyberpunk-700',
-            'fantasy'   => 'border-fantasy-200 dark:border-fantasy-700',
-            'wh40k'     => 'border-wh40k-200 dark:border-wh40k-700',
+            'primary'      => 'border-primary-200 dark:border-primary-700',
+            'secondary'    => 'border-secondary-200 dark:border-secondary-700',
+            'accent'       => 'border-accent-200 dark:border-accent-700',
+            'base'         => 'border-base-200 dark:border-base-700',
+            'info'         => 'border-info-200 dark:border-info-700',
+            'success'      => 'border-success-200 dark:border-success-700',
+            'warning'      => 'border-warning-200 dark:border-warning-700',
+            'danger'       => 'border-danger-200 dark:border-danger-700',
         ];
 
         $this->tabsId = $id !== '' ? $id : 'tabs-'.uniqid();
         $this->classList = 'w-full';
-        $this->listClasses = 'flex flex-wrap gap-x-1 border-b '.($listMap[$theme] ?? $listMap['slate']);
+        $this->listClasses = 'flex flex-wrap gap-x-1 border-b '.($listMap[$color] ?? $listMap['base']);
     }
 
     public function render(): View|Closure|string
     {
         ViewFacade::share('fltcTabs', [
             'id' => $this->tabsId,
-            'theme' => $this->theme,
+            'color' => $this->color,
             'active' => $this->active,
         ]);
 

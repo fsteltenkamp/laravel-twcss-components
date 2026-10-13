@@ -18,7 +18,7 @@ class Dropdown extends Component
     public string $menuClasses;
 
     public function __construct(
-        public string $theme = 'slate',
+        public string $color = 'base',
         public string $align = 'left',
         public string $position = 'bottom',
         public string $width = 'md',
@@ -47,13 +47,13 @@ class Dropdown extends Component
             $alignMap[$align] ?? $alignMap['left'],
             $positionMap[$position] ?? $positionMap['bottom'],
             $widthMap[$width] ?? $widthMap['md'],
-            SidebarTheme::menu($theme),
+            SidebarTheme::menu($color),
         ]));
     }
 
     public function render(): View|Closure|string
     {
-        ViewFacade::share('fltcDropdownTheme', $this->theme);
+        ViewFacade::share('fltcDropdownColor', $this->color);
 
         return view('fltc::components.dropdown');
     }

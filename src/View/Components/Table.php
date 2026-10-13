@@ -19,8 +19,7 @@ class Table extends TableBase
     public string $hoverClasses;
 
     public function __construct(
-        public string $theme = 'slate',
-        ?string $color = null,
+        public string $color = 'base',
         public string $radius = 'xl',
         public bool $striped = false,
         public bool $hover = true,
@@ -29,12 +28,7 @@ class Table extends TableBase
         public bool $responsive = true,
         public bool $floating = false,
     ) {
-        // Backward compatibility: allow legacy `color` while standardizing on `theme`.
-        if ($color !== null && $this->theme === 'gray') {
-            $this->theme = $color;
-        }
-
-        $colors = $this->getThemeColors($this->theme);
+        $colors = $this->getThemeColors($this->color);
 
         // The "floating" variant is a different border/spacing model (rows render as
         // separated rounded pills). It reuses the same theme colors and flows down to

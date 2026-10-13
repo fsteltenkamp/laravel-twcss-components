@@ -21,12 +21,12 @@ class Postlink extends Component
     public function __construct(
         string $action = '',
         public ?string $icon = null,
-        ?string $theme = null,
+        ?string $color = null,
         string $class = '',
     ) {
         $this->action = $action;
-        $resolvedTheme = $theme ?? (app('view')->getShared()['sidebarTheme'] ?? 'slate');
-        $this->hookTheme = $resolvedTheme;
+        $resolvedTheme = $color ?? (app('view')->getShared()['sidebarColor'] ?? 'base');
+        $this->hookColor = $resolvedTheme;
 
         $this->classList = trim(implode(' ', array_filter([
             'nav-link cursor-pointer flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition focus:outline-none focus-visible:ring-2',

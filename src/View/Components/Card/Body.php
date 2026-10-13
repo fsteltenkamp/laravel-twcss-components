@@ -12,9 +12,9 @@ class Body extends Component
     public string $classList;
 
     public function __construct(
-        public ?string $theme = null,
+        public ?string $color = null,
     ) {
-        $this->theme = $this->theme ?? ViewFacade::shared('tailwindCardTheme', 'slate');
+        $this->color = $this->color ?? ViewFacade::shared('tailwindCardColor', 'base');
 
         $themeMap = [
             'slate'   => 'bg-slate-50 text-slate-700 dark:bg-slate-800 dark:text-slate-200',
@@ -43,13 +43,17 @@ class Body extends Component
             'mauve'   => 'bg-mauve-50 text-mauve-700 dark:bg-mauve-900 dark:text-mauve-200',
             'mist'    => 'bg-mist-50 text-mist-700 dark:bg-mist-900 dark:text-mist-200',
             'olive'   => 'bg-olive-50 text-olive-700 dark:bg-olive-900 dark:text-olive-200',
-            'palette'    => 'bg-palette-50 text-palette-700 dark:bg-palette-900 dark:text-palette-200',
-            'cyberpunk' => 'bg-cyberpunk-50 text-cyberpunk-700 dark:bg-cyberpunk-900 dark:text-cyberpunk-200',
-            'fantasy' => 'bg-fantasy-50 text-fantasy-700 dark:bg-fantasy-900 dark:text-fantasy-200',
-            'wh40k'   => 'bg-wh40k-50 text-wh40k-700 dark:bg-wh40k-900 dark:text-wh40k-200',
+            'primary'    => 'bg-primary-50 text-primary-700 dark:bg-primary-900 dark:text-primary-200',
+            'secondary'  => 'bg-secondary-50 text-secondary-700 dark:bg-secondary-900 dark:text-secondary-200',
+            'accent'     => 'bg-accent-50 text-accent-700 dark:bg-accent-900 dark:text-accent-200',
+            'base'       => 'bg-base-50 text-base-700 dark:bg-base-900 dark:text-base-200',
+            'info'       => 'bg-info-50 text-info-700 dark:bg-info-900 dark:text-info-200',
+            'success'    => 'bg-success-50 text-success-700 dark:bg-success-900 dark:text-success-200',
+            'warning'    => 'bg-warning-50 text-warning-700 dark:bg-warning-900 dark:text-warning-200',
+            'danger'     => 'bg-danger-50 text-danger-700 dark:bg-danger-900 dark:text-danger-200',
         ];
 
-        $this->classList = 'px-4 py-4 ' . ($themeMap[$this->theme] ?? $themeMap['slate']);
+        $this->classList = 'px-4 py-4 ' . ($themeMap[$this->color] ?? $themeMap['base']);
     }
 
     public function render(): View|Closure|string

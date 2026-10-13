@@ -26,11 +26,11 @@ class Tab extends Component
         public bool $disabled = false,
         public string $icon = '',
         public string $iconVariant = 'regular',
-        public ?string $theme = null,
+        public ?string $color = null,
     ) {
         $tabs = ViewFacade::shared('fltcTabs', []);
 
-        $this->theme = $theme ?? ($tabs['theme'] ?? 'slate');
+        $this->color = $color ?? ($tabs['color'] ?? 'base');
         $this->tabsId = $tabs['id'] ?? 'tabs';
 
             $activeMap = [
@@ -60,10 +60,14 @@ class Tab extends Component
                 'mauve'     => 'border-mauve-500 text-mauve-900 dark:border-mauve-400 dark:text-mauve-100',
                 'mist'      => 'border-mist-500 text-mist-900 dark:border-mist-400 dark:text-mist-100',
                 'olive'     => 'border-olive-500 text-olive-900 dark:border-olive-400 dark:text-olive-100',
-                'palette'      => 'border-palette-500 text-palette-900 dark:border-palette-400 dark:text-palette-100',
-                'cyberpunk' => 'border-cyberpunk-500 text-cyberpunk-900 dark:border-cyberpunk-400 dark:text-cyberpunk-100',
-                'fantasy'   => 'border-fantasy-500 text-fantasy-900 dark:border-fantasy-400 dark:text-fantasy-100',
-                'wh40k'     => 'border-wh40k-500 text-wh40k-900 dark:border-wh40k-400 dark:text-wh40k-100',
+                'primary'      => 'border-primary-500 text-primary-900 dark:border-primary-400 dark:text-primary-100',
+                'secondary'    => 'border-secondary-500 text-secondary-900 dark:border-secondary-400 dark:text-secondary-100',
+                'accent'       => 'border-accent-500 text-accent-900 dark:border-accent-400 dark:text-accent-100',
+                'base'         => 'border-base-500 text-base-900 dark:border-base-400 dark:text-base-100',
+                'info'         => 'border-info-500 text-info-900 dark:border-info-400 dark:text-info-100',
+                'success'      => 'border-success-500 text-success-900 dark:border-success-400 dark:text-success-100',
+                'warning'      => 'border-warning-500 text-warning-900 dark:border-warning-400 dark:text-warning-100',
+                'danger'       => 'border-danger-500 text-danger-900 dark:border-danger-400 dark:text-danger-100',
             ];
 
             $inactiveMap = [
@@ -93,10 +97,14 @@ class Tab extends Component
                 'mauve'     => 'border-transparent text-mauve-500 hover:border-mauve-300 hover:text-mauve-700 dark:text-mauve-400 dark:hover:border-mauve-600 dark:hover:text-mauve-200',
                 'mist'      => 'border-transparent text-mist-500 hover:border-mist-300 hover:text-mist-700 dark:text-mist-400 dark:hover:border-mist-600 dark:hover:text-mist-200',
                 'olive'     => 'border-transparent text-olive-500 hover:border-olive-300 hover:text-olive-700 dark:text-olive-400 dark:hover:border-olive-600 dark:hover:text-olive-200',
-                'palette'      => 'border-transparent text-palette-500 hover:border-palette-300 hover:text-palette-700 dark:text-palette-400 dark:hover:border-palette-600 dark:hover:text-palette-200',
-                'cyberpunk' => 'border-transparent text-cyberpunk-500 hover:border-cyberpunk-300 hover:text-cyberpunk-700 dark:text-cyberpunk-400 dark:hover:border-cyberpunk-600 dark:hover:text-cyberpunk-200',
-                'fantasy'   => 'border-transparent text-fantasy-500 hover:border-fantasy-300 hover:text-fantasy-700 dark:text-fantasy-400 dark:hover:border-fantasy-600 dark:hover:text-fantasy-200',
-                'wh40k'     => 'border-transparent text-wh40k-500 hover:border-wh40k-300 hover:text-wh40k-700 dark:text-wh40k-400 dark:hover:border-wh40k-600 dark:hover:text-wh40k-200',
+                'primary'      => 'border-transparent text-primary-500 hover:border-primary-300 hover:text-primary-700 dark:text-primary-400 dark:hover:border-primary-600 dark:hover:text-primary-200',
+                'secondary'    => 'border-transparent text-secondary-500 hover:border-secondary-300 hover:text-secondary-700 dark:text-secondary-400 dark:hover:border-secondary-600 dark:hover:text-secondary-200',
+                'accent'       => 'border-transparent text-accent-500 hover:border-accent-300 hover:text-accent-700 dark:text-accent-400 dark:hover:border-accent-600 dark:hover:text-accent-200',
+                'base'         => 'border-transparent text-base-500 hover:border-base-300 hover:text-base-700 dark:text-base-400 dark:hover:border-base-600 dark:hover:text-base-200',
+                'info'         => 'border-transparent text-info-500 hover:border-info-300 hover:text-info-700 dark:text-info-400 dark:hover:border-info-600 dark:hover:text-info-200',
+                'success'      => 'border-transparent text-success-500 hover:border-success-300 hover:text-success-700 dark:text-success-400 dark:hover:border-success-600 dark:hover:text-success-200',
+                'warning'      => 'border-transparent text-warning-500 hover:border-warning-300 hover:text-warning-700 dark:text-warning-400 dark:hover:border-warning-600 dark:hover:text-warning-200',
+                'danger'       => 'border-transparent text-danger-500 hover:border-danger-300 hover:text-danger-700 dark:text-danger-400 dark:hover:border-danger-600 dark:hover:text-danger-200',
             ];
 
             $ringMap = [
@@ -126,19 +134,23 @@ class Tab extends Component
                 'mauve'     => 'focus-visible:ring-mauve-400 dark:focus-visible:ring-mauve-600',
                 'mist'      => 'focus-visible:ring-mist-400 dark:focus-visible:ring-mist-600',
                 'olive'     => 'focus-visible:ring-olive-400 dark:focus-visible:ring-olive-600',
-                'palette'      => 'focus-visible:ring-palette-400 dark:focus-visible:ring-palette-600',
-                'cyberpunk' => 'focus-visible:ring-cyberpunk-400 dark:focus-visible:ring-cyberpunk-600',
-                'fantasy'   => 'focus-visible:ring-fantasy-400 dark:focus-visible:ring-fantasy-600',
-                'wh40k'     => 'focus-visible:ring-wh40k-400 dark:focus-visible:ring-wh40k-600',
+                'primary'      => 'focus-visible:ring-primary-400 dark:focus-visible:ring-primary-600',
+                'secondary'    => 'focus-visible:ring-secondary-400 dark:focus-visible:ring-secondary-600',
+                'accent'       => 'focus-visible:ring-accent-400 dark:focus-visible:ring-accent-600',
+                'base'         => 'focus-visible:ring-base-400 dark:focus-visible:ring-base-600',
+                'info'         => 'focus-visible:ring-info-400 dark:focus-visible:ring-info-600',
+                'success'      => 'focus-visible:ring-success-400 dark:focus-visible:ring-success-600',
+                'warning'      => 'focus-visible:ring-warning-400 dark:focus-visible:ring-warning-600',
+                'danger'       => 'focus-visible:ring-danger-400 dark:focus-visible:ring-danger-600',
             ];
 
-        $this->activeClasses = $activeMap[$this->theme] ?? $activeMap['slate'];
-        $this->inactiveClasses = $inactiveMap[$this->theme] ?? $inactiveMap['slate'];
+        $this->activeClasses = $activeMap[$this->color] ?? $activeMap['base'];
+        $this->inactiveClasses = $inactiveMap[$this->color] ?? $inactiveMap['base'];
         $this->initiallyActive = $current || ($name !== '' && $name === ($tabs['active'] ?? ''));
 
         $this->classList = trim(implode(' ', [
             '-mb-px inline-flex items-center gap-2 whitespace-nowrap border-b-2 px-3 py-2 text-sm font-medium transition focus:outline-none focus-visible:ring-2 focus-visible:ring-inset',
-            $ringMap[$this->theme] ?? $ringMap['slate'],
+            $ringMap[$this->color] ?? $ringMap['base'],
             $disabled ? 'pointer-events-none cursor-not-allowed opacity-50' : 'cursor-pointer',
         ]));
     }

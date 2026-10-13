@@ -49,7 +49,7 @@
             <div class="flex flex-wrap items-center gap-2 sm:min-w-0 sm:flex-1">
                 @if ($hasBackward)
                     <x-fltc::button
-                        :theme="$theme"
+                        :color="$color"
                         variant="outline"
                         onclick="{{ $onclickPrefix }}util.stepperPreviousStep({{ $currentStepKey }})"
                     >
@@ -58,7 +58,7 @@
                     </x-fltc::button>
 
                     @if ($savebtn)
-                        <x-fltc::button theme="green" id="formularInstanceUpdateButton" onclick="submit()">
+                        <x-fltc::button color="green" id="formularInstanceUpdateButton" onclick="submit()">
                             <x-fltc::icon name="floppy-disk" />
                             <span>Speichern</span>
                         </x-fltc::button>
@@ -73,14 +73,14 @@
             <div class="flex flex-wrap items-center justify-start gap-2 sm:min-w-0 sm:flex-1 sm:justify-end">
                 @if ($hasForward)
                     @if ($savebtn)
-                        <x-fltc::button theme="green" id="formularInstanceUpdateButton" onclick="submit()">
+                        <x-fltc::button color="green" id="formularInstanceUpdateButton" onclick="submit()">
                             <x-fltc::icon name="floppy-disk" />
                             <span>Speichern</span>
                         </x-fltc::button>
                     @endif
 
                     <x-fltc::button
-                        :theme="$theme"
+                        :color="$color"
                         onclick="{{ $onclickPrefix }}util.stepperNextStep({{ $currentStepKey }})"
                     >
                         <span>Weiter</span>

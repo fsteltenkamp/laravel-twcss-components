@@ -24,12 +24,12 @@ class Group extends Component
         public string $model = '',
         public bool $live = false,
         public bool $required = false,
-        public string $theme = 'slate',
+        public string $color = 'base',
         public bool $horizontal = false,
         public bool $inline = false,
     ) {
         $this->classList = $inline ? 'min-w-0' : 'mb-4 min-w-0';
-        $this->legendClasses = 'mb-1 block text-sm font-medium '.Shades::secondary($theme);
+        $this->legendClasses = 'mb-1 block text-sm font-medium '.Shades::secondary($color);
         $this->optionsClasses = $horizontal ? 'flex flex-wrap items-center gap-x-6 gap-y-2' : 'flex flex-col gap-2';
     }
 
@@ -43,7 +43,7 @@ class Group extends Component
             'model' => $this->model,
             'live' => $this->live,
             'required' => $this->required,
-            'theme' => $this->theme,
+            'color' => $this->color,
         ]);
 
         return view('fltc::components.form.radio.group');

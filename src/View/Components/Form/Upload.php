@@ -34,7 +34,7 @@ class Upload extends Component
         public bool $disabled = false,
         public string $icon = 'upload-simple',
         public string $prompt = '',
-        public string $theme = 'slate',
+        public string $color = 'base',
         public bool $inline = false,
         public string $wrapperClass = '',
     ) {
@@ -65,10 +65,14 @@ class Upload extends Component
             'mauve'     => 'border-mauve-300 bg-mauve-50/60 hover:border-mauve-400 dark:border-mauve-600 dark:bg-mauve-900/40 dark:hover:border-mauve-500',
             'mist'      => 'border-mist-300 bg-mist-50/60 hover:border-mist-400 dark:border-mist-600 dark:bg-mist-900/40 dark:hover:border-mist-500',
             'olive'     => 'border-olive-300 bg-olive-50/60 hover:border-olive-400 dark:border-olive-600 dark:bg-olive-900/40 dark:hover:border-olive-500',
-            'palette'      => 'border-palette-300 bg-palette-50/60 hover:border-palette-400 dark:border-palette-600 dark:bg-palette-900/40 dark:hover:border-palette-500',
-            'cyberpunk' => 'border-cyberpunk-300 bg-cyberpunk-50/60 hover:border-cyberpunk-400 dark:border-cyberpunk-600 dark:bg-cyberpunk-900/40 dark:hover:border-cyberpunk-500',
-            'fantasy'   => 'border-fantasy-300 bg-fantasy-50/60 hover:border-fantasy-400 dark:border-fantasy-600 dark:bg-fantasy-900/40 dark:hover:border-fantasy-500',
-            'wh40k'     => 'border-wh40k-300 bg-wh40k-50/60 hover:border-wh40k-400 dark:border-wh40k-600 dark:bg-wh40k-900/40 dark:hover:border-wh40k-500',
+            'primary'      => 'border-primary-300 bg-primary-50/60 hover:border-primary-400 dark:border-primary-600 dark:bg-primary-900/40 dark:hover:border-primary-500',
+            'secondary'    => 'border-secondary-300 bg-secondary-50/60 hover:border-secondary-400 dark:border-secondary-600 dark:bg-secondary-900/40 dark:hover:border-secondary-500',
+            'accent'       => 'border-accent-300 bg-accent-50/60 hover:border-accent-400 dark:border-accent-600 dark:bg-accent-900/40 dark:hover:border-accent-500',
+            'base'         => 'border-base-300 bg-base-50/60 hover:border-base-400 dark:border-base-600 dark:bg-base-900/40 dark:hover:border-base-500',
+            'info'         => 'border-info-300 bg-info-50/60 hover:border-info-400 dark:border-info-600 dark:bg-info-900/40 dark:hover:border-info-500',
+            'success'      => 'border-success-300 bg-success-50/60 hover:border-success-400 dark:border-success-600 dark:bg-success-900/40 dark:hover:border-success-500',
+            'warning'      => 'border-warning-300 bg-warning-50/60 hover:border-warning-400 dark:border-warning-600 dark:bg-warning-900/40 dark:hover:border-warning-500',
+            'danger'       => 'border-danger-300 bg-danger-50/60 hover:border-danger-400 dark:border-danger-600 dark:bg-danger-900/40 dark:hover:border-danger-500',
         ];
 
         $dragMap = [
@@ -98,19 +102,23 @@ class Upload extends Component
             'mauve'     => 'border-mauve-500 bg-mauve-100 dark:border-mauve-400 dark:bg-mauve-800',
             'mist'      => 'border-mist-500 bg-mist-100 dark:border-mist-400 dark:bg-mist-800',
             'olive'     => 'border-olive-500 bg-olive-100 dark:border-olive-400 dark:bg-olive-800',
-            'palette'      => 'border-palette-500 bg-palette-100 dark:border-palette-400 dark:bg-palette-800',
-            'cyberpunk' => 'border-cyberpunk-500 bg-cyberpunk-100 dark:border-cyberpunk-400 dark:bg-cyberpunk-800',
-            'fantasy'   => 'border-fantasy-500 bg-fantasy-100 dark:border-fantasy-400 dark:bg-fantasy-800',
-            'wh40k'     => 'border-wh40k-500 bg-wh40k-100 dark:border-wh40k-400 dark:bg-wh40k-800',
+            'primary'      => 'border-primary-500 bg-primary-100 dark:border-primary-400 dark:bg-primary-800',
+            'secondary'    => 'border-secondary-500 bg-secondary-100 dark:border-secondary-400 dark:bg-secondary-800',
+            'accent'       => 'border-accent-500 bg-accent-100 dark:border-accent-400 dark:bg-accent-800',
+            'base'         => 'border-base-500 bg-base-100 dark:border-base-400 dark:bg-base-800',
+            'info'         => 'border-info-500 bg-info-100 dark:border-info-400 dark:bg-info-800',
+            'success'      => 'border-success-500 bg-success-100 dark:border-success-400 dark:bg-success-800',
+            'warning'      => 'border-warning-500 bg-warning-100 dark:border-warning-400 dark:bg-warning-800',
+            'danger'       => 'border-danger-500 bg-danger-100 dark:border-danger-400 dark:bg-danger-800',
         ];
 
-        $this->idleClasses = $idleMap[$theme] ?? $idleMap['slate'];
-        $this->dragClasses = $dragMap[$theme] ?? $dragMap['slate'];
+        $this->idleClasses = $idleMap[$color] ?? $idleMap['base'];
+        $this->dragClasses = $dragMap[$color] ?? $dragMap['base'];
         $this->zoneClasses = 'relative flex flex-col items-center justify-center gap-2 rounded-lg border-2 border-dashed px-6 py-8 text-center transition focus-within:ring-2 focus-within:ring-offset-2 '
-            .Shades::secondary($theme).' '
+            .Shades::secondary($color).' '
             .($disabled ? 'cursor-not-allowed opacity-60' : 'cursor-pointer');
-        $this->hintClasses = 'text-xs '.Shades::tertiary($theme);
-        $this->listClasses = 'mt-2 space-y-1 text-sm '.Shades::secondary($theme);
+        $this->hintClasses = 'text-xs '.Shades::tertiary($color);
+        $this->listClasses = 'mt-2 space-y-1 text-sm '.Shades::secondary($color);
 
         if ($this->prompt === '') {
             $this->prompt = $multiple ? __('Drop files here or click to browse') : __('Drop a file here or click to browse');

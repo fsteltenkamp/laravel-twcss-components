@@ -12,9 +12,9 @@ class Footer extends Component
     public string $classList;
 
     public function __construct(
-        public ?string $theme = null,
+        public ?string $color = null,
     ) {
-        $this->theme = $this->theme ?? ViewFacade::shared('tailwindCardTheme', 'slate');
+        $this->color = $this->color ?? ViewFacade::shared('tailwindCardColor', 'base');
 
         $themeMap = [
             'slate'   => 'bg-slate-200 text-slate-800 border-slate-200 dark:bg-slate-900 dark:text-slate-100 dark:border-slate-700',
@@ -43,13 +43,17 @@ class Footer extends Component
             'mauve'   => 'bg-mauve-200 text-mauve-900 border-mauve-200 dark:bg-mauve-950 dark:text-mauve-100 dark:border-mauve-900',
             'mist'    => 'bg-mist-200 text-mist-900 border-mist-200 dark:bg-mist-950 dark:text-mist-100 dark:border-mist-900',
             'olive'   => 'bg-olive-200 text-olive-900 border-olive-200 dark:bg-olive-950 dark:text-olive-100 dark:border-olive-900',
-            'palette'    => 'bg-palette-200 text-palette-900 border-palette-200 dark:bg-palette-950 dark:text-palette-100 dark:border-palette-900',
-            'cyberpunk' => 'bg-cyberpunk-200 text-cyberpunk-900 border-cyberpunk-200 dark:bg-cyberpunk-950 dark:text-cyberpunk-100 dark:border-cyberpunk-900',
-            'fantasy' => 'bg-fantasy-200 text-fantasy-900 border-fantasy-200 dark:bg-fantasy-950 dark:text-fantasy-100 dark:border-fantasy-900',
-            'wh40k'   => 'bg-wh40k-200 text-wh40k-900 border-wh40k-200 dark:bg-wh40k-950 dark:text-wh40k-100 dark:border-wh40k-900',
+            'primary'    => 'bg-primary-200 text-primary-900 border-primary-200 dark:bg-primary-950 dark:text-primary-100 dark:border-primary-900',
+            'secondary'  => 'bg-secondary-200 text-secondary-900 border-secondary-200 dark:bg-secondary-950 dark:text-secondary-100 dark:border-secondary-900',
+            'accent'     => 'bg-accent-200 text-accent-900 border-accent-200 dark:bg-accent-950 dark:text-accent-100 dark:border-accent-900',
+            'base'       => 'bg-base-200 text-base-900 border-base-200 dark:bg-base-950 dark:text-base-100 dark:border-base-900',
+            'info'       => 'bg-info-200 text-info-900 border-info-200 dark:bg-info-950 dark:text-info-100 dark:border-info-900',
+            'success'    => 'bg-success-200 text-success-900 border-success-200 dark:bg-success-950 dark:text-success-100 dark:border-success-900',
+            'warning'    => 'bg-warning-200 text-warning-900 border-warning-200 dark:bg-warning-950 dark:text-warning-100 dark:border-warning-900',
+            'danger'     => 'bg-danger-200 text-danger-900 border-danger-200 dark:bg-danger-950 dark:text-danger-100 dark:border-danger-900',
         ];
 
-        $this->classList = 'border-t px-4 py-3 ' . ($themeMap[$this->theme] ?? $themeMap['slate']);
+        $this->classList = 'border-t px-4 py-3 ' . ($themeMap[$this->color] ?? $themeMap['base']);
     }
 
     public function render(): View|Closure|string

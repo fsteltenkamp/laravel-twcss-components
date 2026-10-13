@@ -16,7 +16,7 @@ class Sidebar extends Component
      * Create a new component instance.
      */
     public function __construct(
-        public string $theme = 'slate',
+        public string $color = 'base',
         public string $class = '',
         public string $width = 'w-64',
         public string $heightClass = 'h-screen',
@@ -39,13 +39,13 @@ class Sidebar extends Component
             $drawerClasses,
             $this->heightClass,
             $this->width,
-            SidebarTheme::surface($this->theme),
+            SidebarTheme::surface($this->color),
             $this->class,
         ])));
 
         // Share the sidebar theme so child links/groups/footer inherit it
         // when no explicit theme is provided.
-        ViewFacade::share(['sidebarTheme' => $this->theme]);
+        ViewFacade::share(['sidebarColor' => $this->color]);
     }
 
     /**
@@ -54,7 +54,7 @@ class Sidebar extends Component
     public function render(): View|Closure|string
     {
         return view('fltc::components.nav.sidebar')
-            ->with('theme', $this->theme)
+            ->with('color', $this->color)
             ->with('collapsible', $this->collapsible)
             ->with('name', $this->name);
     }

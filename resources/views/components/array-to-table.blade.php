@@ -61,7 +61,7 @@
                             idPrefix="{{ $idPrefix ?? '' }}"
                             idSuffix="{{ $idSuffix ?? '' }}"
                             :debug="$debug ?? false"
-                            :theme="$theme"
+                            :color="$color"
                         />
                     </div>
                 </td>

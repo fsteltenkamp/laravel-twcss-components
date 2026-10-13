@@ -17,14 +17,14 @@ class Timeline extends Component
     public string $classList;
 
     public function __construct(
-        public string $theme = 'slate',
+        public string $color = 'base',
     ) {
-        $this->classList = 'relative ms-3 space-y-6 border-s-2 ps-6 '.SidebarTheme::divider($theme);
+        $this->classList = 'relative ms-3 space-y-6 border-s-2 ps-6 '.SidebarTheme::divider($color);
     }
 
     public function render(): View|Closure|string
     {
-        ViewFacade::share('fltcTimelineTheme', $this->theme);
+        ViewFacade::share('fltcTimelineColor', $this->color);
 
         return view('fltc::components.timeline');
     }

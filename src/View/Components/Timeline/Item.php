@@ -26,10 +26,10 @@ class Item extends Component
         public string $title = '',
         public string $href = '',
         public string $icon = '',
-        public ?string $theme = null,
+        public ?string $color = null,
     ) {
-        $this->theme = $theme ?? ViewFacade::shared('fltcTimelineTheme') ?? 'slate';
-        $theme = $this->theme;
+        $this->color = $color ?? ViewFacade::shared('fltcTimelineColor') ?? 'base';
+        $color = $this->color;
 
         $ringMap = [
             'slate'     => 'ring-white dark:ring-slate-950',
@@ -58,10 +58,14 @@ class Item extends Component
             'mauve'     => 'ring-white dark:ring-mauve-950',
             'mist'      => 'ring-white dark:ring-mist-950',
             'olive'     => 'ring-white dark:ring-olive-950',
-            'palette'      => 'ring-white dark:ring-palette-950',
-            'cyberpunk' => 'ring-white dark:ring-cyberpunk-950',
-            'fantasy'   => 'ring-white dark:ring-fantasy-950',
-            'wh40k'     => 'ring-white dark:ring-wh40k-950',
+            'primary'      => 'ring-white dark:ring-primary-950',
+            'secondary'    => 'ring-white dark:ring-secondary-950',
+            'accent'       => 'ring-white dark:ring-accent-950',
+            'base'         => 'ring-white dark:ring-base-950',
+            'info'         => 'ring-white dark:ring-info-950',
+            'success'      => 'ring-white dark:ring-success-950',
+            'warning'      => 'ring-white dark:ring-warning-950',
+            'danger'       => 'ring-white dark:ring-danger-950',
         ];
 
         // The dot sits on the line: the list is padded by ps-6 and the line is its 2px
@@ -69,14 +73,14 @@ class Item extends Component
         $this->dotClasses = trim(implode(' ', [
             'absolute top-0.5 flex items-center justify-center rounded-full ring-4',
             $icon !== '' ? '-start-[calc(1.5rem+0.75rem+1px)] h-6 w-6 text-xs text-white dark:text-black' : '-start-[calc(1.5rem+0.375rem+1px)] h-3 w-3 mt-1',
-            Shades::fill($theme),
-            $ringMap[$theme] ?? $ringMap['slate'],
+            Shades::fill($color),
+            $ringMap[$color] ?? $ringMap['base'],
         ]));
 
         $this->classList = 'relative';
-        $this->timeClasses = 'block text-xs '.Shades::tertiary($theme);
-        $this->titleClasses = 'font-semibold '.Shades::primary($theme);
-        $this->bodyClasses = 'mt-1 text-sm '.Shades::secondary($theme);
+        $this->timeClasses = 'block text-xs '.Shades::tertiary($color);
+        $this->titleClasses = 'font-semibold '.Shades::primary($color);
+        $this->bodyClasses = 'mt-1 text-sm '.Shades::secondary($color);
     }
 
     public function render(): View|Closure|string

@@ -15,7 +15,7 @@ class Counter extends Component
     public string $descriptionClasses;
 
     public function __construct(
-        public string $theme = 'slate',
+        public string $color = 'base',
         public string $iconColor = '',
         public string $title = '',
         public string $count = '',
@@ -54,13 +54,17 @@ class Counter extends Component
             'mauve'   => ['bg' => 'bg-mauve-50 dark:bg-mauve-950', 'border' => 'border-mauve-200 dark:border-mauve-800', 'count' => 'text-mauve-700 dark:text-mauve-300'],
             'mist'    => ['bg' => 'bg-mist-50 dark:bg-mist-950', 'border' => 'border-mist-200 dark:border-mist-800', 'count' => 'text-mist-700 dark:text-mist-300'],
             'olive'   => ['bg' => 'bg-olive-50 dark:bg-olive-950', 'border' => 'border-olive-200 dark:border-olive-800', 'count' => 'text-olive-700 dark:text-olive-300'],
-            'palette'    => ['bg' => 'bg-palette-50 dark:bg-palette-950', 'border' => 'border-palette-200 dark:border-palette-800', 'count' => 'text-palette-700 dark:text-palette-300'],
-            'cyberpunk' => ['bg' => 'bg-cyberpunk-50 dark:bg-cyberpunk-950', 'border' => 'border-cyberpunk-200 dark:border-cyberpunk-800', 'count' => 'text-cyberpunk-700 dark:text-cyberpunk-300'],
-            'fantasy' => ['bg' => 'bg-fantasy-50 dark:bg-fantasy-950', 'border' => 'border-fantasy-200 dark:border-fantasy-800', 'count' => 'text-fantasy-700 dark:text-fantasy-300'],
-            'wh40k'   => ['bg' => 'bg-wh40k-50 dark:bg-wh40k-950', 'border' => 'border-wh40k-200 dark:border-wh40k-800', 'count' => 'text-wh40k-700 dark:text-wh40k-300'],
+            'primary'    => ['bg' => 'bg-primary-50 dark:bg-primary-950', 'border' => 'border-primary-200 dark:border-primary-800', 'count' => 'text-primary-700 dark:text-primary-300'],
+            'secondary'  => ['bg' => 'bg-secondary-50 dark:bg-secondary-950', 'border' => 'border-secondary-200 dark:border-secondary-800', 'count' => 'text-secondary-700 dark:text-secondary-300'],
+            'accent'     => ['bg' => 'bg-accent-50 dark:bg-accent-950', 'border' => 'border-accent-200 dark:border-accent-800', 'count' => 'text-accent-700 dark:text-accent-300'],
+            'base'       => ['bg' => 'bg-base-50 dark:bg-base-950', 'border' => 'border-base-200 dark:border-base-800', 'count' => 'text-base-700 dark:text-base-300'],
+            'info'       => ['bg' => 'bg-info-50 dark:bg-info-950', 'border' => 'border-info-200 dark:border-info-800', 'count' => 'text-info-700 dark:text-info-300'],
+            'success'    => ['bg' => 'bg-success-50 dark:bg-success-950', 'border' => 'border-success-200 dark:border-success-800', 'count' => 'text-success-700 dark:text-success-300'],
+            'warning'    => ['bg' => 'bg-warning-50 dark:bg-warning-950', 'border' => 'border-warning-200 dark:border-warning-800', 'count' => 'text-warning-700 dark:text-warning-300'],
+            'danger'     => ['bg' => 'bg-danger-50 dark:bg-danger-950', 'border' => 'border-danger-200 dark:border-danger-800', 'count' => 'text-danger-700 dark:text-danger-300'],
         ];
 
-        $themeClasses = $themeMap[$this->theme] ?? $themeMap['slate'];
+        $themeClasses = $themeMap[$this->color] ?? $themeMap['base'];
 
         $this->classList = trim(implode(' ', [
             'flex flex-col rounded-xl border p-5 shadow-sm dark:shadow-lg',
@@ -71,8 +75,8 @@ class Counter extends Component
         ]));
 
         $this->counterClasses = 'mt-3 text-3xl font-semibold tracking-tight '.$themeClasses['count'];
-        $this->titleClasses = 'text-sm font-medium '.Shades::secondary($this->theme);
-        $this->descriptionClasses = 'mt-1 text-xs '.Shades::tertiary($this->theme);
+        $this->titleClasses = 'text-sm font-medium '.Shades::secondary($this->color);
+        $this->descriptionClasses = 'mt-1 text-xs '.Shades::tertiary($this->color);
     }
 
     public function render(): View|Closure|string

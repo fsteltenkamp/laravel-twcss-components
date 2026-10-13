@@ -1,7 +1,7 @@
 @php($hasIcon = filled(trim($icon)))
 @php($hasLabel = filled(trim($slot)))
 @if(filled(trim($tooltip)))
-    <x-fltc::tooltip :text="$tooltip" :theme="$theme" :class="$width === 'full' ? 'w-full' : ''">
+    <x-fltc::tooltip :text="$tooltip" :color="$color" :class="$width === 'full' ? 'w-full' : ''">
         <button
             @disabled($disabled)
             {{ $attributes->class([

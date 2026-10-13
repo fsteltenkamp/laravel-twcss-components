@@ -28,12 +28,12 @@ class Field extends Component
         public string $for = '',
         public string $name = '',
         public bool $required = false,
-        public string $theme = 'slate',
+        public string $color = 'base',
         public bool $inline = false,
     ) {
         $this->errorKey = rtrim($name !== '' ? $name : $for, '[]');
         $this->classList = $inline ? '' : 'mb-4';
-        $this->noteClasses = 'mt-1 text-xs '.Shades::tertiary($theme);
+        $this->noteClasses = 'mt-1 text-xs '.Shades::tertiary($color);
     }
 
     /**

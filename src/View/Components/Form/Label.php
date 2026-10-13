@@ -15,9 +15,9 @@ class Label extends Component
         public string $for = '',
         public bool $required = false,
         public string $description = '',
-        public string $theme = 'slate',
+        public string $color = 'base',
     ) {
-        $this->classList = 'mb-1 block text-sm font-medium '.Shades::secondary($theme);
+        $this->classList = 'mb-1 block text-sm font-medium '.Shades::secondary($color);
     }
 
     /**

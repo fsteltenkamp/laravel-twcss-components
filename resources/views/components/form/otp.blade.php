@@ -1,6 +1,6 @@
 @props([
     'length' => 6,
-    'theme' => 'slate',
+    'color' => 'base',
 ])
 @php
     $length = (int) $length;
@@ -40,7 +40,7 @@
             }
         },
     }"
-    {{ $attributes->only('class')->class(['fltc-form-otp', 'fltc-theme-'.$theme, 'flex items-center justify-center gap-2']) }}
+    {{ $attributes->only('class')->class(['fltc-form-otp', 'fltc-color-'.$color, 'flex items-center justify-center gap-2']) }}
 >
     @for ($i = 0; $i < $length; $i++)
         <input
@@ -53,7 +53,7 @@
             x-on:input="handleInput({{ $i }}, $event)"
             x-on:keydown="handleKeydown({{ $i }}, $event)"
             x-on:focus="$event.target.select()"
-            class="h-12 w-11 rounded-md border border-{{ $theme }}-300 bg-white text-center text-lg font-semibold text-{{ $theme }}-900 shadow-sm transition focus:border-{{ $theme }}-500 focus:outline-none focus:ring-2 focus:ring-{{ $theme }}-500 dark:border-{{ $theme }}-600 dark:bg-{{ $theme }}-950 dark:text-{{ $theme }}-100 dark:focus:border-{{ $theme }}-400 dark:focus:ring-{{ $theme }}-400"
+            class="h-12 w-11 rounded-md border border-{{ $color }}-300 bg-white text-center text-lg font-semibold text-{{ $color }}-900 shadow-sm transition focus:border-{{ $color }}-500 focus:outline-none focus:ring-2 focus:ring-{{ $color }}-500 dark:border-{{ $color }}-600 dark:bg-{{ $color }}-950 dark:text-{{ $color }}-100 dark:focus:border-{{ $color }}-400 dark:focus:ring-{{ $color }}-400"
         />
     @endfor
 

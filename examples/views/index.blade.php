@@ -3,7 +3,7 @@
     with the same $groups manifest used to build the individual pages, so the
     links here always stay in sync with what was generated.
 --}}
-<x-ex::layout title="Examples" theme="slate">
+<x-ex::layout title="Examples" color="slate">
     <div class="mx-auto w-full max-w-5xl px-4 py-12 sm:px-6 lg:px-8">
         <header class="mb-10 flex items-start justify-between gap-4">
             <div>

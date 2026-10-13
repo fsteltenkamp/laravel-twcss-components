@@ -4,7 +4,7 @@
 
 <div {{ $attributes->class(['mb-4']) }}>
     @if ($label !== '')
-        <x-fltc::form.label :for="$id" :required="$required" :theme="$theme ?? 'slate'">
+        <x-fltc::form.label :for="$id" :required="$required" :color="$color ?? 'base'">
             {{ $label }}
         </x-fltc::form.label>
     @endif

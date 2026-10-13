@@ -30,7 +30,7 @@ class MediaCard extends Component
     public function __construct(
         public string $layout = 'card',
         public string $href = '',
-        public string $theme = 'slate',
+        public string $color = 'base',
     ) {
         $this->layout = in_array($layout, static::LAYOUTS, true) ? $layout : 'card';
 
@@ -61,10 +61,14 @@ class MediaCard extends Component
                 'mauve'     => 'border-mauve-200 bg-white dark:border-mauve-700 dark:bg-mauve-900',
                 'mist'      => 'border-mist-200 bg-white dark:border-mist-700 dark:bg-mist-900',
                 'olive'     => 'border-olive-200 bg-white dark:border-olive-700 dark:bg-olive-900',
-                'palette'      => 'border-palette-200 bg-white dark:border-palette-700 dark:bg-palette-900',
-                'cyberpunk' => 'border-cyberpunk-200 bg-white dark:border-cyberpunk-700 dark:bg-cyberpunk-900',
-                'fantasy'   => 'border-fantasy-200 bg-white dark:border-fantasy-700 dark:bg-fantasy-900',
-                'wh40k'     => 'border-wh40k-200 bg-white dark:border-wh40k-700 dark:bg-wh40k-900',
+                'primary'      => 'border-primary-200 bg-white dark:border-primary-700 dark:bg-primary-900',
+                'secondary'    => 'border-secondary-200 bg-white dark:border-secondary-700 dark:bg-secondary-900',
+                'accent'       => 'border-accent-200 bg-white dark:border-accent-700 dark:bg-accent-900',
+                'base'         => 'border-base-200 bg-white dark:border-base-700 dark:bg-base-900',
+                'info'         => 'border-info-200 bg-white dark:border-info-700 dark:bg-info-900',
+                'success'      => 'border-success-200 bg-white dark:border-success-700 dark:bg-success-900',
+                'warning'      => 'border-warning-200 bg-white dark:border-warning-700 dark:bg-warning-900',
+                'danger'       => 'border-danger-200 bg-white dark:border-danger-700 dark:bg-danger-900',
             ];
 
             $hoverMap = [
@@ -94,10 +98,14 @@ class MediaCard extends Component
                 'mauve'     => 'hover:border-mauve-300 hover:shadow-md dark:hover:border-mauve-600',
                 'mist'      => 'hover:border-mist-300 hover:shadow-md dark:hover:border-mist-600',
                 'olive'     => 'hover:border-olive-300 hover:shadow-md dark:hover:border-olive-600',
-                'palette'      => 'hover:border-palette-300 hover:shadow-md dark:hover:border-palette-600',
-                'cyberpunk' => 'hover:border-cyberpunk-300 hover:shadow-md dark:hover:border-cyberpunk-600',
-                'fantasy'   => 'hover:border-fantasy-300 hover:shadow-md dark:hover:border-fantasy-600',
-                'wh40k'     => 'hover:border-wh40k-300 hover:shadow-md dark:hover:border-wh40k-600',
+                'primary'      => 'hover:border-primary-300 hover:shadow-md dark:hover:border-primary-600',
+                'secondary'    => 'hover:border-secondary-300 hover:shadow-md dark:hover:border-secondary-600',
+                'accent'       => 'hover:border-accent-300 hover:shadow-md dark:hover:border-accent-600',
+                'base'         => 'hover:border-base-300 hover:shadow-md dark:hover:border-base-600',
+                'info'         => 'hover:border-info-300 hover:shadow-md dark:hover:border-info-600',
+                'success'      => 'hover:border-success-300 hover:shadow-md dark:hover:border-success-600',
+                'warning'      => 'hover:border-warning-300 hover:shadow-md dark:hover:border-warning-600',
+                'danger'       => 'hover:border-danger-300 hover:shadow-md dark:hover:border-danger-600',
             ];
 
         $this->classList = trim(implode(' ', [
@@ -105,16 +113,16 @@ class MediaCard extends Component
             'data-[layout=card]:flex-col',
             'data-[layout=compact]:items-center data-[layout=compact]:gap-3 data-[layout=compact]:p-2',
             'data-[layout=list]:gap-4 data-[layout=list]:p-3',
-            $surfaceMap[$theme] ?? $surfaceMap['slate'],
-            $href !== '' ? ($hoverMap[$theme] ?? $hoverMap['slate']) : '',
+            $surfaceMap[$color] ?? $surfaceMap['base'],
+            $href !== '' ? ($hoverMap[$color] ?? $hoverMap['base']) : '',
         ]));
 
         $this->coverClasses = 'shrink-0 group-data-[layout=card]/media:w-full group-data-[layout=card]/media:[&_.fltc-cover]:rounded-none group-data-[layout=compact]/media:w-12 group-data-[layout=list]/media:w-20 sm:group-data-[layout=list]/media:w-24';
         $this->bodyClasses = 'flex min-w-0 flex-1 flex-col gap-1 group-data-[layout=card]/media:p-4';
-        $this->titleClasses = 'font-semibold leading-snug '.Shades::primary($theme).' group-data-[layout=compact]/media:truncate group-data-[layout=compact]/media:text-sm';
-        $this->metaClasses = 'text-xs '.Shades::tertiary($theme).' group-data-[layout=compact]/media:truncate';
+        $this->titleClasses = 'font-semibold leading-snug '.Shades::primary($color).' group-data-[layout=compact]/media:truncate group-data-[layout=compact]/media:text-sm';
+        $this->metaClasses = 'text-xs '.Shades::tertiary($color).' group-data-[layout=compact]/media:truncate';
         $this->badgesClasses = 'mt-1 flex flex-wrap gap-1 group-data-[layout=compact]/media:hidden';
-        $this->footerClasses = 'mt-auto pt-2 text-sm '.Shades::secondary($theme).' group-data-[layout=compact]/media:hidden';
+        $this->footerClasses = 'mt-auto pt-2 text-sm '.Shades::secondary($color).' group-data-[layout=compact]/media:hidden';
         $this->actionsClasses = 'relative z-10 flex shrink-0 items-center gap-1 group-data-[layout=card]/media:absolute group-data-[layout=card]/media:right-2 group-data-[layout=card]/media:top-2';
     }
 

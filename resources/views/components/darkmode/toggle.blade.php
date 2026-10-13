@@ -3,8 +3,8 @@
         <span data-darkmode-switch data-storage-key="{{ $storageKey }}">
             <x-fltc::form.checkbox
                 variant="toggle"
-                :theme="$theme"
-                :themeOff="$themeOff"
+                :color="$color"
+                :colorOff="$colorOff"
                 :size="$size"
                 iconChecked="moon"
                 iconUnchecked="sun"
@@ -13,9 +13,9 @@
         </span>
     @else
         <x-fltc::segmented
-            :theme="$theme"
+            :color="$color"
             :interactive="false"
-            label="Color theme"
+            label="Colour mode"
             data-darkmode-group
             :data-storage-key="$storageKey"
             :data-active-class="$activeClasses"
@@ -49,7 +49,7 @@
 
         const getKey = () => {
             const el = document.querySelector('[data-darkmode-group], [data-darkmode-switch]');
-            return el && el.dataset.storageKey ? el.dataset.storageKey : 'theme';
+            return el && el.dataset.storageKey ? el.dataset.storageKey : 'color';
         };
 
         const getPref = () => localStorage.getItem(getKey()) || DEFAULT;

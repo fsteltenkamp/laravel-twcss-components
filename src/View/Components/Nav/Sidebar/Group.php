@@ -30,11 +30,11 @@ class Group extends Component
         ?bool $open = null,
         ?string $activeWhen = null,
         ?string $id = null,
-        ?string $theme = null,
+        ?string $color = null,
         string $class = '',
     ) {
-        $resolvedTheme = $theme ?? (app('view')->getShared()['sidebarTheme'] ?? 'slate');
-        $this->hookTheme = $resolvedTheme;
+        $resolvedTheme = $color ?? (app('view')->getShared()['sidebarColor'] ?? 'base');
+        $this->hookColor = $resolvedTheme;
 
         $isActive = $activeWhen !== null && request()->is($activeWhen);
         $this->isOpen = $open ?? $isActive;

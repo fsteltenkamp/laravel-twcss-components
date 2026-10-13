@@ -9,7 +9,7 @@ use Illuminate\Support\ViewErrorBag;
 /**
  * Neutral hook classes (src/View/Component.php) are what skin stylesheets such as
  * resources/css/skin-effects.css target. Every component must carry them, so this
- * renders each class-backed component and looks for fltc-<tag> and fltc-theme-<theme>.
+ * renders each class-backed component and looks for fltc-<tag> and fltc-color-<theme>.
  */
 function classBackedComponents(): array
 {
@@ -52,7 +52,7 @@ it('renders its hook classes', function (string $tag, string $class) {
         'infocard' => '<x-slot:trigger>Ada</x-slot:trigger>',
     ];
 
-    $html = Blade::render("<x-fltc::{$tag} theme=\"rose\">".($content[$tag] ?? 'x')."</x-fltc::{$tag}>");
+    $html = Blade::render("<x-fltc::{$tag} color=\"rose\">".($content[$tag] ?? 'x')."</x-fltc::{$tag}>");
 
     expect($html)->toContain($class::hookName());
 
@@ -69,7 +69,7 @@ it('renders its hook classes', function (string $tag, string $class) {
     $takesTheme = $constructor && collect($constructor->getParameters())->contains(fn ($p) => $p->getName() === 'theme');
 
     if ($takesTheme || property_exists($class, 'theme')) {
-        expect($html)->toContain('fltc-theme-rose');
+        expect($html)->toContain('fltc-color-rose');
     }
 })->with(classBackedComponents());
 
@@ -79,12 +79,12 @@ it('names hooks after the component tag', function () {
 });
 
 it('keeps host classes next to the hooks', function () {
-    $html = Blade::render('<x-fltc::badge theme="palette" class="ml-2" id="b">x</x-fltc::badge>');
+    $html = Blade::render('<x-fltc::badge color="primary" class="ml-2" id="b">x</x-fltc::badge>');
 
     expect($html)
         ->toMatch('/class="[^"]*\bml-2\b[^"]*"/')
         ->toContain('fltc-badge')
-        ->toContain('fltc-theme-palette')
+        ->toContain('fltc-color-primary')
         ->toContain('id="b"');
 });
 
@@ -93,9 +93,9 @@ it('puts hooks on the anonymous components and teleported parts', function () {
         ->and(Blade::render('<x-fltc::subheading>x</x-fltc::subheading>'))->toContain('fltc-subheading')
         ->and(Blade::render('<x-fltc::separator />'))->toContain('fltc-separator')
         ->and(Blade::render('<x-fltc::modal name="m">x</x-fltc::modal>'))->toContain('fltc-modal')->toContain('fltc-modal-panel')
-        ->and(Blade::render('<x-fltc::form.otp theme="rose" />'))->toContain('fltc-form-otp')->toContain('fltc-theme-rose')
-        ->and(Blade::render('<x-fltc::drawer label="Wiki" theme="rose">x</x-fltc::drawer>'))->toMatch('/fltc-drawer-tab[^"]*fltc-theme-rose/')
-        ->and(Blade::render('<x-fltc::tooltip text="t" theme="rose">x</x-fltc::tooltip>'))->toMatch('/fltc-tooltip-bubble[^"]*fltc-theme-rose/');
+        ->and(Blade::render('<x-fltc::form.otp color="rose" />'))->toContain('fltc-form-otp')->toContain('fltc-color-rose')
+        ->and(Blade::render('<x-fltc::drawer label="Wiki" color="rose">x</x-fltc::drawer>'))->toMatch('/fltc-drawer-tab[^"]*fltc-color-rose/')
+        ->and(Blade::render('<x-fltc::tooltip text="t" color="rose">x</x-fltc::tooltip>'))->toMatch('/fltc-tooltip-bubble[^"]*fltc-color-rose/');
 });
 
 it('renders the glitch heading with its text for the effect layers', function () {
@@ -121,8 +121,8 @@ it('ships every font the skin stylesheet references, with its licence', function
 });
 
 it('puts part hooks on tables, checklists, steppers and the dark-mode toggle', function () {
-    expect(Blade::render('<x-fltc::table theme="rose" floating><x-fltc::table.row><x-fltc::table.cell>x</x-fltc::table.cell></x-fltc::table.row></x-fltc::table>'))
-        ->toMatch('/class="fltc-table-scroll fltc-theme-rose\s+fltc-table-floating/')
+    expect(Blade::render('<x-fltc::table color="rose" floating><x-fltc::table.row><x-fltc::table.cell>x</x-fltc::table.cell></x-fltc::table.row></x-fltc::table>'))
+        ->toMatch('/class="fltc-table-scroll fltc-color-rose\s+fltc-table-floating/')
         ->and(Blade::render('<x-fltc::form.checklist :items="[[\'label\' => \'a\', \'status\' => \'pending\']]" showProgress />'))
         ->toContain('fltc-form-checklist-list')->toContain('fltc-form-checklist-row')->toContain('fltc-form-checklist-track')
         ->and(Blade::render('<x-fltc::nav.stepper :steps="[[\'label\' => \'a\'], [\'label\' => \'b\']]" :stepIndex="1" />'))
@@ -138,7 +138,7 @@ it('renders native input parts for a dark background in dark mode', function () 
 
 it('hooks the theme that navbar and sidebar children inherit', function () {
     $navbar = Blade::render(<<<'BLADE'
-        <x-fltc::nav.navbar theme="rose">
+        <x-fltc::nav.navbar color="rose">
             <x-slot:left>
                 <x-fltc::nav.navbar.dropdown><x-slot:trigger>Menu</x-slot:trigger><x-fltc::nav.navbar.dropdown.link href="#">a</x-fltc::nav.navbar.dropdown.link></x-fltc::nav.navbar.dropdown>
             </x-slot:left>
@@ -146,11 +146,11 @@ it('hooks the theme that navbar and sidebar children inherit', function () {
         BLADE);
 
     expect($navbar)
-        ->toMatch('/class="[^"]*fltc-nav-navbar-dropdown fltc-theme-rose/')
-        ->toMatch('/class="[^"]*fltc-nav-navbar-dropdown-link fltc-theme-rose/');
+        ->toMatch('/class="[^"]*fltc-nav-navbar-dropdown fltc-color-rose/')
+        ->toMatch('/class="[^"]*fltc-nav-navbar-dropdown-link fltc-color-rose/');
 
     $sidebar = Blade::render(<<<'BLADE'
-        <x-fltc::nav.sidebar theme="rose">
+        <x-fltc::nav.sidebar color="rose">
             <x-slot:footer>
                 <x-fltc::nav.sidebar.profile name="Ada"><x-fltc::nav.sidebar.link href="#">Account</x-fltc::nav.sidebar.link></x-fltc::nav.sidebar.profile>
             </x-slot:footer>
@@ -158,7 +158,7 @@ it('hooks the theme that navbar and sidebar children inherit', function () {
         BLADE);
 
     expect($sidebar)
-        ->toMatch('/class="[^"]*fltc-nav-sidebar-profile fltc-theme-rose/')
+        ->toMatch('/class="[^"]*fltc-nav-sidebar-profile fltc-color-rose/')
         ->toContain('fltc-nav-sidebar-profile-trigger')
         ->toContain('fltc-nav-sidebar-profile-avatar')
         ->toContain('fltc-nav-sidebar-profile-menu');
@@ -200,27 +200,25 @@ it('styles the part hooks of the newer components', function () {
 });
 
 it('puts the theme hook on the body and the box so skin effects apply', function () {
-    expect(Blade::render('<x-fltc::body theme="cyberpunk">x</x-fltc::body>'))->toMatch('/<body class="[^"]*fltc-body fltc-theme-cyberpunk/')
-        ->and(Blade::render('<x-fltc::container.box theme="palette">x</x-fltc::container.box>'))->toContain('fltc-container-box fltc-theme-palette');
+    expect(Blade::render('<x-fltc::body color="cyberpunk">x</x-fltc::body>'))->toMatch('/<body class="[^"]*fltc-body fltc-color-cyberpunk/')
+        ->and(Blade::render('<x-fltc::container.box color="primary">x</x-fltc::container.box>'))->toContain('fltc-container-box fltc-color-primary');
 });
 
-it('takes the look only from data-skin and the colour from every theme', function () {
+it('takes the look only from data-skin and draws in every colour', function () {
     $css = file_get_contents(__DIR__.'/../resources/css/skin-effects.css');
 
-    // A theme never switches a look on by itself (outside the COLOURS section, where
-    // cyberpunk, fantasy and wh40k are colours like any other), and the old runtime
-    // colour is gone.
+    // Only data-skin switches a look on: no colour or theme hook selects one.
     $looks = preg_replace('#/\* =+ COLOURS =+ \*/.*?/\* =+ PAGE =+ \*/#s', '', $css);
     expect($looks)->not->toBe($css);
     expect($looks)
-        ->not->toMatch('/\.fltc-theme-(cyberpunk|fantasy|wh40k)(?![\w-])/')
-        ->not->toContain('fltc-theme-skin')
+        ->not->toMatch('/\.fltc-color-(cyberpunk|fantasy|wh40k)(?![\w-])/')
+        ->not->toContain('fltc-theme-')
         ->not->toContain('data-skin-shape')
-        ->toContain('[data-skin="cyberpunk"] [class*="fltc-theme-"]');
+        ->not->toContain('data-theme')
+        ->toContain('[data-skin="cyberpunk"] [class*="fltc-color-"]');
 
-    // Every theme sets the colour roles the skins draw in, in light and dark mode.
-    preg_match_all('/\[data-palette="([a-z0-9]+)"\]/', file_get_contents(__DIR__.'/../resources/css/palettes.css'), $palettes);
-    foreach ([...$palettes[1], 'palette'] as $theme) {
-        expect(substr_count($css, ".fltc-theme-{$theme},\n"))->toBe(2, "{$theme} needs light and dark colour roles");
+    // Every colour (palettes and roles) sets the roles the skins draw in, light and dark.
+    foreach ([...PALETTES, ...ROLES] as $color) {
+        expect(substr_count($css, ".fltc-color-{$color},\n"))->toBe(2, "{$color} needs light and dark colour roles");
     }
 });

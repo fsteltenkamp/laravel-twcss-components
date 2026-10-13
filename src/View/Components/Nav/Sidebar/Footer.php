@@ -15,11 +15,11 @@ class Footer extends Component
      * Create a new component instance.
      */
     public function __construct(
-        ?string $theme = null,
+        ?string $color = null,
         string $class = '',
     ) {
-        $resolvedTheme = $theme ?? (app('view')->getShared()['sidebarTheme'] ?? 'slate');
-        $this->hookTheme = $resolvedTheme;
+        $resolvedTheme = $color ?? (app('view')->getShared()['sidebarColor'] ?? 'base');
+        $this->hookColor = $resolvedTheme;
 
         $this->classList = trim(implode(' ', array_filter([
             'mt-auto shrink-0 space-y-1 border-t px-3 py-3',

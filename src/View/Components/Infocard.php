@@ -31,7 +31,7 @@ class Infocard extends Component
         public string $href = '',
         public string $linkLabel = '',
         public bool $preview = true,
-        public string $theme = 'slate',
+        public string $color = 'base',
     ) {
         $triggerMap = [
             'slate'     => 'decoration-slate-400 hover:decoration-slate-600 focus-visible:ring-slate-400 dark:decoration-slate-500 dark:hover:decoration-slate-300 dark:focus-visible:ring-slate-600',
@@ -60,10 +60,14 @@ class Infocard extends Component
             'mauve'     => 'decoration-mauve-400 hover:decoration-mauve-600 focus-visible:ring-mauve-400 dark:decoration-mauve-500 dark:hover:decoration-mauve-300 dark:focus-visible:ring-mauve-600',
             'mist'      => 'decoration-mist-400 hover:decoration-mist-600 focus-visible:ring-mist-400 dark:decoration-mist-500 dark:hover:decoration-mist-300 dark:focus-visible:ring-mist-600',
             'olive'     => 'decoration-olive-400 hover:decoration-olive-600 focus-visible:ring-olive-400 dark:decoration-olive-500 dark:hover:decoration-olive-300 dark:focus-visible:ring-olive-600',
-            'palette'      => 'decoration-palette-400 hover:decoration-palette-600 focus-visible:ring-palette-400 dark:decoration-palette-500 dark:hover:decoration-palette-300 dark:focus-visible:ring-palette-600',
-            'cyberpunk' => 'decoration-cyberpunk-400 hover:decoration-cyberpunk-600 focus-visible:ring-cyberpunk-400 dark:decoration-cyberpunk-500 dark:hover:decoration-cyberpunk-300 dark:focus-visible:ring-cyberpunk-600',
-            'fantasy'   => 'decoration-fantasy-400 hover:decoration-fantasy-600 focus-visible:ring-fantasy-400 dark:decoration-fantasy-500 dark:hover:decoration-fantasy-300 dark:focus-visible:ring-fantasy-600',
-            'wh40k'     => 'decoration-wh40k-400 hover:decoration-wh40k-600 focus-visible:ring-wh40k-400 dark:decoration-wh40k-500 dark:hover:decoration-wh40k-300 dark:focus-visible:ring-wh40k-600',
+            'primary'      => 'decoration-primary-400 hover:decoration-primary-600 focus-visible:ring-primary-400 dark:decoration-primary-500 dark:hover:decoration-primary-300 dark:focus-visible:ring-primary-600',
+            'secondary'    => 'decoration-secondary-400 hover:decoration-secondary-600 focus-visible:ring-secondary-400 dark:decoration-secondary-500 dark:hover:decoration-secondary-300 dark:focus-visible:ring-secondary-600',
+            'accent'       => 'decoration-accent-400 hover:decoration-accent-600 focus-visible:ring-accent-400 dark:decoration-accent-500 dark:hover:decoration-accent-300 dark:focus-visible:ring-accent-600',
+            'base'         => 'decoration-base-400 hover:decoration-base-600 focus-visible:ring-base-400 dark:decoration-base-500 dark:hover:decoration-base-300 dark:focus-visible:ring-base-600',
+            'info'         => 'decoration-info-400 hover:decoration-info-600 focus-visible:ring-info-400 dark:decoration-info-500 dark:hover:decoration-info-300 dark:focus-visible:ring-info-600',
+            'success'      => 'decoration-success-400 hover:decoration-success-600 focus-visible:ring-success-400 dark:decoration-success-500 dark:hover:decoration-success-300 dark:focus-visible:ring-success-600',
+            'warning'      => 'decoration-warning-400 hover:decoration-warning-600 focus-visible:ring-warning-400 dark:decoration-warning-500 dark:hover:decoration-warning-300 dark:focus-visible:ring-warning-600',
+            'danger'       => 'decoration-danger-400 hover:decoration-danger-600 focus-visible:ring-danger-400 dark:decoration-danger-500 dark:hover:decoration-danger-300 dark:focus-visible:ring-danger-600',
         ];
 
         $linkMap = [
@@ -93,19 +97,23 @@ class Infocard extends Component
             'mauve'     => 'text-mauve-700 hover:text-mauve-900 dark:text-mauve-300 dark:hover:text-mauve-100',
             'mist'      => 'text-mist-700 hover:text-mist-900 dark:text-mist-300 dark:hover:text-mist-100',
             'olive'     => 'text-olive-700 hover:text-olive-900 dark:text-olive-300 dark:hover:text-olive-100',
-            'palette'      => 'text-palette-700 hover:text-palette-900 dark:text-palette-300 dark:hover:text-palette-100',
-            'cyberpunk' => 'text-cyberpunk-700 hover:text-cyberpunk-900 dark:text-cyberpunk-300 dark:hover:text-cyberpunk-100',
-            'fantasy'   => 'text-fantasy-700 hover:text-fantasy-900 dark:text-fantasy-300 dark:hover:text-fantasy-100',
-            'wh40k'     => 'text-wh40k-700 hover:text-wh40k-900 dark:text-wh40k-300 dark:hover:text-wh40k-100',
+            'primary'      => 'text-primary-700 hover:text-primary-900 dark:text-primary-300 dark:hover:text-primary-100',
+            'secondary'    => 'text-secondary-700 hover:text-secondary-900 dark:text-secondary-300 dark:hover:text-secondary-100',
+            'accent'       => 'text-accent-700 hover:text-accent-900 dark:text-accent-300 dark:hover:text-accent-100',
+            'base'         => 'text-base-700 hover:text-base-900 dark:text-base-300 dark:hover:text-base-100',
+            'info'         => 'text-info-700 hover:text-info-900 dark:text-info-300 dark:hover:text-info-100',
+            'success'      => 'text-success-700 hover:text-success-900 dark:text-success-300 dark:hover:text-success-100',
+            'warning'      => 'text-warning-700 hover:text-warning-900 dark:text-warning-300 dark:hover:text-warning-100',
+            'danger'       => 'text-danger-700 hover:text-danger-900 dark:text-danger-300 dark:hover:text-danger-100',
         ];
 
         $this->classList = 'relative';
-        $this->triggerClasses = 'cursor-pointer rounded-sm underline decoration-dotted decoration-2 underline-offset-4 transition focus:outline-none focus-visible:ring-2 '.($triggerMap[$theme] ?? $triggerMap['slate']);
-        $this->previewClasses = 'pointer-events-none absolute left-0 top-full z-30 mt-1 block w-64 overflow-hidden rounded-lg border text-left '.SidebarTheme::menu($theme);
-        $this->cardClasses = 'my-2 block w-full max-w-md overflow-hidden rounded-lg border text-left shadow-sm '.SidebarTheme::surface($theme);
-        $this->titleClasses = 'flex items-center gap-2 font-semibold '.Shades::primary($theme);
-        $this->bodyClasses = 'block text-sm '.Shades::secondary($theme);
-        $this->linkClasses = 'inline-flex items-center gap-1 text-sm font-medium underline-offset-2 hover:underline '.($linkMap[$theme] ?? $linkMap['slate']);
+        $this->triggerClasses = 'cursor-pointer rounded-sm underline decoration-dotted decoration-2 underline-offset-4 transition focus:outline-none focus-visible:ring-2 '.($triggerMap[$color] ?? $triggerMap['base']);
+        $this->previewClasses = 'pointer-events-none absolute left-0 top-full z-30 mt-1 block w-64 overflow-hidden rounded-lg border text-left '.SidebarTheme::menu($color);
+        $this->cardClasses = 'my-2 block w-full max-w-md overflow-hidden rounded-lg border text-left shadow-sm '.SidebarTheme::surface($color);
+        $this->titleClasses = 'flex items-center gap-2 font-semibold '.Shades::primary($color);
+        $this->bodyClasses = 'block text-sm '.Shades::secondary($color);
+        $this->linkClasses = 'inline-flex items-center gap-1 text-sm font-medium underline-offset-2 hover:underline '.($linkMap[$color] ?? $linkMap['base']);
 
         if ($this->linkLabel === '') {
             $this->linkLabel = __('Read more');

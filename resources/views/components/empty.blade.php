@@ -1,7 +1,7 @@
 @props([
     'icon' => 'tray',
     'title' => '',
-    'theme' => 'slate',
+    'color' => 'base',
     'bordered' => false,
     'size' => 'md',
 ])
@@ -18,20 +18,20 @@
     $sizeSet = $sizes[$size] ?? $sizes['md'];
 
     $classList = trim(implode(' ', [
-        'fltc-empty fltc-theme-'.$theme.' flex flex-col items-center justify-center text-center',
+        'fltc-empty fltc-color-'.$color.' flex flex-col items-center justify-center text-center',
         $sizeSet['box'],
-        $bordered ? 'rounded-xl border-2 border-dashed '.\Fsteltenkamp\TwcssComponents\Support\SidebarTheme::divider($theme) : '',
+        $bordered ? 'rounded-xl border-2 border-dashed '.\Fsteltenkamp\TwcssComponents\Support\SidebarTheme::divider($color) : '',
     ]));
 @endphp
 <div {{ $attributes->class([$classList]) }}>
     @if ($icon)
-        <x-fltc::icon :name="$icon" @class(['fltc-empty-icon', $sizeSet['icon'], $shades::faint($theme)]) aria-hidden="true" />
+        <x-fltc::icon :name="$icon" @class(['fltc-empty-icon', $sizeSet['icon'], $shades::faint($color)]) aria-hidden="true" />
     @endif
     @if ($title !== '')
-        <p @class(['fltc-empty-title font-semibold', $sizeSet['title'], $shades::primary($theme)])>{{ $title }}</p>
+        <p @class(['fltc-empty-title font-semibold', $sizeSet['title'], $shades::primary($color)])>{{ $title }}</p>
     @endif
     @if ($slot->isNotEmpty())
-        <div @class(['fltc-empty-text max-w-md text-sm', $shades::tertiary($theme)])>{{ $slot }}</div>
+        <div @class(['fltc-empty-text max-w-md text-sm', $shades::tertiary($color)])>{{ $slot }}</div>
     @endif
     @isset($actions)
         <div class="fltc-empty-actions mt-2 flex flex-wrap items-center justify-center gap-2">{{ $actions }}</div>

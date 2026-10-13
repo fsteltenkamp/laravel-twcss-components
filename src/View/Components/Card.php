@@ -12,7 +12,7 @@ class Card extends Component
     public string $classList;
 
     public function __construct(
-        public string $theme = 'slate',
+        public string $color = 'base',
         public bool $fill = false,
         public string $class = '',
     ) {
@@ -45,13 +45,17 @@ class Card extends Component
             'mauve'   => ['border' => 'border-mauve-200 dark:border-mauve-900', 'text' => 'text-mauve-900 dark:text-mauve-100'],
             'mist'    => ['border' => 'border-mist-200 dark:border-mist-900', 'text' => 'text-mist-900 dark:text-mist-100'],
             'olive'   => ['border' => 'border-olive-200 dark:border-olive-900', 'text' => 'text-olive-900 dark:text-olive-100'],
-            'palette'    => ['border' => 'border-palette-200 dark:border-palette-900', 'text' => 'text-palette-900 dark:text-palette-100'],
-            'cyberpunk' => ['border' => 'border-cyberpunk-200 dark:border-cyberpunk-900', 'text' => 'text-cyberpunk-900 dark:text-cyberpunk-100'],
-            'fantasy' => ['border' => 'border-fantasy-200 dark:border-fantasy-900', 'text' => 'text-fantasy-900 dark:text-fantasy-100'],
-            'wh40k'   => ['border' => 'border-wh40k-200 dark:border-wh40k-900', 'text' => 'text-wh40k-900 dark:text-wh40k-100'],
+            'primary'    => ['border' => 'border-primary-200 dark:border-primary-900', 'text' => 'text-primary-900 dark:text-primary-100'],
+            'secondary'  => ['border' => 'border-secondary-200 dark:border-secondary-900', 'text' => 'text-secondary-900 dark:text-secondary-100'],
+            'accent'     => ['border' => 'border-accent-200 dark:border-accent-900', 'text' => 'text-accent-900 dark:text-accent-100'],
+            'base'       => ['border' => 'border-base-200 dark:border-base-900', 'text' => 'text-base-900 dark:text-base-100'],
+            'info'       => ['border' => 'border-info-200 dark:border-info-900', 'text' => 'text-info-900 dark:text-info-100'],
+            'success'    => ['border' => 'border-success-200 dark:border-success-900', 'text' => 'text-success-900 dark:text-success-100'],
+            'warning'    => ['border' => 'border-warning-200 dark:border-warning-900', 'text' => 'text-warning-900 dark:text-warning-100'],
+            'danger'     => ['border' => 'border-danger-200 dark:border-danger-900', 'text' => 'text-danger-900 dark:text-danger-100'],
         ];
 
-        $themeClasses = $themeMap[$this->theme] ?? $themeMap['slate'];
+        $themeClasses = $themeMap[$this->color] ?? $themeMap['base'];
 
         $this->classList = trim(implode(' ', [
             'overflow-hidden rounded-xl border shadow-sm dark:shadow-lg',
@@ -64,7 +68,7 @@ class Card extends Component
 
     public function render(): View|Closure|string
     {
-        ViewFacade::share('tailwindCardTheme', $this->theme);
+        ViewFacade::share('tailwindCardColor', $this->color);
 
         return view('fltc::components.card');
     }

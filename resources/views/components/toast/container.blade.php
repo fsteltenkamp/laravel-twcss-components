@@ -1,15 +1,15 @@
 {{--
     Dynamic toast container. Listens for `fltc:toast` (and `flux:toast` for Flux compat)
     window events and renders toasts with auto-dismiss, variant-specific layouts, and
-    full theme support.
+    full colour support.
 
     Usage:
         @persist('fltc-toasts')
             <x-fltc::toast.container position="bottom-right" />
         @endpersist
 
-    Dispatching (Alpine):   $dispatch('fltc:toast', { title: '…', theme: 'green', variant: 'card' })
-    Dispatching (Livewire): $this->dispatch('fltc:toast', title: '…', theme: 'green')
+    Dispatching (Alpine):   $dispatch('fltc:toast', { title: '…', color: 'success', variant: 'card' })
+    Dispatching (Livewire): $this->dispatch('fltc:toast', title: '…', color: 'success')
     Dispatching (JS):       window.dispatchEvent(new CustomEvent('fltc:toast', { detail: { title: '…' } }))
 --}}
 <div
@@ -17,7 +17,7 @@
         toasts: [],
         nextId: 0,
 
-        defaultTheme:   @js($theme),
+        defaultColor:   @js($color),
         defaultVariant: @js($variant),
         defaultDuration: @js($duration),
 
@@ -32,9 +32,9 @@
             };
 
             this._fluxHandler = (e) => {
-                const fluxMap = { success: 'green', warning: 'amber', danger: 'red', info: 'blue', default: 'gray' };
+                const fluxMap = { success: 'success', warning: 'warning', danger: 'danger', info: 'info', default: 'base' };
                 const d = e.detail || {};
-                this.add({ ...d, theme: fluxMap[d.variant] ?? this.defaultTheme });
+                this.add({ ...d, color: fluxMap[d.variant] ?? this.defaultColor });
             };
 
             window.addEventListener('fltc:toast', this._toastHandler);
@@ -53,7 +53,7 @@
                 title:   options.title   ?? '',
                 message: options.message ?? null,
                 icon:    options.icon    ?? null,
-                theme:   options.theme   ?? this.defaultTheme,
+                color:   options.color   ?? this.defaultColor,
                 variant: options.variant ?? this.defaultVariant,
                 duration: options.duration ?? this.defaultDuration,
                 visible: true,
@@ -73,19 +73,19 @@
         },
 
         wrapperClasses(toast) {
-            return (this.themeMap[toast.theme]?.[toast.variant] ?? this.themeMap.slate?.toast)?.wrapper ?? '';
+            return (this.themeMap[toast.color]?.[toast.variant] ?? this.themeMap.base?.toast)?.wrapper ?? '';
         },
 
         iconClasses(toast) {
-            return (this.themeMap[toast.theme]?.[toast.variant] ?? this.themeMap.slate?.toast)?.icon ?? '';
+            return (this.themeMap[toast.color]?.[toast.variant] ?? this.themeMap.base?.toast)?.icon ?? '';
         },
 
         closeClasses(toast) {
-            return (this.themeMap[toast.theme]?.[toast.variant] ?? this.themeMap.slate?.toast)?.close ?? '';
+            return (this.themeMap[toast.color]?.[toast.variant] ?? this.themeMap.base?.toast)?.close ?? '';
         },
 
         descClasses(toast) {
-            return (this.themeMap[toast.theme]?.[toast.variant] ?? this.themeMap.slate?.toast)?.desc ?? '';
+            return (this.themeMap[toast.color]?.[toast.variant] ?? this.themeMap.base?.toast)?.desc ?? '';
         },
     }"
     {{ $attributes->class([$classList]) }}

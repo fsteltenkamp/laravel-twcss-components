@@ -34,10 +34,14 @@ abstract class Input extends Component
         'mauve'    => 'border-mauve-300 placeholder-mauve-400 focus:border-mauve-500 focus:ring-mauve-500 dark:border-mauve-600 dark:placeholder-mauve-500 dark:focus:border-mauve-400 dark:focus:ring-mauve-400',
         'mist'     => 'border-mist-300 placeholder-mist-400 focus:border-mist-500 focus:ring-mist-500 dark:border-mist-600 dark:placeholder-mist-500 dark:focus:border-mist-400 dark:focus:ring-mist-400',
         'olive'    => 'border-olive-300 placeholder-olive-400 focus:border-olive-500 focus:ring-olive-500 dark:border-olive-600 dark:placeholder-olive-500 dark:focus:border-olive-400 dark:focus:ring-olive-400',
-        'palette'     => 'border-palette-300 placeholder-palette-400 focus:border-palette-500 focus:ring-palette-500 dark:border-palette-600 dark:placeholder-palette-500 dark:focus:border-palette-400 dark:focus:ring-palette-400',
-        'cyberpunk' => 'border-cyberpunk-300 placeholder-cyberpunk-400 focus:border-cyberpunk-500 focus:ring-cyberpunk-500 dark:border-cyberpunk-600 dark:placeholder-cyberpunk-500 dark:focus:border-cyberpunk-400 dark:focus:ring-cyberpunk-400',
-        'fantasy'  => 'border-fantasy-300 placeholder-fantasy-400 focus:border-fantasy-500 focus:ring-fantasy-500 dark:border-fantasy-600 dark:placeholder-fantasy-500 dark:focus:border-fantasy-400 dark:focus:ring-fantasy-400',
-        'wh40k'    => 'border-wh40k-300 placeholder-wh40k-400 focus:border-wh40k-500 focus:ring-wh40k-500 dark:border-wh40k-600 dark:placeholder-wh40k-500 dark:focus:border-wh40k-400 dark:focus:ring-wh40k-400',
+        'primary'     => 'border-primary-300 placeholder-primary-400 focus:border-primary-500 focus:ring-primary-500 dark:border-primary-600 dark:placeholder-primary-500 dark:focus:border-primary-400 dark:focus:ring-primary-400',
+        'secondary'   => 'border-secondary-300 placeholder-secondary-400 focus:border-secondary-500 focus:ring-secondary-500 dark:border-secondary-600 dark:placeholder-secondary-500 dark:focus:border-secondary-400 dark:focus:ring-secondary-400',
+        'accent'      => 'border-accent-300 placeholder-accent-400 focus:border-accent-500 focus:ring-accent-500 dark:border-accent-600 dark:placeholder-accent-500 dark:focus:border-accent-400 dark:focus:ring-accent-400',
+        'base'        => 'border-base-300 placeholder-base-400 focus:border-base-500 focus:ring-base-500 dark:border-base-600 dark:placeholder-base-500 dark:focus:border-base-400 dark:focus:ring-base-400',
+        'info'        => 'border-info-300 placeholder-info-400 focus:border-info-500 focus:ring-info-500 dark:border-info-600 dark:placeholder-info-500 dark:focus:border-info-400 dark:focus:ring-info-400',
+        'success'     => 'border-success-300 placeholder-success-400 focus:border-success-500 focus:ring-success-500 dark:border-success-600 dark:placeholder-success-500 dark:focus:border-success-400 dark:focus:ring-success-400',
+        'warning'     => 'border-warning-300 placeholder-warning-400 focus:border-warning-500 focus:ring-warning-500 dark:border-warning-600 dark:placeholder-warning-500 dark:focus:border-warning-400 dark:focus:ring-warning-400',
+        'danger'      => 'border-danger-300 placeholder-danger-400 focus:border-danger-500 focus:ring-danger-500 dark:border-danger-600 dark:placeholder-danger-500 dark:focus:border-danger-400 dark:focus:ring-danger-400',
     ];
 
     // dark:[color-scheme:dark] makes native parts (date picker icon and popup, select
@@ -56,24 +60,24 @@ abstract class Input extends Component
      */
     public function iconClasses(): string
     {
-        return Shades::tertiary($this->theme);
+        return Shades::tertiary($this->color);
     }
 
-    protected function getBackgroundClasses($theme = 'slate'): string
+    protected function getBackgroundClasses($color = 'base'): string
     {
         // Surface + Primary Content shades (see README "Color shades"). The input sits
         // one step off the page background and uses the theme's high-contrast text so it
         // stays legible after a dark-mode switch without the host setting anything.
-        return "bg-white dark:bg-$theme-950 text-$theme-900 dark:text-$theme-100";
+        return "bg-white dark:bg-$color-950 text-$color-900 dark:text-$color-100";
     }
 
-    protected function getNormalClasses(string $theme = 'slate', string $class = ''): string
+    protected function getNormalClasses(string $color = 'base', string $class = ''): string
     {
         return trim(implode(' ', [
             $this->baseClasses,
             $this->leftPadding(),
-            $this->getBackgroundClasses($theme),
-            $this->themeMap[$theme] ?? $this->themeMap['slate'],
+            $this->getBackgroundClasses($color),
+            $this->themeMap[$color] ?? $this->themeMap['base'],
             $class,
         ]));
     }

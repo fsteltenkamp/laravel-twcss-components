@@ -43,7 +43,7 @@ class Stepper extends Component
         public bool $iconsOnly = false,
         public bool $savebtn = false,
         public string $onclick = '',
-        public string $theme = 'slate',
+        public string $color = 'base',
         public string $class = '',
         public string $stepParam = 'step',
     ) {
@@ -74,10 +74,14 @@ class Stepper extends Component
             'mauve' => 'border-mauve-200 bg-mauve-50/70 dark:border-mauve-700 dark:bg-mauve-950/30',
             'mist' => 'border-mist-200 bg-mist-50/70 dark:border-mist-700 dark:bg-mist-950/30',
             'olive' => 'border-olive-200 bg-olive-50/70 dark:border-olive-700 dark:bg-olive-950/30',
-            'palette'  => 'border-palette-200 bg-palette-50/70 dark:border-palette-700 dark:bg-palette-950/30',
-            'cyberpunk' => 'border-cyberpunk-200 bg-cyberpunk-50/70 dark:border-cyberpunk-700 dark:bg-cyberpunk-950/30',
-            'fantasy' => 'border-fantasy-200 bg-fantasy-50/70 dark:border-fantasy-700 dark:bg-fantasy-950/30',
-            'wh40k' => 'border-wh40k-200 bg-wh40k-50/70 dark:border-wh40k-700 dark:bg-wh40k-950/30',
+            'primary'  => 'border-primary-200 bg-primary-50/70 dark:border-primary-700 dark:bg-primary-950/30',
+            'secondary' => 'border-secondary-200 bg-secondary-50/70 dark:border-secondary-700 dark:bg-secondary-950/30',
+            'accent'   => 'border-accent-200 bg-accent-50/70 dark:border-accent-700 dark:bg-accent-950/30',
+            'base'     => 'border-base-200 bg-base-50/70 dark:border-base-700 dark:bg-base-950/30',
+            'info'     => 'border-info-200 bg-info-50/70 dark:border-info-700 dark:bg-info-950/30',
+            'success'  => 'border-success-200 bg-success-50/70 dark:border-success-700 dark:bg-success-950/30',
+            'warning'  => 'border-warning-200 bg-warning-50/70 dark:border-warning-700 dark:bg-warning-950/30',
+            'danger'   => 'border-danger-200 bg-danger-50/70 dark:border-danger-700 dark:bg-danger-950/30',
         ];
 
         $activeThemeMap = [
@@ -107,10 +111,14 @@ class Stepper extends Component
             'mauve'   => 'border-mauve-600 text-mauve-700 dark:border-mauve-400 dark:text-mauve-300',
             'mist'    => 'border-mist-600 text-mist-700 dark:border-mist-400 dark:text-mist-300',
             'olive'   => 'border-olive-600 text-olive-700 dark:border-olive-400 dark:text-olive-300',
-            'palette'    => 'border-palette-600 text-palette-700 dark:border-palette-400 dark:text-palette-300',
-            'cyberpunk' => 'border-cyberpunk-600 text-cyberpunk-700 dark:border-cyberpunk-400 dark:text-cyberpunk-300',
-            'fantasy' => 'border-fantasy-600 text-fantasy-700 dark:border-fantasy-400 dark:text-fantasy-300',
-            'wh40k'   => 'border-wh40k-600 text-wh40k-700 dark:border-wh40k-400 dark:text-wh40k-300',
+            'primary'    => 'border-primary-600 text-primary-700 dark:border-primary-400 dark:text-primary-300',
+            'secondary'  => 'border-secondary-600 text-secondary-700 dark:border-secondary-400 dark:text-secondary-300',
+            'accent'     => 'border-accent-600 text-accent-700 dark:border-accent-400 dark:text-accent-300',
+            'base'       => 'border-base-600 text-base-700 dark:border-base-400 dark:text-base-300',
+            'info'       => 'border-info-600 text-info-700 dark:border-info-400 dark:text-info-300',
+            'success'    => 'border-success-600 text-success-700 dark:border-success-400 dark:text-success-300',
+            'warning'    => 'border-warning-600 text-warning-700 dark:border-warning-400 dark:text-warning-300',
+            'danger'     => 'border-danger-600 text-danger-700 dark:border-danger-400 dark:text-danger-300',
         ];
 
         $tabsBorderThemeMap = [
@@ -140,10 +148,14 @@ class Stepper extends Component
             'mauve'   => 'border-mauve-200 dark:border-mauve-800',
             'mist'    => 'border-mist-200 dark:border-mist-800',
             'olive'   => 'border-olive-200 dark:border-olive-800',
-            'palette'    => 'border-palette-200 dark:border-palette-800',
-            'cyberpunk' => 'border-cyberpunk-200 dark:border-cyberpunk-800',
-            'fantasy' => 'border-fantasy-200 dark:border-fantasy-800',
-            'wh40k'   => 'border-wh40k-200 dark:border-wh40k-800',
+            'primary'    => 'border-primary-200 dark:border-primary-800',
+            'secondary'  => 'border-secondary-200 dark:border-secondary-800',
+            'accent'     => 'border-accent-200 dark:border-accent-800',
+            'base'       => 'border-base-200 dark:border-base-800',
+            'info'       => 'border-info-200 dark:border-info-800',
+            'success'    => 'border-success-200 dark:border-success-800',
+            'warning'    => 'border-warning-200 dark:border-warning-800',
+            'danger'     => 'border-danger-200 dark:border-danger-800',
         ];
 
         // inactive tab state is theme-neutral: transparent border, gray text, hover reveals border
@@ -176,16 +188,20 @@ class Stepper extends Component
             'mauve' => 'text-mauve-700 dark:text-mauve-200',
             'mist' => 'text-mist-700 dark:text-mist-200',
             'olive' => 'text-olive-700 dark:text-olive-200',
-            'palette'  => 'text-palette-700 dark:text-palette-200',
-            'cyberpunk' => 'text-cyberpunk-700 dark:text-cyberpunk-200',
-            'fantasy' => 'text-fantasy-700 dark:text-fantasy-200',
-            'wh40k' => 'text-wh40k-700 dark:text-wh40k-200',
+            'primary'  => 'text-primary-700 dark:text-primary-200',
+            'secondary' => 'text-secondary-700 dark:text-secondary-200',
+            'accent'   => 'text-accent-700 dark:text-accent-200',
+            'base'     => 'text-base-700 dark:text-base-200',
+            'info'     => 'text-info-700 dark:text-info-200',
+            'success'  => 'text-success-700 dark:text-success-200',
+            'warning'  => 'text-warning-700 dark:text-warning-200',
+            'danger'   => 'text-danger-700 dark:text-danger-200',
         ];
 
-        $selectedContainerTheme = $containerThemeMap[$this->theme] ?? $containerThemeMap['slate'];
-        $selectedActiveTheme = $activeThemeMap[$this->theme] ?? $activeThemeMap['slate'];
-        $selectedTabsBorder = $tabsBorderThemeMap[$this->theme] ?? $tabsBorderThemeMap['slate'];
-        $selectedSummaryTheme = $summaryThemeMap[$this->theme] ?? $summaryThemeMap['slate'];
+        $selectedContainerTheme = $containerThemeMap[$this->color] ?? $containerThemeMap['base'];
+        $selectedActiveTheme = $activeThemeMap[$this->color] ?? $activeThemeMap['base'];
+        $selectedTabsBorder = $tabsBorderThemeMap[$this->color] ?? $tabsBorderThemeMap['base'];
+        $selectedSummaryTheme = $summaryThemeMap[$this->color] ?? $summaryThemeMap['base'];
 
         $this->classList = trim(implode(' ', array_filter([
             'w-full py-2',

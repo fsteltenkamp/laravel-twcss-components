@@ -11,7 +11,7 @@ class Link extends Component
     public string $classList;
     public string $href;
 
-    public function __construct(public string $theme = 'slate', string $class = '', string $href = '#')
+    public function __construct(public string $color = 'base', string $class = '', string $href = '#')
     {
         $this->href = $href;
 
@@ -42,15 +42,19 @@ class Link extends Component
             'mauve'   => 'text-mauve-700 hover:text-mauve-800 dark:text-mauve-300 dark:hover:text-mauve-200',
             'mist'    => 'text-mist-700 hover:text-mist-800 dark:text-mist-300 dark:hover:text-mist-200',
             'olive'   => 'text-olive-700 hover:text-olive-800 dark:text-olive-300 dark:hover:text-olive-200',
-            'palette'    => 'text-palette-700 hover:text-palette-800 dark:text-palette-300 dark:hover:text-palette-200',
-            'cyberpunk' => 'text-cyberpunk-700 hover:text-cyberpunk-800 dark:text-cyberpunk-300 dark:hover:text-cyberpunk-200',
-            'fantasy' => 'text-fantasy-700 hover:text-fantasy-800 dark:text-fantasy-300 dark:hover:text-fantasy-200',
-            'wh40k'   => 'text-wh40k-700 hover:text-wh40k-800 dark:text-wh40k-300 dark:hover:text-wh40k-200',
+            'primary'    => 'text-primary-700 hover:text-primary-800 dark:text-primary-300 dark:hover:text-primary-200',
+            'secondary'  => 'text-secondary-700 hover:text-secondary-800 dark:text-secondary-300 dark:hover:text-secondary-200',
+            'accent'     => 'text-accent-700 hover:text-accent-800 dark:text-accent-300 dark:hover:text-accent-200',
+            'base'       => 'text-base-700 hover:text-base-800 dark:text-base-300 dark:hover:text-base-200',
+            'info'       => 'text-info-700 hover:text-info-800 dark:text-info-300 dark:hover:text-info-200',
+            'success'    => 'text-success-700 hover:text-success-800 dark:text-success-300 dark:hover:text-success-200',
+            'warning'    => 'text-warning-700 hover:text-warning-800 dark:text-warning-300 dark:hover:text-warning-200',
+            'danger'     => 'text-danger-700 hover:text-danger-800 dark:text-danger-300 dark:hover:text-danger-200',
         ];
 
         $this->classList = trim(implode(' ', [
             'font-medium hover:underline',
-            $themeMap[$theme] ?? $themeMap['slate'],
+            $themeMap[$color] ?? $themeMap['base'],
             $class,
         ]));
     }

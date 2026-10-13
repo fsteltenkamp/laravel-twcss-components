@@ -20,7 +20,7 @@ class Select extends Input
         public string $placeholder = '',
         public bool $required = false,
         public bool $disabled = false,
-        public string $theme = 'slate',
+        public string $color = 'base',
         public string $class = '',
         public string $label = '',
         public string $icon = '',
@@ -33,7 +33,7 @@ class Select extends Input
             $this->name = $this->id;
         }
 
-        $this->normalClasses = $this->getNormalClasses($theme, $class);
+        $this->normalClasses = $this->getNormalClasses($color, $class);
         $this->errorClasses = $this->getErrorClasses($class);
 
         if (empty($id)) {

@@ -37,7 +37,7 @@
             @if (isset($button) && $button instanceof \Illuminate\View\ComponentSlot)
                 {{ $button }}
             @else
-                <x-fltc::button :theme="$theme" icon="eye" x-on:click="reveal()">{{ $buttonLabel }}</x-fltc::button>
+                <x-fltc::button :color="$color" icon="eye" x-on:click="reveal()">{{ $buttonLabel }}</x-fltc::button>
             @endif
         </div>
     </div>

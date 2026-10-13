@@ -1,6 +1,6 @@
 <div data-card-rows {{ $attributes->class([$classList]) }}>
     <x-fltc::table
-        :theme="$theme"
+        :color="$color"
         :striped="$striped"
         :hover="$hover"
         :bordered="$bordered"

@@ -51,7 +51,7 @@
 
     <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
 </head>
-<x-fltc::body :theme="$theme">
+<x-fltc::body :color="$theme">
     {{ $slot }}
 </x-fltc::body>
 </html>

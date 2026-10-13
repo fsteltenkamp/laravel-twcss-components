@@ -11,7 +11,7 @@ class Box extends Component
     public string $classList;
     public ?string $id;
 
-    public function __construct(public string $theme = 'slate', string $class = '', ?string $id = null)
+    public function __construct(public string $color = 'base', string $class = '', ?string $id = null)
     {
         $this->id = $id;
 
@@ -42,16 +42,20 @@ class Box extends Component
             'mauve'   => 'border-mauve-200 dark:border-mauve-700 bg-white dark:bg-mauve-900',
             'mist'    => 'border-mist-200 dark:border-mist-700 bg-white dark:bg-mist-900',
             'olive'   => 'border-olive-200 dark:border-olive-700 bg-white dark:bg-olive-900',
-            'palette'    => 'border-palette-200 dark:border-palette-700 bg-white dark:bg-palette-900',
-            'cyberpunk' => 'border-cyberpunk-200 dark:border-cyberpunk-700 bg-white dark:bg-cyberpunk-900',
-            'fantasy' => 'border-fantasy-200 dark:border-fantasy-700 bg-white dark:bg-fantasy-900',
-            'wh40k'   => 'border-wh40k-200 dark:border-wh40k-700 bg-white dark:bg-wh40k-900',
+            'primary'    => 'border-primary-200 dark:border-primary-700 bg-white dark:bg-primary-900',
+            'secondary'  => 'border-secondary-200 dark:border-secondary-700 bg-white dark:bg-secondary-900',
+            'accent'     => 'border-accent-200 dark:border-accent-700 bg-white dark:bg-accent-900',
+            'base'       => 'border-base-200 dark:border-base-700 bg-white dark:bg-base-900',
+            'info'       => 'border-info-200 dark:border-info-700 bg-white dark:bg-info-900',
+            'success'    => 'border-success-200 dark:border-success-700 bg-white dark:bg-success-900',
+            'warning'    => 'border-warning-200 dark:border-warning-700 bg-white dark:bg-warning-900',
+            'danger'     => 'border-danger-200 dark:border-danger-700 bg-white dark:bg-danger-900',
         ];
 
         // Resolve to a known theme so the interpolated Primary Content classes below
         // always reference a real palette (the literals are emitted by Body.php, so
         // Tailwind generates them for every theme).
-        $resolved = isset($themeMap[$theme]) ? $theme : 'slate';
+        $resolved = isset($themeMap[$color]) ? $color : 'base';
 
         $this->classList = trim(implode(' ', [
             'rounded-xl border p-4 shadow-sm dark:shadow-lg',

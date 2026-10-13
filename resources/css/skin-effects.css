@@ -4,11 +4,11 @@
  * region; it is independent of colour:
  *     <html data-skin="cyberpunk">      cyberpunk look for every component inside
  *     <html data-skin="default">        plain Tailwind (same as no data-skin)
- * Every component inside takes the skin in its own colour (its `theme`): see COLOURS.
+ * Every component inside takes the skin in its own colour (its `color`): see COLOURS.
  * Page-level effects (body font, background, cyberpunk scanlines) apply to the <body>
  * inside a skinned <html>, or to a <body data-skin="…">.
  *
- * Opt-in plain CSS: import it after Tailwind, next to themes.css and palettes.css.
+ * Opt-in plain CSS: import it after Tailwind, next to colors.css and themes.css.
  *
  * Text glow only shows in dark mode (`dark` class on an ancestor).
  *
@@ -277,16 +277,16 @@
     --fltc-font-body: "Share Tech Mono", monospace;
     --fltc-font-term: "VT323", monospace;
     --fltc-radius: 0;
-    --fltc-fx-accent: 196 0 143;
-    --fltc-fx-text: 0 112 124;
-    --fltc-fx-third: 122 31 208;
+    --fltc-fx-accent: var(--fltc-base-600);
+    --fltc-fx-text: var(--fltc-base-700);
+    --fltc-fx-third: var(--fltc-accent-500);
     --fltc-fx-ink: 246 242 251;
     --fltc-fx-glow: 0;
 }
 :is(.dark[data-skin="cyberpunk"], .dark [data-skin="cyberpunk"]) {
-    --fltc-fx-accent: 255 43 214;
-    --fltc-fx-text: 0 255 240;
-    --fltc-fx-third: 157 0 255;
+    --fltc-fx-accent: var(--fltc-base-400);
+    --fltc-fx-text: var(--fltc-base-300);
+    --fltc-fx-third: var(--fltc-accent-400);
     --fltc-fx-ink: 4 2 10;
     --fltc-fx-glow: 0.6;
 }
@@ -296,16 +296,16 @@
     --fltc-font-body: "EB Garamond", Georgia, serif;
     --fltc-font-term: "EB Garamond", Georgia, serif;
     --fltc-radius: 0.25rem;
-    --fltc-fx-accent: 138 90 18;
-    --fltc-fx-text: 80 60 30;
-    --fltc-fx-third: 138 109 31;
+    --fltc-fx-accent: var(--fltc-base-600);
+    --fltc-fx-text: var(--fltc-base-700);
+    --fltc-fx-third: var(--fltc-accent-500);
     --fltc-fx-ink: 240 230 207;
     --fltc-fx-glow: 0;
 }
 :is(.dark[data-skin="fantasy"], .dark [data-skin="fantasy"]) {
-    --fltc-fx-accent: 217 142 50;
-    --fltc-fx-text: 230 215 174;
-    --fltc-fx-third: 242 201 76;
+    --fltc-fx-accent: var(--fltc-base-400);
+    --fltc-fx-text: var(--fltc-base-300);
+    --fltc-fx-third: var(--fltc-accent-400);
     --fltc-fx-ink: 20 15 8;
     --fltc-fx-glow: 0.6;
 }
@@ -315,393 +315,440 @@
     --fltc-font-body: "EB Garamond", Georgia, serif;
     --fltc-font-term: "Share Tech Mono", monospace;
     --fltc-radius: 0;
-    --fltc-fx-accent: 143 29 20;
-    --fltc-fx-text: 58 54 48;
-    --fltc-fx-third: 122 95 22;
+    --fltc-fx-accent: var(--fltc-base-600);
+    --fltc-fx-text: var(--fltc-base-700);
+    --fltc-fx-third: var(--fltc-accent-500);
     --fltc-fx-ink: 231 227 215;
     --fltc-fx-glow: 0;
 }
 :is(.dark[data-skin="wh40k"], .dark [data-skin="wh40k"]) {
-    --fltc-fx-accent: 191 42 31;
-    --fltc-fx-text: 201 194 173;
-    --fltc-fx-third: 201 162 39;
+    --fltc-fx-accent: var(--fltc-base-400);
+    --fltc-fx-text: var(--fltc-base-300);
+    --fltc-fx-third: var(--fltc-accent-400);
     --fltc-fx-ink: 11 11 13;
     --fltc-fx-glow: 0.6;
 }
 
 /* ============ COLOURS ============ */
-/* Skin and colour are separate. The skin (data-skin) is the look: fonts, corners,
-   lines, glow. The colour is the component's `theme`, and a skin draws in it: a green
-   button under data-skin="cyberpunk" gets green neon lines and fills green on hover.
+/* Skin, theme and colour are separate. The skin (data-skin) is the look: fonts,
+   corners, lines, glow. The theme (data-theme, themes.css) is the colour scheme. The
+   colour is each component's `color`: a role of the theme (primary, base, danger, …)
+   or a fixed Tailwind palette (green, rose, …). A skin draws every component in its
+   colour: a green button under data-skin="cyberpunk" gets green neon lines.
 
    Each colour sets three roles the skin rules use: accent (lines, fills, glow), text
-   and third (gradients, secondary lines). For the Tailwind palettes they are shades
-   600/700/500 (400/300/500 in dark mode); for the cyberpunk, fantasy and wh40k
-   palettes they are those looks' signature colours. The values come from
-   palettes.css, where theme="palette" reads them at runtime from data-palette.
-   Children inherit their parent's colour, as they inherit its theme. The skin blocks
-   above give the roles for content outside any themed component. */
+   and third (gradients, secondary lines): shades 600/700/500, 400/300/500 in dark
+   mode, read from themes.css. `base` takes its third colour from the theme's accent
+   role. Children inherit their parent's colour, as they inherit its colour prop. The
+   skin blocks above give the roles for content outside any coloured component. */
 
-:where([data-skin]) .fltc-theme-slate,
-:where([data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-theme-slate) {
-    --fltc-fx-accent: 71 85 105;
-    --fltc-fx-text: 51 65 85;
-    --fltc-fx-third: 100 116 139;
+:where([data-skin]) .fltc-color-slate,
+:where([data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-color-slate) {
+    --fltc-fx-accent: var(--fltc-slate-600);
+    --fltc-fx-text: var(--fltc-slate-700);
+    --fltc-fx-third: var(--fltc-slate-500);
 }
-:where([data-skin]) .fltc-theme-gray,
-:where([data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-theme-gray) {
-    --fltc-fx-accent: 75 85 99;
-    --fltc-fx-text: 55 65 81;
-    --fltc-fx-third: 107 114 128;
+:where([data-skin]) .fltc-color-gray,
+:where([data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-color-gray) {
+    --fltc-fx-accent: var(--fltc-gray-600);
+    --fltc-fx-text: var(--fltc-gray-700);
+    --fltc-fx-third: var(--fltc-gray-500);
 }
-:where([data-skin]) .fltc-theme-zinc,
-:where([data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-theme-zinc) {
-    --fltc-fx-accent: 82 82 91;
-    --fltc-fx-text: 63 63 70;
-    --fltc-fx-third: 113 113 122;
+:where([data-skin]) .fltc-color-zinc,
+:where([data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-color-zinc) {
+    --fltc-fx-accent: var(--fltc-zinc-600);
+    --fltc-fx-text: var(--fltc-zinc-700);
+    --fltc-fx-third: var(--fltc-zinc-500);
 }
-:where([data-skin]) .fltc-theme-neutral,
-:where([data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-theme-neutral) {
-    --fltc-fx-accent: 82 82 82;
-    --fltc-fx-text: 64 64 64;
-    --fltc-fx-third: 115 115 115;
+:where([data-skin]) .fltc-color-neutral,
+:where([data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-color-neutral) {
+    --fltc-fx-accent: var(--fltc-neutral-600);
+    --fltc-fx-text: var(--fltc-neutral-700);
+    --fltc-fx-third: var(--fltc-neutral-500);
 }
-:where([data-skin]) .fltc-theme-stone,
-:where([data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-theme-stone) {
-    --fltc-fx-accent: 87 83 78;
-    --fltc-fx-text: 68 64 60;
-    --fltc-fx-third: 120 113 108;
+:where([data-skin]) .fltc-color-stone,
+:where([data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-color-stone) {
+    --fltc-fx-accent: var(--fltc-stone-600);
+    --fltc-fx-text: var(--fltc-stone-700);
+    --fltc-fx-third: var(--fltc-stone-500);
 }
-:where([data-skin]) .fltc-theme-taupe,
-:where([data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-theme-taupe) {
-    --fltc-fx-accent: 135 118 93;
-    --fltc-fx-text: 111 96 77;
-    --fltc-fx-third: 156 138 112;
+:where([data-skin]) .fltc-color-taupe,
+:where([data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-color-taupe) {
+    --fltc-fx-accent: var(--fltc-taupe-600);
+    --fltc-fx-text: var(--fltc-taupe-700);
+    --fltc-fx-third: var(--fltc-taupe-500);
 }
-:where([data-skin]) .fltc-theme-mauve,
-:where([data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-theme-mauve) {
-    --fltc-fx-accent: 135 95 151;
-    --fltc-fx-text: 111 76 123;
-    --fltc-fx-third: 159 123 176;
+:where([data-skin]) .fltc-color-mauve,
+:where([data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-color-mauve) {
+    --fltc-fx-accent: var(--fltc-mauve-600);
+    --fltc-fx-text: var(--fltc-mauve-700);
+    --fltc-fx-third: var(--fltc-mauve-500);
 }
-:where([data-skin]) .fltc-theme-mist,
-:where([data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-theme-mist) {
-    --fltc-fx-accent: 85 117 145;
-    --fltc-fx-text: 70 95 118;
-    --fltc-fx-third: 106 142 171;
+:where([data-skin]) .fltc-color-mist,
+:where([data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-color-mist) {
+    --fltc-fx-accent: var(--fltc-mist-600);
+    --fltc-fx-text: var(--fltc-mist-700);
+    --fltc-fx-third: var(--fltc-mist-500);
 }
-:where([data-skin]) .fltc-theme-olive,
-:where([data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-theme-olive) {
-    --fltc-fx-accent: 108 124 64;
-    --fltc-fx-text: 84 95 52;
-    --fltc-fx-third: 138 154 84;
+:where([data-skin]) .fltc-color-olive,
+:where([data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-color-olive) {
+    --fltc-fx-accent: var(--fltc-olive-600);
+    --fltc-fx-text: var(--fltc-olive-700);
+    --fltc-fx-third: var(--fltc-olive-500);
 }
-:where([data-skin]) .fltc-theme-red,
-:where([data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-theme-red) {
-    --fltc-fx-accent: 220 38 38;
-    --fltc-fx-text: 185 28 28;
-    --fltc-fx-third: 239 68 68;
+:where([data-skin]) .fltc-color-red,
+:where([data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-color-red) {
+    --fltc-fx-accent: var(--fltc-red-600);
+    --fltc-fx-text: var(--fltc-red-700);
+    --fltc-fx-third: var(--fltc-red-500);
 }
-:where([data-skin]) .fltc-theme-orange,
-:where([data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-theme-orange) {
-    --fltc-fx-accent: 234 88 12;
-    --fltc-fx-text: 194 65 12;
-    --fltc-fx-third: 249 115 22;
+:where([data-skin]) .fltc-color-orange,
+:where([data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-color-orange) {
+    --fltc-fx-accent: var(--fltc-orange-600);
+    --fltc-fx-text: var(--fltc-orange-700);
+    --fltc-fx-third: var(--fltc-orange-500);
 }
-:where([data-skin]) .fltc-theme-amber,
-:where([data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-theme-amber) {
-    --fltc-fx-accent: 217 119 6;
-    --fltc-fx-text: 180 83 9;
-    --fltc-fx-third: 245 158 11;
+:where([data-skin]) .fltc-color-amber,
+:where([data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-color-amber) {
+    --fltc-fx-accent: var(--fltc-amber-600);
+    --fltc-fx-text: var(--fltc-amber-700);
+    --fltc-fx-third: var(--fltc-amber-500);
 }
-:where([data-skin]) .fltc-theme-yellow,
-:where([data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-theme-yellow) {
-    --fltc-fx-accent: 202 138 4;
-    --fltc-fx-text: 161 98 7;
-    --fltc-fx-third: 234 179 8;
+:where([data-skin]) .fltc-color-yellow,
+:where([data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-color-yellow) {
+    --fltc-fx-accent: var(--fltc-yellow-600);
+    --fltc-fx-text: var(--fltc-yellow-700);
+    --fltc-fx-third: var(--fltc-yellow-500);
 }
-:where([data-skin]) .fltc-theme-lime,
-:where([data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-theme-lime) {
-    --fltc-fx-accent: 101 163 13;
-    --fltc-fx-text: 77 124 15;
-    --fltc-fx-third: 132 204 22;
+:where([data-skin]) .fltc-color-lime,
+:where([data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-color-lime) {
+    --fltc-fx-accent: var(--fltc-lime-600);
+    --fltc-fx-text: var(--fltc-lime-700);
+    --fltc-fx-third: var(--fltc-lime-500);
 }
-:where([data-skin]) .fltc-theme-green,
-:where([data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-theme-green) {
-    --fltc-fx-accent: 22 163 74;
-    --fltc-fx-text: 21 128 61;
-    --fltc-fx-third: 34 197 94;
+:where([data-skin]) .fltc-color-green,
+:where([data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-color-green) {
+    --fltc-fx-accent: var(--fltc-green-600);
+    --fltc-fx-text: var(--fltc-green-700);
+    --fltc-fx-third: var(--fltc-green-500);
 }
-:where([data-skin]) .fltc-theme-emerald,
-:where([data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-theme-emerald) {
-    --fltc-fx-accent: 5 150 105;
-    --fltc-fx-text: 4 120 87;
-    --fltc-fx-third: 16 185 129;
+:where([data-skin]) .fltc-color-emerald,
+:where([data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-color-emerald) {
+    --fltc-fx-accent: var(--fltc-emerald-600);
+    --fltc-fx-text: var(--fltc-emerald-700);
+    --fltc-fx-third: var(--fltc-emerald-500);
 }
-:where([data-skin]) .fltc-theme-teal,
-:where([data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-theme-teal) {
-    --fltc-fx-accent: 13 148 136;
-    --fltc-fx-text: 15 118 110;
-    --fltc-fx-third: 20 184 166;
+:where([data-skin]) .fltc-color-teal,
+:where([data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-color-teal) {
+    --fltc-fx-accent: var(--fltc-teal-600);
+    --fltc-fx-text: var(--fltc-teal-700);
+    --fltc-fx-third: var(--fltc-teal-500);
 }
-:where([data-skin]) .fltc-theme-cyan,
-:where([data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-theme-cyan) {
-    --fltc-fx-accent: 8 145 178;
-    --fltc-fx-text: 14 116 144;
-    --fltc-fx-third: 6 182 212;
+:where([data-skin]) .fltc-color-cyan,
+:where([data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-color-cyan) {
+    --fltc-fx-accent: var(--fltc-cyan-600);
+    --fltc-fx-text: var(--fltc-cyan-700);
+    --fltc-fx-third: var(--fltc-cyan-500);
 }
-:where([data-skin]) .fltc-theme-sky,
-:where([data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-theme-sky) {
-    --fltc-fx-accent: 2 132 199;
-    --fltc-fx-text: 3 105 161;
-    --fltc-fx-third: 14 165 233;
+:where([data-skin]) .fltc-color-sky,
+:where([data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-color-sky) {
+    --fltc-fx-accent: var(--fltc-sky-600);
+    --fltc-fx-text: var(--fltc-sky-700);
+    --fltc-fx-third: var(--fltc-sky-500);
 }
-:where([data-skin]) .fltc-theme-blue,
-:where([data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-theme-blue) {
-    --fltc-fx-accent: 37 99 235;
-    --fltc-fx-text: 29 78 216;
-    --fltc-fx-third: 59 130 246;
+:where([data-skin]) .fltc-color-blue,
+:where([data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-color-blue) {
+    --fltc-fx-accent: var(--fltc-blue-600);
+    --fltc-fx-text: var(--fltc-blue-700);
+    --fltc-fx-third: var(--fltc-blue-500);
 }
-:where([data-skin]) .fltc-theme-indigo,
-:where([data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-theme-indigo) {
-    --fltc-fx-accent: 79 70 229;
-    --fltc-fx-text: 67 56 202;
-    --fltc-fx-third: 99 102 241;
+:where([data-skin]) .fltc-color-indigo,
+:where([data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-color-indigo) {
+    --fltc-fx-accent: var(--fltc-indigo-600);
+    --fltc-fx-text: var(--fltc-indigo-700);
+    --fltc-fx-third: var(--fltc-indigo-500);
 }
-:where([data-skin]) .fltc-theme-violet,
-:where([data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-theme-violet) {
-    --fltc-fx-accent: 124 58 237;
-    --fltc-fx-text: 109 40 217;
-    --fltc-fx-third: 139 92 246;
+:where([data-skin]) .fltc-color-violet,
+:where([data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-color-violet) {
+    --fltc-fx-accent: var(--fltc-violet-600);
+    --fltc-fx-text: var(--fltc-violet-700);
+    --fltc-fx-third: var(--fltc-violet-500);
 }
-:where([data-skin]) .fltc-theme-purple,
-:where([data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-theme-purple) {
-    --fltc-fx-accent: 147 51 234;
-    --fltc-fx-text: 126 34 206;
-    --fltc-fx-third: 168 85 247;
+:where([data-skin]) .fltc-color-purple,
+:where([data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-color-purple) {
+    --fltc-fx-accent: var(--fltc-purple-600);
+    --fltc-fx-text: var(--fltc-purple-700);
+    --fltc-fx-third: var(--fltc-purple-500);
 }
-:where([data-skin]) .fltc-theme-fuchsia,
-:where([data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-theme-fuchsia) {
-    --fltc-fx-accent: 192 38 211;
-    --fltc-fx-text: 162 28 175;
-    --fltc-fx-third: 217 70 239;
+:where([data-skin]) .fltc-color-fuchsia,
+:where([data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-color-fuchsia) {
+    --fltc-fx-accent: var(--fltc-fuchsia-600);
+    --fltc-fx-text: var(--fltc-fuchsia-700);
+    --fltc-fx-third: var(--fltc-fuchsia-500);
 }
-:where([data-skin]) .fltc-theme-pink,
-:where([data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-theme-pink) {
-    --fltc-fx-accent: 219 39 119;
-    --fltc-fx-text: 190 24 93;
-    --fltc-fx-third: 236 72 153;
+:where([data-skin]) .fltc-color-pink,
+:where([data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-color-pink) {
+    --fltc-fx-accent: var(--fltc-pink-600);
+    --fltc-fx-text: var(--fltc-pink-700);
+    --fltc-fx-third: var(--fltc-pink-500);
 }
-:where([data-skin]) .fltc-theme-rose,
-:where([data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-theme-rose) {
-    --fltc-fx-accent: 225 29 72;
-    --fltc-fx-text: 190 18 60;
-    --fltc-fx-third: 244 63 94;
+:where([data-skin]) .fltc-color-rose,
+:where([data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-color-rose) {
+    --fltc-fx-accent: var(--fltc-rose-600);
+    --fltc-fx-text: var(--fltc-rose-700);
+    --fltc-fx-third: var(--fltc-rose-500);
 }
-:where([data-skin]) .fltc-theme-cyberpunk,
-:where([data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-theme-cyberpunk) {
-    --fltc-fx-accent: 196 0 143;
-    --fltc-fx-text: 0 112 124;
-    --fltc-fx-third: 122 31 208;
+:where([data-skin]) .fltc-color-primary,
+:where([data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-color-primary) {
+    --fltc-fx-accent: var(--fltc-primary-600);
+    --fltc-fx-text: var(--fltc-primary-700);
+    --fltc-fx-third: var(--fltc-primary-500);
 }
-:where([data-skin]) .fltc-theme-fantasy,
-:where([data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-theme-fantasy) {
-    --fltc-fx-accent: 138 90 18;
-    --fltc-fx-text: 80 60 30;
-    --fltc-fx-third: 138 109 31;
+:where([data-skin]) .fltc-color-secondary,
+:where([data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-color-secondary) {
+    --fltc-fx-accent: var(--fltc-secondary-600);
+    --fltc-fx-text: var(--fltc-secondary-700);
+    --fltc-fx-third: var(--fltc-secondary-500);
 }
-:where([data-skin]) .fltc-theme-wh40k,
-:where([data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-theme-wh40k) {
-    --fltc-fx-accent: 143 29 20;
-    --fltc-fx-text: 58 54 48;
-    --fltc-fx-third: 122 95 22;
+:where([data-skin]) .fltc-color-accent,
+:where([data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-color-accent) {
+    --fltc-fx-accent: var(--fltc-accent-600);
+    --fltc-fx-text: var(--fltc-accent-700);
+    --fltc-fx-third: var(--fltc-accent-500);
 }
-:where(.dark[data-skin], .dark [data-skin]) .fltc-theme-slate,
-:where(.dark[data-skin], .dark [data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-theme-slate) {
-    --fltc-fx-accent: 148 163 184;
-    --fltc-fx-text: 203 213 225;
-    --fltc-fx-third: 100 116 139;
+:where([data-skin]) .fltc-color-base,
+:where([data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-color-base) {
+    --fltc-fx-accent: var(--fltc-base-600);
+    --fltc-fx-text: var(--fltc-base-700);
+    --fltc-fx-third: var(--fltc-accent-500);
 }
-:where(.dark[data-skin], .dark [data-skin]) .fltc-theme-gray,
-:where(.dark[data-skin], .dark [data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-theme-gray) {
-    --fltc-fx-accent: 156 163 175;
-    --fltc-fx-text: 209 213 219;
-    --fltc-fx-third: 107 114 128;
+:where([data-skin]) .fltc-color-info,
+:where([data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-color-info) {
+    --fltc-fx-accent: var(--fltc-info-600);
+    --fltc-fx-text: var(--fltc-info-700);
+    --fltc-fx-third: var(--fltc-info-500);
 }
-:where(.dark[data-skin], .dark [data-skin]) .fltc-theme-zinc,
-:where(.dark[data-skin], .dark [data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-theme-zinc) {
-    --fltc-fx-accent: 161 161 170;
-    --fltc-fx-text: 212 212 216;
-    --fltc-fx-third: 113 113 122;
+:where([data-skin]) .fltc-color-success,
+:where([data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-color-success) {
+    --fltc-fx-accent: var(--fltc-success-600);
+    --fltc-fx-text: var(--fltc-success-700);
+    --fltc-fx-third: var(--fltc-success-500);
 }
-:where(.dark[data-skin], .dark [data-skin]) .fltc-theme-neutral,
-:where(.dark[data-skin], .dark [data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-theme-neutral) {
-    --fltc-fx-accent: 163 163 163;
-    --fltc-fx-text: 212 212 212;
-    --fltc-fx-third: 115 115 115;
+:where([data-skin]) .fltc-color-warning,
+:where([data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-color-warning) {
+    --fltc-fx-accent: var(--fltc-warning-600);
+    --fltc-fx-text: var(--fltc-warning-700);
+    --fltc-fx-third: var(--fltc-warning-500);
 }
-:where(.dark[data-skin], .dark [data-skin]) .fltc-theme-stone,
-:where(.dark[data-skin], .dark [data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-theme-stone) {
-    --fltc-fx-accent: 168 162 158;
-    --fltc-fx-text: 214 211 209;
-    --fltc-fx-third: 120 113 108;
+:where([data-skin]) .fltc-color-danger,
+:where([data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-color-danger) {
+    --fltc-fx-accent: var(--fltc-danger-600);
+    --fltc-fx-text: var(--fltc-danger-700);
+    --fltc-fx-third: var(--fltc-danger-500);
 }
-:where(.dark[data-skin], .dark [data-skin]) .fltc-theme-taupe,
-:where(.dark[data-skin], .dark [data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-theme-taupe) {
-    --fltc-fx-accent: 179 164 141;
-    --fltc-fx-text: 208 198 182;
-    --fltc-fx-third: 156 138 112;
+:where(.dark[data-skin], .dark [data-skin]) .fltc-color-slate,
+:where(.dark[data-skin], .dark [data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-color-slate) {
+    --fltc-fx-accent: var(--fltc-slate-400);
+    --fltc-fx-text: var(--fltc-slate-300);
+    --fltc-fx-third: var(--fltc-slate-500);
 }
-:where(.dark[data-skin], .dark [data-skin]) .fltc-theme-mauve,
-:where(.dark[data-skin], .dark [data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-theme-mauve) {
-    --fltc-fx-accent: 185 157 199;
-    --fltc-fx-text: 212 194 220;
-    --fltc-fx-third: 159 123 176;
+:where(.dark[data-skin], .dark [data-skin]) .fltc-color-gray,
+:where(.dark[data-skin], .dark [data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-color-gray) {
+    --fltc-fx-accent: var(--fltc-gray-400);
+    --fltc-fx-text: var(--fltc-gray-300);
+    --fltc-fx-third: var(--fltc-gray-500);
 }
-:where(.dark[data-skin], .dark [data-skin]) .fltc-theme-mist,
-:where(.dark[data-skin], .dark [data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-theme-mist) {
-    --fltc-fx-accent: 137 170 193;
-    --fltc-fx-text: 178 200 216;
-    --fltc-fx-third: 106 142 171;
+:where(.dark[data-skin], .dark [data-skin]) .fltc-color-zinc,
+:where(.dark[data-skin], .dark [data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-color-zinc) {
+    --fltc-fx-accent: var(--fltc-zinc-400);
+    --fltc-fx-text: var(--fltc-zinc-300);
+    --fltc-fx-third: var(--fltc-zinc-500);
 }
-:where(.dark[data-skin], .dark [data-skin]) .fltc-theme-olive,
-:where(.dark[data-skin], .dark [data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-theme-olive) {
-    --fltc-fx-accent: 166 181 116;
-    --fltc-fx-text: 194 205 159;
-    --fltc-fx-third: 138 154 84;
+:where(.dark[data-skin], .dark [data-skin]) .fltc-color-neutral,
+:where(.dark[data-skin], .dark [data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-color-neutral) {
+    --fltc-fx-accent: var(--fltc-neutral-400);
+    --fltc-fx-text: var(--fltc-neutral-300);
+    --fltc-fx-third: var(--fltc-neutral-500);
 }
-:where(.dark[data-skin], .dark [data-skin]) .fltc-theme-red,
-:where(.dark[data-skin], .dark [data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-theme-red) {
-    --fltc-fx-accent: 248 113 113;
-    --fltc-fx-text: 252 165 165;
-    --fltc-fx-third: 239 68 68;
+:where(.dark[data-skin], .dark [data-skin]) .fltc-color-stone,
+:where(.dark[data-skin], .dark [data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-color-stone) {
+    --fltc-fx-accent: var(--fltc-stone-400);
+    --fltc-fx-text: var(--fltc-stone-300);
+    --fltc-fx-third: var(--fltc-stone-500);
 }
-:where(.dark[data-skin], .dark [data-skin]) .fltc-theme-orange,
-:where(.dark[data-skin], .dark [data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-theme-orange) {
-    --fltc-fx-accent: 251 146 60;
-    --fltc-fx-text: 253 186 116;
-    --fltc-fx-third: 249 115 22;
+:where(.dark[data-skin], .dark [data-skin]) .fltc-color-taupe,
+:where(.dark[data-skin], .dark [data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-color-taupe) {
+    --fltc-fx-accent: var(--fltc-taupe-400);
+    --fltc-fx-text: var(--fltc-taupe-300);
+    --fltc-fx-third: var(--fltc-taupe-500);
 }
-:where(.dark[data-skin], .dark [data-skin]) .fltc-theme-amber,
-:where(.dark[data-skin], .dark [data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-theme-amber) {
-    --fltc-fx-accent: 251 191 36;
-    --fltc-fx-text: 252 211 77;
-    --fltc-fx-third: 245 158 11;
+:where(.dark[data-skin], .dark [data-skin]) .fltc-color-mauve,
+:where(.dark[data-skin], .dark [data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-color-mauve) {
+    --fltc-fx-accent: var(--fltc-mauve-400);
+    --fltc-fx-text: var(--fltc-mauve-300);
+    --fltc-fx-third: var(--fltc-mauve-500);
 }
-:where(.dark[data-skin], .dark [data-skin]) .fltc-theme-yellow,
-:where(.dark[data-skin], .dark [data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-theme-yellow) {
-    --fltc-fx-accent: 250 204 21;
-    --fltc-fx-text: 253 224 71;
-    --fltc-fx-third: 234 179 8;
+:where(.dark[data-skin], .dark [data-skin]) .fltc-color-mist,
+:where(.dark[data-skin], .dark [data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-color-mist) {
+    --fltc-fx-accent: var(--fltc-mist-400);
+    --fltc-fx-text: var(--fltc-mist-300);
+    --fltc-fx-third: var(--fltc-mist-500);
 }
-:where(.dark[data-skin], .dark [data-skin]) .fltc-theme-lime,
-:where(.dark[data-skin], .dark [data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-theme-lime) {
-    --fltc-fx-accent: 163 230 53;
-    --fltc-fx-text: 190 242 100;
-    --fltc-fx-third: 132 204 22;
+:where(.dark[data-skin], .dark [data-skin]) .fltc-color-olive,
+:where(.dark[data-skin], .dark [data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-color-olive) {
+    --fltc-fx-accent: var(--fltc-olive-400);
+    --fltc-fx-text: var(--fltc-olive-300);
+    --fltc-fx-third: var(--fltc-olive-500);
 }
-:where(.dark[data-skin], .dark [data-skin]) .fltc-theme-green,
-:where(.dark[data-skin], .dark [data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-theme-green) {
-    --fltc-fx-accent: 74 222 128;
-    --fltc-fx-text: 134 239 172;
-    --fltc-fx-third: 34 197 94;
+:where(.dark[data-skin], .dark [data-skin]) .fltc-color-red,
+:where(.dark[data-skin], .dark [data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-color-red) {
+    --fltc-fx-accent: var(--fltc-red-400);
+    --fltc-fx-text: var(--fltc-red-300);
+    --fltc-fx-third: var(--fltc-red-500);
 }
-:where(.dark[data-skin], .dark [data-skin]) .fltc-theme-emerald,
-:where(.dark[data-skin], .dark [data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-theme-emerald) {
-    --fltc-fx-accent: 52 211 153;
-    --fltc-fx-text: 110 231 183;
-    --fltc-fx-third: 16 185 129;
+:where(.dark[data-skin], .dark [data-skin]) .fltc-color-orange,
+:where(.dark[data-skin], .dark [data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-color-orange) {
+    --fltc-fx-accent: var(--fltc-orange-400);
+    --fltc-fx-text: var(--fltc-orange-300);
+    --fltc-fx-third: var(--fltc-orange-500);
 }
-:where(.dark[data-skin], .dark [data-skin]) .fltc-theme-teal,
-:where(.dark[data-skin], .dark [data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-theme-teal) {
-    --fltc-fx-accent: 45 212 191;
-    --fltc-fx-text: 94 234 212;
-    --fltc-fx-third: 20 184 166;
+:where(.dark[data-skin], .dark [data-skin]) .fltc-color-amber,
+:where(.dark[data-skin], .dark [data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-color-amber) {
+    --fltc-fx-accent: var(--fltc-amber-400);
+    --fltc-fx-text: var(--fltc-amber-300);
+    --fltc-fx-third: var(--fltc-amber-500);
 }
-:where(.dark[data-skin], .dark [data-skin]) .fltc-theme-cyan,
-:where(.dark[data-skin], .dark [data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-theme-cyan) {
-    --fltc-fx-accent: 34 211 238;
-    --fltc-fx-text: 103 232 249;
-    --fltc-fx-third: 6 182 212;
+:where(.dark[data-skin], .dark [data-skin]) .fltc-color-yellow,
+:where(.dark[data-skin], .dark [data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-color-yellow) {
+    --fltc-fx-accent: var(--fltc-yellow-400);
+    --fltc-fx-text: var(--fltc-yellow-300);
+    --fltc-fx-third: var(--fltc-yellow-500);
 }
-:where(.dark[data-skin], .dark [data-skin]) .fltc-theme-sky,
-:where(.dark[data-skin], .dark [data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-theme-sky) {
-    --fltc-fx-accent: 56 189 248;
-    --fltc-fx-text: 125 211 252;
-    --fltc-fx-third: 14 165 233;
+:where(.dark[data-skin], .dark [data-skin]) .fltc-color-lime,
+:where(.dark[data-skin], .dark [data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-color-lime) {
+    --fltc-fx-accent: var(--fltc-lime-400);
+    --fltc-fx-text: var(--fltc-lime-300);
+    --fltc-fx-third: var(--fltc-lime-500);
 }
-:where(.dark[data-skin], .dark [data-skin]) .fltc-theme-blue,
-:where(.dark[data-skin], .dark [data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-theme-blue) {
-    --fltc-fx-accent: 96 165 250;
-    --fltc-fx-text: 147 197 253;
-    --fltc-fx-third: 59 130 246;
+:where(.dark[data-skin], .dark [data-skin]) .fltc-color-green,
+:where(.dark[data-skin], .dark [data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-color-green) {
+    --fltc-fx-accent: var(--fltc-green-400);
+    --fltc-fx-text: var(--fltc-green-300);
+    --fltc-fx-third: var(--fltc-green-500);
 }
-:where(.dark[data-skin], .dark [data-skin]) .fltc-theme-indigo,
-:where(.dark[data-skin], .dark [data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-theme-indigo) {
-    --fltc-fx-accent: 129 140 248;
-    --fltc-fx-text: 165 180 252;
-    --fltc-fx-third: 99 102 241;
+:where(.dark[data-skin], .dark [data-skin]) .fltc-color-emerald,
+:where(.dark[data-skin], .dark [data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-color-emerald) {
+    --fltc-fx-accent: var(--fltc-emerald-400);
+    --fltc-fx-text: var(--fltc-emerald-300);
+    --fltc-fx-third: var(--fltc-emerald-500);
 }
-:where(.dark[data-skin], .dark [data-skin]) .fltc-theme-violet,
-:where(.dark[data-skin], .dark [data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-theme-violet) {
-    --fltc-fx-accent: 167 139 250;
-    --fltc-fx-text: 196 181 253;
-    --fltc-fx-third: 139 92 246;
+:where(.dark[data-skin], .dark [data-skin]) .fltc-color-teal,
+:where(.dark[data-skin], .dark [data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-color-teal) {
+    --fltc-fx-accent: var(--fltc-teal-400);
+    --fltc-fx-text: var(--fltc-teal-300);
+    --fltc-fx-third: var(--fltc-teal-500);
 }
-:where(.dark[data-skin], .dark [data-skin]) .fltc-theme-purple,
-:where(.dark[data-skin], .dark [data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-theme-purple) {
-    --fltc-fx-accent: 192 132 252;
-    --fltc-fx-text: 216 180 254;
-    --fltc-fx-third: 168 85 247;
+:where(.dark[data-skin], .dark [data-skin]) .fltc-color-cyan,
+:where(.dark[data-skin], .dark [data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-color-cyan) {
+    --fltc-fx-accent: var(--fltc-cyan-400);
+    --fltc-fx-text: var(--fltc-cyan-300);
+    --fltc-fx-third: var(--fltc-cyan-500);
 }
-:where(.dark[data-skin], .dark [data-skin]) .fltc-theme-fuchsia,
-:where(.dark[data-skin], .dark [data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-theme-fuchsia) {
-    --fltc-fx-accent: 232 121 249;
-    --fltc-fx-text: 240 171 252;
-    --fltc-fx-third: 217 70 239;
+:where(.dark[data-skin], .dark [data-skin]) .fltc-color-sky,
+:where(.dark[data-skin], .dark [data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-color-sky) {
+    --fltc-fx-accent: var(--fltc-sky-400);
+    --fltc-fx-text: var(--fltc-sky-300);
+    --fltc-fx-third: var(--fltc-sky-500);
 }
-:where(.dark[data-skin], .dark [data-skin]) .fltc-theme-pink,
-:where(.dark[data-skin], .dark [data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-theme-pink) {
-    --fltc-fx-accent: 244 114 182;
-    --fltc-fx-text: 249 168 212;
-    --fltc-fx-third: 236 72 153;
+:where(.dark[data-skin], .dark [data-skin]) .fltc-color-blue,
+:where(.dark[data-skin], .dark [data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-color-blue) {
+    --fltc-fx-accent: var(--fltc-blue-400);
+    --fltc-fx-text: var(--fltc-blue-300);
+    --fltc-fx-third: var(--fltc-blue-500);
 }
-:where(.dark[data-skin], .dark [data-skin]) .fltc-theme-rose,
-:where(.dark[data-skin], .dark [data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-theme-rose) {
-    --fltc-fx-accent: 251 113 133;
-    --fltc-fx-text: 253 164 175;
-    --fltc-fx-third: 244 63 94;
+:where(.dark[data-skin], .dark [data-skin]) .fltc-color-indigo,
+:where(.dark[data-skin], .dark [data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-color-indigo) {
+    --fltc-fx-accent: var(--fltc-indigo-400);
+    --fltc-fx-text: var(--fltc-indigo-300);
+    --fltc-fx-third: var(--fltc-indigo-500);
 }
-:where(.dark[data-skin], .dark [data-skin]) .fltc-theme-cyberpunk,
-:where(.dark[data-skin], .dark [data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-theme-cyberpunk) {
-    --fltc-fx-accent: 255 43 214;
-    --fltc-fx-text: 0 255 240;
-    --fltc-fx-third: 157 0 255;
+:where(.dark[data-skin], .dark [data-skin]) .fltc-color-violet,
+:where(.dark[data-skin], .dark [data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-color-violet) {
+    --fltc-fx-accent: var(--fltc-violet-400);
+    --fltc-fx-text: var(--fltc-violet-300);
+    --fltc-fx-third: var(--fltc-violet-500);
 }
-:where(.dark[data-skin], .dark [data-skin]) .fltc-theme-fantasy,
-:where(.dark[data-skin], .dark [data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-theme-fantasy) {
-    --fltc-fx-accent: 217 142 50;
-    --fltc-fx-text: 230 215 174;
-    --fltc-fx-third: 242 201 76;
+:where(.dark[data-skin], .dark [data-skin]) .fltc-color-purple,
+:where(.dark[data-skin], .dark [data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-color-purple) {
+    --fltc-fx-accent: var(--fltc-purple-400);
+    --fltc-fx-text: var(--fltc-purple-300);
+    --fltc-fx-third: var(--fltc-purple-500);
 }
-:where(.dark[data-skin], .dark [data-skin]) .fltc-theme-wh40k,
-:where(.dark[data-skin], .dark [data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-theme-wh40k) {
-    --fltc-fx-accent: 191 42 31;
-    --fltc-fx-text: 201 194 173;
-    --fltc-fx-third: 201 162 39;
+:where(.dark[data-skin], .dark [data-skin]) .fltc-color-fuchsia,
+:where(.dark[data-skin], .dark [data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-color-fuchsia) {
+    --fltc-fx-accent: var(--fltc-fuchsia-400);
+    --fltc-fx-text: var(--fltc-fuchsia-300);
+    --fltc-fx-third: var(--fltc-fuchsia-500);
 }
-
-:where([data-skin]) .fltc-theme-palette,
-:where([data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-theme-palette) {
-    --fltc-fx-accent: var(--fltc-palette-accent);
-    --fltc-fx-text: var(--fltc-palette-text);
-    --fltc-fx-third: var(--fltc-palette-third);
+:where(.dark[data-skin], .dark [data-skin]) .fltc-color-pink,
+:where(.dark[data-skin], .dark [data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-color-pink) {
+    --fltc-fx-accent: var(--fltc-pink-400);
+    --fltc-fx-text: var(--fltc-pink-300);
+    --fltc-fx-third: var(--fltc-pink-500);
 }
-:where(.dark[data-skin], .dark [data-skin]) .fltc-theme-palette,
-:where(.dark[data-skin], .dark [data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-theme-palette) {
-    --fltc-fx-accent: var(--fltc-palette-accent-dark);
-    --fltc-fx-text: var(--fltc-palette-text-dark);
-    --fltc-fx-third: var(--fltc-palette-third-dark);
+:where(.dark[data-skin], .dark [data-skin]) .fltc-color-rose,
+:where(.dark[data-skin], .dark [data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-color-rose) {
+    --fltc-fx-accent: var(--fltc-rose-400);
+    --fltc-fx-text: var(--fltc-rose-300);
+    --fltc-fx-third: var(--fltc-rose-500);
+}
+:where(.dark[data-skin], .dark [data-skin]) .fltc-color-primary,
+:where(.dark[data-skin], .dark [data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-color-primary) {
+    --fltc-fx-accent: var(--fltc-primary-400);
+    --fltc-fx-text: var(--fltc-primary-300);
+    --fltc-fx-third: var(--fltc-primary-500);
+}
+:where(.dark[data-skin], .dark [data-skin]) .fltc-color-secondary,
+:where(.dark[data-skin], .dark [data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-color-secondary) {
+    --fltc-fx-accent: var(--fltc-secondary-400);
+    --fltc-fx-text: var(--fltc-secondary-300);
+    --fltc-fx-third: var(--fltc-secondary-500);
+}
+:where(.dark[data-skin], .dark [data-skin]) .fltc-color-accent,
+:where(.dark[data-skin], .dark [data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-color-accent) {
+    --fltc-fx-accent: var(--fltc-accent-400);
+    --fltc-fx-text: var(--fltc-accent-300);
+    --fltc-fx-third: var(--fltc-accent-500);
+}
+:where(.dark[data-skin], .dark [data-skin]) .fltc-color-base,
+:where(.dark[data-skin], .dark [data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-color-base) {
+    --fltc-fx-accent: var(--fltc-base-400);
+    --fltc-fx-text: var(--fltc-base-300);
+    --fltc-fx-third: var(--fltc-accent-400);
+}
+:where(.dark[data-skin], .dark [data-skin]) .fltc-color-info,
+:where(.dark[data-skin], .dark [data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-color-info) {
+    --fltc-fx-accent: var(--fltc-info-400);
+    --fltc-fx-text: var(--fltc-info-300);
+    --fltc-fx-third: var(--fltc-info-500);
+}
+:where(.dark[data-skin], .dark [data-skin]) .fltc-color-success,
+:where(.dark[data-skin], .dark [data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-color-success) {
+    --fltc-fx-accent: var(--fltc-success-400);
+    --fltc-fx-text: var(--fltc-success-300);
+    --fltc-fx-third: var(--fltc-success-500);
+}
+:where(.dark[data-skin], .dark [data-skin]) .fltc-color-warning,
+:where(.dark[data-skin], .dark [data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-color-warning) {
+    --fltc-fx-accent: var(--fltc-warning-400);
+    --fltc-fx-text: var(--fltc-warning-300);
+    --fltc-fx-third: var(--fltc-warning-500);
+}
+:where(.dark[data-skin], .dark [data-skin]) .fltc-color-danger,
+:where(.dark[data-skin], .dark [data-skin]) .fltc-form-checkbox-control:has(> .fltc-form-checkbox.fltc-color-danger) {
+    --fltc-fx-accent: var(--fltc-danger-400);
+    --fltc-fx-text: var(--fltc-danger-300);
+    --fltc-fx-third: var(--fltc-danger-500);
 }
 
 /* ============ PAGE ============ */
@@ -829,42 +876,42 @@ body[data-skin="cyberpunk"]::after {
 
 /* ============ SHAPE ============ */
 
-.fltc-button:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-theme-"]),
-.fltc-button-link:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-theme-"]),
-.fltc-badge:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-theme-"]),
-.fltc-card:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-theme-"]),
-.fltc-container-box:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-theme-"]),
-.fltc-alert:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-theme-"]),
-.fltc-messagebox:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-theme-"]),
-.fltc-toast:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-theme-"]),
-.fltc-counter:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-theme-"]),
-.fltc-accordion:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-theme-"]),
-.fltc-tooltip-bubble:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-theme-"]),
-.fltc-form-input-text:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-theme-"]),
-.fltc-form-input-email:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-theme-"]),
-.fltc-form-input-password:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-theme-"]),
-.fltc-form-input-select:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-theme-"]),
-.fltc-form-input-datetime:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-theme-"]),
-.fltc-form-textarea:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-theme-"]),
-.fltc-form-input-number:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-theme-"]),
-.fltc-form-input-date:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-theme-"]),
-.fltc-form-input-time:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-theme-"]),
-.fltc-form-input-file:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-theme-"]),
-.fltc-form-checklist:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-theme-"]),
-.fltc-drawer-tab:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-theme-"]),
-.fltc-darkmode-toggle:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-theme-"]),
-.fltc-segmented:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-theme-"]),
-.fltc-nav-navbar-dropdown-menu:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-theme-"]),
-.fltc-dropdown:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-theme-"]) .fltc-dropdown-menu,
-.fltc-progress:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-theme-"]) .fltc-progress-track,
-.fltc-status > [data-status]:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-theme-"]),
-.fltc-cover:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-theme-"]),
-.fltc-media-card:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-theme-"]),
-.fltc-action-bar:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-theme-"]),
-.fltc-file-card:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-theme-"]),
-div.fltc-spoiler:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-theme-"]),
-.fltc-infocard:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-theme-"]) :is(.fltc-infocard-preview, .fltc-infocard-card),
-.fltc-form-upload:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-theme-"]) .fltc-form-upload-zone {
+.fltc-button:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-color-"]),
+.fltc-button-link:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-color-"]),
+.fltc-badge:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-color-"]),
+.fltc-card:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-color-"]),
+.fltc-container-box:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-color-"]),
+.fltc-alert:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-color-"]),
+.fltc-messagebox:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-color-"]),
+.fltc-toast:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-color-"]),
+.fltc-counter:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-color-"]),
+.fltc-accordion:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-color-"]),
+.fltc-tooltip-bubble:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-color-"]),
+.fltc-form-input-text:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-color-"]),
+.fltc-form-input-email:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-color-"]),
+.fltc-form-input-password:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-color-"]),
+.fltc-form-input-select:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-color-"]),
+.fltc-form-input-datetime:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-color-"]),
+.fltc-form-textarea:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-color-"]),
+.fltc-form-input-number:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-color-"]),
+.fltc-form-input-date:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-color-"]),
+.fltc-form-input-time:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-color-"]),
+.fltc-form-input-file:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-color-"]),
+.fltc-form-checklist:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-color-"]),
+.fltc-drawer-tab:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-color-"]),
+.fltc-darkmode-toggle:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-color-"]),
+.fltc-segmented:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-color-"]),
+.fltc-nav-navbar-dropdown-menu:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-color-"]),
+.fltc-dropdown:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-color-"]) .fltc-dropdown-menu,
+.fltc-progress:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-color-"]) .fltc-progress-track,
+.fltc-status > [data-status]:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-color-"]),
+.fltc-cover:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-color-"]),
+.fltc-media-card:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-color-"]),
+.fltc-action-bar:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-color-"]),
+.fltc-file-card:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-color-"]),
+div.fltc-spoiler:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-color-"]),
+.fltc-infocard:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-color-"]) :is(.fltc-infocard-preview, .fltc-infocard-card),
+.fltc-form-upload:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-color-"]) .fltc-form-upload-zone {
     border-radius: var(--fltc-radius);
 }
 :is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) .fltc-modal-panel {
@@ -874,33 +921,33 @@ div.fltc-spoiler:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-sk
 /* ============ PANELS ============ */
 /* Neon panel: a soft outer glow plus a gradient strip along the top edge. */
 
-.fltc-card:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-theme-"]),
-.fltc-container-box:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-theme-"]),
-.fltc-counter:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-theme-"]),
-.fltc-messagebox:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-theme-"]),
-.fltc-accordion:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-theme-"]),
-.fltc-drawer:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-theme-"]),
-.fltc-toast:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-theme-"]),
-.fltc-nav-navbar-dropdown-menu:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-theme-"]),
-.fltc-dropdown:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-theme-"]) .fltc-dropdown-menu,
-.fltc-media-card:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-theme-"]),
-.fltc-file-card:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-theme-"]),
-.fltc-infocard:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-theme-"]) :is(.fltc-infocard-preview, .fltc-infocard-card),
+.fltc-card:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-color-"]),
+.fltc-container-box:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-color-"]),
+.fltc-counter:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-color-"]),
+.fltc-messagebox:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-color-"]),
+.fltc-accordion:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-color-"]),
+.fltc-drawer:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-color-"]),
+.fltc-toast:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-color-"]),
+.fltc-nav-navbar-dropdown-menu:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-color-"]),
+.fltc-dropdown:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-color-"]) .fltc-dropdown-menu,
+.fltc-media-card:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-color-"]),
+.fltc-file-card:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-color-"]),
+.fltc-infocard:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-color-"]) :is(.fltc-infocard-preview, .fltc-infocard-card),
 :is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) .fltc-modal-panel {
     box-shadow:
         0 0 0 1px rgb(var(--fltc-fx-accent) / 0.05) inset,
         0 0 18px rgb(var(--fltc-fx-accent) / 0.12),
         0 0 40px rgb(var(--fltc-fx-text) / 0.05);
 }
-.fltc-card:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-theme-"]),
-.fltc-container-box:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-theme-"]),
-.fltc-counter:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-theme-"]),
+.fltc-card:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-color-"]),
+.fltc-container-box:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-color-"]),
+.fltc-counter:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-color-"]),
 :is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) .fltc-modal-panel {
     position: relative;
 }
-.fltc-card:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-theme-"])::before,
-.fltc-container-box:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-theme-"])::before,
-.fltc-counter:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-theme-"])::before,
+.fltc-card:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-color-"])::before,
+.fltc-container-box:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-color-"])::before,
+.fltc-counter:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-color-"])::before,
 :is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) .fltc-modal-panel::before {
     content: "";
     position: absolute;
@@ -916,52 +963,52 @@ div.fltc-spoiler:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-sk
 
 /* ============ CONTROLS ============ */
 
-.fltc-button:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-theme-"]),
-.fltc-button-link:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-theme-"]) {
+.fltc-button:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-color-"]),
+.fltc-button-link:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-color-"]) {
     text-transform: uppercase;
     letter-spacing: 0.1em;
 }
-.fltc-button:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-theme-"]):hover,
-.fltc-button-link:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-theme-"]):hover {
+.fltc-button:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-color-"]):hover,
+.fltc-button-link:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-color-"]):hover {
     box-shadow: 0 0 12px rgb(var(--fltc-fx-accent) / 0.8);
 }
-.fltc-badge:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-theme-"]) {
+.fltc-badge:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-color-"]) {
     font-family: var(--fltc-font-term);
     letter-spacing: 0.1em;
     text-transform: uppercase;
 }
-.fltc-form-input-text:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-theme-"]):focus,
-.fltc-form-input-email:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-theme-"]):focus,
-.fltc-form-input-password:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-theme-"]):focus,
-.fltc-form-input-select:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-theme-"]):focus,
-.fltc-form-input-datetime:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-theme-"]):focus,
-.fltc-form-input-number:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-theme-"]):focus,
-.fltc-form-input-date:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-theme-"]):focus,
-.fltc-form-input-time:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-theme-"]):focus,
-.fltc-form-input-file:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-theme-"]):focus,
-.fltc-form-textarea:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-theme-"]):focus {
+.fltc-form-input-text:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-color-"]):focus,
+.fltc-form-input-email:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-color-"]):focus,
+.fltc-form-input-password:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-color-"]):focus,
+.fltc-form-input-select:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-color-"]):focus,
+.fltc-form-input-datetime:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-color-"]):focus,
+.fltc-form-input-number:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-color-"]):focus,
+.fltc-form-input-date:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-color-"]):focus,
+.fltc-form-input-time:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-color-"]):focus,
+.fltc-form-input-file:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-color-"]):focus,
+.fltc-form-textarea:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-color-"]):focus {
     border-color: rgb(var(--fltc-fx-accent));
     box-shadow: 0 0 10px rgb(var(--fltc-fx-accent) / 0.3);
 }
-.fltc-drawer-tab:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-theme-"]),
-.fltc-nav-navbar-link:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-theme-"]),
-.fltc-nav-sidebar-link:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-theme-"]),
-.fltc-nav-breadcrumbs:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-theme-"]),
-.fltc-tabs-tab:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-theme-"]),
-.fltc-nav-pagination:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-theme-"]) .fltc-nav-pagination-summary,
-.fltc-progress:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-theme-"]) :is(.fltc-progress-label, .fltc-progress-value, .fltc-progress-legend),
-.fltc-form-field:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-theme-"]) .fltc-form-field-note,
-.fltc-status > [data-status]:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-theme-"]),
-.fltc-media-card:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-theme-"]) .fltc-media-card-meta,
-.fltc-file-card:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-theme-"]) .fltc-file-card-meta,
-.fltc-timeline-item:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-theme-"]) .fltc-timeline-time,
-.fltc-cover:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-theme-"]) .fltc-cover-fallback {
+.fltc-drawer-tab:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-color-"]),
+.fltc-nav-navbar-link:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-color-"]),
+.fltc-nav-sidebar-link:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-color-"]),
+.fltc-nav-breadcrumbs:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-color-"]),
+.fltc-tabs-tab:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-color-"]),
+.fltc-nav-pagination:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-color-"]) .fltc-nav-pagination-summary,
+.fltc-progress:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-color-"]) :is(.fltc-progress-label, .fltc-progress-value, .fltc-progress-legend),
+.fltc-form-field:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-color-"]) .fltc-form-field-note,
+.fltc-status > [data-status]:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-color-"]),
+.fltc-media-card:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-color-"]) .fltc-media-card-meta,
+.fltc-file-card:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-color-"]) .fltc-file-card-meta,
+.fltc-timeline-item:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-color-"]) .fltc-timeline-time,
+.fltc-cover:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-color-"]) .fltc-cover-fallback {
     font-family: var(--fltc-font-term);
     letter-spacing: 0.08em;
 }
 
 /* Radios take the skin's accent colour for their native dot. */
-.fltc-form-radio:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-theme-"]) {
+.fltc-form-radio:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"]) [class*="fltc-color-"]) {
     accent-color: rgb(var(--fltc-fx-accent));
 }
 
@@ -981,14 +1028,14 @@ div.fltc-spoiler:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-sk
 
 [data-skin="cyberpunk"] {
     --fltc-cut: 9px;
-    --fltc-fx-danger: 211 28 28;
+    --fltc-fx-danger: var(--fltc-danger-600);
 }
 :is(.dark[data-skin="cyberpunk"], .dark [data-skin="cyberpunk"]) {
-    --fltc-fx-danger: 255 59 59;
+    --fltc-fx-danger: var(--fltc-danger-400);
 }
 
-.fltc-button:is([data-skin="cyberpunk"] [class*="fltc-theme-"]),
-.fltc-button-link:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) {
+.fltc-button:is([data-skin="cyberpunk"] [class*="fltc-color-"]),
+.fltc-button-link:is([data-skin="cyberpunk"] [class*="fltc-color-"]) {
     --fltc-line: var(--fltc-fx-accent);
     position: relative;
     isolation: isolate;
@@ -1000,11 +1047,11 @@ div.fltc-spoiler:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-sk
     clip-path: polygon(calc(var(--fltc-cut) + 1px) -1px, calc(100% + 1px) -1px, calc(100% + 1px) calc(100% - var(--fltc-cut) - 1px), calc(100% - var(--fltc-cut) - 1px) calc(100% + 1px), -1px calc(100% + 1px), -1px calc(var(--fltc-cut) + 1px));
     transition: color 0.15s, background-color 0.15s;
 }
-.fltc-button-outline:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) {
+.fltc-button-outline:is([data-skin="cyberpunk"] [class*="fltc-color-"]) {
     --fltc-line: var(--fltc-fx-text);
 }
-.fltc-button:is([data-skin="cyberpunk"] [class*="fltc-theme-"])::before,
-.fltc-button-link:is([data-skin="cyberpunk"] [class*="fltc-theme-"])::before {
+.fltc-button:is([data-skin="cyberpunk"] [class*="fltc-color-"])::before,
+.fltc-button-link:is([data-skin="cyberpunk"] [class*="fltc-color-"])::before {
     content: "";
     position: absolute;
     inset: 1px;
@@ -1015,21 +1062,21 @@ div.fltc-spoiler:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-sk
     clip-path: polygon(calc(var(--fltc-cut) - 0.5px) 0, 100% 0, 100% calc(100% - var(--fltc-cut) + 0.5px), calc(100% - var(--fltc-cut) + 0.5px) 100%, 0 100%, 0 calc(var(--fltc-cut) - 0.5px));
     transition: background 0.15s;
 }
-.fltc-button:is([data-skin="cyberpunk"] [class*="fltc-theme-"]):is(:hover, :focus-visible),
-.fltc-button-link:is([data-skin="cyberpunk"] [class*="fltc-theme-"]):is(:hover, :focus-visible) {
+.fltc-button:is([data-skin="cyberpunk"] [class*="fltc-color-"]):is(:hover, :focus-visible),
+.fltc-button-link:is([data-skin="cyberpunk"] [class*="fltc-color-"]):is(:hover, :focus-visible) {
     /* restated so Tailwind's (dark:)hover:bg-* can't repaint the drawn border */
     background: rgb(var(--fltc-line));
     color: rgb(var(--fltc-fx-ink));
     box-shadow: none;
     outline: none;
 }
-.fltc-button:is([data-skin="cyberpunk"] [class*="fltc-theme-"]):is(:hover, :focus-visible)::before,
-.fltc-button-link:is([data-skin="cyberpunk"] [class*="fltc-theme-"]):is(:hover, :focus-visible)::before {
+.fltc-button:is([data-skin="cyberpunk"] [class*="fltc-color-"]):is(:hover, :focus-visible)::before,
+.fltc-button-link:is([data-skin="cyberpunk"] [class*="fltc-color-"]):is(:hover, :focus-visible)::before {
     background: rgb(var(--fltc-line));
 }
 /* Keyboard focus: a dashed inner frame on top of the fill, since clip-path hides rings. */
-.fltc-button:is([data-skin="cyberpunk"] [class*="fltc-theme-"]):focus-visible::after,
-.fltc-button-link:is([data-skin="cyberpunk"] [class*="fltc-theme-"]):focus-visible::after {
+.fltc-button:is([data-skin="cyberpunk"] [class*="fltc-color-"]):focus-visible::after,
+.fltc-button-link:is([data-skin="cyberpunk"] [class*="fltc-color-"]):focus-visible::after {
     content: "";
     position: absolute;
     inset: 3px;
@@ -1037,16 +1084,16 @@ div.fltc-spoiler:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-sk
     pointer-events: none;
 }
 /* Inside a button group (pagination too) the buttons and button links butt together, so only the group's ends are cut. */
-.fltc-buttongroup > :is(.fltc-button, .fltc-button-link):is([data-skin="cyberpunk"] [class*="fltc-theme-"]),
-.fltc-buttongroup > :is(.fltc-button, .fltc-button-link):is([data-skin="cyberpunk"] [class*="fltc-theme-"])::before {
+.fltc-buttongroup > :is(.fltc-button, .fltc-button-link):is([data-skin="cyberpunk"] [class*="fltc-color-"]),
+.fltc-buttongroup > :is(.fltc-button, .fltc-button-link):is([data-skin="cyberpunk"] [class*="fltc-color-"])::before {
     clip-path: none;
 }
-.fltc-buttongroup > :is(.fltc-button, .fltc-button-link):is([data-skin="cyberpunk"] [class*="fltc-theme-"]):first-child,
-.fltc-buttongroup > :is(.fltc-button, .fltc-button-link):is([data-skin="cyberpunk"] [class*="fltc-theme-"]):first-child::before {
+.fltc-buttongroup > :is(.fltc-button, .fltc-button-link):is([data-skin="cyberpunk"] [class*="fltc-color-"]):first-child,
+.fltc-buttongroup > :is(.fltc-button, .fltc-button-link):is([data-skin="cyberpunk"] [class*="fltc-color-"]):first-child::before {
     clip-path: polygon(calc(var(--fltc-cut) + 1px) -1px, calc(100% + 1px) -1px, calc(100% + 1px) calc(100% + 1px), -1px calc(100% + 1px), -1px calc(var(--fltc-cut) + 1px));
 }
-.fltc-buttongroup > :is(.fltc-button, .fltc-button-link):is([data-skin="cyberpunk"] [class*="fltc-theme-"]):last-child,
-.fltc-buttongroup > :is(.fltc-button, .fltc-button-link):is([data-skin="cyberpunk"] [class*="fltc-theme-"]):last-child::before {
+.fltc-buttongroup > :is(.fltc-button, .fltc-button-link):is([data-skin="cyberpunk"] [class*="fltc-color-"]):last-child,
+.fltc-buttongroup > :is(.fltc-button, .fltc-button-link):is([data-skin="cyberpunk"] [class*="fltc-color-"]):last-child::before {
     clip-path: polygon(-1px -1px, calc(100% + 1px) -1px, calc(100% + 1px) calc(100% - var(--fltc-cut) - 1px), calc(100% - var(--fltc-cut) - 1px) calc(100% + 1px), -1px calc(100% + 1px));
 }
 
@@ -1055,7 +1102,7 @@ div.fltc-spoiler:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-sk
    layer just inside the cut. On focus the line turns pink and glows inward (an outer
    glow would be clipped). Add the class `fltc-corner-tick` to an input to fill the
    corner with a solid tick instead of cutting it. */
-:is(.fltc-form-input-text, .fltc-form-input-email, .fltc-form-input-password, .fltc-form-input-number, .fltc-form-input-date, .fltc-form-input-time, .fltc-form-input-datetime, .fltc-form-input-file, .fltc-form-input-select, .fltc-form-textarea):is([data-skin="cyberpunk"] [class*="fltc-theme-"]) {
+:is(.fltc-form-input-text, .fltc-form-input-email, .fltc-form-input-password, .fltc-form-input-number, .fltc-form-input-date, .fltc-form-input-time, .fltc-form-input-datetime, .fltc-form-input-file, .fltc-form-input-select, .fltc-form-textarea):is([data-skin="cyberpunk"] [class*="fltc-color-"]) {
     --fltc-line: var(--fltc-fx-text);
     --fltc-line-alpha: 0.5;
     border: 1px solid rgb(var(--fltc-line) / var(--fltc-line-alpha));
@@ -1071,29 +1118,29 @@ div.fltc-spoiler:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-sk
     box-shadow: none;
     transition: border-color 0.15s, box-shadow 0.15s;
 }
-:is(.fltc-form-input-text, .fltc-form-input-email, .fltc-form-input-password, .fltc-form-input-number, .fltc-form-input-date, .fltc-form-input-time, .fltc-form-input-datetime, .fltc-form-input-file, .fltc-form-input-select, .fltc-form-textarea):is([data-skin="cyberpunk"] [class*="fltc-theme-"]).fltc-corner-tick {
+:is(.fltc-form-input-text, .fltc-form-input-email, .fltc-form-input-password, .fltc-form-input-number, .fltc-form-input-date, .fltc-form-input-time, .fltc-form-input-datetime, .fltc-form-input-file, .fltc-form-input-select, .fltc-form-textarea):is([data-skin="cyberpunk"] [class*="fltc-color-"]).fltc-corner-tick {
     clip-path: none;
     background-image: linear-gradient(135deg, transparent calc(100% - 8px), rgb(var(--fltc-line)) calc(100% - 8px));
     background-size: auto;
     background-origin: padding-box;
 }
-:is(.fltc-form-input-text, .fltc-form-input-email, .fltc-form-input-password, .fltc-form-input-number, .fltc-form-input-date, .fltc-form-input-time, .fltc-form-input-datetime, .fltc-form-input-file, .fltc-form-input-select, .fltc-form-textarea):is([data-skin="cyberpunk"] [class*="fltc-theme-"])::placeholder {
+:is(.fltc-form-input-text, .fltc-form-input-email, .fltc-form-input-password, .fltc-form-input-number, .fltc-form-input-date, .fltc-form-input-time, .fltc-form-input-datetime, .fltc-form-input-file, .fltc-form-input-select, .fltc-form-textarea):is([data-skin="cyberpunk"] [class*="fltc-color-"])::placeholder {
     color: rgb(var(--fltc-fx-text) / 0.4);
 }
-:is(.fltc-form-input-text, .fltc-form-input-email, .fltc-form-input-password, .fltc-form-input-number, .fltc-form-input-date, .fltc-form-input-time, .fltc-form-input-datetime, .fltc-form-input-file, .fltc-form-input-select, .fltc-form-textarea):is([data-skin="cyberpunk"] [class*="fltc-theme-"]):focus {
+:is(.fltc-form-input-text, .fltc-form-input-email, .fltc-form-input-password, .fltc-form-input-number, .fltc-form-input-date, .fltc-form-input-time, .fltc-form-input-datetime, .fltc-form-input-file, .fltc-form-input-select, .fltc-form-textarea):is([data-skin="cyberpunk"] [class*="fltc-color-"]):focus {
     --fltc-line: var(--fltc-fx-accent);
     --fltc-line-alpha: 1;
     box-shadow: inset 0 0 10px rgb(var(--fltc-line) / 0.3);
     outline: none;
 }
-:is(.fltc-form-input-text, .fltc-form-input-email, .fltc-form-input-password, .fltc-form-input-number, .fltc-form-input-date, .fltc-form-input-time, .fltc-form-input-datetime, .fltc-form-input-file, .fltc-form-input-select, .fltc-form-textarea):is([data-skin="cyberpunk"] [class*="fltc-theme-"])[aria-invalid="true"] {
+:is(.fltc-form-input-text, .fltc-form-input-email, .fltc-form-input-password, .fltc-form-input-number, .fltc-form-input-date, .fltc-form-input-time, .fltc-form-input-datetime, .fltc-form-input-file, .fltc-form-input-select, .fltc-form-textarea):is([data-skin="cyberpunk"] [class*="fltc-color-"])[aria-invalid="true"] {
     --fltc-line: var(--fltc-fx-danger);
     --fltc-line-alpha: 1;
 }
 
 /* Select: the native arrow is replaced with a solid chevron in the line colour (two
    gradient triangles), next to the cut corner. */
-.fltc-form-input-select:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) {
+.fltc-form-input-select:is([data-skin="cyberpunk"] [class*="fltc-color-"]) {
     appearance: none;
     padding-right: 2.25rem;
     background-image:
@@ -1106,20 +1153,20 @@ div.fltc-spoiler:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-sk
 /* The opened list is drawn by the browser. Chromium and Firefox on Windows/Linux honour
    option colours (macOS keeps its own menu); dark mode also gets a dark native list
    through color-scheme. */
-.fltc-form-input-select:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) option {
+.fltc-form-input-select:is([data-skin="cyberpunk"] [class*="fltc-color-"]) option {
     background-color: rgb(var(--fltc-fx-ink));
     color: rgb(var(--fltc-fx-text));
 }
 /* Browsers with customizable selects (Chromium 135+) get a fully styled list. */
 @supports (appearance: base-select) {
-    .fltc-form-input-select:is([data-skin="cyberpunk"] [class*="fltc-theme-"]),
-    .fltc-form-input-select:is([data-skin="cyberpunk"] [class*="fltc-theme-"])::picker(select) {
+    .fltc-form-input-select:is([data-skin="cyberpunk"] [class*="fltc-color-"]),
+    .fltc-form-input-select:is([data-skin="cyberpunk"] [class*="fltc-color-"])::picker(select) {
         appearance: base-select;
     }
-    .fltc-form-input-select:is([data-skin="cyberpunk"] [class*="fltc-theme-"])::picker-icon {
+    .fltc-form-input-select:is([data-skin="cyberpunk"] [class*="fltc-color-"])::picker-icon {
         display: none;
     }
-    .fltc-form-input-select:is([data-skin="cyberpunk"] [class*="fltc-theme-"])::picker(select) {
+    .fltc-form-input-select:is([data-skin="cyberpunk"] [class*="fltc-color-"])::picker(select) {
         margin-top: 2px;
         border: 1px solid rgb(var(--fltc-fx-accent));
         border-radius: 0;
@@ -1127,18 +1174,18 @@ div.fltc-spoiler:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-sk
         background: rgb(var(--fltc-fx-ink));
         box-shadow: 0 0 18px rgb(var(--fltc-fx-accent) / 0.25);
     }
-    .fltc-form-input-select:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) option {
+    .fltc-form-input-select:is([data-skin="cyberpunk"] [class*="fltc-color-"]) option {
         padding: 0.4rem 0.75rem;
         font-family: var(--fltc-font-body);
     }
-    .fltc-form-input-select:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) option::checkmark {
+    .fltc-form-input-select:is([data-skin="cyberpunk"] [class*="fltc-color-"]) option::checkmark {
         color: rgb(var(--fltc-fx-accent));
     }
-    .fltc-form-input-select:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) option:is(:hover, :focus-visible) {
+    .fltc-form-input-select:is([data-skin="cyberpunk"] [class*="fltc-color-"]) option:is(:hover, :focus-visible) {
         background-color: rgb(var(--fltc-fx-text));
         color: rgb(var(--fltc-fx-ink));
     }
-    .fltc-form-input-select:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) option:checked {
+    .fltc-form-input-select:is([data-skin="cyberpunk"] [class*="fltc-color-"]) option:checked {
         background-color: rgb(var(--fltc-fx-accent) / 0.2);
         color: rgb(var(--fltc-fx-accent));
     }
@@ -1147,27 +1194,27 @@ div.fltc-spoiler:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-sk
 /* Date and time: the calendar icon is redrawn as a square-cornered glyph in the line
    colour, and the focused date part fills like a hovered button (Chromium/Safari). The
    popup calendar itself is native: only color-scheme (dark in dark mode) reaches it. */
-:is(.fltc-form-input-date, .fltc-form-input-time, .fltc-form-input-datetime):is([data-skin="cyberpunk"] [class*="fltc-theme-"])::-webkit-calendar-picker-indicator {
+:is(.fltc-form-input-date, .fltc-form-input-time, .fltc-form-input-datetime):is([data-skin="cyberpunk"] [class*="fltc-color-"])::-webkit-calendar-picker-indicator {
     background: rgb(var(--fltc-line));
     -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2'%3E%3Cpath d='M3 5h18v16H3zM3 10h18M8 2v5M16 2v5'/%3E%3C/svg%3E") center / 1rem no-repeat;
     mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2'%3E%3Cpath d='M3 5h18v16H3zM3 10h18M8 2v5M16 2v5'/%3E%3C/svg%3E") center / 1rem no-repeat;
     cursor: pointer;
 }
-:is(.fltc-form-input-date, .fltc-form-input-time, .fltc-form-input-datetime):is([data-skin="cyberpunk"] [class*="fltc-theme-"])::-webkit-datetime-edit-text {
+:is(.fltc-form-input-date, .fltc-form-input-time, .fltc-form-input-datetime):is([data-skin="cyberpunk"] [class*="fltc-color-"])::-webkit-datetime-edit-text {
     color: rgb(var(--fltc-fx-text) / 0.5);
 }
-:is(.fltc-form-input-date, .fltc-form-input-time, .fltc-form-input-datetime):is([data-skin="cyberpunk"] [class*="fltc-theme-"])::-webkit-datetime-edit-day-field:focus,
-:is(.fltc-form-input-date, .fltc-form-input-time, .fltc-form-input-datetime):is([data-skin="cyberpunk"] [class*="fltc-theme-"])::-webkit-datetime-edit-month-field:focus,
-:is(.fltc-form-input-date, .fltc-form-input-time, .fltc-form-input-datetime):is([data-skin="cyberpunk"] [class*="fltc-theme-"])::-webkit-datetime-edit-year-field:focus,
-:is(.fltc-form-input-date, .fltc-form-input-time, .fltc-form-input-datetime):is([data-skin="cyberpunk"] [class*="fltc-theme-"])::-webkit-datetime-edit-hour-field:focus,
-:is(.fltc-form-input-date, .fltc-form-input-time, .fltc-form-input-datetime):is([data-skin="cyberpunk"] [class*="fltc-theme-"])::-webkit-datetime-edit-minute-field:focus {
+:is(.fltc-form-input-date, .fltc-form-input-time, .fltc-form-input-datetime):is([data-skin="cyberpunk"] [class*="fltc-color-"])::-webkit-datetime-edit-day-field:focus,
+:is(.fltc-form-input-date, .fltc-form-input-time, .fltc-form-input-datetime):is([data-skin="cyberpunk"] [class*="fltc-color-"])::-webkit-datetime-edit-month-field:focus,
+:is(.fltc-form-input-date, .fltc-form-input-time, .fltc-form-input-datetime):is([data-skin="cyberpunk"] [class*="fltc-color-"])::-webkit-datetime-edit-year-field:focus,
+:is(.fltc-form-input-date, .fltc-form-input-time, .fltc-form-input-datetime):is([data-skin="cyberpunk"] [class*="fltc-color-"])::-webkit-datetime-edit-hour-field:focus,
+:is(.fltc-form-input-date, .fltc-form-input-time, .fltc-form-input-datetime):is([data-skin="cyberpunk"] [class*="fltc-color-"])::-webkit-datetime-edit-minute-field:focus {
     background: rgb(var(--fltc-fx-accent));
     color: rgb(var(--fltc-fx-ink));
 }
 
 /* Labels: small uppercase terminal type. */
-.fltc-form-label:is([data-skin="cyberpunk"] [class*="fltc-theme-"]),
-.fltc-form-radio-group:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) .fltc-form-radio-group-legend {
+.fltc-form-label:is([data-skin="cyberpunk"] [class*="fltc-color-"]),
+.fltc-form-radio-group:is([data-skin="cyberpunk"] [class*="fltc-color-"]) .fltc-form-radio-group-legend {
     font-family: var(--fltc-font-term);
     font-size: 0.95rem;
     font-weight: 400;
@@ -1177,39 +1224,39 @@ div.fltc-spoiler:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-sk
 }
 
 /* Checkboxes and toggles: square box and knob, cyan line, pink when on. */
-.fltc-form-checkbox:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) ~ .fltc-form-checkbox-track {
+.fltc-form-checkbox:is([data-skin="cyberpunk"] [class*="fltc-color-"]) ~ .fltc-form-checkbox-track {
     border: 1px solid rgb(var(--fltc-fx-text) / 0.6);
     border-radius: 0;
     background: rgb(var(--fltc-fx-ink) / 0.6);
 }
-.fltc-form-checkbox:is([data-skin="cyberpunk"] [class*="fltc-theme-"]):checked ~ .fltc-form-checkbox-track {
+.fltc-form-checkbox:is([data-skin="cyberpunk"] [class*="fltc-color-"]):checked ~ .fltc-form-checkbox-track {
     border-color: rgb(var(--fltc-fx-accent));
     background: rgb(var(--fltc-fx-accent) / 0.2);
     box-shadow: 0 0 8px rgb(var(--fltc-fx-accent) / 0.4);
 }
-.fltc-form-checkbox:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) ~ .fltc-form-checkbox-track .fltc-form-checkbox-knob {
+.fltc-form-checkbox:is([data-skin="cyberpunk"] [class*="fltc-color-"]) ~ .fltc-form-checkbox-track .fltc-form-checkbox-knob {
     top: 1px;
     left: 1px;
     border-radius: 0;
     background: rgb(var(--fltc-fx-text));
     box-shadow: none;
 }
-.fltc-form-checkbox:is([data-skin="cyberpunk"] [class*="fltc-theme-"]):checked ~ .fltc-form-checkbox-track .fltc-form-checkbox-knob {
+.fltc-form-checkbox:is([data-skin="cyberpunk"] [class*="fltc-color-"]):checked ~ .fltc-form-checkbox-track .fltc-form-checkbox-knob {
     background: rgb(var(--fltc-fx-accent));
 }
-.fltc-form-checkbox:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) ~ .fltc-icon {
+.fltc-form-checkbox:is([data-skin="cyberpunk"] [class*="fltc-color-"]) ~ .fltc-icon {
     color: rgb(var(--fltc-fx-text));
 }
-.fltc-form-checkbox:is([data-skin="cyberpunk"] [class*="fltc-theme-"]):checked ~ .fltc-icon {
+.fltc-form-checkbox:is([data-skin="cyberpunk"] [class*="fltc-color-"]):checked ~ .fltc-icon {
     color: rgb(var(--fltc-fx-accent));
 }
-.fltc-form-checkbox:is([data-skin="cyberpunk"] [class*="fltc-theme-"]):focus-visible ~ :is(.fltc-form-checkbox-track, .fltc-icon) {
+.fltc-form-checkbox:is([data-skin="cyberpunk"] [class*="fltc-color-"]):focus-visible ~ :is(.fltc-form-checkbox-track, .fltc-icon) {
     outline: 1px dashed rgb(var(--fltc-fx-accent));
     outline-offset: 2px;
 }
 
 /* Badges: tags with a tinted fill, thin line and uppercase terminal type. */
-.fltc-badge:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) {
+.fltc-badge:is([data-skin="cyberpunk"] [class*="fltc-color-"]) {
     border: 1px solid rgb(var(--fltc-fx-text) / 0.5);
     border-radius: 0;
     background: rgb(var(--fltc-fx-text) / 0.1);
@@ -1217,18 +1264,18 @@ div.fltc-spoiler:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-sk
 }
 
 /* Drawer tabs: dark panel, accent line and label. */
-.fltc-drawer-tab:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) {
+.fltc-drawer-tab:is([data-skin="cyberpunk"] [class*="fltc-color-"]) {
     border-color: rgb(var(--fltc-fx-accent));
     border-radius: 0;
     background: rgb(var(--fltc-fx-ink) / 0.92);
     color: rgb(var(--fltc-fx-accent));
     text-transform: uppercase;
 }
-.fltc-drawer-tab:is([data-skin="cyberpunk"] [class*="fltc-theme-"]):hover {
+.fltc-drawer-tab:is([data-skin="cyberpunk"] [class*="fltc-color-"]):hover {
     background: rgb(var(--fltc-fx-accent) / 0.15);
     box-shadow: 0 0 12px rgb(var(--fltc-fx-accent) / 0.5);
 }
-.fltc-drawer-tab:is([data-skin="cyberpunk"] [class*="fltc-theme-"])[aria-expanded="true"] {
+.fltc-drawer-tab:is([data-skin="cyberpunk"] [class*="fltc-color-"])[aria-expanded="true"] {
     background: rgb(var(--fltc-fx-accent));
     color: rgb(var(--fltc-fx-ink));
 }
@@ -1240,25 +1287,25 @@ div.fltc-spoiler:is(:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-sk
    lose their rounding and get the same two cut corners as the buttons, with a thin cyan
    line. The cut clips their border, so ::after redraws the two diagonal edges on top of
    the content. Their glow moves inside, where the clip can't remove it. */
-.fltc-container-box:is([data-skin="cyberpunk"] [class*="fltc-theme-"]),
-.fltc-card:is([data-skin="cyberpunk"] [class*="fltc-theme-"]),
-.fltc-counter:is([data-skin="cyberpunk"] [class*="fltc-theme-"]),
-.fltc-alert:is([data-skin="cyberpunk"] [class*="fltc-theme-"]),
-.fltc-messagebox:is([data-skin="cyberpunk"] [class*="fltc-theme-"]),
-.fltc-accordion:is([data-skin="cyberpunk"] [class*="fltc-theme-"]),
-.fltc-table-scroll:is([data-skin="cyberpunk"] [class*="fltc-theme-"]),
-.fltc-form-checklist:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) .fltc-form-checklist-list,
-.fltc-nav-stepper:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) .fltc-nav-stepper-panel,
-.fltc-segmented:is([data-skin="cyberpunk"] [class*="fltc-theme-"]),
-.fltc-media-card:is([data-skin="cyberpunk"] [class*="fltc-theme-"]),
-.fltc-file-card:is([data-skin="cyberpunk"] [class*="fltc-theme-"]),
-.fltc-action-bar:is([data-skin="cyberpunk"] [class*="fltc-theme-"]),
-div.fltc-spoiler:is([data-skin="cyberpunk"] [class*="fltc-theme-"]),
-.fltc-infocard:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) :is(.fltc-infocard-preview, .fltc-infocard-card),
-.fltc-form-upload:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) .fltc-form-upload-zone,
-.fltc-nav-navbar-dropdown:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) .fltc-nav-navbar-dropdown-menu,
-.fltc-dropdown:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) .fltc-dropdown-menu,
-.fltc-form-checkbox-control.border:has(> .fltc-form-checkbox:is([data-skin="cyberpunk"] [class*="fltc-theme-"])) {
+.fltc-container-box:is([data-skin="cyberpunk"] [class*="fltc-color-"]),
+.fltc-card:is([data-skin="cyberpunk"] [class*="fltc-color-"]),
+.fltc-counter:is([data-skin="cyberpunk"] [class*="fltc-color-"]),
+.fltc-alert:is([data-skin="cyberpunk"] [class*="fltc-color-"]),
+.fltc-messagebox:is([data-skin="cyberpunk"] [class*="fltc-color-"]),
+.fltc-accordion:is([data-skin="cyberpunk"] [class*="fltc-color-"]),
+.fltc-table-scroll:is([data-skin="cyberpunk"] [class*="fltc-color-"]),
+.fltc-form-checklist:is([data-skin="cyberpunk"] [class*="fltc-color-"]) .fltc-form-checklist-list,
+.fltc-nav-stepper:is([data-skin="cyberpunk"] [class*="fltc-color-"]) .fltc-nav-stepper-panel,
+.fltc-segmented:is([data-skin="cyberpunk"] [class*="fltc-color-"]),
+.fltc-media-card:is([data-skin="cyberpunk"] [class*="fltc-color-"]),
+.fltc-file-card:is([data-skin="cyberpunk"] [class*="fltc-color-"]),
+.fltc-action-bar:is([data-skin="cyberpunk"] [class*="fltc-color-"]),
+div.fltc-spoiler:is([data-skin="cyberpunk"] [class*="fltc-color-"]),
+.fltc-infocard:is([data-skin="cyberpunk"] [class*="fltc-color-"]) :is(.fltc-infocard-preview, .fltc-infocard-card),
+.fltc-form-upload:is([data-skin="cyberpunk"] [class*="fltc-color-"]) .fltc-form-upload-zone,
+.fltc-nav-navbar-dropdown:is([data-skin="cyberpunk"] [class*="fltc-color-"]) .fltc-nav-navbar-dropdown-menu,
+.fltc-dropdown:is([data-skin="cyberpunk"] [class*="fltc-color-"]) .fltc-dropdown-menu,
+.fltc-form-checkbox-control.border:has(> .fltc-form-checkbox:is([data-skin="cyberpunk"] [class*="fltc-color-"])) {
     --fltc-line: var(--fltc-fx-text);
     --fltc-line-alpha: 0.4;
     border-color: rgb(var(--fltc-line) / var(--fltc-line-alpha));
@@ -1266,41 +1313,41 @@ div.fltc-spoiler:is([data-skin="cyberpunk"] [class*="fltc-theme-"]),
     clip-path: polygon(calc(var(--fltc-cut) + 1px) -1px, calc(100% + 1px) -1px, calc(100% + 1px) calc(100% - var(--fltc-cut) - 1px), calc(100% - var(--fltc-cut) - 1px) calc(100% + 1px), -1px calc(100% + 1px), -1px calc(var(--fltc-cut) + 1px));
     box-shadow: inset 0 0 24px rgb(var(--fltc-fx-accent) / 0.08);
 }
-.fltc-container-box:is([data-skin="cyberpunk"] [class*="fltc-theme-"]),
-.fltc-card:is([data-skin="cyberpunk"] [class*="fltc-theme-"]),
-.fltc-counter:is([data-skin="cyberpunk"] [class*="fltc-theme-"]),
-.fltc-alert:is([data-skin="cyberpunk"] [class*="fltc-theme-"]),
-.fltc-messagebox:is([data-skin="cyberpunk"] [class*="fltc-theme-"]),
-.fltc-accordion:is([data-skin="cyberpunk"] [class*="fltc-theme-"]),
-.fltc-table-scroll:is([data-skin="cyberpunk"] [class*="fltc-theme-"]),
-.fltc-form-checklist:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) .fltc-form-checklist-list,
-.fltc-nav-stepper:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) .fltc-nav-stepper-panel,
-.fltc-segmented:is([data-skin="cyberpunk"] [class*="fltc-theme-"]),
-.fltc-file-card:is([data-skin="cyberpunk"] [class*="fltc-theme-"]),
-div.fltc-spoiler:is([data-skin="cyberpunk"] [class*="fltc-theme-"]),
-.fltc-infocard:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) .fltc-infocard-card,
-.fltc-form-checkbox-control.border:has(> .fltc-form-checkbox:is([data-skin="cyberpunk"] [class*="fltc-theme-"])) {
+.fltc-container-box:is([data-skin="cyberpunk"] [class*="fltc-color-"]),
+.fltc-card:is([data-skin="cyberpunk"] [class*="fltc-color-"]),
+.fltc-counter:is([data-skin="cyberpunk"] [class*="fltc-color-"]),
+.fltc-alert:is([data-skin="cyberpunk"] [class*="fltc-color-"]),
+.fltc-messagebox:is([data-skin="cyberpunk"] [class*="fltc-color-"]),
+.fltc-accordion:is([data-skin="cyberpunk"] [class*="fltc-color-"]),
+.fltc-table-scroll:is([data-skin="cyberpunk"] [class*="fltc-color-"]),
+.fltc-form-checklist:is([data-skin="cyberpunk"] [class*="fltc-color-"]) .fltc-form-checklist-list,
+.fltc-nav-stepper:is([data-skin="cyberpunk"] [class*="fltc-color-"]) .fltc-nav-stepper-panel,
+.fltc-segmented:is([data-skin="cyberpunk"] [class*="fltc-color-"]),
+.fltc-file-card:is([data-skin="cyberpunk"] [class*="fltc-color-"]),
+div.fltc-spoiler:is([data-skin="cyberpunk"] [class*="fltc-color-"]),
+.fltc-infocard:is([data-skin="cyberpunk"] [class*="fltc-color-"]) .fltc-infocard-card,
+.fltc-form-checkbox-control.border:has(> .fltc-form-checkbox:is([data-skin="cyberpunk"] [class*="fltc-color-"])) {
     position: relative; /* the media card, action bar (sticky), preview and drop zone are positioned already */ /* dropdown menus are positioned already */
 }
-.fltc-container-box:is([data-skin="cyberpunk"] [class*="fltc-theme-"])::after,
-.fltc-card:is([data-skin="cyberpunk"] [class*="fltc-theme-"])::after,
-.fltc-counter:is([data-skin="cyberpunk"] [class*="fltc-theme-"])::after,
-.fltc-alert:is([data-skin="cyberpunk"] [class*="fltc-theme-"])::after,
-.fltc-messagebox:is([data-skin="cyberpunk"] [class*="fltc-theme-"])::after,
-.fltc-accordion:is([data-skin="cyberpunk"] [class*="fltc-theme-"])::after,
-.fltc-table-scroll:is([data-skin="cyberpunk"] [class*="fltc-theme-"])::after,
-.fltc-form-checklist:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) .fltc-form-checklist-list::after,
-.fltc-nav-stepper:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) .fltc-nav-stepper-panel::after,
-.fltc-segmented:is([data-skin="cyberpunk"] [class*="fltc-theme-"])::after,
-.fltc-media-card:is([data-skin="cyberpunk"] [class*="fltc-theme-"])::after,
-.fltc-file-card:is([data-skin="cyberpunk"] [class*="fltc-theme-"])::after,
-.fltc-action-bar:is([data-skin="cyberpunk"] [class*="fltc-theme-"])::after,
-div.fltc-spoiler:is([data-skin="cyberpunk"] [class*="fltc-theme-"])::after,
-.fltc-infocard:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) :is(.fltc-infocard-preview, .fltc-infocard-card)::after,
-.fltc-form-upload:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) .fltc-form-upload-zone::after,
-.fltc-nav-navbar-dropdown:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) .fltc-nav-navbar-dropdown-menu::after,
-.fltc-dropdown:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) .fltc-dropdown-menu::after,
-.fltc-form-checkbox-control.border:has(> .fltc-form-checkbox:is([data-skin="cyberpunk"] [class*="fltc-theme-"]))::after {
+.fltc-container-box:is([data-skin="cyberpunk"] [class*="fltc-color-"])::after,
+.fltc-card:is([data-skin="cyberpunk"] [class*="fltc-color-"])::after,
+.fltc-counter:is([data-skin="cyberpunk"] [class*="fltc-color-"])::after,
+.fltc-alert:is([data-skin="cyberpunk"] [class*="fltc-color-"])::after,
+.fltc-messagebox:is([data-skin="cyberpunk"] [class*="fltc-color-"])::after,
+.fltc-accordion:is([data-skin="cyberpunk"] [class*="fltc-color-"])::after,
+.fltc-table-scroll:is([data-skin="cyberpunk"] [class*="fltc-color-"])::after,
+.fltc-form-checklist:is([data-skin="cyberpunk"] [class*="fltc-color-"]) .fltc-form-checklist-list::after,
+.fltc-nav-stepper:is([data-skin="cyberpunk"] [class*="fltc-color-"]) .fltc-nav-stepper-panel::after,
+.fltc-segmented:is([data-skin="cyberpunk"] [class*="fltc-color-"])::after,
+.fltc-media-card:is([data-skin="cyberpunk"] [class*="fltc-color-"])::after,
+.fltc-file-card:is([data-skin="cyberpunk"] [class*="fltc-color-"])::after,
+.fltc-action-bar:is([data-skin="cyberpunk"] [class*="fltc-color-"])::after,
+div.fltc-spoiler:is([data-skin="cyberpunk"] [class*="fltc-color-"])::after,
+.fltc-infocard:is([data-skin="cyberpunk"] [class*="fltc-color-"]) :is(.fltc-infocard-preview, .fltc-infocard-card)::after,
+.fltc-form-upload:is([data-skin="cyberpunk"] [class*="fltc-color-"]) .fltc-form-upload-zone::after,
+.fltc-nav-navbar-dropdown:is([data-skin="cyberpunk"] [class*="fltc-color-"]) .fltc-nav-navbar-dropdown-menu::after,
+.fltc-dropdown:is([data-skin="cyberpunk"] [class*="fltc-color-"]) .fltc-dropdown-menu::after,
+.fltc-form-checkbox-control.border:has(> .fltc-form-checkbox:is([data-skin="cyberpunk"] [class*="fltc-color-"]))::after {
     content: "";
     position: absolute;
     inset: -1px;
@@ -1308,43 +1355,43 @@ div.fltc-spoiler:is([data-skin="cyberpunk"] [class*="fltc-theme-"])::after,
     pointer-events: none;
     background: linear-gradient(to bottom right, transparent 50%, rgb(var(--fltc-line) / var(--fltc-line-alpha)) 50%, rgb(var(--fltc-line) / var(--fltc-line-alpha)) calc(50% + 1.2px), transparent calc(50% + 1.2px)) top left / var(--fltc-cut) var(--fltc-cut) no-repeat, linear-gradient(to top left, transparent 50%, rgb(var(--fltc-line) / var(--fltc-line-alpha)) 50%, rgb(var(--fltc-line) / var(--fltc-line-alpha)) calc(50% + 1.2px), transparent calc(50% + 1.2px)) bottom right / var(--fltc-cut) var(--fltc-cut) no-repeat;
 }
-.fltc-alert:is([data-skin="cyberpunk"] [class*="fltc-theme-"]), .fltc-messagebox:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) {
+.fltc-alert:is([data-skin="cyberpunk"] [class*="fltc-color-"]), .fltc-messagebox:is([data-skin="cyberpunk"] [class*="fltc-color-"]) {
     --fltc-line: var(--fltc-fx-accent);
     --fltc-line-alpha: 0.7;
 }
 
 /* ---- cyberpunk tables ---- */
-.fltc-table-scroll:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) .fltc-table-head {
+.fltc-table-scroll:is([data-skin="cyberpunk"] [class*="fltc-color-"]) .fltc-table-head {
     font-family: var(--fltc-font-term);
     font-size: 0.95rem;
     letter-spacing: 0.1em;
     color: rgb(var(--fltc-fx-accent));
     box-shadow: inset 0 -1px 0 rgb(var(--fltc-fx-accent));
 }
-.fltc-table-scroll:is([data-skin="cyberpunk"] [class*="fltc-theme-"]):not(.fltc-table-floating) .fltc-table-cell {
+.fltc-table-scroll:is([data-skin="cyberpunk"] [class*="fltc-color-"]):not(.fltc-table-floating) .fltc-table-cell {
     border-color: rgb(var(--fltc-fx-text) / 0.2);
 }
 /* Hovered rows get a pink bar on their leading edge. */
-.fltc-table-scroll:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) tbody .fltc-table-row:hover > :first-child {
+.fltc-table-scroll:is([data-skin="cyberpunk"] [class*="fltc-color-"]) tbody .fltc-table-row:hover > :first-child {
     box-shadow: inset 3px 0 0 rgb(var(--fltc-fx-accent));
 }
 /* Floating rows: square pills with the leading and trailing corners cut, so the frame
    is not clipped here — each row carries the cut itself. */
-.fltc-table-scroll.fltc-table-floating:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) {
+.fltc-table-scroll.fltc-table-floating:is([data-skin="cyberpunk"] [class*="fltc-color-"]) {
     clip-path: none;
     box-shadow: none;
 }
-.fltc-table-scroll.fltc-table-floating:is([data-skin="cyberpunk"] [class*="fltc-theme-"])::after {
+.fltc-table-scroll.fltc-table-floating:is([data-skin="cyberpunk"] [class*="fltc-color-"])::after {
     content: none;
 }
-.fltc-table-scroll.fltc-table-floating:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) .fltc-table-row > * {
+.fltc-table-scroll.fltc-table-floating:is([data-skin="cyberpunk"] [class*="fltc-color-"]) .fltc-table-row > * {
     --fltc-line: var(--fltc-fx-text);
     --fltc-line-alpha: 0.4;
     border-color: rgb(var(--fltc-line) / var(--fltc-line-alpha));
     border-radius: 0;
     box-shadow: none;
 }
-.fltc-table-scroll.fltc-table-floating:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) .fltc-table-row > :first-child {
+.fltc-table-scroll.fltc-table-floating:is([data-skin="cyberpunk"] [class*="fltc-color-"]) .fltc-table-row > :first-child {
     clip-path: polygon(calc(var(--fltc-cut) + 1px) -1px, calc(100% + 1px) -1px, calc(100% + 1px) calc(100% + 1px), -1px calc(100% + 1px), -1px calc(var(--fltc-cut) + 1px));
     background-image: linear-gradient(to bottom right, transparent 50%, rgb(var(--fltc-line) / var(--fltc-line-alpha)) 50%, rgb(var(--fltc-line) / var(--fltc-line-alpha)) calc(50% + 1.2px), transparent calc(50% + 1.2px));
     background-position: top left;
@@ -1352,7 +1399,7 @@ div.fltc-spoiler:is([data-skin="cyberpunk"] [class*="fltc-theme-"])::after,
     background-repeat: no-repeat;
     background-origin: border-box;
 }
-.fltc-table-scroll.fltc-table-floating:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) .fltc-table-row > :last-child {
+.fltc-table-scroll.fltc-table-floating:is([data-skin="cyberpunk"] [class*="fltc-color-"]) .fltc-table-row > :last-child {
     clip-path: polygon(-1px -1px, calc(100% + 1px) -1px, calc(100% + 1px) calc(100% - var(--fltc-cut) - 1px), calc(100% - var(--fltc-cut) - 1px) calc(100% + 1px), -1px calc(100% + 1px));
     background-image: linear-gradient(to top left, transparent 50%, rgb(var(--fltc-line) / var(--fltc-line-alpha)) 50%, rgb(var(--fltc-line) / var(--fltc-line-alpha)) calc(50% + 1.2px), transparent calc(50% + 1.2px));
     background-position: bottom right;
@@ -1360,28 +1407,28 @@ div.fltc-spoiler:is([data-skin="cyberpunk"] [class*="fltc-theme-"])::after,
     background-repeat: no-repeat;
     background-origin: border-box;
 }
-.fltc-table-scroll.fltc-table-floating:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) .fltc-table-row:hover > * {
+.fltc-table-scroll.fltc-table-floating:is([data-skin="cyberpunk"] [class*="fltc-color-"]) .fltc-table-row:hover > * {
     --fltc-line: var(--fltc-fx-accent);
     --fltc-line-alpha: 1;
 }
 
 /* ---- cyberpunk checklist ---- */
-.fltc-form-checklist:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) .fltc-form-checklist-list {
+.fltc-form-checklist:is([data-skin="cyberpunk"] [class*="fltc-color-"]) .fltc-form-checklist-list {
     background-color: rgb(var(--fltc-fx-ink) / 0.6);
 }
-.fltc-form-checklist:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) .fltc-form-checklist-list > * {
+.fltc-form-checklist:is([data-skin="cyberpunk"] [class*="fltc-color-"]) .fltc-form-checklist-list > * {
     border-color: rgb(var(--fltc-fx-text) / 0.2);
 }
-.fltc-form-checklist:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) .fltc-form-checklist-row:hover {
+.fltc-form-checklist:is([data-skin="cyberpunk"] [class*="fltc-color-"]) .fltc-form-checklist-row:hover {
     background-color: rgb(var(--fltc-fx-text) / 0.06);
     box-shadow: inset 3px 0 0 rgb(var(--fltc-fx-accent));
 }
-.fltc-form-checklist:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) .fltc-form-checklist-track {
+.fltc-form-checklist:is([data-skin="cyberpunk"] [class*="fltc-color-"]) .fltc-form-checklist-track {
     border: 1px solid rgb(var(--fltc-fx-text) / 0.4);
     border-radius: 0;
     background: rgb(var(--fltc-fx-ink) / 0.6);
 }
-.fltc-form-checklist:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) .fltc-form-checklist-fill {
+.fltc-form-checklist:is([data-skin="cyberpunk"] [class*="fltc-color-"]) .fltc-form-checklist-fill {
     border-radius: 0;
     box-shadow: 0 0 8px currentColor;
 }
@@ -1389,23 +1436,23 @@ div.fltc-spoiler:is([data-skin="cyberpunk"] [class*="fltc-theme-"])::after,
 /* ---- cyberpunk checkbox and checklist glyphs ----
    The default circle icons become Phosphor's square ones (only the defaults: custom
    icons keep their glyph). */
-.fltc-form-checkbox:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) ~ .ph-circle::before,
-.fltc-form-checklist:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) .ph-circle::before {
+.fltc-form-checkbox:is([data-skin="cyberpunk"] [class*="fltc-color-"]) ~ .ph-circle::before,
+.fltc-form-checklist:is([data-skin="cyberpunk"] [class*="fltc-color-"]) .ph-circle::before {
     content: "\e45e"; /* ph-square */
 }
-.fltc-form-checkbox:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) ~ .ph-check-circle::before,
-.fltc-form-checklist:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) .ph-check-circle::before {
+.fltc-form-checkbox:is([data-skin="cyberpunk"] [class*="fltc-color-"]) ~ .ph-check-circle::before,
+.fltc-form-checklist:is([data-skin="cyberpunk"] [class*="fltc-color-"]) .ph-check-circle::before {
     content: "\e186"; /* ph-check-square */
 }
 
 /* ---- cyberpunk stepper ---- */
-.fltc-nav-stepper:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) .fltc-nav-stepper-step {
+.fltc-nav-stepper:is([data-skin="cyberpunk"] [class*="fltc-color-"]) .fltc-nav-stepper-step {
     font-family: var(--fltc-font-term);
     font-size: 1rem;
     letter-spacing: 0.1em;
     text-transform: uppercase;
 }
-.fltc-nav-stepper:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) .fltc-nav-stepper-step[aria-current="step"] {
+.fltc-nav-stepper:is([data-skin="cyberpunk"] [class*="fltc-color-"]) .fltc-nav-stepper-step[aria-current="step"] {
     border-color: rgb(var(--fltc-fx-accent));
     color: rgb(var(--fltc-fx-accent));
     text-shadow: 0 0 12px rgb(var(--fltc-fx-accent) / var(--fltc-fx-glow));
@@ -1414,13 +1461,13 @@ div.fltc-spoiler:is([data-skin="cyberpunk"] [class*="fltc-theme-"])::after,
 /* ---- cyberpunk navbar and sidebar ----
    Not clipped: they are often sticky or fixed and edge-to-edge. Square, a cyan frame
    and a pink line on the edge facing the content. */
-.fltc-nav-navbar:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) {
+.fltc-nav-navbar:is([data-skin="cyberpunk"] [class*="fltc-color-"]) {
     border-color: rgb(var(--fltc-fx-text) / 0.35);
     border-bottom-color: rgb(var(--fltc-fx-accent));
     border-radius: 0;
     box-shadow: 0 6px 18px -10px rgb(var(--fltc-fx-accent) / 0.6);
 }
-.fltc-nav-navbar:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) :is(.fltc-nav-navbar-link, .fltc-nav-navbar-onclick, .fltc-nav-navbar-postlink, .fltc-nav-navbar-dropdown > button) {
+.fltc-nav-navbar:is([data-skin="cyberpunk"] [class*="fltc-color-"]) :is(.fltc-nav-navbar-link, .fltc-nav-navbar-onclick, .fltc-nav-navbar-postlink, .fltc-nav-navbar-dropdown > button) {
     border-radius: 0;
     font-family: var(--fltc-font-term);
     font-size: 1.05rem;
@@ -1429,37 +1476,37 @@ div.fltc-spoiler:is([data-skin="cyberpunk"] [class*="fltc-theme-"])::after,
 }
 /* Active links (aria-current="page") look like hovered ones: the inset shadow is one
    continuous underline beneath icon and text, where a text underline would break. */
-.fltc-nav-navbar:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) :is(.fltc-nav-navbar-link, .fltc-nav-navbar-onclick, .fltc-nav-navbar-postlink, .fltc-nav-navbar-dropdown > button):hover,
-.fltc-nav-navbar:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) .fltc-nav-navbar-link[aria-current="page"] {
+.fltc-nav-navbar:is([data-skin="cyberpunk"] [class*="fltc-color-"]) :is(.fltc-nav-navbar-link, .fltc-nav-navbar-onclick, .fltc-nav-navbar-postlink, .fltc-nav-navbar-dropdown > button):hover,
+.fltc-nav-navbar:is([data-skin="cyberpunk"] [class*="fltc-color-"]) .fltc-nav-navbar-link[aria-current="page"] {
     background: rgb(var(--fltc-fx-accent) / 0.1);
     color: rgb(var(--fltc-fx-accent));
     box-shadow: inset 0 -2px 0 rgb(var(--fltc-fx-accent));
     text-decoration: none;
 }
-.fltc-nav-navbar-dropdown:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) .fltc-nav-navbar-dropdown-menu,
-.fltc-dropdown:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) .fltc-dropdown-menu {
+.fltc-nav-navbar-dropdown:is([data-skin="cyberpunk"] [class*="fltc-color-"]) .fltc-nav-navbar-dropdown-menu,
+.fltc-dropdown:is([data-skin="cyberpunk"] [class*="fltc-color-"]) .fltc-dropdown-menu {
     --fltc-line: var(--fltc-fx-accent);
     --fltc-line-alpha: 1;
     background-color: rgb(var(--fltc-fx-ink));
 }
-.fltc-nav-navbar-dropdown:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) .fltc-nav-navbar-dropdown-menu :is(a, button),
-.fltc-dropdown:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) .fltc-dropdown-item {
+.fltc-nav-navbar-dropdown:is([data-skin="cyberpunk"] [class*="fltc-color-"]) .fltc-nav-navbar-dropdown-menu :is(a, button),
+.fltc-dropdown:is([data-skin="cyberpunk"] [class*="fltc-color-"]) .fltc-dropdown-item {
     border-radius: 0;
 }
-.fltc-nav-sidebar:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) {
+.fltc-nav-sidebar:is([data-skin="cyberpunk"] [class*="fltc-color-"]) {
     border-color: rgb(var(--fltc-fx-text) / 0.35);
     border-right-color: rgb(var(--fltc-fx-accent));
     border-radius: 0;
 }
-.fltc-nav-sidebar:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) :is(.fltc-nav-sidebar-link, .fltc-nav-sidebar-postlink, .fltc-nav-sidebar-group > button) {
+.fltc-nav-sidebar:is([data-skin="cyberpunk"] [class*="fltc-color-"]) :is(.fltc-nav-sidebar-link, .fltc-nav-sidebar-postlink, .fltc-nav-sidebar-group > button) {
     border-radius: 0;
     letter-spacing: 0.05em;
 }
-.fltc-nav-sidebar:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) :is(.fltc-nav-sidebar-link, .fltc-nav-sidebar-postlink):hover {
+.fltc-nav-sidebar:is([data-skin="cyberpunk"] [class*="fltc-color-"]) :is(.fltc-nav-sidebar-link, .fltc-nav-sidebar-postlink):hover {
     background: rgb(var(--fltc-fx-text) / 0.08);
     color: rgb(var(--fltc-fx-text));
 }
-.fltc-nav-sidebar:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) .fltc-nav-sidebar-link[aria-current="page"] {
+.fltc-nav-sidebar:is([data-skin="cyberpunk"] [class*="fltc-color-"]) .fltc-nav-sidebar-link[aria-current="page"] {
     background: rgb(var(--fltc-fx-accent) / 0.15);
     color: rgb(var(--fltc-fx-accent));
     box-shadow: inset 3px 0 0 rgb(var(--fltc-fx-accent));
@@ -1467,12 +1514,12 @@ div.fltc-spoiler:is([data-skin="cyberpunk"] [class*="fltc-theme-"])::after,
 
 /* ---- cyberpunk segmented controls (and the segmented dark-mode toggle) ----
    Square segments in the cut frame; the active one fills pink like a hovered button. */
-.fltc-segmented:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) {
+.fltc-segmented:is([data-skin="cyberpunk"] [class*="fltc-color-"]) {
     gap: 0;
     padding: 0;
     background: rgb(var(--fltc-fx-ink) / 0.6);
 }
-.fltc-segmented:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) .fltc-segmented-option {
+.fltc-segmented:is([data-skin="cyberpunk"] [class*="fltc-color-"]) .fltc-segmented-option {
     border-radius: 0;
     background: transparent;
     color: rgb(var(--fltc-fx-text) / 0.7);
@@ -1482,42 +1529,42 @@ div.fltc-spoiler:is([data-skin="cyberpunk"] [class*="fltc-theme-"])::after,
     text-transform: uppercase;
     box-shadow: none;
 }
-.fltc-segmented:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) .fltc-segmented-option:hover {
+.fltc-segmented:is([data-skin="cyberpunk"] [class*="fltc-color-"]) .fltc-segmented-option:hover {
     background: rgb(var(--fltc-fx-text) / 0.1);
     color: rgb(var(--fltc-fx-text));
 }
-.fltc-segmented:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) .fltc-segmented-option[aria-pressed="true"] {
+.fltc-segmented:is([data-skin="cyberpunk"] [class*="fltc-color-"]) .fltc-segmented-option[aria-pressed="true"] {
     background: rgb(var(--fltc-fx-accent));
     color: rgb(var(--fltc-fx-ink));
 }
 /* The table wrapper scrolls and has no border of its own: keep the overlay inside it,
    or the -1px overhang adds a scrollbar. */
-.fltc-table-scroll:is([data-skin="cyberpunk"] [class*="fltc-theme-"])::after {
+.fltc-table-scroll:is([data-skin="cyberpunk"] [class*="fltc-color-"])::after {
     inset: 0;
 }
 
 /* Floating table head: the head row is a pill like the body rows, so instead of an
    underline (which ran straight across the cut corner) its whole frame, diagonals
    included, is pink. */
-.fltc-table-scroll.fltc-table-floating:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) .fltc-table-head {
+.fltc-table-scroll.fltc-table-floating:is([data-skin="cyberpunk"] [class*="fltc-color-"]) .fltc-table-head {
     box-shadow: none;
 }
-.fltc-table-scroll.fltc-table-floating:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) .fltc-table-head .fltc-table-row > * {
+.fltc-table-scroll.fltc-table-floating:is([data-skin="cyberpunk"] [class*="fltc-color-"]) .fltc-table-head .fltc-table-row > * {
     --fltc-line: var(--fltc-fx-accent);
     --fltc-line-alpha: 1;
 }
 
 /* Navbar dropdown items: square, cyan, filling pink with a leading bar on hover. */
-.fltc-nav-navbar-dropdown:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) .fltc-nav-navbar-dropdown-menu :is(a, button),
-.fltc-dropdown:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) .fltc-dropdown-item {
+.fltc-nav-navbar-dropdown:is([data-skin="cyberpunk"] [class*="fltc-color-"]) .fltc-nav-navbar-dropdown-menu :is(a, button),
+.fltc-dropdown:is([data-skin="cyberpunk"] [class*="fltc-color-"]) .fltc-dropdown-item {
     font-family: var(--fltc-font-term);
     font-size: 1.05rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
     color: rgb(var(--fltc-fx-text));
 }
-.fltc-nav-navbar-dropdown:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) .fltc-nav-navbar-dropdown-menu :is(a, button):is(:hover, :focus-visible),
-.fltc-dropdown:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) .fltc-dropdown-item:is(:hover, :focus-visible) {
+.fltc-nav-navbar-dropdown:is([data-skin="cyberpunk"] [class*="fltc-color-"]) .fltc-nav-navbar-dropdown-menu :is(a, button):is(:hover, :focus-visible),
+.fltc-dropdown:is([data-skin="cyberpunk"] [class*="fltc-color-"]) .fltc-dropdown-item:is(:hover, :focus-visible) {
     background: rgb(var(--fltc-fx-accent) / 0.15);
     color: rgb(var(--fltc-fx-accent));
     box-shadow: inset 3px 0 0 rgb(var(--fltc-fx-accent));
@@ -1525,32 +1572,32 @@ div.fltc-spoiler:is([data-skin="cyberpunk"] [class*="fltc-theme-"])::after,
 
 /* Sidebar profile: the account row becomes a framed card with cut corners and a
    square-cut avatar; its popout menu is a pink-framed cut panel like the dropdowns. */
-.fltc-nav-sidebar-profile:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) .fltc-nav-sidebar-profile-trigger,
-.fltc-nav-sidebar-profile:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) .fltc-nav-sidebar-profile-menu {
+.fltc-nav-sidebar-profile:is([data-skin="cyberpunk"] [class*="fltc-color-"]) .fltc-nav-sidebar-profile-trigger,
+.fltc-nav-sidebar-profile:is([data-skin="cyberpunk"] [class*="fltc-color-"]) .fltc-nav-sidebar-profile-menu {
     --fltc-line: var(--fltc-fx-text);
     --fltc-line-alpha: 0.4;
     border: 1px solid rgb(var(--fltc-line) / var(--fltc-line-alpha));
     border-radius: 0;
     clip-path: polygon(calc(var(--fltc-cut) + 1px) -1px, calc(100% + 1px) -1px, calc(100% + 1px) calc(100% - var(--fltc-cut) - 1px), calc(100% - var(--fltc-cut) - 1px) calc(100% + 1px), -1px calc(100% + 1px), -1px calc(var(--fltc-cut) + 1px));
 }
-.fltc-nav-sidebar-profile:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) .fltc-nav-sidebar-profile-trigger {
+.fltc-nav-sidebar-profile:is([data-skin="cyberpunk"] [class*="fltc-color-"]) .fltc-nav-sidebar-profile-trigger {
     position: relative;
     background: rgb(var(--fltc-fx-ink) / 0.6);
 }
-.fltc-nav-sidebar-profile:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) .fltc-nav-sidebar-profile-trigger:is(:hover, :focus-visible) {
+.fltc-nav-sidebar-profile:is([data-skin="cyberpunk"] [class*="fltc-color-"]) .fltc-nav-sidebar-profile-trigger:is(:hover, :focus-visible) {
     --fltc-line: var(--fltc-fx-accent);
     --fltc-line-alpha: 1;
     background: rgb(var(--fltc-fx-accent) / 0.1);
     box-shadow: inset 0 0 18px rgb(var(--fltc-fx-accent) / 0.15);
 }
-.fltc-nav-sidebar-profile:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) .fltc-nav-sidebar-profile-menu {
+.fltc-nav-sidebar-profile:is([data-skin="cyberpunk"] [class*="fltc-color-"]) .fltc-nav-sidebar-profile-menu {
     --fltc-line: var(--fltc-fx-accent);
     --fltc-line-alpha: 1;
     background-color: rgb(var(--fltc-fx-ink));
     box-shadow: inset 0 0 24px rgb(var(--fltc-fx-accent) / 0.1);
 }
-.fltc-nav-sidebar-profile:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) .fltc-nav-sidebar-profile-trigger::after,
-.fltc-nav-sidebar-profile:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) .fltc-nav-sidebar-profile-menu::after {
+.fltc-nav-sidebar-profile:is([data-skin="cyberpunk"] [class*="fltc-color-"]) .fltc-nav-sidebar-profile-trigger::after,
+.fltc-nav-sidebar-profile:is([data-skin="cyberpunk"] [class*="fltc-color-"]) .fltc-nav-sidebar-profile-menu::after {
     content: "";
     position: absolute;
     inset: -1px;
@@ -1558,7 +1605,7 @@ div.fltc-spoiler:is([data-skin="cyberpunk"] [class*="fltc-theme-"])::after,
     pointer-events: none;
     background: linear-gradient(to bottom right, transparent 50%, rgb(var(--fltc-line) / var(--fltc-line-alpha)) 50%, rgb(var(--fltc-line) / var(--fltc-line-alpha)) calc(50% + 1.2px), transparent calc(50% + 1.2px)) top left / var(--fltc-cut) var(--fltc-cut) no-repeat, linear-gradient(to top left, transparent 50%, rgb(var(--fltc-line) / var(--fltc-line-alpha)) 50%, rgb(var(--fltc-line) / var(--fltc-line-alpha)) calc(50% + 1.2px), transparent calc(50% + 1.2px)) bottom right / var(--fltc-cut) var(--fltc-cut) no-repeat;
 }
-.fltc-nav-sidebar-profile:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) .fltc-nav-sidebar-profile-avatar {
+.fltc-nav-sidebar-profile:is([data-skin="cyberpunk"] [class*="fltc-color-"]) .fltc-nav-sidebar-profile-avatar {
     border-radius: 0;
     clip-path: polygon(6px -1px, calc(100% + 1px) -1px, calc(100% + 1px) calc(100% - 6px), calc(100% - 6px) calc(100% + 1px), -1px calc(100% + 1px), -1px 6px);
     background: rgb(var(--fltc-fx-accent) / 0.2);
@@ -1570,7 +1617,7 @@ div.fltc-spoiler:is([data-skin="cyberpunk"] [class*="fltc-theme-"])::after,
 /* ---- cyberpunk file input ----
    The field is a text field (above); its "Choose file" button is a square segment
    behind a line, in terminal type, filling cyan on hover like an outline button. */
-.fltc-form-input-file:is([data-skin="cyberpunk"] [class*="fltc-theme-"])::file-selector-button {
+.fltc-form-input-file:is([data-skin="cyberpunk"] [class*="fltc-color-"])::file-selector-button {
     margin-right: 0.75rem;
     border: 0;
     border-right: 1px solid rgb(var(--fltc-line) / var(--fltc-line-alpha));
@@ -1584,13 +1631,13 @@ div.fltc-spoiler:is([data-skin="cyberpunk"] [class*="fltc-theme-"])::after,
     text-transform: uppercase;
     transition: background-color 0.15s, color 0.15s;
 }
-.fltc-form-input-file:is([data-skin="cyberpunk"] [class*="fltc-theme-"]):is(:hover, :focus-visible)::file-selector-button {
+.fltc-form-input-file:is([data-skin="cyberpunk"] [class*="fltc-color-"]):is(:hover, :focus-visible)::file-selector-button {
     background: rgb(var(--fltc-fx-text));
     color: rgb(var(--fltc-fx-ink));
 }
 
 /* Time inputs get a square clock instead of the calendar glyph. */
-.fltc-form-input-time:is([data-skin="cyberpunk"] [class*="fltc-theme-"])::-webkit-calendar-picker-indicator {
+.fltc-form-input-time:is([data-skin="cyberpunk"] [class*="fltc-color-"])::-webkit-calendar-picker-indicator {
     -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2'%3E%3Cpath d='M3 3h18v18H3zM12 7v5h4'/%3E%3C/svg%3E");
     mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2'%3E%3Cpath d='M3 3h18v18H3zM12 7v5h4'/%3E%3C/svg%3E");
 }
@@ -1598,7 +1645,7 @@ div.fltc-spoiler:is([data-skin="cyberpunk"] [class*="fltc-theme-"])::after,
 /* ---- cyberpunk radios ----
    Diamonds (a square turned 45°, so the border is real and nothing is clipped) next to
    the square checkboxes: cyan line, filled pink with an ink gap when chosen. */
-.fltc-form-radio:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) {
+.fltc-form-radio:is([data-skin="cyberpunk"] [class*="fltc-color-"]) {
     appearance: none;
     width: 0.8rem;
     height: 0.8rem;
@@ -1610,22 +1657,22 @@ div.fltc-spoiler:is([data-skin="cyberpunk"] [class*="fltc-theme-"])::after,
     transform: rotate(45deg);
     transition: border-color 0.15s, background-color 0.15s, box-shadow 0.15s;
 }
-.fltc-form-radio:is([data-skin="cyberpunk"] [class*="fltc-theme-"]):hover:not(:disabled) {
+.fltc-form-radio:is([data-skin="cyberpunk"] [class*="fltc-color-"]):hover:not(:disabled) {
     border-color: rgb(var(--fltc-fx-text));
 }
-.fltc-form-radio:is([data-skin="cyberpunk"] [class*="fltc-theme-"]):checked {
+.fltc-form-radio:is([data-skin="cyberpunk"] [class*="fltc-color-"]):checked {
     border-color: rgb(var(--fltc-fx-accent));
     background: rgb(var(--fltc-fx-accent));
     box-shadow: inset 0 0 0 2px rgb(var(--fltc-fx-ink)), 0 0 8px rgb(var(--fltc-fx-accent) / 0.5);
 }
-.fltc-form-radio:is([data-skin="cyberpunk"] [class*="fltc-theme-"]):focus-visible {
+.fltc-form-radio:is([data-skin="cyberpunk"] [class*="fltc-color-"]):focus-visible {
     outline: 1px dashed rgb(var(--fltc-fx-accent));
     outline-offset: 3px;
 }
-.fltc-form-radio:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) ~ .fltc-form-radio-label {
+.fltc-form-radio:is([data-skin="cyberpunk"] [class*="fltc-color-"]) ~ .fltc-form-radio-label {
     color: rgb(var(--fltc-fx-text));
 }
-.fltc-form-radio:is([data-skin="cyberpunk"] [class*="fltc-theme-"]):checked ~ .fltc-form-radio-label {
+.fltc-form-radio:is([data-skin="cyberpunk"] [class*="fltc-color-"]):checked ~ .fltc-form-radio-label {
     color: rgb(var(--fltc-fx-accent));
     text-shadow: 0 0 12px rgb(var(--fltc-fx-accent) / var(--fltc-fx-glow));
 }
@@ -1633,23 +1680,23 @@ div.fltc-spoiler:is([data-skin="cyberpunk"] [class*="fltc-theme-"])::after,
 /* ---- cyberpunk tabs ----
    Uppercase terminal labels on a cyan rule; the active tab is pink with a glowing
    underline and a fill rising from it. */
-.fltc-tabs:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) .fltc-tabs-list {
+.fltc-tabs:is([data-skin="cyberpunk"] [class*="fltc-color-"]) .fltc-tabs-list {
     border-color: rgb(var(--fltc-fx-text) / 0.35);
 }
-.fltc-tabs-tab:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) {
+.fltc-tabs-tab:is([data-skin="cyberpunk"] [class*="fltc-color-"]) {
     border-radius: 0;
     color: rgb(var(--fltc-fx-text) / 0.7);
     font-size: 1.05rem;
     letter-spacing: 0.1em;
     text-transform: uppercase;
 }
-.fltc-tabs-tab:is([data-skin="cyberpunk"] [class*="fltc-theme-"]):is(:hover, :focus-visible) {
+.fltc-tabs-tab:is([data-skin="cyberpunk"] [class*="fltc-color-"]):is(:hover, :focus-visible) {
     border-bottom-color: rgb(var(--fltc-fx-text) / 0.6);
     background: rgb(var(--fltc-fx-text) / 0.08);
     color: rgb(var(--fltc-fx-text));
     outline: none;
 }
-.fltc-tabs-tab:is([data-skin="cyberpunk"] [class*="fltc-theme-"])[aria-selected="true"] {
+.fltc-tabs-tab:is([data-skin="cyberpunk"] [class*="fltc-color-"])[aria-selected="true"] {
     border-bottom-color: rgb(var(--fltc-fx-accent));
     background: linear-gradient(to top, rgb(var(--fltc-fx-accent) / 0.18), transparent);
     color: rgb(var(--fltc-fx-accent));
@@ -1660,30 +1707,30 @@ div.fltc-spoiler:is([data-skin="cyberpunk"] [class*="fltc-theme-"])::after,
 /* ---- cyberpunk pagination ----
    The current page is filled like a hovered button, so it stands out even when the
    accent and main themes are the same; the summary is terminal type with pink numbers. */
-:is(.fltc-button, .fltc-button-link):is([data-skin="cyberpunk"] [class*="fltc-theme-"])[aria-current="page"],
-:is(.fltc-button, .fltc-button-link):is([data-skin="cyberpunk"] [class*="fltc-theme-"])[aria-current="page"]::before {
+:is(.fltc-button, .fltc-button-link):is([data-skin="cyberpunk"] [class*="fltc-color-"])[aria-current="page"],
+:is(.fltc-button, .fltc-button-link):is([data-skin="cyberpunk"] [class*="fltc-color-"])[aria-current="page"]::before {
     background: rgb(var(--fltc-line));
     color: rgb(var(--fltc-fx-ink));
 }
-.fltc-nav-pagination:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) .fltc-nav-pagination-summary {
+.fltc-nav-pagination:is([data-skin="cyberpunk"] [class*="fltc-color-"]) .fltc-nav-pagination-summary {
     font-size: 1.05rem;
     letter-spacing: 0.08em;
     color: rgb(var(--fltc-fx-text) / 0.75);
 }
-.fltc-nav-pagination:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) .fltc-nav-pagination-summary .font-medium {
+.fltc-nav-pagination:is([data-skin="cyberpunk"] [class*="fltc-color-"]) .fltc-nav-pagination-summary .font-medium {
     color: rgb(var(--fltc-fx-accent));
 }
 
 /* ---- cyberpunk dropdown ----
    The menu and its items share the navbar dropdown's rules (above). Separators turn
-   into a faint pink line; items themed red become danger-red instead of cyan. */
-.fltc-dropdown:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) .fltc-dropdown-menu .fltc-separator {
+   into a faint pink line; items coloured red or danger turn the theme's danger colour. */
+.fltc-dropdown:is([data-skin="cyberpunk"] [class*="fltc-color-"]) .fltc-dropdown-menu .fltc-separator {
     border-color: rgb(var(--fltc-fx-accent) / 0.35);
 }
-.fltc-dropdown:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) .fltc-dropdown-item.fltc-theme-red {
+.fltc-dropdown:is([data-skin="cyberpunk"] [class*="fltc-color-"]) .fltc-dropdown-item:is(.fltc-color-red, .fltc-color-danger) {
     color: rgb(var(--fltc-fx-danger));
 }
-.fltc-dropdown:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) .fltc-dropdown-item.fltc-theme-red:is(:hover, :focus-visible) {
+.fltc-dropdown:is([data-skin="cyberpunk"] [class*="fltc-color-"]) .fltc-dropdown-item:is(.fltc-color-red, .fltc-color-danger):is(:hover, :focus-visible) {
     background: rgb(var(--fltc-fx-danger) / 0.15);
     color: rgb(var(--fltc-fx-danger));
     box-shadow: inset 3px 0 0 rgb(var(--fltc-fx-danger));
@@ -1692,8 +1739,8 @@ div.fltc-spoiler:is([data-skin="cyberpunk"] [class*="fltc-theme-"])::after,
 /* ---- cyberpunk spinner ----
    Ticks round in twelve steps instead of turning smoothly, and glows. Also inside a
    cyberpunk button with theme="current". */
-.fltc-spinner:is([data-skin="cyberpunk"] [class*="fltc-theme-"]),
-:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) .fltc-spinner.fltc-theme-current {
+.fltc-spinner:is([data-skin="cyberpunk"] [class*="fltc-color-"]),
+:is([data-skin="cyberpunk"] [class*="fltc-color-"]) .fltc-spinner.fltc-color-current {
     animation-timing-function: steps(12);
     filter: drop-shadow(0 0 4px currentColor);
 }
@@ -1701,32 +1748,32 @@ div.fltc-spoiler:is([data-skin="cyberpunk"] [class*="fltc-theme-"])::after,
 /* ---- cyberpunk chips (badge variants) ----
    Link chips light up cyan on hover; toggle chips fill pink while on; the count is a
    square tag and the remove button fills pink. */
-a.fltc-badge:is([data-skin="cyberpunk"] [class*="fltc-theme-"]):is(:hover, :focus-visible),
-label.fltc-badge:is([data-skin="cyberpunk"] [class*="fltc-theme-"]):hover {
+a.fltc-badge:is([data-skin="cyberpunk"] [class*="fltc-color-"]):is(:hover, :focus-visible),
+label.fltc-badge:is([data-skin="cyberpunk"] [class*="fltc-color-"]):hover {
     border-color: rgb(var(--fltc-fx-text));
     background: rgb(var(--fltc-fx-text) / 0.2);
     box-shadow: 0 0 8px rgb(var(--fltc-fx-text) / 0.35);
     outline: none;
 }
-label.fltc-badge:is([data-skin="cyberpunk"] [class*="fltc-theme-"]):has(:checked) {
+label.fltc-badge:is([data-skin="cyberpunk"] [class*="fltc-color-"]):has(:checked) {
     border-color: rgb(var(--fltc-fx-accent));
     background: rgb(var(--fltc-fx-accent));
     color: rgb(var(--fltc-fx-ink));
     box-shadow: 0 0 10px rgb(var(--fltc-fx-accent) / 0.5);
 }
-label.fltc-badge:is([data-skin="cyberpunk"] [class*="fltc-theme-"]):has(:focus-visible) {
+label.fltc-badge:is([data-skin="cyberpunk"] [class*="fltc-color-"]):has(:focus-visible) {
     outline: 1px dashed rgb(var(--fltc-fx-accent));
     outline-offset: 2px;
 }
-.fltc-badge:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) .fltc-badge-count {
+.fltc-badge:is([data-skin="cyberpunk"] [class*="fltc-color-"]) .fltc-badge-count {
     border-radius: 0;
     background: rgb(var(--fltc-fx-text) / 0.2);
     color: inherit;
 }
-.fltc-badge:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) .fltc-badge-remove {
+.fltc-badge:is([data-skin="cyberpunk"] [class*="fltc-color-"]) .fltc-badge-remove {
     border-radius: 0;
 }
-.fltc-badge:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) .fltc-badge-remove:is(:hover, :focus-visible) {
+.fltc-badge:is([data-skin="cyberpunk"] [class*="fltc-color-"]) .fltc-badge-remove:is(:hover, :focus-visible) {
     background: rgb(var(--fltc-fx-accent));
     color: rgb(var(--fltc-fx-ink));
     outline: none;
@@ -1735,65 +1782,65 @@ label.fltc-badge:is([data-skin="cyberpunk"] [class*="fltc-theme-"]):has(:focus-v
 /* ---- cyberpunk progress bars and meters ----
    A square cyan-framed track; fills are LED segments (gaps cut in with a repeating
    gradient) and glow. */
-.fltc-progress:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) .fltc-progress-track {
+.fltc-progress:is([data-skin="cyberpunk"] [class*="fltc-color-"]) .fltc-progress-track {
     border: 1px solid rgb(var(--fltc-fx-text) / 0.4);
     border-radius: 0;
     background: rgb(var(--fltc-fx-ink) / 0.6);
     box-shadow: inset 0 0 8px rgb(var(--fltc-fx-text) / 0.1);
 }
-.fltc-progress:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) :is(.fltc-progress-fill, .fltc-progress-segment) {
+.fltc-progress:is([data-skin="cyberpunk"] [class*="fltc-color-"]) :is(.fltc-progress-fill, .fltc-progress-segment) {
     background-image: repeating-linear-gradient(90deg, transparent 0 6px, rgb(var(--fltc-fx-ink) / 0.55) 6px 8px);
     box-shadow: 0 0 8px currentColor;
 }
-.fltc-progress:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) :is(.fltc-progress-label, .fltc-progress-legend) {
+.fltc-progress:is([data-skin="cyberpunk"] [class*="fltc-color-"]) :is(.fltc-progress-label, .fltc-progress-legend) {
     font-size: 1rem;
     letter-spacing: 0.1em;
     text-transform: uppercase;
     color: rgb(var(--fltc-fx-text) / 0.75);
 }
-.fltc-progress:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) .fltc-progress-value {
+.fltc-progress:is([data-skin="cyberpunk"] [class*="fltc-color-"]) .fltc-progress-value {
     font-size: 1rem;
     letter-spacing: 0.08em;
 }
 
 /* ---- cyberpunk empty state ---- */
-.fltc-empty:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) {
+.fltc-empty:is([data-skin="cyberpunk"] [class*="fltc-color-"]) {
     border-color: rgb(var(--fltc-fx-text) / 0.35);
     border-radius: 0;
 }
-.fltc-empty:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) .fltc-empty-icon {
+.fltc-empty:is([data-skin="cyberpunk"] [class*="fltc-color-"]) .fltc-empty-icon {
     color: rgb(var(--fltc-fx-text) / 0.45);
     text-shadow: 0 0 12px rgb(var(--fltc-fx-text) / 0.5);
 }
-.fltc-empty:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) .fltc-empty-title {
+.fltc-empty:is([data-skin="cyberpunk"] [class*="fltc-color-"]) .fltc-empty-title {
     color: rgb(var(--fltc-fx-accent));
     text-shadow: 0 0 12px rgb(var(--fltc-fx-accent) / var(--fltc-fx-glow));
     text-transform: uppercase;
 }
 
 /* ---- cyberpunk error panel (messagebox details) ---- */
-.fltc-messagebox:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) .fltc-messagebox-details summary {
+.fltc-messagebox:is([data-skin="cyberpunk"] [class*="fltc-color-"]) .fltc-messagebox-details summary {
     font-family: var(--fltc-font-term);
     font-size: 0.95rem;
     letter-spacing: 0.1em;
     text-transform: uppercase;
 }
-.fltc-messagebox:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) .fltc-messagebox-details pre {
+.fltc-messagebox:is([data-skin="cyberpunk"] [class*="fltc-color-"]) .fltc-messagebox-details pre {
     font-family: var(--fltc-font-term);
     color: rgb(var(--fltc-fx-text) / 0.85);
 }
 
 /* ---- cyberpunk form sections and field notes ---- */
-.fltc-form-section:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) {
+.fltc-form-section:is([data-skin="cyberpunk"] [class*="fltc-color-"]) {
     border-color: rgb(var(--fltc-fx-text) / 0.25);
 }
-.fltc-form-section:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) .fltc-form-section-title {
+.fltc-form-section:is([data-skin="cyberpunk"] [class*="fltc-color-"]) .fltc-form-section-title {
     color: rgb(var(--fltc-fx-accent));
     letter-spacing: 0.1em;
     text-transform: uppercase;
     text-shadow: 0 0 12px rgb(var(--fltc-fx-accent) / var(--fltc-fx-glow));
 }
-.fltc-form-field:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) .fltc-form-field-note {
+.fltc-form-field:is([data-skin="cyberpunk"] [class*="fltc-color-"]) .fltc-form-field-note {
     font-size: 0.9rem;
     letter-spacing: 0.06em;
     color: rgb(var(--fltc-fx-text) / 0.55);
@@ -1802,13 +1849,13 @@ label.fltc-badge:is([data-skin="cyberpunk"] [class*="fltc-theme-"]):has(:focus-v
 /* ---- cyberpunk star ratings ----
    Filled stars glow in the accent colour; the picker's keyboard focus is a dashed
    frame, like the other cyberpunk controls. */
-:is(.fltc-rating, .fltc-form-rating):is([data-skin="cyberpunk"] [class*="fltc-theme-"]) :is(.fltc-rating-fill, .fltc-form-rating-fill) {
+:is(.fltc-rating, .fltc-form-rating):is([data-skin="cyberpunk"] [class*="fltc-color-"]) :is(.fltc-rating-fill, .fltc-form-rating-fill) {
     filter: drop-shadow(0 0 3px currentColor);
 }
-.fltc-form-rating:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) .fltc-form-rating-star {
+.fltc-form-rating:is([data-skin="cyberpunk"] [class*="fltc-color-"]) .fltc-form-rating-star {
     border-radius: 0;
 }
-.fltc-form-rating:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) .fltc-form-rating-star:focus-visible {
+.fltc-form-rating:is([data-skin="cyberpunk"] [class*="fltc-color-"]) .fltc-form-rating-star:focus-visible {
     outline: 1px dashed rgb(var(--fltc-fx-accent));
     outline-offset: 1px;
     box-shadow: none;
@@ -1817,13 +1864,13 @@ label.fltc-badge:is([data-skin="cyberpunk"] [class*="fltc-theme-"]):has(:focus-v
 /* ---- cyberpunk save-status chip ----
    Each state is a square tag in its own colour, the saving one blinking like a
    cursor. */
-.fltc-status > [data-status]:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) {
+.fltc-status > [data-status]:is([data-skin="cyberpunk"] [class*="fltc-color-"]) {
     border-radius: 0;
     font-size: 0.95rem;
     letter-spacing: 0.1em;
     text-transform: uppercase;
 }
-.fltc-status > .fltc-status-saving:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) {
+.fltc-status > .fltc-status-saving:is([data-skin="cyberpunk"] [class*="fltc-color-"]) {
     animation: fltc-status-blink 1s steps(2) infinite;
 }
 @keyframes fltc-status-blink {
@@ -1837,11 +1884,11 @@ label.fltc-badge:is([data-skin="cyberpunk"] [class*="fltc-theme-"]):has(:focus-v
 
 /* ---- cyberpunk covers ----
    Both corners cut; the placeholder is a dark panel with scanlines and cyan type. */
-.fltc-cover:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) {
+.fltc-cover:is([data-skin="cyberpunk"] [class*="fltc-color-"]) {
     border-radius: 0;
     clip-path: polygon(calc(var(--fltc-cut) + 1px) -1px, calc(100% + 1px) -1px, calc(100% + 1px) calc(100% - var(--fltc-cut) - 1px), calc(100% - var(--fltc-cut) - 1px) calc(100% + 1px), -1px calc(100% + 1px), -1px calc(var(--fltc-cut) + 1px));
 }
-.fltc-cover:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) .fltc-cover-fallback {
+.fltc-cover:is([data-skin="cyberpunk"] [class*="fltc-color-"]) .fltc-cover-fallback {
     border-color: rgb(var(--fltc-fx-text) / 0.4);
     background: repeating-linear-gradient(to bottom, rgb(var(--fltc-fx-text) / 0.06) 0 1px, transparent 1px 3px), rgb(var(--fltc-fx-ink) / 0.85);
     color: rgb(var(--fltc-fx-text) / 0.7);
@@ -1850,19 +1897,19 @@ label.fltc-badge:is([data-skin="cyberpunk"] [class*="fltc-theme-"]):has(:focus-v
 
 /* ---- cyberpunk media cards ----
    Cut panels (above); the title glows pink on hover, meta is terminal type. */
-.fltc-media-card:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) {
+.fltc-media-card:is([data-skin="cyberpunk"] [class*="fltc-color-"]) {
     background-color: rgb(var(--fltc-fx-ink) / 0.6);
 }
-.fltc-media-card:is([data-skin="cyberpunk"] [class*="fltc-theme-"]):hover {
+.fltc-media-card:is([data-skin="cyberpunk"] [class*="fltc-color-"]):hover {
     --fltc-line: var(--fltc-fx-accent);
     --fltc-line-alpha: 0.9;
     box-shadow: inset 0 0 24px rgb(var(--fltc-fx-accent) / 0.15);
 }
-.fltc-media-card:is([data-skin="cyberpunk"] [class*="fltc-theme-"]):hover .fltc-media-card-title {
+.fltc-media-card:is([data-skin="cyberpunk"] [class*="fltc-color-"]):hover .fltc-media-card-title {
     color: rgb(var(--fltc-fx-accent));
     text-shadow: 0 0 12px rgb(var(--fltc-fx-accent) / var(--fltc-fx-glow));
 }
-.fltc-media-card:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) .fltc-media-card-meta {
+.fltc-media-card:is([data-skin="cyberpunk"] [class*="fltc-color-"]) .fltc-media-card-meta {
     font-size: 0.85rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
@@ -1871,18 +1918,18 @@ label.fltc-badge:is([data-skin="cyberpunk"] [class*="fltc-theme-"]):has(:focus-v
 
 /* ---- cyberpunk action bar ----
    A pink leading bar and an uppercase title; the quiet variant keeps a cyan line. */
-.fltc-action-bar:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) {
+.fltc-action-bar:is([data-skin="cyberpunk"] [class*="fltc-color-"]) {
     --fltc-line: var(--fltc-fx-accent);
     --fltc-line-alpha: 0.7;
     background-color: rgb(var(--fltc-fx-ink) / 0.85);
     box-shadow: inset 3px 0 0 rgb(var(--fltc-fx-accent)), inset 0 0 24px rgb(var(--fltc-fx-accent) / 0.1);
 }
-.fltc-action-bar.border-dashed:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) {
+.fltc-action-bar.border-dashed:is([data-skin="cyberpunk"] [class*="fltc-color-"]) {
     --fltc-line: var(--fltc-fx-text);
     --fltc-line-alpha: 0.5;
     box-shadow: inset 3px 0 0 rgb(var(--fltc-fx-text) / 0.6);
 }
-.fltc-action-bar:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) .fltc-action-bar-title {
+.fltc-action-bar:is([data-skin="cyberpunk"] [class*="fltc-color-"]) .fltc-action-bar-title {
     color: rgb(var(--fltc-fx-accent));
     letter-spacing: 0.1em;
     text-transform: uppercase;
@@ -1892,19 +1939,19 @@ label.fltc-badge:is([data-skin="cyberpunk"] [class*="fltc-theme-"]):has(:focus-v
 /* ---- cyberpunk spoilers ----
    Inline: a redaction bar of cyan scan stripes; once revealed, a faint pink highlight
    underlined in pink. Gate: the overlay is a dark scanline panel. */
-span.fltc-spoiler:is([data-skin="cyberpunk"] [class*="fltc-theme-"])[data-revealed="false"] {
+span.fltc-spoiler:is([data-skin="cyberpunk"] [class*="fltc-color-"])[data-revealed="false"] {
     border-radius: 0;
     background: repeating-linear-gradient(90deg, rgb(var(--fltc-fx-text) / 0.55) 0 2px, rgb(var(--fltc-fx-text) / 0.25) 2px 4px);
 }
-span.fltc-spoiler:is([data-skin="cyberpunk"] [class*="fltc-theme-"])[data-revealed="true"] {
+span.fltc-spoiler:is([data-skin="cyberpunk"] [class*="fltc-color-"])[data-revealed="true"] {
     border-radius: 0;
     background: rgb(var(--fltc-fx-accent) / 0.12);
     box-shadow: inset 0 -1px 0 rgb(var(--fltc-fx-accent));
 }
-div.fltc-spoiler:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) .fltc-spoiler-overlay {
+div.fltc-spoiler:is([data-skin="cyberpunk"] [class*="fltc-color-"]) .fltc-spoiler-overlay {
     background: repeating-linear-gradient(to bottom, rgb(var(--fltc-fx-text) / 0.05) 0 1px, transparent 1px 3px), rgb(var(--fltc-fx-ink) / 0.7);
 }
-div.fltc-spoiler:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) .fltc-spoiler-title {
+div.fltc-spoiler:is([data-skin="cyberpunk"] [class*="fltc-color-"]) .fltc-spoiler-title {
     color: rgb(var(--fltc-fx-accent));
     letter-spacing: 0.15em;
     text-transform: uppercase;
@@ -1913,16 +1960,16 @@ div.fltc-spoiler:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) .fltc-spoile
 
 /* ---- cyberpunk info cards ----
    The trigger gets a pink dotted underline; preview and card are cut panels (above). */
-.fltc-infocard:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) .fltc-infocard-trigger {
+.fltc-infocard:is([data-skin="cyberpunk"] [class*="fltc-color-"]) .fltc-infocard-trigger {
     text-decoration-color: rgb(var(--fltc-fx-accent));
 }
-.fltc-infocard:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) .fltc-infocard-trigger:is(:hover, :focus-visible, [aria-expanded="true"]) {
+.fltc-infocard:is([data-skin="cyberpunk"] [class*="fltc-color-"]) .fltc-infocard-trigger:is(:hover, :focus-visible, [aria-expanded="true"]) {
     color: rgb(var(--fltc-fx-accent));
     text-shadow: 0 0 12px rgb(var(--fltc-fx-accent) / var(--fltc-fx-glow));
     box-shadow: none;
     outline: none;
 }
-.fltc-infocard:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) :is(.fltc-infocard-preview, .fltc-infocard-card) {
+.fltc-infocard:is([data-skin="cyberpunk"] [class*="fltc-color-"]) :is(.fltc-infocard-preview, .fltc-infocard-card) {
     --fltc-line: var(--fltc-fx-accent);
     --fltc-line-alpha: 0.8;
     background-color: rgb(var(--fltc-fx-ink));
@@ -1930,20 +1977,20 @@ div.fltc-spoiler:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) .fltc-spoile
 
 /* ---- cyberpunk timeline ----
    A cyan rail with glowing pink diamonds for dots. */
-.fltc-timeline:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) {
+.fltc-timeline:is([data-skin="cyberpunk"] [class*="fltc-color-"]) {
     border-color: rgb(var(--fltc-fx-text) / 0.35);
 }
-.fltc-timeline-item:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) .fltc-timeline-dot {
+.fltc-timeline-item:is([data-skin="cyberpunk"] [class*="fltc-color-"]) .fltc-timeline-dot {
     border-radius: 0;
     transform: rotate(45deg);
     background: rgb(var(--fltc-fx-accent));
     color: rgb(var(--fltc-fx-ink));
     box-shadow: 0 0 0 3px rgb(var(--fltc-fx-ink)), 0 0 10px rgb(var(--fltc-fx-accent) / 0.8);
 }
-.fltc-timeline-item:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) .fltc-timeline-dot > * {
+.fltc-timeline-item:is([data-skin="cyberpunk"] [class*="fltc-color-"]) .fltc-timeline-dot > * {
     transform: rotate(-45deg);
 }
-.fltc-timeline-item:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) .fltc-timeline-time {
+.fltc-timeline-item:is([data-skin="cyberpunk"] [class*="fltc-color-"]) .fltc-timeline-time {
     font-size: 0.9rem;
     letter-spacing: 0.1em;
     text-transform: uppercase;
@@ -1951,40 +1998,40 @@ div.fltc-spoiler:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) .fltc-spoile
 }
 
 /* ---- cyberpunk file cards ---- */
-.fltc-file-card:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) {
+.fltc-file-card:is([data-skin="cyberpunk"] [class*="fltc-color-"]) {
     background-color: rgb(var(--fltc-fx-ink) / 0.6);
 }
-.fltc-file-card:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) .fltc-file-card-preview {
+.fltc-file-card:is([data-skin="cyberpunk"] [class*="fltc-color-"]) .fltc-file-card-preview {
     border-color: rgb(var(--fltc-fx-text) / 0.4);
     border-radius: 0;
     background: rgb(var(--fltc-fx-text) / 0.08);
     color: rgb(var(--fltc-fx-text));
 }
-.fltc-file-card:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) .fltc-file-card-meta {
+.fltc-file-card:is([data-skin="cyberpunk"] [class*="fltc-color-"]) .fltc-file-card-meta {
     font-size: 0.85rem;
     color: rgb(var(--fltc-fx-text) / 0.65);
 }
 
 /* ---- cyberpunk upload drop zone ----
    A dashed cyan cut panel; dragging files over it turns it pink and glowing. */
-.fltc-form-upload:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) .fltc-form-upload-zone {
+.fltc-form-upload:is([data-skin="cyberpunk"] [class*="fltc-color-"]) .fltc-form-upload-zone {
     border-style: dashed;
     background: rgb(var(--fltc-fx-ink) / 0.6);
     color: rgb(var(--fltc-fx-text) / 0.8);
 }
-.fltc-form-upload:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) .fltc-form-upload-zone:is(:hover, [data-dragging="true"]) {
+.fltc-form-upload:is([data-skin="cyberpunk"] [class*="fltc-color-"]) .fltc-form-upload-zone:is(:hover, [data-dragging="true"]) {
     --fltc-line: var(--fltc-fx-accent);
     --fltc-line-alpha: 1;
     background: rgb(var(--fltc-fx-accent) / 0.1);
     color: rgb(var(--fltc-fx-accent));
     box-shadow: inset 0 0 24px rgb(var(--fltc-fx-accent) / 0.25);
 }
-.fltc-form-upload:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) .fltc-form-upload-prompt {
+.fltc-form-upload:is([data-skin="cyberpunk"] [class*="fltc-color-"]) .fltc-form-upload-prompt {
     font-family: var(--fltc-font-term);
     font-size: 1rem;
     letter-spacing: 0.1em;
     text-transform: uppercase;
 }
-.fltc-form-upload:is([data-skin="cyberpunk"] [class*="fltc-theme-"]) .fltc-form-upload-icon {
+.fltc-form-upload:is([data-skin="cyberpunk"] [class*="fltc-color-"]) .fltc-form-upload-icon {
     text-shadow: 0 0 10px currentColor;
 }

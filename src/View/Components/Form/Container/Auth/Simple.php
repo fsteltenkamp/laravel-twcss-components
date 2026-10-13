@@ -14,7 +14,7 @@ class Simple extends Component
      * Create a new component instance.
      */
     public function __construct(
-        public string $theme = 'slate',
+        public string $color = 'base',
         public string $class = '',
         public ?string $id = null,
     ) {
@@ -45,13 +45,17 @@ class Simple extends Component
             'mauve' => 'border-mauve-200 bg-white dark:border-mauve-800 dark:bg-mauve-950/50',
             'mist' => 'border-mist-200 bg-white dark:border-mist-800 dark:bg-mist-950/50',
             'olive' => 'border-olive-200 bg-white dark:border-olive-800 dark:bg-olive-950/50',
-            'palette'  => 'border-palette-200 bg-white dark:border-palette-800 dark:bg-palette-950/50',
-            'cyberpunk' => 'border-cyberpunk-200 bg-white dark:border-cyberpunk-800 dark:bg-cyberpunk-950/50',
-            'fantasy' => 'border-fantasy-200 bg-white dark:border-fantasy-800 dark:bg-fantasy-950/50',
-            'wh40k' => 'border-wh40k-200 bg-white dark:border-wh40k-800 dark:bg-wh40k-950/50',
+            'primary'  => 'border-primary-200 bg-white dark:border-primary-800 dark:bg-primary-950/50',
+            'secondary' => 'border-secondary-200 bg-white dark:border-secondary-800 dark:bg-secondary-950/50',
+            'accent'   => 'border-accent-200 bg-white dark:border-accent-800 dark:bg-accent-950/50',
+            'base'     => 'border-base-200 bg-white dark:border-base-800 dark:bg-base-950/50',
+            'info'     => 'border-info-200 bg-white dark:border-info-800 dark:bg-info-950/50',
+            'success'  => 'border-success-200 bg-white dark:border-success-800 dark:bg-success-950/50',
+            'warning'  => 'border-warning-200 bg-white dark:border-warning-800 dark:bg-warning-950/50',
+            'danger'   => 'border-danger-200 bg-white dark:border-danger-800 dark:bg-danger-950/50',
         ];
 
-        $themeClasses = $themeMap[$this->theme] ?? $themeMap['slate'];
+        $themeClasses = $themeMap[$this->color] ?? $themeMap['base'];
 
         $this->classList = trim(implode(' ', [
             'rounded-2xl border shadow-xl',

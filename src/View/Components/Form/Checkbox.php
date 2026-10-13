@@ -34,14 +34,14 @@ class Checkbox extends Component
         public bool $live = false,
         public bool $checked = false,
         public bool $disabled = false,
-        public string $theme = 'slate',
+        public string $color = 'base',
         public string $class = '',
         public string $iconChecked = 'ph ph-check-circle',
         public string $iconUnchecked = 'ph ph-circle',
         public bool $bordered = true,
         public string $variant = 'default',
         public string $size = 'md',
-        public string $themeOff = 'slate',
+        public string $colorOff = 'base',
     ) {
         $iconColorMap = [
             'slate'   => 'text-slate-500 dark:text-slate-400',
@@ -70,10 +70,14 @@ class Checkbox extends Component
             'mauve'   => 'text-mauve-500 dark:text-mauve-400',
             'mist'    => 'text-mist-500 dark:text-mist-400',
             'olive'   => 'text-olive-500 dark:text-olive-400',
-            'palette'    => 'text-palette-500 dark:text-palette-400',
-            'cyberpunk' => 'text-cyberpunk-500 dark:text-cyberpunk-400',
-            'fantasy' => 'text-fantasy-500 dark:text-fantasy-400',
-            'wh40k'   => 'text-wh40k-500 dark:text-wh40k-400',
+            'primary'    => 'text-primary-500 dark:text-primary-400',
+            'secondary'  => 'text-secondary-500 dark:text-secondary-400',
+            'accent'     => 'text-accent-500 dark:text-accent-400',
+            'base'       => 'text-base-500 dark:text-base-400',
+            'info'       => 'text-info-500 dark:text-info-400',
+            'success'    => 'text-success-500 dark:text-success-400',
+            'warning'    => 'text-warning-500 dark:text-warning-400',
+            'danger'     => 'text-danger-500 dark:text-danger-400',
         ];
 
         $iconColorPeerCheckedMap = [
@@ -103,10 +107,14 @@ class Checkbox extends Component
             'mauve'   => 'peer-checked:text-mauve-500 dark:peer-checked:text-mauve-400',
             'mist'    => 'peer-checked:text-mist-500 dark:peer-checked:text-mist-400',
             'olive'   => 'peer-checked:text-olive-500 dark:peer-checked:text-olive-400',
-            'palette'    => 'peer-checked:text-palette-500 dark:peer-checked:text-palette-400',
-            'cyberpunk' => 'peer-checked:text-cyberpunk-500 dark:peer-checked:text-cyberpunk-400',
-            'fantasy' => 'peer-checked:text-fantasy-500 dark:peer-checked:text-fantasy-400',
-            'wh40k'   => 'peer-checked:text-wh40k-500 dark:peer-checked:text-wh40k-400',
+            'primary'    => 'peer-checked:text-primary-500 dark:peer-checked:text-primary-400',
+            'secondary'  => 'peer-checked:text-secondary-500 dark:peer-checked:text-secondary-400',
+            'accent'     => 'peer-checked:text-accent-500 dark:peer-checked:text-accent-400',
+            'base'       => 'peer-checked:text-base-500 dark:peer-checked:text-base-400',
+            'info'       => 'peer-checked:text-info-500 dark:peer-checked:text-info-400',
+            'success'    => 'peer-checked:text-success-500 dark:peer-checked:text-success-400',
+            'warning'    => 'peer-checked:text-warning-500 dark:peer-checked:text-warning-400',
+            'danger'     => 'peer-checked:text-danger-500 dark:peer-checked:text-danger-400',
         ];
 
         $iconColorUncheckedMap = [
@@ -136,10 +144,14 @@ class Checkbox extends Component
             'mauve'   => 'text-mauve-300 dark:text-mauve-700',
             'mist'    => 'text-mist-300 dark:text-mist-700',
             'olive'   => 'text-olive-300 dark:text-olive-700',
-            'palette'    => 'text-palette-300 dark:text-palette-700',
-            'cyberpunk' => 'text-cyberpunk-300 dark:text-cyberpunk-700',
-            'fantasy' => 'text-fantasy-300 dark:text-fantasy-700',
-            'wh40k'   => 'text-wh40k-300 dark:text-wh40k-700',
+            'primary'    => 'text-primary-300 dark:text-primary-700',
+            'secondary'  => 'text-secondary-300 dark:text-secondary-700',
+            'accent'     => 'text-accent-300 dark:text-accent-700',
+            'base'       => 'text-base-300 dark:text-base-700',
+            'info'       => 'text-info-300 dark:text-info-700',
+            'success'    => 'text-success-300 dark:text-success-700',
+            'warning'    => 'text-warning-300 dark:text-warning-700',
+            'danger'     => 'text-danger-300 dark:text-danger-700',
         ];
 
         $containerBorderMap = [
@@ -169,10 +181,14 @@ class Checkbox extends Component
             'mauve'   => 'border-mauve-200 dark:border-mauve-800',
             'mist'    => 'border-mist-200 dark:border-mist-800',
             'olive'   => 'border-olive-200 dark:border-olive-800',
-            'palette'    => 'border-palette-200 dark:border-palette-800',
-            'cyberpunk' => 'border-cyberpunk-200 dark:border-cyberpunk-800',
-            'fantasy' => 'border-fantasy-200 dark:border-fantasy-800',
-            'wh40k'   => 'border-wh40k-200 dark:border-wh40k-800',
+            'primary'    => 'border-primary-200 dark:border-primary-800',
+            'secondary'  => 'border-secondary-200 dark:border-secondary-800',
+            'accent'     => 'border-accent-200 dark:border-accent-800',
+            'base'       => 'border-base-200 dark:border-base-800',
+            'info'       => 'border-info-200 dark:border-info-800',
+            'success'    => 'border-success-200 dark:border-success-800',
+            'warning'    => 'border-warning-200 dark:border-warning-800',
+            'danger'     => 'border-danger-200 dark:border-danger-800',
         ];
 
         $rowBgMap = [
@@ -202,10 +218,14 @@ class Checkbox extends Component
             'mauve'   => 'bg-mauve-50/40 dark:bg-mauve-950/20',
             'mist'    => 'bg-mist-50/40 dark:bg-mist-950/20',
             'olive'   => 'bg-olive-50/40 dark:bg-olive-950/20',
-            'palette'    => 'bg-palette-50/40 dark:bg-palette-950/20',
-            'cyberpunk' => 'bg-cyberpunk-50/40 dark:bg-cyberpunk-950/20',
-            'fantasy' => 'bg-fantasy-50/40 dark:bg-fantasy-950/20',
-            'wh40k'   => 'bg-wh40k-50/40 dark:bg-wh40k-950/20',
+            'primary'    => 'bg-primary-50/40 dark:bg-primary-950/20',
+            'secondary'  => 'bg-secondary-50/40 dark:bg-secondary-950/20',
+            'accent'     => 'bg-accent-50/40 dark:bg-accent-950/20',
+            'base'       => 'bg-base-50/40 dark:bg-base-950/20',
+            'info'       => 'bg-info-50/40 dark:bg-info-950/20',
+            'success'    => 'bg-success-50/40 dark:bg-success-950/20',
+            'warning'    => 'bg-warning-50/40 dark:bg-warning-950/20',
+            'danger'     => 'bg-danger-50/40 dark:bg-danger-950/20',
         ];
 
         $rowBgCheckedHasMap = [
@@ -235,10 +255,14 @@ class Checkbox extends Component
             'mauve'   => 'has-[:checked]:bg-mauve-50 dark:has-[:checked]:bg-mauve-950/30',
             'mist'    => 'has-[:checked]:bg-mist-50 dark:has-[:checked]:bg-mist-950/30',
             'olive'   => 'has-[:checked]:bg-olive-50 dark:has-[:checked]:bg-olive-950/30',
-            'palette'    => 'has-[:checked]:bg-palette-50 dark:has-[:checked]:bg-palette-950/30',
-            'cyberpunk' => 'has-[:checked]:bg-cyberpunk-50 dark:has-[:checked]:bg-cyberpunk-950/30',
-            'fantasy' => 'has-[:checked]:bg-fantasy-50 dark:has-[:checked]:bg-fantasy-950/30',
-            'wh40k'   => 'has-[:checked]:bg-wh40k-50 dark:has-[:checked]:bg-wh40k-950/30',
+            'primary'    => 'has-[:checked]:bg-primary-50 dark:has-[:checked]:bg-primary-950/30',
+            'secondary'  => 'has-[:checked]:bg-secondary-50 dark:has-[:checked]:bg-secondary-950/30',
+            'accent'     => 'has-[:checked]:bg-accent-50 dark:has-[:checked]:bg-accent-950/30',
+            'base'       => 'has-[:checked]:bg-base-50 dark:has-[:checked]:bg-base-950/30',
+            'info'       => 'has-[:checked]:bg-info-50 dark:has-[:checked]:bg-info-950/30',
+            'success'    => 'has-[:checked]:bg-success-50 dark:has-[:checked]:bg-success-950/30',
+            'warning'    => 'has-[:checked]:bg-warning-50 dark:has-[:checked]:bg-warning-950/30',
+            'danger'     => 'has-[:checked]:bg-danger-50 dark:has-[:checked]:bg-danger-950/30',
         ];
 
         // Toggle ("switch") variant — separate on/off themes, sizes and icons.
@@ -269,10 +293,14 @@ class Checkbox extends Component
             'mauve'   => 'group-has-[:checked]/toggle:bg-mauve-500 dark:group-has-[:checked]/toggle:bg-mauve-600',
             'mist'    => 'group-has-[:checked]/toggle:bg-mist-500 dark:group-has-[:checked]/toggle:bg-mist-600',
             'olive'   => 'group-has-[:checked]/toggle:bg-olive-500 dark:group-has-[:checked]/toggle:bg-olive-600',
-            'palette'    => 'group-has-[:checked]/toggle:bg-palette-500 dark:group-has-[:checked]/toggle:bg-palette-600',
-            'cyberpunk' => 'group-has-[:checked]/toggle:bg-cyberpunk-500 dark:group-has-[:checked]/toggle:bg-cyberpunk-600',
-            'fantasy' => 'group-has-[:checked]/toggle:bg-fantasy-500 dark:group-has-[:checked]/toggle:bg-fantasy-600',
-            'wh40k'   => 'group-has-[:checked]/toggle:bg-wh40k-500 dark:group-has-[:checked]/toggle:bg-wh40k-600',
+            'primary'    => 'group-has-[:checked]/toggle:bg-primary-500 dark:group-has-[:checked]/toggle:bg-primary-600',
+            'secondary'  => 'group-has-[:checked]/toggle:bg-secondary-500 dark:group-has-[:checked]/toggle:bg-secondary-600',
+            'accent'     => 'group-has-[:checked]/toggle:bg-accent-500 dark:group-has-[:checked]/toggle:bg-accent-600',
+            'base'       => 'group-has-[:checked]/toggle:bg-base-500 dark:group-has-[:checked]/toggle:bg-base-600',
+            'info'       => 'group-has-[:checked]/toggle:bg-info-500 dark:group-has-[:checked]/toggle:bg-info-600',
+            'success'    => 'group-has-[:checked]/toggle:bg-success-500 dark:group-has-[:checked]/toggle:bg-success-600',
+            'warning'    => 'group-has-[:checked]/toggle:bg-warning-500 dark:group-has-[:checked]/toggle:bg-warning-600',
+            'danger'     => 'group-has-[:checked]/toggle:bg-danger-500 dark:group-has-[:checked]/toggle:bg-danger-600',
         ];
 
         $trackOffMap = [
@@ -302,10 +330,14 @@ class Checkbox extends Component
             'mauve'   => 'bg-mauve-200 dark:bg-mauve-800',
             'mist'    => 'bg-mist-200 dark:bg-mist-800',
             'olive'   => 'bg-olive-200 dark:bg-olive-800',
-            'palette'    => 'bg-palette-200 dark:bg-palette-800',
-            'cyberpunk' => 'bg-cyberpunk-200 dark:bg-cyberpunk-800',
-            'fantasy' => 'bg-fantasy-200 dark:bg-fantasy-800',
-            'wh40k'   => 'bg-wh40k-200 dark:bg-wh40k-800',
+            'primary'    => 'bg-primary-200 dark:bg-primary-800',
+            'secondary'  => 'bg-secondary-200 dark:bg-secondary-800',
+            'accent'     => 'bg-accent-200 dark:bg-accent-800',
+            'base'       => 'bg-base-200 dark:bg-base-800',
+            'info'       => 'bg-info-200 dark:bg-info-800',
+            'success'    => 'bg-success-200 dark:bg-success-800',
+            'warning'    => 'bg-warning-200 dark:bg-warning-800',
+            'danger'     => 'bg-danger-200 dark:bg-danger-800',
         ];
 
         $sizeMap = [
@@ -315,22 +347,22 @@ class Checkbox extends Component
         ];
         $sizeSet = $sizeMap[$size] ?? $sizeMap['md'];
 
-        $this->trackOn       = $trackOnMap[$theme] ?? $trackOnMap['slate'];
-        $this->trackOff      = $trackOffMap[$themeOff] ?? $trackOffMap['slate'];
+        $this->trackOn       = $trackOnMap[$color] ?? $trackOnMap['base'];
+        $this->trackOff      = $trackOffMap[$colorOff] ?? $trackOffMap['base'];
         $this->trackSize     = $sizeSet['track'];
         $this->knobSize      = $sizeSet['knob'];
         $this->knobTranslate = $sizeSet['translate'];
         $this->knobIconSize  = $sizeSet['icon'];
-        $this->iconColorOn   = $iconColorMap[$theme] ?? $iconColorMap['slate'];
-        $this->iconColorOff  = $iconColorMap[$themeOff] ?? $iconColorMap['slate'];
+        $this->iconColorOn   = $iconColorMap[$color] ?? $iconColorMap['base'];
+        $this->iconColorOff  = $iconColorMap[$colorOff] ?? $iconColorMap['base'];
 
-        $this->iconColorUnchecked   = $iconColorUncheckedMap[$theme] ?? $iconColorUncheckedMap['slate'];
-        $this->iconColorChecked     = $iconColorMap[$theme] ?? $iconColorMap['slate'];
-        $this->iconColorCheckedPeer = $iconColorPeerCheckedMap[$theme] ?? $iconColorPeerCheckedMap['slate'];
-        $this->labelClasses         = 'cursor-pointer text-sm font-medium select-none '.Shades::secondary($theme);
-        $this->containerBorder      = $containerBorderMap[$theme] ?? $containerBorderMap['slate'];
-        $this->rowBg                = $rowBgMap[$theme] ?? $rowBgMap['slate'];
-        $this->rowBgCheckedHas      = $rowBgCheckedHasMap[$theme] ?? $rowBgCheckedHasMap['slate'];
+        $this->iconColorUnchecked   = $iconColorUncheckedMap[$color] ?? $iconColorUncheckedMap['base'];
+        $this->iconColorChecked     = $iconColorMap[$color] ?? $iconColorMap['base'];
+        $this->iconColorCheckedPeer = $iconColorPeerCheckedMap[$color] ?? $iconColorPeerCheckedMap['base'];
+        $this->labelClasses         = 'cursor-pointer text-sm font-medium select-none '.Shades::secondary($color);
+        $this->containerBorder      = $containerBorderMap[$color] ?? $containerBorderMap['base'];
+        $this->rowBg                = $rowBgMap[$color] ?? $rowBgMap['base'];
+        $this->rowBgCheckedHas      = $rowBgCheckedHasMap[$color] ?? $rowBgCheckedHasMap['base'];
 
         if (empty($id)) {
             $this->id = 'checkbox-' . uniqid();

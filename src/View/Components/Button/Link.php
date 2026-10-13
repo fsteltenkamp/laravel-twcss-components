@@ -11,7 +11,7 @@ class Link extends Button
     public function __construct(
         public string $href = '#',
         public bool $navigate = false,
-        string $theme = 'slate',
+        string $color = 'base',
         string $width = 'fit',
         string $height = 'md',
         string $tooltip = '',
@@ -23,7 +23,7 @@ class Link extends Button
         string $class = ''
     )
     {
-        parent::__construct(theme: $theme, width: $width, height: $height, tooltip: $tooltip, disabled: $disabled, variant: $variant, icon: $icon, iconVariant: $iconVariant, iconPosition: $iconPosition, class: $class);
+        parent::__construct(color: $color, width: $width, height: $height, tooltip: $tooltip, disabled: $disabled, variant: $variant, icon: $icon, iconVariant: $iconVariant, iconPosition: $iconPosition, class: $class);
     }
 
     public function render(): View|Closure|string

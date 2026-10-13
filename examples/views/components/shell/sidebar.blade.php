@@ -9,9 +9,9 @@
     'active' => 'dashboard',
 ])
 
-<x-ex::layout :title="$title" :theme="$theme">
+<x-ex::layout :title="$title" :color="$theme">
     <div class="flex min-h-screen">
-        <x-fltc::nav.sidebar :theme="$theme" class="lg:sticky lg:top-0">
+        <x-fltc::nav.sidebar :color="$theme" class="lg:sticky lg:top-0">
             <x-slot:brand>
                 <a href="app-sidebar-profile.html" class="flex items-center gap-2 font-semibold tracking-tight">
                     <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-{{ $theme }}-500 text-white">
@@ -25,7 +25,7 @@
             <x-fltc::nav.sidebar.link href="app-sidebar-list.html" icon="ph ph-users" :active="$active === 'customers'">
                 Customers
                 <x-slot:trailing>
-                    <x-fltc::badge :theme="$theme">128</x-fltc::badge>
+                    <x-fltc::badge :color="$theme">128</x-fltc::badge>
                 </x-slot:trailing>
             </x-fltc::nav.sidebar.link>
             <x-fltc::nav.sidebar.link href="#" icon="ph ph-chart-line">Reports</x-fltc::nav.sidebar.link>
@@ -47,7 +47,7 @@
         </x-fltc::nav.sidebar>
 
         <div class="flex min-w-0 flex-1 flex-col">
-            <x-fltc::nav.navbar :theme="$theme" stickyTop containerClass="w-full px-4 sm:px-6 lg:px-8">
+            <x-fltc::nav.navbar :color="$theme" stickyTop containerClass="w-full px-4 sm:px-6 lg:px-8">
                 <x-slot:left>
                     <x-fltc::nav.navbar.toggle />
                     <span class="flex items-center text-sm font-medium opacity-70">

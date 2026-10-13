@@ -19,9 +19,8 @@ class Icon extends Component
      *                           duotone. Defaults to regular (the base "ph" weight), since
      *                           that is the weight host apps load by default; the other
      *                           weights are opt-in and require the host to load their CSS.
-     * @param  string  $color    Theme palette name colouring the glyph; empty inherits the
-     *                           surrounding text colour (currentColor).
-     * @param  string  $theme    Alias for $color (General Properties theme support).
+     * @param  string  $color    Colour role or palette colouring the glyph; empty inherits
+     *                           the surrounding text colour (currentColor).
      * @param  string  $size     Tailwind text-size token (e.g. "sm", "lg", "2xl").
      * @param  string  $before   Logical start margin (space before the icon), e.g. "2".
      * @param  string  $after    Logical end margin (space after the icon), e.g. "2".
@@ -31,7 +30,6 @@ class Icon extends Component
         public string $name = '',
         public string $variant = 'regular',
         public string $color = '',
-        public string $theme = '',
         public string $size = '',
         public string $before = '',
         public string $after = '',
@@ -64,7 +62,7 @@ class Icon extends Component
             ? $trimmedName
             : trim($weightClass . ' ph-' . $trimmedName);
 
-        $resolvedColor = $color !== '' ? $color : $theme;
+        $resolvedColor = $color;
 
         $this->classList = $this->squish(implode(' ', [
             $glyphClasses,

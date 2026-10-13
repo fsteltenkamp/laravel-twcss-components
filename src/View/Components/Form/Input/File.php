@@ -26,7 +26,7 @@ class File extends Input
         public bool $live = false,
         public bool $required = false,
         public bool $disabled = false,
-        public string $theme = 'slate',
+        public string $color = 'base',
         public string $class = '',
         public string $label = '',
         public bool $inline = false,
@@ -60,19 +60,23 @@ class File extends Input
             'mauve'     => 'file:bg-mauve-100 file:text-mauve-700 hover:file:bg-mauve-200 dark:file:bg-mauve-800 dark:file:text-mauve-200 dark:hover:file:bg-mauve-700',
             'mist'      => 'file:bg-mist-100 file:text-mist-700 hover:file:bg-mist-200 dark:file:bg-mist-800 dark:file:text-mist-200 dark:hover:file:bg-mist-700',
             'olive'     => 'file:bg-olive-100 file:text-olive-700 hover:file:bg-olive-200 dark:file:bg-olive-800 dark:file:text-olive-200 dark:hover:file:bg-olive-700',
-            'palette'      => 'file:bg-palette-100 file:text-palette-700 hover:file:bg-palette-200 dark:file:bg-palette-800 dark:file:text-palette-200 dark:hover:file:bg-palette-700',
-            'cyberpunk' => 'file:bg-cyberpunk-100 file:text-cyberpunk-700 hover:file:bg-cyberpunk-200 dark:file:bg-cyberpunk-800 dark:file:text-cyberpunk-200 dark:hover:file:bg-cyberpunk-700',
-            'fantasy'   => 'file:bg-fantasy-100 file:text-fantasy-700 hover:file:bg-fantasy-200 dark:file:bg-fantasy-800 dark:file:text-fantasy-200 dark:hover:file:bg-fantasy-700',
-            'wh40k'     => 'file:bg-wh40k-100 file:text-wh40k-700 hover:file:bg-wh40k-200 dark:file:bg-wh40k-800 dark:file:text-wh40k-200 dark:hover:file:bg-wh40k-700',
+            'primary'      => 'file:bg-primary-100 file:text-primary-700 hover:file:bg-primary-200 dark:file:bg-primary-800 dark:file:text-primary-200 dark:hover:file:bg-primary-700',
+            'secondary'    => 'file:bg-secondary-100 file:text-secondary-700 hover:file:bg-secondary-200 dark:file:bg-secondary-800 dark:file:text-secondary-200 dark:hover:file:bg-secondary-700',
+            'accent'       => 'file:bg-accent-100 file:text-accent-700 hover:file:bg-accent-200 dark:file:bg-accent-800 dark:file:text-accent-200 dark:hover:file:bg-accent-700',
+            'base'         => 'file:bg-base-100 file:text-base-700 hover:file:bg-base-200 dark:file:bg-base-800 dark:file:text-base-200 dark:hover:file:bg-base-700',
+            'info'         => 'file:bg-info-100 file:text-info-700 hover:file:bg-info-200 dark:file:bg-info-800 dark:file:text-info-200 dark:hover:file:bg-info-700',
+            'success'      => 'file:bg-success-100 file:text-success-700 hover:file:bg-success-200 dark:file:bg-success-800 dark:file:text-success-200 dark:hover:file:bg-success-700',
+            'warning'      => 'file:bg-warning-100 file:text-warning-700 hover:file:bg-warning-200 dark:file:bg-warning-800 dark:file:text-warning-200 dark:hover:file:bg-warning-700',
+            'danger'       => 'file:bg-danger-100 file:text-danger-700 hover:file:bg-danger-200 dark:file:bg-danger-800 dark:file:text-danger-200 dark:hover:file:bg-danger-700',
         ];
 
         if ($this->name === '') {
             $this->name = $this->id;
         }
 
-        $button = $buttonMap[$theme] ?? $buttonMap['slate'];
+        $button = $buttonMap[$color] ?? $buttonMap['base'];
 
-        $this->normalClasses  = $this->getNormalClasses($theme, trim($button.' '.$class));
+        $this->normalClasses  = $this->getNormalClasses($color, trim($button.' '.$class));
         $this->errorClasses   = $this->getErrorClasses(trim($button.' '.$class));
 
         if (empty($id)) {

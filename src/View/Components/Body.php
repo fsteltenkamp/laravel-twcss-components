@@ -10,7 +10,7 @@ class Body extends Component
 {
     public string $classList;
 
-    public function __construct(public string $theme = 'slate')
+    public function __construct(public string $color = 'base')
     {
         $themeMap = [
             'slate'   => 'bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100',
@@ -39,13 +39,17 @@ class Body extends Component
             'mauve'   => 'bg-mauve-50 text-mauve-900 dark:bg-mauve-950 dark:text-mauve-100',
             'mist'    => 'bg-mist-50 text-mist-900 dark:bg-mist-950 dark:text-mist-100',
             'olive'   => 'bg-olive-50 text-olive-900 dark:bg-olive-950 dark:text-olive-100',
-            'palette'    => 'bg-palette-50 text-palette-900 dark:bg-palette-950 dark:text-palette-100',
-            'cyberpunk' => 'bg-cyberpunk-50 text-cyberpunk-900 dark:bg-cyberpunk-950 dark:text-cyberpunk-100',
-            'fantasy' => 'bg-fantasy-50 text-fantasy-900 dark:bg-fantasy-950 dark:text-fantasy-100',
-            'wh40k'   => 'bg-wh40k-50 text-wh40k-900 dark:bg-wh40k-950 dark:text-wh40k-100',
+            'primary'    => 'bg-primary-50 text-primary-900 dark:bg-primary-950 dark:text-primary-100',
+            'secondary'  => 'bg-secondary-50 text-secondary-900 dark:bg-secondary-950 dark:text-secondary-100',
+            'accent'     => 'bg-accent-50 text-accent-900 dark:bg-accent-950 dark:text-accent-100',
+            'base'       => 'bg-base-50 text-base-900 dark:bg-base-950 dark:text-base-100',
+            'info'       => 'bg-info-50 text-info-900 dark:bg-info-950 dark:text-info-100',
+            'success'    => 'bg-success-50 text-success-900 dark:bg-success-950 dark:text-success-100',
+            'warning'    => 'bg-warning-50 text-warning-900 dark:bg-warning-950 dark:text-warning-100',
+            'danger'     => 'bg-danger-50 text-danger-900 dark:bg-danger-950 dark:text-danger-100',
         ];
 
-        $this->classList = $themeMap[$theme] ?? $themeMap['slate'];
+        $this->classList = $themeMap[$color] ?? $themeMap['base'];
     }
 
     /**

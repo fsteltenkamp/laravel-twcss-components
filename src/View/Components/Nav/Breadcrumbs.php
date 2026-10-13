@@ -22,7 +22,7 @@ class Breadcrumbs extends Component
      */
     public function __construct(
         public mixed $crumbs = null,
-        public string $theme = 'slate',
+        public string $color = 'base',
         public string $class = '',
         public string $containerClass = 'w-full px-4 sm:px-6 lg:px-8',
     ) {
@@ -59,13 +59,17 @@ class Breadcrumbs extends Component
             'mauve'   => 'text-mauve-500 dark:text-mauve-400',
             'mist'    => 'text-mist-500 dark:text-mist-400',
             'olive'   => 'text-olive-500 dark:text-olive-400',
-            'palette'    => 'text-palette-500 dark:text-palette-400',
-            'cyberpunk' => 'text-cyberpunk-500 dark:text-cyberpunk-400',
-            'fantasy' => 'text-fantasy-500 dark:text-fantasy-400',
-            'wh40k'   => 'text-wh40k-500 dark:text-wh40k-400',
+            'primary'    => 'text-primary-500 dark:text-primary-400',
+            'secondary'  => 'text-secondary-500 dark:text-secondary-400',
+            'accent'     => 'text-accent-500 dark:text-accent-400',
+            'base'       => 'text-base-500 dark:text-base-400',
+            'info'       => 'text-info-500 dark:text-info-400',
+            'success'    => 'text-success-500 dark:text-success-400',
+            'warning'    => 'text-warning-500 dark:text-warning-400',
+            'danger'     => 'text-danger-500 dark:text-danger-400',
         ];
 
-        $this->listClass = 'flex flex-wrap items-center gap-x-2 gap-y-2 text-sm ' . ($listTextMap[$this->theme] ?? $listTextMap['slate']);
+        $this->listClass = 'flex flex-wrap items-center gap-x-2 gap-y-2 text-sm ' . ($listTextMap[$this->color] ?? $listTextMap['base']);
 
         $this->items = [];
 
@@ -93,7 +97,7 @@ class Breadcrumbs extends Component
      */
     public function render(): View|Closure|string
     {
-        ViewFacade::share('tailwindBreadcrumbsTheme', $this->theme);
+        ViewFacade::share('tailwindBreadcrumbsColor', $this->color);
 
         return view('fltc::components.nav.breadcrumbs');
     }

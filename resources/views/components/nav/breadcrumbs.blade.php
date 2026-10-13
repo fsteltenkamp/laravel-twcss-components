@@ -19,7 +19,7 @@
                         :icon="$item['icon']"
                         :is-active="$item['isActive']"
                         :show-separator="$item['showSeparator']"
-                        :theme="$theme"
+                        :color="$color"
                     >{{ $item['label'] }}</x-fltc::nav.breadcrumbs.item>
                 @endforeach
             @else

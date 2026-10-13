@@ -28,7 +28,7 @@ class Rating extends Component
         public string $note = '',
         public int $value = 0,
         public int $max = 5,
-        public string $theme = 'slate',
+        public string $color = 'base',
         public string $size = 'md',
         public string $model = '',
         public bool $live = false,
@@ -41,7 +41,7 @@ class Rating extends Component
         $this->max = max(1, $max);
         $this->current = max(0, min($this->max, (int) ($name !== '' ? old($name, $value) : $value)));
 
-        ['star' => $this->starClasses, 'filled' => $this->filledClasses, 'empty' => $this->emptyClasses] = RatingDisplay::classes($theme, $size);
+        ['star' => $this->starClasses, 'filled' => $this->filledClasses, 'empty' => $this->emptyClasses] = RatingDisplay::classes($color, $size);
 
         $this->classList = 'inline-flex items-center';
         $this->buttonClasses = 'rounded p-0.5 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-current '

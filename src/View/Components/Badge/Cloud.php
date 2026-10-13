@@ -15,7 +15,7 @@ class Cloud extends Component
     public string $classList;
 
     public function __construct(
-        public string $theme = 'slate',
+        public string $color = 'base',
         public string $gap = 'md',
         public string $label = '',
     ) {
@@ -30,7 +30,7 @@ class Cloud extends Component
 
     public function render(): View|Closure|string
     {
-        ViewFacade::share('fltcBadgeTheme', $this->theme);
+        ViewFacade::share('fltcBadgeColor', $this->color);
 
         return view('fltc::components.badge.cloud');
     }

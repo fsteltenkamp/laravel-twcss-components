@@ -15,14 +15,14 @@ class ArrayToTable extends TableBase
     public string $hoverClasses;
 
     public function __construct(
-        public string $theme = 'slate',
+        public string $color = 'base',
         public string $prefix = '',
         public string $idPrefix = '',
         public string $idSuffix = '',
         public bool $debug = false,
         public array $array = [],
     ) {
-        $colors = $this->getThemeColors($this->theme);
+        $colors = $this->getThemeColors($this->color);
 
         $this->classList = 'w-full min-w-full font-mono text-sm mb-2 '.$colors['divide'];
         $this->headClasses = 'text-left text-xs font-semibold tracking-wide uppercase border-b '.$colors['head'].' '.$colors['border'];

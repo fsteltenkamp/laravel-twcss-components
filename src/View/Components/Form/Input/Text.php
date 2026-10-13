@@ -31,7 +31,7 @@ class Text extends Input
         public bool $required = false,
         public bool $autofocus = false,
         public bool $disabled = false,
-        public string $theme = 'slate',
+        public string $color = 'base',
         public string $class = '',
         public string $label = '',
         public string $icon = '',
@@ -47,7 +47,7 @@ class Text extends Input
             $this->name = $this->id;
         }
 
-        $this->normalClasses  = $this->getNormalClasses($theme, $class);
+        $this->normalClasses  = $this->getNormalClasses($color, $class);
         $this->errorClasses   = $this->getErrorClasses($class);
 
         if (empty($id)) {

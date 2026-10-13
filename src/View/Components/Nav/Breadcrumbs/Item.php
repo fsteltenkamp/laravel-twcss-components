@@ -21,10 +21,10 @@ class Item extends Component
         public mixed $icon = null,
         public bool $isActive = false,
         public bool $showSeparator = true,
-        public ?string $theme = null,
+        public ?string $color = null,
         public string $class = '',
     ) {
-        $this->theme = $this->theme ?? ViewFacade::shared('tailwindBreadcrumbsTheme', 'slate');
+        $this->color = $this->color ?? ViewFacade::shared('tailwindBreadcrumbsColor', 'base');
 
         $this->isLink = !$this->isActive && filled($this->href) && $this->href !== '#';
 
@@ -55,10 +55,14 @@ class Item extends Component
             'mauve'   => 'bg-mauve-100 text-mauve-700 dark:bg-mauve-800 dark:text-mauve-100',
             'mist'    => 'bg-mist-100 text-mist-700 dark:bg-mist-800 dark:text-mist-100',
             'olive'   => 'bg-olive-100 text-olive-700 dark:bg-olive-800 dark:text-olive-100',
-            'palette'    => 'bg-palette-100 text-palette-700 dark:bg-palette-800 dark:text-palette-100',
-            'cyberpunk' => 'bg-cyberpunk-100 text-cyberpunk-700 dark:bg-cyberpunk-800 dark:text-cyberpunk-100',
-            'fantasy' => 'bg-fantasy-100 text-fantasy-700 dark:bg-fantasy-800 dark:text-fantasy-100',
-            'wh40k'   => 'bg-wh40k-100 text-wh40k-700 dark:bg-wh40k-800 dark:text-wh40k-100',
+            'primary'    => 'bg-primary-100 text-primary-700 dark:bg-primary-800 dark:text-primary-100',
+            'secondary'  => 'bg-secondary-100 text-secondary-700 dark:bg-secondary-800 dark:text-secondary-100',
+            'accent'     => 'bg-accent-100 text-accent-700 dark:bg-accent-800 dark:text-accent-100',
+            'base'       => 'bg-base-100 text-base-700 dark:bg-base-800 dark:text-base-100',
+            'info'       => 'bg-info-100 text-info-700 dark:bg-info-800 dark:text-info-100',
+            'success'    => 'bg-success-100 text-success-700 dark:bg-success-800 dark:text-success-100',
+            'warning'    => 'bg-warning-100 text-warning-700 dark:bg-warning-800 dark:text-warning-100',
+            'danger'     => 'bg-danger-100 text-danger-700 dark:bg-danger-800 dark:text-danger-100',
         ];
 
         $inactiveMap = [
@@ -88,10 +92,14 @@ class Item extends Component
             'mauve'   => 'text-mauve-500 dark:text-mauve-400',
             'mist'    => 'text-mist-500 dark:text-mist-400',
             'olive'   => 'text-olive-500 dark:text-olive-400',
-            'palette'    => 'text-palette-500 dark:text-palette-400',
-            'cyberpunk' => 'text-cyberpunk-500 dark:text-cyberpunk-400',
-            'fantasy' => 'text-fantasy-500 dark:text-fantasy-400',
-            'wh40k'   => 'text-wh40k-500 dark:text-wh40k-400',
+            'primary'    => 'text-primary-500 dark:text-primary-400',
+            'secondary'  => 'text-secondary-500 dark:text-secondary-400',
+            'accent'     => 'text-accent-500 dark:text-accent-400',
+            'base'       => 'text-base-500 dark:text-base-400',
+            'info'       => 'text-info-500 dark:text-info-400',
+            'success'    => 'text-success-500 dark:text-success-400',
+            'warning'    => 'text-warning-500 dark:text-warning-400',
+            'danger'     => 'text-danger-500 dark:text-danger-400',
         ];
 
         $linkHoverMap = [
@@ -121,10 +129,14 @@ class Item extends Component
             'mauve'   => 'hover:bg-mauve-100 hover:text-mauve-900 focus:outline-none focus-visible:bg-mauve-100 focus-visible:text-mauve-900 focus-visible:ring-2 focus-visible:ring-mauve-300 dark:hover:bg-mauve-900 dark:hover:text-mauve-100 dark:focus-visible:bg-mauve-900 dark:focus-visible:text-mauve-100 dark:focus-visible:ring-mauve-700',
             'mist'    => 'hover:bg-mist-100 hover:text-mist-900 focus:outline-none focus-visible:bg-mist-100 focus-visible:text-mist-900 focus-visible:ring-2 focus-visible:ring-mist-300 dark:hover:bg-mist-900 dark:hover:text-mist-100 dark:focus-visible:bg-mist-900 dark:focus-visible:text-mist-100 dark:focus-visible:ring-mist-700',
             'olive'   => 'hover:bg-olive-100 hover:text-olive-900 focus:outline-none focus-visible:bg-olive-100 focus-visible:text-olive-900 focus-visible:ring-2 focus-visible:ring-olive-300 dark:hover:bg-olive-900 dark:hover:text-olive-100 dark:focus-visible:bg-olive-900 dark:focus-visible:text-olive-100 dark:focus-visible:ring-olive-700',
-            'palette'    => 'hover:bg-palette-100 hover:text-palette-900 focus:outline-none focus-visible:bg-palette-100 focus-visible:text-palette-900 focus-visible:ring-2 focus-visible:ring-palette-300 dark:hover:bg-palette-900 dark:hover:text-palette-100 dark:focus-visible:bg-palette-900 dark:focus-visible:text-palette-100 dark:focus-visible:ring-palette-700',
-            'cyberpunk' => 'hover:bg-cyberpunk-100 hover:text-cyberpunk-900 focus:outline-none focus-visible:bg-cyberpunk-100 focus-visible:text-cyberpunk-900 focus-visible:ring-2 focus-visible:ring-cyberpunk-300 dark:hover:bg-cyberpunk-900 dark:hover:text-cyberpunk-100 dark:focus-visible:bg-cyberpunk-900 dark:focus-visible:text-cyberpunk-100 dark:focus-visible:ring-cyberpunk-700',
-            'fantasy' => 'hover:bg-fantasy-100 hover:text-fantasy-900 focus:outline-none focus-visible:bg-fantasy-100 focus-visible:text-fantasy-900 focus-visible:ring-2 focus-visible:ring-fantasy-300 dark:hover:bg-fantasy-900 dark:hover:text-fantasy-100 dark:focus-visible:bg-fantasy-900 dark:focus-visible:text-fantasy-100 dark:focus-visible:ring-fantasy-700',
-            'wh40k'   => 'hover:bg-wh40k-100 hover:text-wh40k-900 focus:outline-none focus-visible:bg-wh40k-100 focus-visible:text-wh40k-900 focus-visible:ring-2 focus-visible:ring-wh40k-300 dark:hover:bg-wh40k-900 dark:hover:text-wh40k-100 dark:focus-visible:bg-wh40k-900 dark:focus-visible:text-wh40k-100 dark:focus-visible:ring-wh40k-700',
+            'primary'    => 'hover:bg-primary-100 hover:text-primary-900 focus:outline-none focus-visible:bg-primary-100 focus-visible:text-primary-900 focus-visible:ring-2 focus-visible:ring-primary-300 dark:hover:bg-primary-900 dark:hover:text-primary-100 dark:focus-visible:bg-primary-900 dark:focus-visible:text-primary-100 dark:focus-visible:ring-primary-700',
+            'secondary'  => 'hover:bg-secondary-100 hover:text-secondary-900 focus:outline-none focus-visible:bg-secondary-100 focus-visible:text-secondary-900 focus-visible:ring-2 focus-visible:ring-secondary-300 dark:hover:bg-secondary-900 dark:hover:text-secondary-100 dark:focus-visible:bg-secondary-900 dark:focus-visible:text-secondary-100 dark:focus-visible:ring-secondary-700',
+            'accent'     => 'hover:bg-accent-100 hover:text-accent-900 focus:outline-none focus-visible:bg-accent-100 focus-visible:text-accent-900 focus-visible:ring-2 focus-visible:ring-accent-300 dark:hover:bg-accent-900 dark:hover:text-accent-100 dark:focus-visible:bg-accent-900 dark:focus-visible:text-accent-100 dark:focus-visible:ring-accent-700',
+            'base'       => 'hover:bg-base-100 hover:text-base-900 focus:outline-none focus-visible:bg-base-100 focus-visible:text-base-900 focus-visible:ring-2 focus-visible:ring-base-300 dark:hover:bg-base-900 dark:hover:text-base-100 dark:focus-visible:bg-base-900 dark:focus-visible:text-base-100 dark:focus-visible:ring-base-700',
+            'info'       => 'hover:bg-info-100 hover:text-info-900 focus:outline-none focus-visible:bg-info-100 focus-visible:text-info-900 focus-visible:ring-2 focus-visible:ring-info-300 dark:hover:bg-info-900 dark:hover:text-info-100 dark:focus-visible:bg-info-900 dark:focus-visible:text-info-100 dark:focus-visible:ring-info-700',
+            'success'    => 'hover:bg-success-100 hover:text-success-900 focus:outline-none focus-visible:bg-success-100 focus-visible:text-success-900 focus-visible:ring-2 focus-visible:ring-success-300 dark:hover:bg-success-900 dark:hover:text-success-100 dark:focus-visible:bg-success-900 dark:focus-visible:text-success-100 dark:focus-visible:ring-success-700',
+            'warning'    => 'hover:bg-warning-100 hover:text-warning-900 focus:outline-none focus-visible:bg-warning-100 focus-visible:text-warning-900 focus-visible:ring-2 focus-visible:ring-warning-300 dark:hover:bg-warning-900 dark:hover:text-warning-100 dark:focus-visible:bg-warning-900 dark:focus-visible:text-warning-100 dark:focus-visible:ring-warning-700',
+            'danger'     => 'hover:bg-danger-100 hover:text-danger-900 focus:outline-none focus-visible:bg-danger-100 focus-visible:text-danger-900 focus-visible:ring-2 focus-visible:ring-danger-300 dark:hover:bg-danger-900 dark:hover:text-danger-100 dark:focus-visible:bg-danger-900 dark:focus-visible:text-danger-100 dark:focus-visible:ring-danger-700',
         ];
 
         $separatorMap = [
@@ -154,20 +166,24 @@ class Item extends Component
             'mauve'   => 'text-mauve-300 dark:text-mauve-700',
             'mist'    => 'text-mist-300 dark:text-mist-700',
             'olive'   => 'text-olive-300 dark:text-olive-700',
-            'palette'    => 'text-palette-300 dark:text-palette-700',
-            'cyberpunk' => 'text-cyberpunk-300 dark:text-cyberpunk-700',
-            'fantasy' => 'text-fantasy-300 dark:text-fantasy-700',
-            'wh40k'   => 'text-wh40k-300 dark:text-wh40k-700',
+            'primary'    => 'text-primary-300 dark:text-primary-700',
+            'secondary'  => 'text-secondary-300 dark:text-secondary-700',
+            'accent'     => 'text-accent-300 dark:text-accent-700',
+            'base'       => 'text-base-300 dark:text-base-700',
+            'info'       => 'text-info-300 dark:text-info-700',
+            'success'    => 'text-success-300 dark:text-success-700',
+            'warning'    => 'text-warning-300 dark:text-warning-700',
+            'danger'     => 'text-danger-300 dark:text-danger-700',
         ];
 
-        $this->separatorClass = 'text-xs ' . ($separatorMap[$this->theme] ?? $separatorMap['slate']);
+        $this->separatorClass = 'text-xs ' . ($separatorMap[$this->color] ?? $separatorMap['base']);
 
         $this->classList = trim(implode(' ', array_filter([
             'inline-flex items-center gap-2 rounded-full px-3 py-1.5 transition',
             $this->isActive
-                ? ($activeMap[$this->theme] ?? $activeMap['slate'])
-                : ($inactiveMap[$this->theme] ?? $inactiveMap['slate']),
-            $this->isLink ? ($linkHoverMap[$this->theme] ?? $linkHoverMap['slate']) : null,
+                ? ($activeMap[$this->color] ?? $activeMap['base'])
+                : ($inactiveMap[$this->color] ?? $inactiveMap['base']),
+            $this->isLink ? ($linkHoverMap[$this->color] ?? $linkHoverMap['base']) : null,
             $this->class,
         ])));
     }

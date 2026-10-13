@@ -23,9 +23,9 @@ class Item extends Component
         public string $icon = '',
         public string $iconVariant = 'regular',
         public bool $disabled = false,
-        public ?string $theme = null,
+        public ?string $color = null,
     ) {
-        $this->theme = $theme ?? ViewFacade::shared('fltcDropdownTheme', 'slate');
+        $this->color = $color ?? ViewFacade::shared('fltcDropdownColor', 'base');
         $this->method = strtoupper($method);
 
         $this->tag = match (true) {
@@ -36,7 +36,7 @@ class Item extends Component
 
         $this->classList = trim(implode(' ', [
             'flex w-full items-center gap-2 rounded-md px-3 py-2 text-left text-sm transition focus:outline-none focus-visible:ring-2',
-            SidebarTheme::inactive($this->theme),
+            SidebarTheme::inactive($this->color),
             $disabled ? 'pointer-events-none cursor-not-allowed opacity-50' : 'cursor-pointer',
         ]));
     }

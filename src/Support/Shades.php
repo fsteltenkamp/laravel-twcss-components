@@ -7,14 +7,14 @@ namespace Fsteltenkamp\TwcssComponents\Support;
  * for components whose markup needs a role colour outside their own theme map.
  *
  * Every value is a **literal** class string per theme so Tailwind's JIT scanner
- * emits all of them. Unknown themes fall back to `slate`.
+ * emits all of them. Unknown colours fall back to `base`.
  */
 class Shades
 {
     /**
      * Primary Content: headings and body copy.
      */
-    public static function primary(?string $theme): string
+    public static function primary(?string $color): string
     {
         $map = [
             'slate'     => 'text-slate-900 dark:text-slate-100',
@@ -43,19 +43,23 @@ class Shades
             'mauve'     => 'text-mauve-900 dark:text-mauve-100',
             'mist'      => 'text-mist-900 dark:text-mist-100',
             'olive'     => 'text-olive-900 dark:text-olive-100',
-            'palette'      => 'text-palette-900 dark:text-palette-100',
-            'cyberpunk' => 'text-cyberpunk-900 dark:text-cyberpunk-100',
-            'fantasy'   => 'text-fantasy-900 dark:text-fantasy-100',
-            'wh40k'     => 'text-wh40k-900 dark:text-wh40k-100',
+            'primary'      => 'text-primary-900 dark:text-primary-100',
+            'secondary'    => 'text-secondary-900 dark:text-secondary-100',
+            'accent'       => 'text-accent-900 dark:text-accent-100',
+            'base'         => 'text-base-900 dark:text-base-100',
+            'info'         => 'text-info-900 dark:text-info-100',
+            'success'      => 'text-success-900 dark:text-success-100',
+            'warning'      => 'text-warning-900 dark:text-warning-100',
+            'danger'       => 'text-danger-900 dark:text-danger-100',
         ];
 
-        return $map[$theme] ?? $map['slate'];
+        return $map[$color] ?? $map['base'];
     }
 
     /**
      * Secondary Content: supporting text, labels, sub-headings.
      */
-    public static function secondary(?string $theme): string
+    public static function secondary(?string $color): string
     {
         $map = [
             'slate'     => 'text-slate-700 dark:text-slate-300',
@@ -84,19 +88,23 @@ class Shades
             'mauve'     => 'text-mauve-700 dark:text-mauve-300',
             'mist'      => 'text-mist-700 dark:text-mist-300',
             'olive'     => 'text-olive-700 dark:text-olive-300',
-            'palette'      => 'text-palette-700 dark:text-palette-300',
-            'cyberpunk' => 'text-cyberpunk-700 dark:text-cyberpunk-300',
-            'fantasy'   => 'text-fantasy-700 dark:text-fantasy-300',
-            'wh40k'     => 'text-wh40k-700 dark:text-wh40k-300',
+            'primary'      => 'text-primary-700 dark:text-primary-300',
+            'secondary'    => 'text-secondary-700 dark:text-secondary-300',
+            'accent'       => 'text-accent-700 dark:text-accent-300',
+            'base'         => 'text-base-700 dark:text-base-300',
+            'info'         => 'text-info-700 dark:text-info-300',
+            'success'      => 'text-success-700 dark:text-success-300',
+            'warning'      => 'text-warning-700 dark:text-warning-300',
+            'danger'       => 'text-danger-700 dark:text-danger-300',
         ];
 
-        return $map[$theme] ?? $map['slate'];
+        return $map[$color] ?? $map['base'];
     }
 
     /**
      * Tertiary Content: muted text, placeholders, icons.
      */
-    public static function tertiary(?string $theme): string
+    public static function tertiary(?string $color): string
     {
         $map = [
             'slate'     => 'text-slate-500 dark:text-slate-400',
@@ -125,19 +133,23 @@ class Shades
             'mauve'     => 'text-mauve-500 dark:text-mauve-400',
             'mist'      => 'text-mist-500 dark:text-mist-400',
             'olive'     => 'text-olive-500 dark:text-olive-400',
-            'palette'      => 'text-palette-500 dark:text-palette-400',
-            'cyberpunk' => 'text-cyberpunk-500 dark:text-cyberpunk-400',
-            'fantasy'   => 'text-fantasy-500 dark:text-fantasy-400',
-            'wh40k'     => 'text-wh40k-500 dark:text-wh40k-400',
+            'primary'      => 'text-primary-500 dark:text-primary-400',
+            'secondary'    => 'text-secondary-500 dark:text-secondary-400',
+            'accent'       => 'text-accent-500 dark:text-accent-400',
+            'base'         => 'text-base-500 dark:text-base-400',
+            'info'         => 'text-info-500 dark:text-info-400',
+            'success'      => 'text-success-500 dark:text-success-400',
+            'warning'      => 'text-warning-500 dark:text-warning-400',
+            'danger'       => 'text-danger-500 dark:text-danger-400',
         ];
 
-        return $map[$theme] ?? $map['slate'];
+        return $map[$color] ?? $map['base'];
     }
 
     /**
      * Unfilled track behind a progress fill.
      */
-    public static function track(?string $theme): string
+    public static function track(?string $color): string
     {
         $map = [
             'slate'     => 'bg-slate-200 dark:bg-slate-700',
@@ -166,19 +178,23 @@ class Shades
             'mauve'     => 'bg-mauve-200 dark:bg-mauve-700',
             'mist'      => 'bg-mist-200 dark:bg-mist-700',
             'olive'     => 'bg-olive-200 dark:bg-olive-700',
-            'palette'      => 'bg-palette-200 dark:bg-palette-700',
-            'cyberpunk' => 'bg-cyberpunk-200 dark:bg-cyberpunk-700',
-            'fantasy'   => 'bg-fantasy-200 dark:bg-fantasy-700',
-            'wh40k'     => 'bg-wh40k-200 dark:bg-wh40k-700',
+            'primary'      => 'bg-primary-200 dark:bg-primary-700',
+            'secondary'    => 'bg-secondary-200 dark:bg-secondary-700',
+            'accent'       => 'bg-accent-200 dark:bg-accent-700',
+            'base'         => 'bg-base-200 dark:bg-base-700',
+            'info'         => 'bg-info-200 dark:bg-info-700',
+            'success'      => 'bg-success-200 dark:bg-success-700',
+            'warning'      => 'bg-warning-200 dark:bg-warning-700',
+            'danger'       => 'bg-danger-200 dark:bg-danger-700',
         ];
 
-        return $map[$theme] ?? $map['slate'];
+        return $map[$color] ?? $map['base'];
     }
 
     /**
      * Filled part of a progress bar or meter, filled rating stars.
      */
-    public static function fill(?string $theme): string
+    public static function fill(?string $color): string
     {
         $map = [
             'slate'     => 'bg-slate-500 dark:bg-slate-400',
@@ -207,19 +223,23 @@ class Shades
             'mauve'     => 'bg-mauve-500 dark:bg-mauve-400',
             'mist'      => 'bg-mist-500 dark:bg-mist-400',
             'olive'     => 'bg-olive-500 dark:bg-olive-400',
-            'palette'      => 'bg-palette-500 dark:bg-palette-400',
-            'cyberpunk' => 'bg-cyberpunk-500 dark:bg-cyberpunk-400',
-            'fantasy'   => 'bg-fantasy-500 dark:bg-fantasy-400',
-            'wh40k'     => 'bg-wh40k-500 dark:bg-wh40k-400',
+            'primary'      => 'bg-primary-500 dark:bg-primary-400',
+            'secondary'    => 'bg-secondary-500 dark:bg-secondary-400',
+            'accent'       => 'bg-accent-500 dark:bg-accent-400',
+            'base'         => 'bg-base-500 dark:bg-base-400',
+            'info'         => 'bg-info-500 dark:bg-info-400',
+            'success'      => 'bg-success-500 dark:bg-success-400',
+            'warning'      => 'bg-warning-500 dark:bg-warning-400',
+            'danger'       => 'bg-danger-500 dark:bg-danger-400',
         ];
 
-        return $map[$theme] ?? $map['slate'];
+        return $map[$color] ?? $map['base'];
     }
 
     /**
      * Faint marks on a surface: empty rating stars, placeholder glyphs.
      */
-    public static function faint(?string $theme): string
+    public static function faint(?string $color): string
     {
         $map = [
             'slate'     => 'text-slate-300 dark:text-slate-600',
@@ -248,12 +268,16 @@ class Shades
             'mauve'     => 'text-mauve-300 dark:text-mauve-600',
             'mist'      => 'text-mist-300 dark:text-mist-600',
             'olive'     => 'text-olive-300 dark:text-olive-600',
-            'palette'      => 'text-palette-300 dark:text-palette-600',
-            'cyberpunk' => 'text-cyberpunk-300 dark:text-cyberpunk-600',
-            'fantasy'   => 'text-fantasy-300 dark:text-fantasy-600',
-            'wh40k'     => 'text-wh40k-300 dark:text-wh40k-600',
+            'primary'      => 'text-primary-300 dark:text-primary-600',
+            'secondary'    => 'text-secondary-300 dark:text-secondary-600',
+            'accent'       => 'text-accent-300 dark:text-accent-600',
+            'base'         => 'text-base-300 dark:text-base-600',
+            'info'         => 'text-info-300 dark:text-info-600',
+            'success'      => 'text-success-300 dark:text-success-600',
+            'warning'      => 'text-warning-300 dark:text-warning-600',
+            'danger'       => 'text-danger-300 dark:text-danger-600',
         ];
 
-        return $map[$theme] ?? $map['slate'];
+        return $map[$color] ?? $map['base'];
     }
 }

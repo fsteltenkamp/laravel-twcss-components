@@ -40,7 +40,7 @@ class Checklist extends Component
         public string $name = '',
         public string $idPrefix = '',
         public string $label = '',
-        public string $theme = 'slate',
+        public string $color = 'base',
         public bool $showProgress = false,
         public bool $strikeThroughChecked = true,
         public ?int $completedSteps = null,
@@ -78,10 +78,14 @@ class Checklist extends Component
             'mauve'   => 'text-mauve-500 dark:text-mauve-400',
             'mist'    => 'text-mist-500 dark:text-mist-400',
             'olive'   => 'text-olive-500 dark:text-olive-400',
-            'palette'    => 'text-palette-500 dark:text-palette-400',
-            'cyberpunk' => 'text-cyberpunk-500 dark:text-cyberpunk-400',
-            'fantasy' => 'text-fantasy-500 dark:text-fantasy-400',
-            'wh40k'   => 'text-wh40k-500 dark:text-wh40k-400',
+            'primary'    => 'text-primary-500 dark:text-primary-400',
+            'secondary'  => 'text-secondary-500 dark:text-secondary-400',
+            'accent'     => 'text-accent-500 dark:text-accent-400',
+            'base'       => 'text-base-500 dark:text-base-400',
+            'info'       => 'text-info-500 dark:text-info-400',
+            'success'    => 'text-success-500 dark:text-success-400',
+            'warning'    => 'text-warning-500 dark:text-warning-400',
+            'danger'     => 'text-danger-500 dark:text-danger-400',
         ];
 
         $iconColorPeerCheckedMap = [
@@ -111,10 +115,14 @@ class Checklist extends Component
             'mauve'   => 'peer-checked:text-mauve-500 dark:peer-checked:text-mauve-400',
             'mist'    => 'peer-checked:text-mist-500 dark:peer-checked:text-mist-400',
             'olive'   => 'peer-checked:text-olive-500 dark:peer-checked:text-olive-400',
-            'palette'    => 'peer-checked:text-palette-500 dark:peer-checked:text-palette-400',
-            'cyberpunk' => 'peer-checked:text-cyberpunk-500 dark:peer-checked:text-cyberpunk-400',
-            'fantasy' => 'peer-checked:text-fantasy-500 dark:peer-checked:text-fantasy-400',
-            'wh40k'   => 'peer-checked:text-wh40k-500 dark:peer-checked:text-wh40k-400',
+            'primary'    => 'peer-checked:text-primary-500 dark:peer-checked:text-primary-400',
+            'secondary'  => 'peer-checked:text-secondary-500 dark:peer-checked:text-secondary-400',
+            'accent'     => 'peer-checked:text-accent-500 dark:peer-checked:text-accent-400',
+            'base'       => 'peer-checked:text-base-500 dark:peer-checked:text-base-400',
+            'info'       => 'peer-checked:text-info-500 dark:peer-checked:text-info-400',
+            'success'    => 'peer-checked:text-success-500 dark:peer-checked:text-success-400',
+            'warning'    => 'peer-checked:text-warning-500 dark:peer-checked:text-warning-400',
+            'danger'     => 'peer-checked:text-danger-500 dark:peer-checked:text-danger-400',
         ];
 
         $progressBarMap = [
@@ -144,10 +152,14 @@ class Checklist extends Component
             'mauve'   => 'bg-mauve-500',
             'mist'    => 'bg-mist-500',
             'olive'   => 'bg-olive-500',
-            'palette'    => 'bg-palette-500',
-            'cyberpunk' => 'bg-cyberpunk-500',
-            'fantasy' => 'bg-fantasy-500',
-            'wh40k'   => 'bg-wh40k-500',
+            'primary'    => 'bg-primary-500',
+            'secondary'  => 'bg-secondary-500',
+            'accent'     => 'bg-accent-500',
+            'base'       => 'bg-base-500',
+            'info'       => 'bg-info-500',
+            'success'    => 'bg-success-500',
+            'warning'    => 'bg-warning-500',
+            'danger'     => 'bg-danger-500',
         ];
 
         $containerBorderMap = [
@@ -177,10 +189,14 @@ class Checklist extends Component
             'mauve'   => 'border-mauve-200 dark:border-mauve-800',
             'mist'    => 'border-mist-200 dark:border-mist-800',
             'olive'   => 'border-olive-200 dark:border-olive-800',
-            'palette'    => 'border-palette-200 dark:border-palette-800',
-            'cyberpunk' => 'border-cyberpunk-200 dark:border-cyberpunk-800',
-            'fantasy' => 'border-fantasy-200 dark:border-fantasy-800',
-            'wh40k'   => 'border-wh40k-200 dark:border-wh40k-800',
+            'primary'    => 'border-primary-200 dark:border-primary-800',
+            'secondary'  => 'border-secondary-200 dark:border-secondary-800',
+            'accent'     => 'border-accent-200 dark:border-accent-800',
+            'base'       => 'border-base-200 dark:border-base-800',
+            'info'       => 'border-info-200 dark:border-info-800',
+            'success'    => 'border-success-200 dark:border-success-800',
+            'warning'    => 'border-warning-200 dark:border-warning-800',
+            'danger'     => 'border-danger-200 dark:border-danger-800',
         ];
 
         $dividerMap = [
@@ -210,10 +226,14 @@ class Checklist extends Component
             'mauve'   => 'divide-mauve-100 dark:divide-mauve-900',
             'mist'    => 'divide-mist-100 dark:divide-mist-900',
             'olive'   => 'divide-olive-100 dark:divide-olive-900',
-            'palette'    => 'divide-palette-100 dark:divide-palette-900',
-            'cyberpunk' => 'divide-cyberpunk-100 dark:divide-cyberpunk-900',
-            'fantasy' => 'divide-fantasy-100 dark:divide-fantasy-900',
-            'wh40k'   => 'divide-wh40k-100 dark:divide-wh40k-900',
+            'primary'    => 'divide-primary-100 dark:divide-primary-900',
+            'secondary'  => 'divide-secondary-100 dark:divide-secondary-900',
+            'accent'     => 'divide-accent-100 dark:divide-accent-900',
+            'base'       => 'divide-base-100 dark:divide-base-900',
+            'info'       => 'divide-info-100 dark:divide-info-900',
+            'success'    => 'divide-success-100 dark:divide-success-900',
+            'warning'    => 'divide-warning-100 dark:divide-warning-900',
+            'danger'     => 'divide-danger-100 dark:divide-danger-900',
         ];
 
         $rowBgPendingMap = [
@@ -243,10 +263,14 @@ class Checklist extends Component
             'mauve'   => 'bg-mauve-50/40 dark:bg-mauve-950/20',
             'mist'    => 'bg-mist-50/40 dark:bg-mist-950/20',
             'olive'   => 'bg-olive-50/40 dark:bg-olive-950/20',
-            'palette'    => 'bg-palette-50/40 dark:bg-palette-950/20',
-            'cyberpunk' => 'bg-cyberpunk-50/40 dark:bg-cyberpunk-950/20',
-            'fantasy' => 'bg-fantasy-50/40 dark:bg-fantasy-950/20',
-            'wh40k'   => 'bg-wh40k-50/40 dark:bg-wh40k-950/20',
+            'primary'    => 'bg-primary-50/40 dark:bg-primary-950/20',
+            'secondary'  => 'bg-secondary-50/40 dark:bg-secondary-950/20',
+            'accent'     => 'bg-accent-50/40 dark:bg-accent-950/20',
+            'base'       => 'bg-base-50/40 dark:bg-base-950/20',
+            'info'       => 'bg-info-50/40 dark:bg-info-950/20',
+            'success'    => 'bg-success-50/40 dark:bg-success-950/20',
+            'warning'    => 'bg-warning-50/40 dark:bg-warning-950/20',
+            'danger'     => 'bg-danger-50/40 dark:bg-danger-950/20',
         ];
 
         $iconColorPendingMap = [
@@ -276,10 +300,14 @@ class Checklist extends Component
             'mauve'   => 'text-mauve-300 dark:text-mauve-700',
             'mist'    => 'text-mist-300 dark:text-mist-700',
             'olive'   => 'text-olive-300 dark:text-olive-700',
-            'palette'    => 'text-palette-300 dark:text-palette-700',
-            'cyberpunk' => 'text-cyberpunk-300 dark:text-cyberpunk-700',
-            'fantasy' => 'text-fantasy-300 dark:text-fantasy-700',
-            'wh40k'   => 'text-wh40k-300 dark:text-wh40k-700',
+            'primary'    => 'text-primary-300 dark:text-primary-700',
+            'secondary'  => 'text-secondary-300 dark:text-secondary-700',
+            'accent'     => 'text-accent-300 dark:text-accent-700',
+            'base'       => 'text-base-300 dark:text-base-700',
+            'info'       => 'text-info-300 dark:text-info-700',
+            'success'    => 'text-success-300 dark:text-success-700',
+            'warning'    => 'text-warning-300 dark:text-warning-700',
+            'danger'     => 'text-danger-300 dark:text-danger-700',
         ];
 
         $labelPendingMap = [
@@ -309,10 +337,14 @@ class Checklist extends Component
             'mauve'   => 'text-mauve-700 dark:text-mauve-300',
             'mist'    => 'text-mist-700 dark:text-mist-300',
             'olive'   => 'text-olive-700 dark:text-olive-300',
-            'palette'    => 'text-palette-700 dark:text-palette-300',
-            'cyberpunk' => 'text-cyberpunk-700 dark:text-cyberpunk-300',
-            'fantasy' => 'text-fantasy-700 dark:text-fantasy-300',
-            'wh40k'   => 'text-wh40k-700 dark:text-wh40k-300',
+            'primary'    => 'text-primary-700 dark:text-primary-300',
+            'secondary'  => 'text-secondary-700 dark:text-secondary-300',
+            'accent'     => 'text-accent-700 dark:text-accent-300',
+            'base'       => 'text-base-700 dark:text-base-300',
+            'info'       => 'text-info-700 dark:text-info-300',
+            'success'    => 'text-success-700 dark:text-success-300',
+            'warning'    => 'text-warning-700 dark:text-warning-300',
+            'danger'     => 'text-danger-700 dark:text-danger-300',
         ];
 
         $headingColorMap = [
@@ -342,30 +374,34 @@ class Checklist extends Component
             'mauve'   => 'text-mauve-900 dark:text-mauve-100',
             'mist'    => 'text-mist-900 dark:text-mist-100',
             'olive'   => 'text-olive-900 dark:text-olive-100',
-            'palette'    => 'text-palette-900 dark:text-palette-100',
-            'cyberpunk' => 'text-cyberpunk-900 dark:text-cyberpunk-100',
-            'fantasy' => 'text-fantasy-900 dark:text-fantasy-100',
-            'wh40k'   => 'text-wh40k-900 dark:text-wh40k-100',
+            'primary'    => 'text-primary-900 dark:text-primary-100',
+            'secondary'  => 'text-secondary-900 dark:text-secondary-100',
+            'accent'     => 'text-accent-900 dark:text-accent-100',
+            'base'       => 'text-base-900 dark:text-base-100',
+            'info'       => 'text-info-900 dark:text-info-100',
+            'success'    => 'text-success-900 dark:text-success-100',
+            'warning'    => 'text-warning-900 dark:text-warning-100',
+            'danger'     => 'text-danger-900 dark:text-danger-100',
         ];
 
         $this->iconColorCompleted     = 'text-green-500 dark:text-green-400';
         $this->iconColorFailed        = 'text-red-500 dark:text-red-400';
         $this->iconColorInProgress    = 'text-blue-500 dark:text-blue-400';
         $this->iconColorPending       = 'text-slate-300 dark:text-slate-600';
-        $this->containerBorder        = $containerBorderMap[$theme] ?? $containerBorderMap['slate'];
-        $this->divider                = $dividerMap[$theme] ?? $dividerMap['slate'];
-        $this->rowBgPending           = $rowBgPendingMap[$theme] ?? $rowBgPendingMap['slate'];
-        $this->iconColorPendingThemed = $iconColorPendingMap[$theme] ?? $iconColorPendingMap['slate'];
-        $this->labelColorPendingThemed = $labelPendingMap[$theme] ?? $labelPendingMap['slate'];
-        $this->headingColor           = $headingColorMap[$theme] ?? $headingColorMap['slate'];
-        $this->iconColorChecked     = $iconColorMap[$theme] ?? $iconColorMap['slate'];
-        $this->iconColorCheckedPeer = $iconColorPeerCheckedMap[$theme] ?? $iconColorPeerCheckedMap['slate'];
+        $this->containerBorder        = $containerBorderMap[$color] ?? $containerBorderMap['base'];
+        $this->divider                = $dividerMap[$color] ?? $dividerMap['base'];
+        $this->rowBgPending           = $rowBgPendingMap[$color] ?? $rowBgPendingMap['base'];
+        $this->iconColorPendingThemed = $iconColorPendingMap[$color] ?? $iconColorPendingMap['base'];
+        $this->labelColorPendingThemed = $labelPendingMap[$color] ?? $labelPendingMap['base'];
+        $this->headingColor           = $headingColorMap[$color] ?? $headingColorMap['base'];
+        $this->iconColorChecked     = $iconColorMap[$color] ?? $iconColorMap['base'];
+        $this->iconColorCheckedPeer = $iconColorPeerCheckedMap[$color] ?? $iconColorPeerCheckedMap['base'];
         $this->rowBgCompleted       = 'bg-green-50 dark:bg-green-950/30';
         $this->rowBgCompletedHas    = 'has-[:checked]:bg-green-50 dark:has-[:checked]:bg-green-950/30';
         $this->rowBgFailed          = 'bg-red-50 dark:bg-red-950/30';
         $this->rowBgInProgress      = 'bg-blue-50 dark:bg-blue-950/30';
-        $this->progressBarColor     = $progressBarMap[$theme] ?? $progressBarMap['slate'];
-        $this->progressTrackColor   = Shades::track($theme);
+        $this->progressBarColor     = $progressBarMap[$color] ?? $progressBarMap['base'];
+        $this->progressTrackColor   = Shades::track($color);
 
         if (empty($idPrefix)) {
             $this->idPrefix = 'checklist-' . uniqid();

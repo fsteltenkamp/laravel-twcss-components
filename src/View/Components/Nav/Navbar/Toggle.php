@@ -22,10 +22,10 @@ class Toggle extends Component
         public string $class = '',
         public string $target = '',
         public string $label = 'Toggle navigation',
-        ?string $theme = null,
+        ?string $color = null,
     ) {
-        $resolvedTheme = $theme ?? (app('view')->getShared()['navbarTheme'] ?? 'slate');
-        $this->hookTheme = $resolvedTheme;
+        $resolvedTheme = $color ?? (app('view')->getShared()['navbarColor'] ?? 'base');
+        $this->hookColor = $resolvedTheme;
 
         $themeMap = [
             'slate'   => 'text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800 focus-visible:ring-slate-400 dark:focus-visible:ring-slate-600',
@@ -54,13 +54,17 @@ class Toggle extends Component
             'mauve'   => 'text-mauve-700 hover:bg-mauve-100 dark:text-mauve-200 dark:hover:bg-mauve-800 focus-visible:ring-mauve-400 dark:focus-visible:ring-mauve-600',
             'mist'    => 'text-mist-700 hover:bg-mist-100 dark:text-mist-200 dark:hover:bg-mist-800 focus-visible:ring-mist-400 dark:focus-visible:ring-mist-600',
             'olive'   => 'text-olive-700 hover:bg-olive-100 dark:text-olive-200 dark:hover:bg-olive-800 focus-visible:ring-olive-400 dark:focus-visible:ring-olive-600',
-            'palette'    => 'text-palette-700 hover:bg-palette-100 dark:text-palette-200 dark:hover:bg-palette-800 focus-visible:ring-palette-400 dark:focus-visible:ring-palette-600',
-            'cyberpunk' => 'text-cyberpunk-700 hover:bg-cyberpunk-100 dark:text-cyberpunk-200 dark:hover:bg-cyberpunk-800 focus-visible:ring-cyberpunk-400 dark:focus-visible:ring-cyberpunk-600',
-            'fantasy' => 'text-fantasy-700 hover:bg-fantasy-100 dark:text-fantasy-200 dark:hover:bg-fantasy-800 focus-visible:ring-fantasy-400 dark:focus-visible:ring-fantasy-600',
-            'wh40k'   => 'text-wh40k-700 hover:bg-wh40k-100 dark:text-wh40k-200 dark:hover:bg-wh40k-800 focus-visible:ring-wh40k-400 dark:focus-visible:ring-wh40k-600',
+            'primary'    => 'text-primary-700 hover:bg-primary-100 dark:text-primary-200 dark:hover:bg-primary-800 focus-visible:ring-primary-400 dark:focus-visible:ring-primary-600',
+            'secondary'  => 'text-secondary-700 hover:bg-secondary-100 dark:text-secondary-200 dark:hover:bg-secondary-800 focus-visible:ring-secondary-400 dark:focus-visible:ring-secondary-600',
+            'accent'     => 'text-accent-700 hover:bg-accent-100 dark:text-accent-200 dark:hover:bg-accent-800 focus-visible:ring-accent-400 dark:focus-visible:ring-accent-600',
+            'base'       => 'text-base-700 hover:bg-base-100 dark:text-base-200 dark:hover:bg-base-800 focus-visible:ring-base-400 dark:focus-visible:ring-base-600',
+            'info'       => 'text-info-700 hover:bg-info-100 dark:text-info-200 dark:hover:bg-info-800 focus-visible:ring-info-400 dark:focus-visible:ring-info-600',
+            'success'    => 'text-success-700 hover:bg-success-100 dark:text-success-200 dark:hover:bg-success-800 focus-visible:ring-success-400 dark:focus-visible:ring-success-600',
+            'warning'    => 'text-warning-700 hover:bg-warning-100 dark:text-warning-200 dark:hover:bg-warning-800 focus-visible:ring-warning-400 dark:focus-visible:ring-warning-600',
+            'danger'     => 'text-danger-700 hover:bg-danger-100 dark:text-danger-200 dark:hover:bg-danger-800 focus-visible:ring-danger-400 dark:focus-visible:ring-danger-600',
         ];
 
-        $themeClasses = $themeMap[$resolvedTheme] ?? $themeMap['slate'];
+        $themeClasses = $themeMap[$resolvedTheme] ?? $themeMap['base'];
 
         $this->classList = trim(implode(' ', array_filter([
             'nav-toggle inline-flex h-10 w-10 shrink-0 items-center justify-center self-center rounded-md text-xl transition focus:outline-none focus-visible:ring-2 lg:hidden',

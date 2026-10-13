@@ -9,14 +9,14 @@ namespace Fsteltenkamp\TwcssComponents\Support;
  * The drawer panel itself reuses the SidebarTheme surface/divider/inactive
  * maps; only the tab needs its own colours. Every value is a **literal**
  * class string per theme so Tailwind's JIT scanner emits all of them. Unknown
- * themes fall back to `slate`, matching the rest of the package.
+ * colours fall back to `base`, matching the rest of the package.
  */
 class DrawerTheme
 {
     /**
      * Resting tab: surface background, theme-coloured label and border.
      */
-    public static function tab(?string $theme): string
+    public static function tab(?string $color): string
     {
         $map = [
             'slate'   => 'bg-white text-slate-700 border-slate-300 hover:bg-slate-50 dark:bg-slate-900 dark:text-slate-300 dark:border-slate-700 dark:hover:bg-slate-800 focus-visible:ring-slate-400 dark:focus-visible:ring-slate-600',
@@ -45,19 +45,23 @@ class DrawerTheme
             'mauve'   => 'bg-white text-mauve-700 border-mauve-300 hover:bg-mauve-50 dark:bg-mauve-900 dark:text-mauve-300 dark:border-mauve-700 dark:hover:bg-mauve-800 focus-visible:ring-mauve-400 dark:focus-visible:ring-mauve-600',
             'mist'    => 'bg-white text-mist-700 border-mist-300 hover:bg-mist-50 dark:bg-mist-900 dark:text-mist-300 dark:border-mist-700 dark:hover:bg-mist-800 focus-visible:ring-mist-400 dark:focus-visible:ring-mist-600',
             'olive'   => 'bg-white text-olive-700 border-olive-300 hover:bg-olive-50 dark:bg-olive-900 dark:text-olive-300 dark:border-olive-700 dark:hover:bg-olive-800 focus-visible:ring-olive-400 dark:focus-visible:ring-olive-600',
-            'palette'    => 'bg-white text-palette-700 border-palette-300 hover:bg-palette-50 dark:bg-palette-900 dark:text-palette-300 dark:border-palette-700 dark:hover:bg-palette-800 focus-visible:ring-palette-400 dark:focus-visible:ring-palette-600',
-            'cyberpunk' => 'bg-white text-cyberpunk-700 border-cyberpunk-300 hover:bg-cyberpunk-50 dark:bg-cyberpunk-900 dark:text-cyberpunk-300 dark:border-cyberpunk-700 dark:hover:bg-cyberpunk-800 focus-visible:ring-cyberpunk-400 dark:focus-visible:ring-cyberpunk-600',
-            'fantasy' => 'bg-white text-fantasy-700 border-fantasy-300 hover:bg-fantasy-50 dark:bg-fantasy-900 dark:text-fantasy-300 dark:border-fantasy-700 dark:hover:bg-fantasy-800 focus-visible:ring-fantasy-400 dark:focus-visible:ring-fantasy-600',
-            'wh40k'   => 'bg-white text-wh40k-700 border-wh40k-300 hover:bg-wh40k-50 dark:bg-wh40k-900 dark:text-wh40k-300 dark:border-wh40k-700 dark:hover:bg-wh40k-800 focus-visible:ring-wh40k-400 dark:focus-visible:ring-wh40k-600',
+            'primary'    => 'bg-white text-primary-700 border-primary-300 hover:bg-primary-50 dark:bg-primary-900 dark:text-primary-300 dark:border-primary-700 dark:hover:bg-primary-800 focus-visible:ring-primary-400 dark:focus-visible:ring-primary-600',
+            'secondary'  => 'bg-white text-secondary-700 border-secondary-300 hover:bg-secondary-50 dark:bg-secondary-900 dark:text-secondary-300 dark:border-secondary-700 dark:hover:bg-secondary-800 focus-visible:ring-secondary-400 dark:focus-visible:ring-secondary-600',
+            'accent'     => 'bg-white text-accent-700 border-accent-300 hover:bg-accent-50 dark:bg-accent-900 dark:text-accent-300 dark:border-accent-700 dark:hover:bg-accent-800 focus-visible:ring-accent-400 dark:focus-visible:ring-accent-600',
+            'base'       => 'bg-white text-base-700 border-base-300 hover:bg-base-50 dark:bg-base-900 dark:text-base-300 dark:border-base-700 dark:hover:bg-base-800 focus-visible:ring-base-400 dark:focus-visible:ring-base-600',
+            'info'       => 'bg-white text-info-700 border-info-300 hover:bg-info-50 dark:bg-info-900 dark:text-info-300 dark:border-info-700 dark:hover:bg-info-800 focus-visible:ring-info-400 dark:focus-visible:ring-info-600',
+            'success'    => 'bg-white text-success-700 border-success-300 hover:bg-success-50 dark:bg-success-900 dark:text-success-300 dark:border-success-700 dark:hover:bg-success-800 focus-visible:ring-success-400 dark:focus-visible:ring-success-600',
+            'warning'    => 'bg-white text-warning-700 border-warning-300 hover:bg-warning-50 dark:bg-warning-900 dark:text-warning-300 dark:border-warning-700 dark:hover:bg-warning-800 focus-visible:ring-warning-400 dark:focus-visible:ring-warning-600',
+            'danger'     => 'bg-white text-danger-700 border-danger-300 hover:bg-danger-50 dark:bg-danger-900 dark:text-danger-300 dark:border-danger-700 dark:hover:bg-danger-800 focus-visible:ring-danger-400 dark:focus-visible:ring-danger-600',
         ];
 
-        return $map[$theme] ?? $map['slate'];
+        return $map[$color] ?? $map['base'];
     }
 
     /**
      * Tab of the open drawer: filled with the theme colour.
      */
-    public static function tabActive(?string $theme): string
+    public static function tabActive(?string $color): string
     {
         $map = [
             'slate'   => 'bg-slate-600 text-white border-slate-600 dark:bg-slate-500 dark:text-white dark:border-slate-500 focus-visible:ring-slate-400 dark:focus-visible:ring-slate-600',
@@ -86,12 +90,16 @@ class DrawerTheme
             'mauve'   => 'bg-mauve-600 text-white border-mauve-600 dark:bg-mauve-500 dark:text-white dark:border-mauve-500 focus-visible:ring-mauve-400 dark:focus-visible:ring-mauve-600',
             'mist'    => 'bg-mist-600 text-white border-mist-600 dark:bg-mist-500 dark:text-white dark:border-mist-500 focus-visible:ring-mist-400 dark:focus-visible:ring-mist-600',
             'olive'   => 'bg-olive-600 text-white border-olive-600 dark:bg-olive-500 dark:text-white dark:border-olive-500 focus-visible:ring-olive-400 dark:focus-visible:ring-olive-600',
-            'palette'    => 'bg-palette-600 text-white border-palette-600 dark:bg-palette-500 dark:text-white dark:border-palette-500 focus-visible:ring-palette-400 dark:focus-visible:ring-palette-600',
-            'cyberpunk' => 'bg-cyberpunk-600 text-white border-cyberpunk-600 dark:bg-cyberpunk-500 dark:text-white dark:border-cyberpunk-500 focus-visible:ring-cyberpunk-400 dark:focus-visible:ring-cyberpunk-600',
-            'fantasy' => 'bg-fantasy-600 text-white border-fantasy-600 dark:bg-fantasy-500 dark:text-white dark:border-fantasy-500 focus-visible:ring-fantasy-400 dark:focus-visible:ring-fantasy-600',
-            'wh40k'   => 'bg-wh40k-600 text-white border-wh40k-600 dark:bg-wh40k-500 dark:text-white dark:border-wh40k-500 focus-visible:ring-wh40k-400 dark:focus-visible:ring-wh40k-600',
+            'primary'    => 'bg-primary-600 text-white border-primary-600 dark:bg-primary-500 dark:text-white dark:border-primary-500 focus-visible:ring-primary-400 dark:focus-visible:ring-primary-600',
+            'secondary'  => 'bg-secondary-600 text-white border-secondary-600 dark:bg-secondary-500 dark:text-white dark:border-secondary-500 focus-visible:ring-secondary-400 dark:focus-visible:ring-secondary-600',
+            'accent'     => 'bg-accent-600 text-white border-accent-600 dark:bg-accent-500 dark:text-white dark:border-accent-500 focus-visible:ring-accent-400 dark:focus-visible:ring-accent-600',
+            'base'       => 'bg-base-600 text-white border-base-600 dark:bg-base-500 dark:text-white dark:border-base-500 focus-visible:ring-base-400 dark:focus-visible:ring-base-600',
+            'info'       => 'bg-info-600 text-white border-info-600 dark:bg-info-500 dark:text-white dark:border-info-500 focus-visible:ring-info-400 dark:focus-visible:ring-info-600',
+            'success'    => 'bg-success-600 text-white border-success-600 dark:bg-success-500 dark:text-white dark:border-success-500 focus-visible:ring-success-400 dark:focus-visible:ring-success-600',
+            'warning'    => 'bg-warning-600 text-white border-warning-600 dark:bg-warning-500 dark:text-white dark:border-warning-500 focus-visible:ring-warning-400 dark:focus-visible:ring-warning-600',
+            'danger'     => 'bg-danger-600 text-white border-danger-600 dark:bg-danger-500 dark:text-white dark:border-danger-500 focus-visible:ring-danger-400 dark:focus-visible:ring-danger-600',
         ];
 
-        return $map[$theme] ?? $map['slate'];
+        return $map[$color] ?? $map['base'];
     }
 }

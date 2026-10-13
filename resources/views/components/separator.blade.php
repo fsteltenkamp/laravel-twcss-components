@@ -3,7 +3,7 @@
     'variant' => 'default',
 ])
 @php
-    $color = $variant === 'subtle'
+    $borderClasses = $variant === 'subtle'
         ? 'border-zinc-100 dark:border-zinc-800'
         : 'border-zinc-200 dark:border-zinc-700';
 
@@ -12,5 +12,5 @@
 <div
     role="separator"
     aria-orientation="{{ $vertical ? 'vertical' : 'horizontal' }}"
-    {{ $attributes->class(['fltc-separator', $orientation, $color]) }}
+    {{ $attributes->class(['fltc-separator', $orientation, $borderClasses]) }}
 ></div>

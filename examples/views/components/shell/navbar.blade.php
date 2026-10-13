@@ -22,9 +22,9 @@
     $activeLink = 'bg-'.$theme.'-100 font-semibold dark:bg-'.$theme.'-800';
 @endphp
 
-<x-ex::layout :title="$title" :theme="$theme">
+<x-ex::layout :title="$title" :color="$theme">
     <div class="flex min-h-screen flex-col">
-        <x-fltc::nav.navbar :theme="$theme" stickyTop>
+        <x-fltc::nav.navbar :color="$theme" stickyTop>
             <x-slot:left>
                 {{-- Mobile only: opens the nav drawer below. --}}
                 <x-fltc::nav.navbar.toggle target="primary-nav" />
@@ -79,7 +79,7 @@
 
         {{-- Mobile navigation drawer: hidden from lg up, where the inline navbar
              links take over. --}}
-        <x-fltc::nav.sidebar :theme="$theme" name="primary-nav" class="lg:hidden">
+        <x-fltc::nav.sidebar :color="$theme" name="primary-nav" class="lg:hidden">
             <x-slot:brand>
                 <a href="app-navbar-profile.html" class="flex items-center gap-2 font-semibold tracking-tight">
                     <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-{{ $theme }}-500 text-white">

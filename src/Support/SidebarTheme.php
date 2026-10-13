@@ -10,14 +10,14 @@ namespace Fsteltenkamp\TwcssComponents\Support;
  * themes so Tailwind's JIT scanner emits the utilities for all of them — the
  * sidebar uses fill/border shades (e.g. `bg-{c}-100`, `dark:bg-{c}-800`) that
  * no other component emits, so they cannot be interpolated safely. Unknown
- * themes fall back to `slate`, matching the rest of the package.
+ * colours fall back to `base`, matching the rest of the package.
  */
 class SidebarTheme
 {
     /**
      * Root surface: background, border and primary content colour.
      */
-    public static function surface(?string $theme): string
+    public static function surface(?string $color): string
     {
         $map = [
             'slate'   => 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100',
@@ -46,19 +46,23 @@ class SidebarTheme
             'mauve'   => 'bg-white dark:bg-mauve-900 border-mauve-200 dark:border-mauve-700 text-mauve-900 dark:text-mauve-100',
             'mist'    => 'bg-white dark:bg-mist-900 border-mist-200 dark:border-mist-700 text-mist-900 dark:text-mist-100',
             'olive'   => 'bg-white dark:bg-olive-900 border-olive-200 dark:border-olive-700 text-olive-900 dark:text-olive-100',
-            'palette'    => 'bg-white dark:bg-palette-900 border-palette-200 dark:border-palette-700 text-palette-900 dark:text-palette-100',
-            'cyberpunk' => 'bg-white dark:bg-cyberpunk-900 border-cyberpunk-200 dark:border-cyberpunk-700 text-cyberpunk-900 dark:text-cyberpunk-100',
-            'fantasy' => 'bg-white dark:bg-fantasy-900 border-fantasy-200 dark:border-fantasy-700 text-fantasy-900 dark:text-fantasy-100',
-            'wh40k'   => 'bg-white dark:bg-wh40k-900 border-wh40k-200 dark:border-wh40k-700 text-wh40k-900 dark:text-wh40k-100',
+            'primary'    => 'bg-white dark:bg-primary-900 border-primary-200 dark:border-primary-700 text-primary-900 dark:text-primary-100',
+            'secondary'  => 'bg-white dark:bg-secondary-900 border-secondary-200 dark:border-secondary-700 text-secondary-900 dark:text-secondary-100',
+            'accent'     => 'bg-white dark:bg-accent-900 border-accent-200 dark:border-accent-700 text-accent-900 dark:text-accent-100',
+            'base'       => 'bg-white dark:bg-base-900 border-base-200 dark:border-base-700 text-base-900 dark:text-base-100',
+            'info'       => 'bg-white dark:bg-info-900 border-info-200 dark:border-info-700 text-info-900 dark:text-info-100',
+            'success'    => 'bg-white dark:bg-success-900 border-success-200 dark:border-success-700 text-success-900 dark:text-success-100',
+            'warning'    => 'bg-white dark:bg-warning-900 border-warning-200 dark:border-warning-700 text-warning-900 dark:text-warning-100',
+            'danger'     => 'bg-white dark:bg-danger-900 border-danger-200 dark:border-danger-700 text-danger-900 dark:text-danger-100',
         ];
 
-        return $map[$theme] ?? $map['slate'];
+        return $map[$color] ?? $map['base'];
     }
 
     /**
      * Resting state for links and group triggers (hover + focus ring).
      */
-    public static function inactive(?string $theme): string
+    public static function inactive(?string $color): string
     {
         $map = [
             'slate'   => 'text-slate-700 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-slate-100 focus-visible:ring-slate-400 dark:focus-visible:ring-slate-600',
@@ -87,19 +91,23 @@ class SidebarTheme
             'mauve'   => 'text-mauve-700 hover:bg-mauve-100 hover:text-mauve-900 dark:text-mauve-300 dark:hover:bg-mauve-800 dark:hover:text-mauve-100 focus-visible:ring-mauve-400 dark:focus-visible:ring-mauve-600',
             'mist'    => 'text-mist-700 hover:bg-mist-100 hover:text-mist-900 dark:text-mist-300 dark:hover:bg-mist-800 dark:hover:text-mist-100 focus-visible:ring-mist-400 dark:focus-visible:ring-mist-600',
             'olive'   => 'text-olive-700 hover:bg-olive-100 hover:text-olive-900 dark:text-olive-300 dark:hover:bg-olive-800 dark:hover:text-olive-100 focus-visible:ring-olive-400 dark:focus-visible:ring-olive-600',
-            'palette'    => 'text-palette-700 hover:bg-palette-100 hover:text-palette-900 dark:text-palette-300 dark:hover:bg-palette-800 dark:hover:text-palette-100 focus-visible:ring-palette-400 dark:focus-visible:ring-palette-600',
-            'cyberpunk' => 'text-cyberpunk-700 hover:bg-cyberpunk-100 hover:text-cyberpunk-900 dark:text-cyberpunk-300 dark:hover:bg-cyberpunk-800 dark:hover:text-cyberpunk-100 focus-visible:ring-cyberpunk-400 dark:focus-visible:ring-cyberpunk-600',
-            'fantasy' => 'text-fantasy-700 hover:bg-fantasy-100 hover:text-fantasy-900 dark:text-fantasy-300 dark:hover:bg-fantasy-800 dark:hover:text-fantasy-100 focus-visible:ring-fantasy-400 dark:focus-visible:ring-fantasy-600',
-            'wh40k'   => 'text-wh40k-700 hover:bg-wh40k-100 hover:text-wh40k-900 dark:text-wh40k-300 dark:hover:bg-wh40k-800 dark:hover:text-wh40k-100 focus-visible:ring-wh40k-400 dark:focus-visible:ring-wh40k-600',
+            'primary'    => 'text-primary-700 hover:bg-primary-100 hover:text-primary-900 dark:text-primary-300 dark:hover:bg-primary-800 dark:hover:text-primary-100 focus-visible:ring-primary-400 dark:focus-visible:ring-primary-600',
+            'secondary'  => 'text-secondary-700 hover:bg-secondary-100 hover:text-secondary-900 dark:text-secondary-300 dark:hover:bg-secondary-800 dark:hover:text-secondary-100 focus-visible:ring-secondary-400 dark:focus-visible:ring-secondary-600',
+            'accent'     => 'text-accent-700 hover:bg-accent-100 hover:text-accent-900 dark:text-accent-300 dark:hover:bg-accent-800 dark:hover:text-accent-100 focus-visible:ring-accent-400 dark:focus-visible:ring-accent-600',
+            'base'       => 'text-base-700 hover:bg-base-100 hover:text-base-900 dark:text-base-300 dark:hover:bg-base-800 dark:hover:text-base-100 focus-visible:ring-base-400 dark:focus-visible:ring-base-600',
+            'info'       => 'text-info-700 hover:bg-info-100 hover:text-info-900 dark:text-info-300 dark:hover:bg-info-800 dark:hover:text-info-100 focus-visible:ring-info-400 dark:focus-visible:ring-info-600',
+            'success'    => 'text-success-700 hover:bg-success-100 hover:text-success-900 dark:text-success-300 dark:hover:bg-success-800 dark:hover:text-success-100 focus-visible:ring-success-400 dark:focus-visible:ring-success-600',
+            'warning'    => 'text-warning-700 hover:bg-warning-100 hover:text-warning-900 dark:text-warning-300 dark:hover:bg-warning-800 dark:hover:text-warning-100 focus-visible:ring-warning-400 dark:focus-visible:ring-warning-600',
+            'danger'     => 'text-danger-700 hover:bg-danger-100 hover:text-danger-900 dark:text-danger-300 dark:hover:bg-danger-800 dark:hover:text-danger-100 focus-visible:ring-danger-400 dark:focus-visible:ring-danger-600',
         ];
 
-        return $map[$theme] ?? $map['slate'];
+        return $map[$color] ?? $map['base'];
     }
 
     /**
      * Active/current item: filled background and primary content colour.
      */
-    public static function active(?string $theme): string
+    public static function active(?string $color): string
     {
         $map = [
             'slate'   => 'bg-slate-100 text-slate-900 dark:bg-slate-800 dark:text-slate-100 focus-visible:ring-slate-400 dark:focus-visible:ring-slate-600',
@@ -128,19 +136,23 @@ class SidebarTheme
             'mauve'   => 'bg-mauve-100 text-mauve-900 dark:bg-mauve-800 dark:text-mauve-100 focus-visible:ring-mauve-400 dark:focus-visible:ring-mauve-600',
             'mist'    => 'bg-mist-100 text-mist-900 dark:bg-mist-800 dark:text-mist-100 focus-visible:ring-mist-400 dark:focus-visible:ring-mist-600',
             'olive'   => 'bg-olive-100 text-olive-900 dark:bg-olive-800 dark:text-olive-100 focus-visible:ring-olive-400 dark:focus-visible:ring-olive-600',
-            'palette'    => 'bg-palette-100 text-palette-900 dark:bg-palette-800 dark:text-palette-100 focus-visible:ring-palette-400 dark:focus-visible:ring-palette-600',
-            'cyberpunk' => 'bg-cyberpunk-100 text-cyberpunk-900 dark:bg-cyberpunk-800 dark:text-cyberpunk-100 focus-visible:ring-cyberpunk-400 dark:focus-visible:ring-cyberpunk-600',
-            'fantasy' => 'bg-fantasy-100 text-fantasy-900 dark:bg-fantasy-800 dark:text-fantasy-100 focus-visible:ring-fantasy-400 dark:focus-visible:ring-fantasy-600',
-            'wh40k'   => 'bg-wh40k-100 text-wh40k-900 dark:bg-wh40k-800 dark:text-wh40k-100 focus-visible:ring-wh40k-400 dark:focus-visible:ring-wh40k-600',
+            'primary'    => 'bg-primary-100 text-primary-900 dark:bg-primary-800 dark:text-primary-100 focus-visible:ring-primary-400 dark:focus-visible:ring-primary-600',
+            'secondary'  => 'bg-secondary-100 text-secondary-900 dark:bg-secondary-800 dark:text-secondary-100 focus-visible:ring-secondary-400 dark:focus-visible:ring-secondary-600',
+            'accent'     => 'bg-accent-100 text-accent-900 dark:bg-accent-800 dark:text-accent-100 focus-visible:ring-accent-400 dark:focus-visible:ring-accent-600',
+            'base'       => 'bg-base-100 text-base-900 dark:bg-base-800 dark:text-base-100 focus-visible:ring-base-400 dark:focus-visible:ring-base-600',
+            'info'       => 'bg-info-100 text-info-900 dark:bg-info-800 dark:text-info-100 focus-visible:ring-info-400 dark:focus-visible:ring-info-600',
+            'success'    => 'bg-success-100 text-success-900 dark:bg-success-800 dark:text-success-100 focus-visible:ring-success-400 dark:focus-visible:ring-success-600',
+            'warning'    => 'bg-warning-100 text-warning-900 dark:bg-warning-800 dark:text-warning-100 focus-visible:ring-warning-400 dark:focus-visible:ring-warning-600',
+            'danger'     => 'bg-danger-100 text-danger-900 dark:bg-danger-800 dark:text-danger-100 focus-visible:ring-danger-400 dark:focus-visible:ring-danger-600',
         ];
 
-        return $map[$theme] ?? $map['slate'];
+        return $map[$color] ?? $map['base'];
     }
 
     /**
      * Floating surface used by the profile menu popover.
      */
-    public static function menu(?string $theme): string
+    public static function menu(?string $color): string
     {
         $map = [
             'slate'   => 'border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-900 shadow-lg shadow-slate-900/5 ring-1 ring-black/5 dark:ring-white/10',
@@ -169,19 +181,23 @@ class SidebarTheme
             'mauve'   => 'border-mauve-200 bg-white dark:border-mauve-700 dark:bg-mauve-900 shadow-lg shadow-mauve-900/5 ring-1 ring-black/5 dark:ring-white/10',
             'mist'    => 'border-mist-200 bg-white dark:border-mist-700 dark:bg-mist-900 shadow-lg shadow-mist-900/5 ring-1 ring-black/5 dark:ring-white/10',
             'olive'   => 'border-olive-200 bg-white dark:border-olive-700 dark:bg-olive-900 shadow-lg shadow-olive-900/5 ring-1 ring-black/5 dark:ring-white/10',
-            'palette'    => 'border-palette-200 bg-white dark:border-palette-700 dark:bg-palette-900 shadow-lg shadow-palette-900/5 ring-1 ring-black/5 dark:ring-white/10',
-            'cyberpunk' => 'border-cyberpunk-200 bg-white dark:border-cyberpunk-700 dark:bg-cyberpunk-900 shadow-lg shadow-cyberpunk-900/5 ring-1 ring-black/5 dark:ring-white/10',
-            'fantasy' => 'border-fantasy-200 bg-white dark:border-fantasy-700 dark:bg-fantasy-900 shadow-lg shadow-fantasy-900/5 ring-1 ring-black/5 dark:ring-white/10',
-            'wh40k'   => 'border-wh40k-200 bg-white dark:border-wh40k-700 dark:bg-wh40k-900 shadow-lg shadow-wh40k-900/5 ring-1 ring-black/5 dark:ring-white/10',
+            'primary'    => 'border-primary-200 bg-white dark:border-primary-700 dark:bg-primary-900 shadow-lg shadow-primary-900/5 ring-1 ring-black/5 dark:ring-white/10',
+            'secondary'  => 'border-secondary-200 bg-white dark:border-secondary-700 dark:bg-secondary-900 shadow-lg shadow-secondary-900/5 ring-1 ring-black/5 dark:ring-white/10',
+            'accent'     => 'border-accent-200 bg-white dark:border-accent-700 dark:bg-accent-900 shadow-lg shadow-accent-900/5 ring-1 ring-black/5 dark:ring-white/10',
+            'base'       => 'border-base-200 bg-white dark:border-base-700 dark:bg-base-900 shadow-lg shadow-base-900/5 ring-1 ring-black/5 dark:ring-white/10',
+            'info'       => 'border-info-200 bg-white dark:border-info-700 dark:bg-info-900 shadow-lg shadow-info-900/5 ring-1 ring-black/5 dark:ring-white/10',
+            'success'    => 'border-success-200 bg-white dark:border-success-700 dark:bg-success-900 shadow-lg shadow-success-900/5 ring-1 ring-black/5 dark:ring-white/10',
+            'warning'    => 'border-warning-200 bg-white dark:border-warning-700 dark:bg-warning-900 shadow-lg shadow-warning-900/5 ring-1 ring-black/5 dark:ring-white/10',
+            'danger'     => 'border-danger-200 bg-white dark:border-danger-700 dark:bg-danger-900 shadow-lg shadow-danger-900/5 ring-1 ring-black/5 dark:ring-white/10',
         ];
 
-        return $map[$theme] ?? $map['slate'];
+        return $map[$color] ?? $map['base'];
     }
 
     /**
      * Border colour used for footers and the group's sub-item guide line.
      */
-    public static function divider(?string $theme): string
+    public static function divider(?string $color): string
     {
         $map = [
             'slate'   => 'border-slate-200 dark:border-slate-700',
@@ -210,12 +226,16 @@ class SidebarTheme
             'mauve'   => 'border-mauve-200 dark:border-mauve-700',
             'mist'    => 'border-mist-200 dark:border-mist-700',
             'olive'   => 'border-olive-200 dark:border-olive-700',
-            'palette'    => 'border-palette-200 dark:border-palette-700',
-            'cyberpunk' => 'border-cyberpunk-200 dark:border-cyberpunk-700',
-            'fantasy' => 'border-fantasy-200 dark:border-fantasy-700',
-            'wh40k'   => 'border-wh40k-200 dark:border-wh40k-700',
+            'primary'    => 'border-primary-200 dark:border-primary-700',
+            'secondary'  => 'border-secondary-200 dark:border-secondary-700',
+            'accent'     => 'border-accent-200 dark:border-accent-700',
+            'base'       => 'border-base-200 dark:border-base-700',
+            'info'       => 'border-info-200 dark:border-info-700',
+            'success'    => 'border-success-200 dark:border-success-700',
+            'warning'    => 'border-warning-200 dark:border-warning-700',
+            'danger'     => 'border-danger-200 dark:border-danger-700',
         ];
 
-        return $map[$theme] ?? $map['slate'];
+        return $map[$color] ?? $map['base'];
     }
 }

@@ -12,12 +12,12 @@ class Text extends Component
     public string $classList;
 
     /**
-     * @param  string  $theme  Palette for the Primary Content text colour. Ignored when an
+     * @param  string  $color  Palette for the Primary Content text colour. Ignored when an
      *                         explicit `color` attribute sets the colour instead.
      */
-    public function __construct(public string $theme = 'slate')
+    public function __construct(public string $color = 'base')
     {
-        $this->classList = Shades::primary($theme);
+        $this->classList = Shades::primary($color);
     }
 
     /**

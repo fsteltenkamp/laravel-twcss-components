@@ -27,12 +27,12 @@ class Radio extends Component
         public ?bool $checked = null,
         public bool $disabled = false,
         public ?bool $required = null,
-        public ?string $theme = null,
+        public ?string $color = null,
         public string $class = '',
     ) {
         $group = ViewFacade::shared('fltcRadioGroup');
 
-        $this->theme = $theme ?? ($group['theme'] ?? 'slate');
+        $this->color = $color ?? ($group['color'] ?? 'base');
         $this->name  = $name ?? ($group['name'] ?? '');
         $this->model = $model ?? ($group['model'] ?? '');
         $this->live  = $live ?? ($group['live'] ?? false);
@@ -73,18 +73,22 @@ class Radio extends Component
             'mauve'     => 'border-mauve-300 accent-mauve-600 focus-visible:ring-mauve-500 dark:border-mauve-600 dark:accent-mauve-400 dark:focus-visible:ring-mauve-400',
             'mist'      => 'border-mist-300 accent-mist-600 focus-visible:ring-mist-500 dark:border-mist-600 dark:accent-mist-400 dark:focus-visible:ring-mist-400',
             'olive'     => 'border-olive-300 accent-olive-600 focus-visible:ring-olive-500 dark:border-olive-600 dark:accent-olive-400 dark:focus-visible:ring-olive-400',
-            'palette'      => 'border-palette-300 accent-palette-600 focus-visible:ring-palette-500 dark:border-palette-600 dark:accent-palette-400 dark:focus-visible:ring-palette-400',
-            'cyberpunk' => 'border-cyberpunk-300 accent-cyberpunk-600 focus-visible:ring-cyberpunk-500 dark:border-cyberpunk-600 dark:accent-cyberpunk-400 dark:focus-visible:ring-cyberpunk-400',
-            'fantasy'   => 'border-fantasy-300 accent-fantasy-600 focus-visible:ring-fantasy-500 dark:border-fantasy-600 dark:accent-fantasy-400 dark:focus-visible:ring-fantasy-400',
-            'wh40k'     => 'border-wh40k-300 accent-wh40k-600 focus-visible:ring-wh40k-500 dark:border-wh40k-600 dark:accent-wh40k-400 dark:focus-visible:ring-wh40k-400',
+            'primary'      => 'border-primary-300 accent-primary-600 focus-visible:ring-primary-500 dark:border-primary-600 dark:accent-primary-400 dark:focus-visible:ring-primary-400',
+            'secondary'    => 'border-secondary-300 accent-secondary-600 focus-visible:ring-secondary-500 dark:border-secondary-600 dark:accent-secondary-400 dark:focus-visible:ring-secondary-400',
+            'accent'       => 'border-accent-300 accent-accent-600 focus-visible:ring-accent-500 dark:border-accent-600 dark:accent-accent-400 dark:focus-visible:ring-accent-400',
+            'base'         => 'border-base-300 accent-base-600 focus-visible:ring-base-500 dark:border-base-600 dark:accent-base-400 dark:focus-visible:ring-base-400',
+            'info'         => 'border-info-300 accent-info-600 focus-visible:ring-info-500 dark:border-info-600 dark:accent-info-400 dark:focus-visible:ring-info-400',
+            'success'      => 'border-success-300 accent-success-600 focus-visible:ring-success-500 dark:border-success-600 dark:accent-success-400 dark:focus-visible:ring-success-400',
+            'warning'      => 'border-warning-300 accent-warning-600 focus-visible:ring-warning-500 dark:border-warning-600 dark:accent-warning-400 dark:focus-visible:ring-warning-400',
+            'danger'       => 'border-danger-300 accent-danger-600 focus-visible:ring-danger-500 dark:border-danger-600 dark:accent-danger-400 dark:focus-visible:ring-danger-400',
         ];
 
         $this->classList = trim(implode(' ', [
             'h-4 w-4 shrink-0 cursor-pointer rounded-full transition focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed dark:focus-visible:ring-offset-slate-950',
-            $controlMap[$this->theme] ?? $controlMap['slate'],
+            $controlMap[$this->color] ?? $controlMap['base'],
         ]));
 
-        $this->labelClasses = 'text-sm select-none '.Shades::secondary($this->theme);
+        $this->labelClasses = 'text-sm select-none '.Shades::secondary($this->color);
 
         if ($id === '') {
             $this->id = 'radio-'.uniqid();

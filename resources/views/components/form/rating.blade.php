@@ -1,5 +1,5 @@
 @php($star = \Fsteltenkamp\TwcssComponents\View\Components\Rating::STAR_PATH)
-<x-fltc::form.field :label="$label" :note="$note" :for="$id" :name="$name" :required="$required" :theme="$theme" :inline="$inline" :class="$wrapperClass">
+<x-fltc::form.field :label="$label" :note="$note" :for="$id" :name="$name" :required="$required" :color="$color" :inline="$inline" :class="$wrapperClass">
     <div
         x-data="{
             value: @js($current),

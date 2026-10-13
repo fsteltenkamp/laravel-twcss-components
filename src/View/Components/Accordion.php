@@ -15,7 +15,7 @@ class Accordion extends Component
      * Create a new component instance.
      */
     public function __construct(
-        public string $theme = 'slate',
+        public string $color = 'base',
         public bool $draggable = false,
         public bool $openFirst = true,
         public string $class = '',
@@ -47,16 +47,20 @@ class Accordion extends Component
             'mauve'   => 'border-mauve-200 bg-white divide-mauve-200 dark:border-mauve-700 dark:bg-mauve-950/30 dark:divide-mauve-800',
             'mist'    => 'border-mist-200 bg-white divide-mist-200 dark:border-mist-700 dark:bg-mist-950/30 dark:divide-mist-800',
             'olive'   => 'border-olive-200 bg-white divide-olive-200 dark:border-olive-700 dark:bg-olive-950/30 dark:divide-olive-800',
-            'palette'    => 'border-palette-200 bg-white divide-palette-200 dark:border-palette-700 dark:bg-palette-950/30 dark:divide-palette-800',
-            'cyberpunk' => 'border-cyberpunk-200 bg-white divide-cyberpunk-200 dark:border-cyberpunk-700 dark:bg-cyberpunk-950/30 dark:divide-cyberpunk-800',
-            'fantasy' => 'border-fantasy-200 bg-white divide-fantasy-200 dark:border-fantasy-700 dark:bg-fantasy-950/30 dark:divide-fantasy-800',
-            'wh40k'   => 'border-wh40k-200 bg-white divide-wh40k-200 dark:border-wh40k-700 dark:bg-wh40k-950/30 dark:divide-wh40k-800',
+            'primary'    => 'border-primary-200 bg-white divide-primary-200 dark:border-primary-700 dark:bg-primary-950/30 dark:divide-primary-800',
+            'secondary'  => 'border-secondary-200 bg-white divide-secondary-200 dark:border-secondary-700 dark:bg-secondary-950/30 dark:divide-secondary-800',
+            'accent'     => 'border-accent-200 bg-white divide-accent-200 dark:border-accent-700 dark:bg-accent-950/30 dark:divide-accent-800',
+            'base'       => 'border-base-200 bg-white divide-base-200 dark:border-base-700 dark:bg-base-950/30 dark:divide-base-800',
+            'info'       => 'border-info-200 bg-white divide-info-200 dark:border-info-700 dark:bg-info-950/30 dark:divide-info-800',
+            'success'    => 'border-success-200 bg-white divide-success-200 dark:border-success-700 dark:bg-success-950/30 dark:divide-success-800',
+            'warning'    => 'border-warning-200 bg-white divide-warning-200 dark:border-warning-700 dark:bg-warning-950/30 dark:divide-warning-800',
+            'danger'     => 'border-danger-200 bg-white divide-danger-200 dark:border-danger-700 dark:bg-danger-950/30 dark:divide-danger-800',
         ];
 
         // Resolve to a known theme so the interpolated Primary Content classes below
         // always reference a real palette (the literals are emitted by Body.php, so
         // Tailwind generates them for every theme).
-        $resolved = isset($containerThemeMap[$this->theme]) ? $this->theme : 'slate';
+        $resolved = isset($containerThemeMap[$this->color]) ? $this->color : 'base';
 
         $this->classList = trim(implode(' ', array_filter([
             'overflow-hidden rounded-xl border divide-y',
@@ -73,7 +77,7 @@ class Accordion extends Component
      */
     public function render(): View|Closure|string
     {
-        ViewFacade::share('tailwindAccordionTheme', $this->theme);
+        ViewFacade::share('tailwindAccordionColor', $this->color);
         ViewFacade::share('tailwindAccordionDraggable', $this->draggable);
         ViewFacade::share('tailwindAccordionOpenFirst', $this->openFirst);
 

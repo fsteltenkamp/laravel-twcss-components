@@ -22,16 +22,16 @@ class Section extends Component
     public function __construct(
         public string $title = '',
         public string $hint = '',
-        public string $theme = 'slate',
+        public string $color = 'base',
         public bool $split = false,
     ) {
         $this->classList = trim(implode(' ', [
             'border-b pb-8 mb-8 last:mb-0 last:border-b-0 last:pb-0',
             $split ? 'grid gap-x-8 gap-y-4 md:grid-cols-3' : '',
-            SidebarTheme::divider($theme),
+            SidebarTheme::divider($color),
         ]));
-        $this->titleClasses = 'text-base font-semibold '.Shades::primary($theme);
-        $this->hintClasses = 'mt-1 text-sm '.Shades::tertiary($theme);
+        $this->titleClasses = 'text-base font-semibold '.Shades::primary($color);
+        $this->hintClasses = 'mt-1 text-sm '.Shades::tertiary($color);
     }
 
     public function render(): View|Closure|string

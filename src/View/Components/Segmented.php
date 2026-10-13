@@ -24,11 +24,11 @@ class Segmented extends Component
     public function __construct(
         public string $value = '',
         public string $name = '',
-        public string $theme = 'slate',
+        public string $color = 'base',
         public string $label = '',
         public bool $interactive = true,
     ) {
-        ['container' => $container, 'active' => $this->activeClasses, 'inactive' => $this->inactiveClasses] = static::classes($theme);
+        ['container' => $container, 'active' => $this->activeClasses, 'inactive' => $this->inactiveClasses] = static::classes($color);
 
         $this->classList = 'inline-flex items-center gap-1 rounded-lg p-1 '.$container;
     }
@@ -38,7 +38,7 @@ class Segmented extends Component
      *
      * @return array{container: string, active: string, inactive: string}
      */
-    public static function classes(string $theme): array
+    public static function classes(string $color): array
     {
         // Themed track background behind the segments. Literal strings so the host app's
         // Tailwind scanner picks them up (dynamic class names are not detected).
@@ -69,10 +69,14 @@ class Segmented extends Component
             'mauve'   => 'bg-mauve-100 dark:bg-mauve-950/50',
             'mist'    => 'bg-mist-100 dark:bg-mist-950/50',
             'olive'   => 'bg-olive-100 dark:bg-olive-950/50',
-            'palette'    => 'bg-palette-100 dark:bg-palette-950/50',
-            'cyberpunk' => 'bg-cyberpunk-100 dark:bg-cyberpunk-950/50',
-            'fantasy' => 'bg-fantasy-100 dark:bg-fantasy-950/50',
-            'wh40k'   => 'bg-wh40k-100 dark:bg-wh40k-950/50',
+            'primary'    => 'bg-primary-100 dark:bg-primary-950/50',
+            'secondary'  => 'bg-secondary-100 dark:bg-secondary-950/50',
+            'accent'     => 'bg-accent-100 dark:bg-accent-950/50',
+            'base'       => 'bg-base-100 dark:bg-base-950/50',
+            'info'       => 'bg-info-100 dark:bg-info-950/50',
+            'success'    => 'bg-success-100 dark:bg-success-950/50',
+            'warning'    => 'bg-warning-100 dark:bg-warning-950/50',
+            'danger'     => 'bg-danger-100 dark:bg-danger-950/50',
         ];
 
         // Inactive segment text — themed but muted, brightening on hover.
@@ -103,10 +107,14 @@ class Segmented extends Component
             'mauve'   => 'text-mauve-500 hover:text-mauve-800 dark:text-mauve-400 dark:hover:text-mauve-100',
             'mist'    => 'text-mist-500 hover:text-mist-800 dark:text-mist-400 dark:hover:text-mist-100',
             'olive'   => 'text-olive-500 hover:text-olive-800 dark:text-olive-400 dark:hover:text-olive-100',
-            'palette'    => 'text-palette-500 hover:text-palette-800 dark:text-palette-400 dark:hover:text-palette-100',
-            'cyberpunk' => 'text-cyberpunk-500 hover:text-cyberpunk-800 dark:text-cyberpunk-400 dark:hover:text-cyberpunk-100',
-            'fantasy' => 'text-fantasy-500 hover:text-fantasy-800 dark:text-fantasy-400 dark:hover:text-fantasy-100',
-            'wh40k'   => 'text-wh40k-500 hover:text-wh40k-800 dark:text-wh40k-400 dark:hover:text-wh40k-100',
+            'primary'    => 'text-primary-500 hover:text-primary-800 dark:text-primary-400 dark:hover:text-primary-100',
+            'secondary'  => 'text-secondary-500 hover:text-secondary-800 dark:text-secondary-400 dark:hover:text-secondary-100',
+            'accent'     => 'text-accent-500 hover:text-accent-800 dark:text-accent-400 dark:hover:text-accent-100',
+            'base'       => 'text-base-500 hover:text-base-800 dark:text-base-400 dark:hover:text-base-100',
+            'info'       => 'text-info-500 hover:text-info-800 dark:text-info-400 dark:hover:text-info-100',
+            'success'    => 'text-success-500 hover:text-success-800 dark:text-success-400 dark:hover:text-success-100',
+            'warning'    => 'text-warning-500 hover:text-warning-800 dark:text-warning-400 dark:hover:text-warning-100',
+            'danger'     => 'text-danger-500 hover:text-danger-800 dark:text-danger-400 dark:hover:text-danger-100',
         ];
 
         // Active segment colour for the segmented control. Literal strings so the host
@@ -138,23 +146,27 @@ class Segmented extends Component
             'mauve'   => 'bg-mauve-600 text-white shadow-sm dark:bg-mauve-500',
             'mist'    => 'bg-mist-600 text-white shadow-sm dark:bg-mist-500',
             'olive'   => 'bg-olive-600 text-white shadow-sm dark:bg-olive-500',
-            'palette'    => 'bg-palette-600 text-white shadow-sm dark:bg-palette-500',
-            'cyberpunk' => 'bg-cyberpunk-600 text-white shadow-sm dark:bg-cyberpunk-500',
-            'fantasy' => 'bg-fantasy-600 text-white shadow-sm dark:bg-fantasy-500',
-            'wh40k'   => 'bg-wh40k-600 text-white shadow-sm dark:bg-wh40k-500',
+            'primary'    => 'bg-primary-600 text-white shadow-sm dark:bg-primary-500',
+            'secondary'  => 'bg-secondary-600 text-white shadow-sm dark:bg-secondary-500',
+            'accent'     => 'bg-accent-600 text-white shadow-sm dark:bg-accent-500',
+            'base'       => 'bg-base-600 text-white shadow-sm dark:bg-base-500',
+            'info'       => 'bg-info-600 text-white shadow-sm dark:bg-info-500',
+            'success'    => 'bg-success-600 text-white shadow-sm dark:bg-success-500',
+            'warning'    => 'bg-warning-600 text-white shadow-sm dark:bg-warning-500',
+            'danger'     => 'bg-danger-600 text-white shadow-sm dark:bg-danger-500',
         ];
 
         return [
-            'container' => $containerMap[$theme] ?? $containerMap['slate'],
-            'active'    => $activeMap[$theme] ?? $activeMap['slate'],
-            'inactive'  => $inactiveMap[$theme] ?? $inactiveMap['slate'],
+            'container' => $containerMap[$color] ?? $containerMap['base'],
+            'active'    => $activeMap[$color] ?? $activeMap['base'],
+            'inactive'  => $inactiveMap[$color] ?? $inactiveMap['base'],
         ];
     }
 
     public function render(): View|Closure|string
     {
         ViewFacade::share('fltcSegmented', [
-            'theme' => $this->theme,
+            'color' => $this->color,
             'value' => $this->value,
             'interactive' => $this->interactive,
             'active' => $this->activeClasses,

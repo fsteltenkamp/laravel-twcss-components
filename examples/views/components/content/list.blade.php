@@ -24,30 +24,30 @@
     ]"
 >
     <x-slot:actions>
-        <x-fltc::button theme="slate" variant="outline">
+        <x-fltc::button color="slate" variant="outline">
             <i class="ph ph-export mr-2" aria-hidden="true"></i> Export
         </x-fltc::button>
-        <x-fltc::button :theme="$theme">
+        <x-fltc::button :color="$theme">
             <i class="ph ph-plus mr-2" aria-hidden="true"></i> New customer
         </x-fltc::button>
     </x-slot:actions>
 </x-ex::page-header>
 
 <div class="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
-    <x-fltc::counter :theme="$theme" title="Total customers" count="128" description="+6 this month" icon="ph ph-users" />
-    <x-fltc::counter theme="green" title="Active" count="98" description="76% of total" icon="ph ph-pulse" />
-    <x-fltc::counter theme="amber" title="Trialing" count="14" description="ending soon" icon="ph ph-hourglass" />
+    <x-fltc::counter :color="$theme" title="Total customers" count="128" description="+6 this month" icon="ph ph-users" />
+    <x-fltc::counter color="green" title="Active" count="98" description="76% of total" icon="ph ph-pulse" />
+    <x-fltc::counter color="amber" title="Trialing" count="14" description="ending soon" icon="ph ph-hourglass" />
 </div>
 
-<x-fltc::card :theme="$theme">
-    <x-fltc::card.header :theme="$theme" class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+<x-fltc::card :color="$theme">
+    <x-fltc::card.header :color="$theme" class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <h2 class="text-base font-semibold">All customers</h2>
         <div class="w-full sm:max-w-xs">
-            <x-fltc::form.input.text id="search" placeholder="Search customers…" icon="magnifying-glass" :theme="$theme" class="!mb-0" />
+            <x-fltc::form.input.text id="search" placeholder="Search customers…" icon="magnifying-glass" :color="$theme" class="!mb-0" />
         </div>
     </x-fltc::card.header>
 
-    <x-fltc::table :theme="$theme" striped hover bordered="false">
+    <x-fltc::table :color="$theme" striped hover bordered="false">
         <x-fltc::table.head>
             <x-fltc::table.row>
                 <x-fltc::table.cell header>Customer</x-fltc::table.cell>
@@ -73,15 +73,15 @@
                 </x-fltc::table.cell>
                 <x-fltc::table.cell>{{ $customer['plan'] }}</x-fltc::table.cell>
                 <x-fltc::table.cell>
-                    <x-fltc::badge :theme="$customer['badge']">{{ $customer['status'] }}</x-fltc::badge>
+                    <x-fltc::badge :color="$customer['badge']">{{ $customer['status'] }}</x-fltc::badge>
                 </x-fltc::table.cell>
                 <x-fltc::table.cell numeric class="font-medium">{{ $customer['spend'] }}</x-fltc::table.cell>
                 <x-fltc::table.cell numeric>
                     <div class="inline-flex items-center gap-1">
-                        <x-fltc::button.link href="#" theme="slate" variant="outline" tooltip="View" class="!px-2.5">
+                        <x-fltc::button.link href="#" color="slate" variant="outline" tooltip="View" class="!px-2.5">
                             <i class="ph ph-eye" aria-hidden="true"></i>
                         </x-fltc::button.link>
-                        <x-fltc::button.link href="#" :theme="$theme" tooltip="Edit" class="!px-2.5">
+                        <x-fltc::button.link href="#" :color="$theme" tooltip="Edit" class="!px-2.5">
                             <i class="ph ph-pencil-simple" aria-hidden="true"></i>
                         </x-fltc::button.link>
                     </div>
@@ -90,8 +90,8 @@
         @endforeach
     </x-fltc::table>
 
-    <x-fltc::card.footer :theme="$theme" class="flex flex-col items-center justify-between gap-3 sm:flex-row">
+    <x-fltc::card.footer :color="$theme" class="flex flex-col items-center justify-between gap-3 sm:flex-row">
         <span class="text-xs opacity-70">Showing 1–5 of 128</span>
-        <x-fltc::nav.pagination :currentPage="1" :totalPages="26" :start="1" :end="5" theme="slate" :accentTheme="$theme" />
+        <x-fltc::nav.pagination :currentPage="1" :totalPages="26" :start="1" :end="5" color="slate" :accentTheme="$theme" />
     </x-fltc::card.footer>
 </x-fltc::card>

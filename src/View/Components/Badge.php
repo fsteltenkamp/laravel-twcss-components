@@ -21,7 +21,7 @@ class Badge extends Component
     public string $tag;
 
     public function __construct(
-        public ?string $theme = null,
+        public ?string $color = null,
         public string $href = '',
         public string $icon = '',
         public string $iconVariant = 'regular',
@@ -33,8 +33,8 @@ class Badge extends Component
         public string $removeLabel = '',
         public int|string|null $count = null,
     ) {
-        $this->theme = $theme ?? ViewFacade::shared('fltcBadgeTheme') ?? 'slate';
-        $theme = $this->theme;
+        $this->color = $color ?? ViewFacade::shared('fltcBadgeColor') ?? 'base';
+        $color = $this->color;
 
         $linkMap = [
             'slate'     => 'hover:bg-slate-100 focus-visible:ring-slate-400 dark:hover:bg-slate-800 dark:focus-visible:ring-slate-600',
@@ -63,10 +63,14 @@ class Badge extends Component
             'mauve'     => 'hover:bg-mauve-100 focus-visible:ring-mauve-400 dark:hover:bg-mauve-800 dark:focus-visible:ring-mauve-600',
             'mist'      => 'hover:bg-mist-100 focus-visible:ring-mist-400 dark:hover:bg-mist-800 dark:focus-visible:ring-mist-600',
             'olive'     => 'hover:bg-olive-100 focus-visible:ring-olive-400 dark:hover:bg-olive-800 dark:focus-visible:ring-olive-600',
-            'palette'      => 'hover:bg-palette-100 focus-visible:ring-palette-400 dark:hover:bg-palette-800 dark:focus-visible:ring-palette-600',
-            'cyberpunk' => 'hover:bg-cyberpunk-100 focus-visible:ring-cyberpunk-400 dark:hover:bg-cyberpunk-800 dark:focus-visible:ring-cyberpunk-600',
-            'fantasy'   => 'hover:bg-fantasy-100 focus-visible:ring-fantasy-400 dark:hover:bg-fantasy-800 dark:focus-visible:ring-fantasy-600',
-            'wh40k'     => 'hover:bg-wh40k-100 focus-visible:ring-wh40k-400 dark:hover:bg-wh40k-800 dark:focus-visible:ring-wh40k-600',
+            'primary'      => 'hover:bg-primary-100 focus-visible:ring-primary-400 dark:hover:bg-primary-800 dark:focus-visible:ring-primary-600',
+            'secondary'    => 'hover:bg-secondary-100 focus-visible:ring-secondary-400 dark:hover:bg-secondary-800 dark:focus-visible:ring-secondary-600',
+            'accent'       => 'hover:bg-accent-100 focus-visible:ring-accent-400 dark:hover:bg-accent-800 dark:focus-visible:ring-accent-600',
+            'base'         => 'hover:bg-base-100 focus-visible:ring-base-400 dark:hover:bg-base-800 dark:focus-visible:ring-base-600',
+            'info'         => 'hover:bg-info-100 focus-visible:ring-info-400 dark:hover:bg-info-800 dark:focus-visible:ring-info-600',
+            'success'      => 'hover:bg-success-100 focus-visible:ring-success-400 dark:hover:bg-success-800 dark:focus-visible:ring-success-600',
+            'warning'      => 'hover:bg-warning-100 focus-visible:ring-warning-400 dark:hover:bg-warning-800 dark:focus-visible:ring-warning-600',
+            'danger'       => 'hover:bg-danger-100 focus-visible:ring-danger-400 dark:hover:bg-danger-800 dark:focus-visible:ring-danger-600',
         ];
 
         $onMap = [
@@ -96,10 +100,14 @@ class Badge extends Component
             'mauve'     => 'has-[:checked]:border-mauve-600 has-[:checked]:bg-mauve-600 has-[:checked]:text-white has-[:focus-visible]:ring-mauve-400 dark:has-[:checked]:border-mauve-400 dark:has-[:checked]:bg-mauve-400 dark:has-[:checked]:text-mauve-950 dark:has-[:focus-visible]:ring-mauve-600',
             'mist'      => 'has-[:checked]:border-mist-600 has-[:checked]:bg-mist-600 has-[:checked]:text-white has-[:focus-visible]:ring-mist-400 dark:has-[:checked]:border-mist-400 dark:has-[:checked]:bg-mist-400 dark:has-[:checked]:text-mist-950 dark:has-[:focus-visible]:ring-mist-600',
             'olive'     => 'has-[:checked]:border-olive-600 has-[:checked]:bg-olive-600 has-[:checked]:text-white has-[:focus-visible]:ring-olive-400 dark:has-[:checked]:border-olive-400 dark:has-[:checked]:bg-olive-400 dark:has-[:checked]:text-olive-950 dark:has-[:focus-visible]:ring-olive-600',
-            'palette'      => 'has-[:checked]:border-palette-600 has-[:checked]:bg-palette-600 has-[:checked]:text-white has-[:focus-visible]:ring-palette-400 dark:has-[:checked]:border-palette-400 dark:has-[:checked]:bg-palette-400 dark:has-[:checked]:text-palette-950 dark:has-[:focus-visible]:ring-palette-600',
-            'cyberpunk' => 'has-[:checked]:border-cyberpunk-600 has-[:checked]:bg-cyberpunk-600 has-[:checked]:text-white has-[:focus-visible]:ring-cyberpunk-400 dark:has-[:checked]:border-cyberpunk-400 dark:has-[:checked]:bg-cyberpunk-400 dark:has-[:checked]:text-cyberpunk-950 dark:has-[:focus-visible]:ring-cyberpunk-600',
-            'fantasy'   => 'has-[:checked]:border-fantasy-600 has-[:checked]:bg-fantasy-600 has-[:checked]:text-white has-[:focus-visible]:ring-fantasy-400 dark:has-[:checked]:border-fantasy-400 dark:has-[:checked]:bg-fantasy-400 dark:has-[:checked]:text-fantasy-950 dark:has-[:focus-visible]:ring-fantasy-600',
-            'wh40k'     => 'has-[:checked]:border-wh40k-600 has-[:checked]:bg-wh40k-600 has-[:checked]:text-white has-[:focus-visible]:ring-wh40k-400 dark:has-[:checked]:border-wh40k-400 dark:has-[:checked]:bg-wh40k-400 dark:has-[:checked]:text-wh40k-950 dark:has-[:focus-visible]:ring-wh40k-600',
+            'primary'      => 'has-[:checked]:border-primary-600 has-[:checked]:bg-primary-600 has-[:checked]:text-white has-[:focus-visible]:ring-primary-400 dark:has-[:checked]:border-primary-400 dark:has-[:checked]:bg-primary-400 dark:has-[:checked]:text-primary-950 dark:has-[:focus-visible]:ring-primary-600',
+            'secondary'    => 'has-[:checked]:border-secondary-600 has-[:checked]:bg-secondary-600 has-[:checked]:text-white has-[:focus-visible]:ring-secondary-400 dark:has-[:checked]:border-secondary-400 dark:has-[:checked]:bg-secondary-400 dark:has-[:checked]:text-secondary-950 dark:has-[:focus-visible]:ring-secondary-600',
+            'accent'       => 'has-[:checked]:border-accent-600 has-[:checked]:bg-accent-600 has-[:checked]:text-white has-[:focus-visible]:ring-accent-400 dark:has-[:checked]:border-accent-400 dark:has-[:checked]:bg-accent-400 dark:has-[:checked]:text-accent-950 dark:has-[:focus-visible]:ring-accent-600',
+            'base'         => 'has-[:checked]:border-base-600 has-[:checked]:bg-base-600 has-[:checked]:text-white has-[:focus-visible]:ring-base-400 dark:has-[:checked]:border-base-400 dark:has-[:checked]:bg-base-400 dark:has-[:checked]:text-base-950 dark:has-[:focus-visible]:ring-base-600',
+            'info'         => 'has-[:checked]:border-info-600 has-[:checked]:bg-info-600 has-[:checked]:text-white has-[:focus-visible]:ring-info-400 dark:has-[:checked]:border-info-400 dark:has-[:checked]:bg-info-400 dark:has-[:checked]:text-info-950 dark:has-[:focus-visible]:ring-info-600',
+            'success'      => 'has-[:checked]:border-success-600 has-[:checked]:bg-success-600 has-[:checked]:text-white has-[:focus-visible]:ring-success-400 dark:has-[:checked]:border-success-400 dark:has-[:checked]:bg-success-400 dark:has-[:checked]:text-success-950 dark:has-[:focus-visible]:ring-success-600',
+            'warning'      => 'has-[:checked]:border-warning-600 has-[:checked]:bg-warning-600 has-[:checked]:text-white has-[:focus-visible]:ring-warning-400 dark:has-[:checked]:border-warning-400 dark:has-[:checked]:bg-warning-400 dark:has-[:checked]:text-warning-950 dark:has-[:focus-visible]:ring-warning-600',
+            'danger'       => 'has-[:checked]:border-danger-600 has-[:checked]:bg-danger-600 has-[:checked]:text-white has-[:focus-visible]:ring-danger-400 dark:has-[:checked]:border-danger-400 dark:has-[:checked]:bg-danger-400 dark:has-[:checked]:text-danger-950 dark:has-[:focus-visible]:ring-danger-600',
         ];
 
         $countMap = [
@@ -129,10 +137,14 @@ class Badge extends Component
             'mauve'     => 'bg-mauve-200 text-mauve-800 dark:bg-mauve-800 dark:text-mauve-200',
             'mist'      => 'bg-mist-200 text-mist-800 dark:bg-mist-800 dark:text-mist-200',
             'olive'     => 'bg-olive-200 text-olive-800 dark:bg-olive-800 dark:text-olive-200',
-            'palette'      => 'bg-palette-200 text-palette-800 dark:bg-palette-800 dark:text-palette-200',
-            'cyberpunk' => 'bg-cyberpunk-200 text-cyberpunk-800 dark:bg-cyberpunk-800 dark:text-cyberpunk-200',
-            'fantasy'   => 'bg-fantasy-200 text-fantasy-800 dark:bg-fantasy-800 dark:text-fantasy-200',
-            'wh40k'     => 'bg-wh40k-200 text-wh40k-800 dark:bg-wh40k-800 dark:text-wh40k-200',
+            'primary'      => 'bg-primary-200 text-primary-800 dark:bg-primary-800 dark:text-primary-200',
+            'secondary'    => 'bg-secondary-200 text-secondary-800 dark:bg-secondary-800 dark:text-secondary-200',
+            'accent'       => 'bg-accent-200 text-accent-800 dark:bg-accent-800 dark:text-accent-200',
+            'base'         => 'bg-base-200 text-base-800 dark:bg-base-800 dark:text-base-200',
+            'info'         => 'bg-info-200 text-info-800 dark:bg-info-800 dark:text-info-200',
+            'success'      => 'bg-success-200 text-success-800 dark:bg-success-800 dark:text-success-200',
+            'warning'      => 'bg-warning-200 text-warning-800 dark:bg-warning-800 dark:text-warning-200',
+            'danger'       => 'bg-danger-200 text-danger-800 dark:bg-danger-800 dark:text-danger-200',
         ];
 
         $removeMap = [
@@ -162,10 +174,14 @@ class Badge extends Component
             'mauve'     => 'hover:bg-mauve-200 focus-visible:ring-mauve-400 dark:hover:bg-mauve-700 dark:focus-visible:ring-mauve-600',
             'mist'      => 'hover:bg-mist-200 focus-visible:ring-mist-400 dark:hover:bg-mist-700 dark:focus-visible:ring-mist-600',
             'olive'     => 'hover:bg-olive-200 focus-visible:ring-olive-400 dark:hover:bg-olive-700 dark:focus-visible:ring-olive-600',
-            'palette'      => 'hover:bg-palette-200 focus-visible:ring-palette-400 dark:hover:bg-palette-700 dark:focus-visible:ring-palette-600',
-            'cyberpunk' => 'hover:bg-cyberpunk-200 focus-visible:ring-cyberpunk-400 dark:hover:bg-cyberpunk-700 dark:focus-visible:ring-cyberpunk-600',
-            'fantasy'   => 'hover:bg-fantasy-200 focus-visible:ring-fantasy-400 dark:hover:bg-fantasy-700 dark:focus-visible:ring-fantasy-600',
-            'wh40k'     => 'hover:bg-wh40k-200 focus-visible:ring-wh40k-400 dark:hover:bg-wh40k-700 dark:focus-visible:ring-wh40k-600',
+            'primary'      => 'hover:bg-primary-200 focus-visible:ring-primary-400 dark:hover:bg-primary-700 dark:focus-visible:ring-primary-600',
+            'secondary'    => 'hover:bg-secondary-200 focus-visible:ring-secondary-400 dark:hover:bg-secondary-700 dark:focus-visible:ring-secondary-600',
+            'accent'       => 'hover:bg-accent-200 focus-visible:ring-accent-400 dark:hover:bg-accent-700 dark:focus-visible:ring-accent-600',
+            'base'         => 'hover:bg-base-200 focus-visible:ring-base-400 dark:hover:bg-base-700 dark:focus-visible:ring-base-600',
+            'info'         => 'hover:bg-info-200 focus-visible:ring-info-400 dark:hover:bg-info-700 dark:focus-visible:ring-info-600',
+            'success'      => 'hover:bg-success-200 focus-visible:ring-success-400 dark:hover:bg-success-700 dark:focus-visible:ring-success-600',
+            'warning'      => 'hover:bg-warning-200 focus-visible:ring-warning-400 dark:hover:bg-warning-700 dark:focus-visible:ring-warning-600',
+            'danger'       => 'hover:bg-danger-200 focus-visible:ring-danger-400 dark:hover:bg-danger-700 dark:focus-visible:ring-danger-600',
         ];
 
         $this->tag = match (true) {
@@ -176,16 +192,16 @@ class Badge extends Component
 
         $this->classList = trim(implode(' ', [
             'inline-flex items-center gap-1 rounded-md border px-2.5 py-1 text-xs font-medium',
-            static::surface($theme),
+            static::surface($color),
             match ($this->tag) {
-                'a' => 'cursor-pointer transition focus:outline-none focus-visible:ring-2 '.($linkMap[$theme] ?? $linkMap['slate']),
-                'label' => 'cursor-pointer select-none transition has-[:focus-visible]:ring-2 '.($linkMap[$theme] ?? $linkMap['slate']).' '.($onMap[$theme] ?? $onMap['slate']),
+                'a' => 'cursor-pointer transition focus:outline-none focus-visible:ring-2 '.($linkMap[$color] ?? $linkMap['base']),
+                'label' => 'cursor-pointer select-none transition has-[:focus-visible]:ring-2 '.($linkMap[$color] ?? $linkMap['base']).' '.($onMap[$color] ?? $onMap['base']),
                 default => '',
             },
         ]));
 
-        $this->countClasses = 'ml-0.5 rounded-full px-1.5 text-[0.7rem] leading-4 tabular-nums '.($countMap[$theme] ?? $countMap['slate']);
-        $this->removeClasses = '-mr-1 ml-0.5 inline-flex h-4 w-4 cursor-pointer items-center justify-center rounded transition focus:outline-none focus-visible:ring-2 '.($removeMap[$theme] ?? $removeMap['slate']);
+        $this->countClasses = 'ml-0.5 rounded-full px-1.5 text-[0.7rem] leading-4 tabular-nums '.($countMap[$color] ?? $countMap['base']);
+        $this->removeClasses = '-mr-1 ml-0.5 inline-flex h-4 w-4 cursor-pointer items-center justify-center rounded transition focus:outline-none focus-visible:ring-2 '.($removeMap[$color] ?? $removeMap['base']);
 
         if ($this->removeLabel === '') {
             $this->removeLabel = __('Remove');
@@ -195,7 +211,7 @@ class Badge extends Component
     /**
      * The badge surface: border, tinted fill and text. Shared with x-fltc::status.
      */
-    public static function surface(string $theme): string
+    public static function surface(string $color): string
     {
         $themeMap = [
             'slate'   => 'border-slate-200 bg-slate-50 text-slate-700 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300',
@@ -224,13 +240,17 @@ class Badge extends Component
             'mauve'   => 'border-mauve-200 bg-mauve-50 text-mauve-700 dark:border-mauve-800 dark:bg-mauve-950 dark:text-mauve-300',
             'mist'    => 'border-mist-200 bg-mist-50 text-mist-700 dark:border-mist-800 dark:bg-mist-950 dark:text-mist-300',
             'olive'   => 'border-olive-200 bg-olive-50 text-olive-700 dark:border-olive-800 dark:bg-olive-950 dark:text-olive-300',
-            'palette'    => 'border-palette-200 bg-palette-50 text-palette-700 dark:border-palette-800 dark:bg-palette-950 dark:text-palette-300',
-            'cyberpunk' => 'border-cyberpunk-200 bg-cyberpunk-50 text-cyberpunk-700 dark:border-cyberpunk-800 dark:bg-cyberpunk-950 dark:text-cyberpunk-300',
-            'fantasy' => 'border-fantasy-200 bg-fantasy-50 text-fantasy-700 dark:border-fantasy-800 dark:bg-fantasy-950 dark:text-fantasy-300',
-            'wh40k'   => 'border-wh40k-200 bg-wh40k-50 text-wh40k-700 dark:border-wh40k-800 dark:bg-wh40k-950 dark:text-wh40k-300',
+            'primary'    => 'border-primary-200 bg-primary-50 text-primary-700 dark:border-primary-800 dark:bg-primary-950 dark:text-primary-300',
+            'secondary'  => 'border-secondary-200 bg-secondary-50 text-secondary-700 dark:border-secondary-800 dark:bg-secondary-950 dark:text-secondary-300',
+            'accent'     => 'border-accent-200 bg-accent-50 text-accent-700 dark:border-accent-800 dark:bg-accent-950 dark:text-accent-300',
+            'base'       => 'border-base-200 bg-base-50 text-base-700 dark:border-base-800 dark:bg-base-950 dark:text-base-300',
+            'info'       => 'border-info-200 bg-info-50 text-info-700 dark:border-info-800 dark:bg-info-950 dark:text-info-300',
+            'success'    => 'border-success-200 bg-success-50 text-success-700 dark:border-success-800 dark:bg-success-950 dark:text-success-300',
+            'warning'    => 'border-warning-200 bg-warning-50 text-warning-700 dark:border-warning-800 dark:bg-warning-950 dark:text-warning-300',
+            'danger'     => 'border-danger-200 bg-danger-50 text-danger-700 dark:border-danger-800 dark:bg-danger-950 dark:text-danger-300',
         ];
 
-        return $themeMap[$theme] ?? $themeMap['slate'];
+        return $themeMap[$color] ?? $themeMap['base'];
     }
 
     public function render(): View|Closure|string

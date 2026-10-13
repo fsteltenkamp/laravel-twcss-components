@@ -3,7 +3,7 @@
 @endphp
 <div {{ $attributes->class([$classList]) }}>
     @if ($label !== '')
-        <x-fltc::form.label :for="$for" :required="$required" :theme="$theme">
+        <x-fltc::form.label :for="$for" :required="$required" :color="$color">
             {{ $label }}
         </x-fltc::form.label>
     @endif

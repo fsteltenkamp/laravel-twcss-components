@@ -13,7 +13,7 @@ class Alert extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct(public string $theme = 'slate')
+    public function __construct(public string $color = 'base')
     {
         $map = [
             'slate'   => 'border-slate-200 bg-slate-50 text-slate-700 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300',
@@ -42,13 +42,17 @@ class Alert extends Component
             'mauve'   => 'border-mauve-200 bg-mauve-50 text-mauve-700 dark:border-mauve-800 dark:bg-mauve-950 dark:text-mauve-300',
             'mist'    => 'border-mist-200 bg-mist-50 text-mist-700 dark:border-mist-800 dark:bg-mist-950 dark:text-mist-300',
             'olive'   => 'border-olive-200 bg-olive-50 text-olive-700 dark:border-olive-800 dark:bg-olive-950 dark:text-olive-300',
-            'palette'    => 'border-palette-200 bg-palette-50 text-palette-700 dark:border-palette-800 dark:bg-palette-950 dark:text-palette-300',
-            'cyberpunk' => 'border-cyberpunk-200 bg-cyberpunk-50 text-cyberpunk-700 dark:border-cyberpunk-800 dark:bg-cyberpunk-950 dark:text-cyberpunk-300',
-            'fantasy' => 'border-fantasy-200 bg-fantasy-50 text-fantasy-700 dark:border-fantasy-800 dark:bg-fantasy-950 dark:text-fantasy-300',
-            'wh40k'   => 'border-wh40k-200 bg-wh40k-50 text-wh40k-700 dark:border-wh40k-800 dark:bg-wh40k-950 dark:text-wh40k-300',
+            'primary'    => 'border-primary-200 bg-primary-50 text-primary-700 dark:border-primary-800 dark:bg-primary-950 dark:text-primary-300',
+            'secondary'  => 'border-secondary-200 bg-secondary-50 text-secondary-700 dark:border-secondary-800 dark:bg-secondary-950 dark:text-secondary-300',
+            'accent'     => 'border-accent-200 bg-accent-50 text-accent-700 dark:border-accent-800 dark:bg-accent-950 dark:text-accent-300',
+            'base'       => 'border-base-200 bg-base-50 text-base-700 dark:border-base-800 dark:bg-base-950 dark:text-base-300',
+            'info'       => 'border-info-200 bg-info-50 text-info-700 dark:border-info-800 dark:bg-info-950 dark:text-info-300',
+            'success'    => 'border-success-200 bg-success-50 text-success-700 dark:border-success-800 dark:bg-success-950 dark:text-success-300',
+            'warning'    => 'border-warning-200 bg-warning-50 text-warning-700 dark:border-warning-800 dark:bg-warning-950 dark:text-warning-300',
+            'danger'     => 'border-danger-200 bg-danger-50 text-danger-700 dark:border-danger-800 dark:bg-danger-950 dark:text-danger-300',
         ];
 
-        $this->alertClasses = $map[$this->theme] ?? $map['slate'];
+        $this->alertClasses = $map[$this->color] ?? $map['base'];
     }
 
     /**

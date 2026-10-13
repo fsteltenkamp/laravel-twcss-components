@@ -55,7 +55,7 @@ class Drawer extends Component
         public ?string $label = null,
         public string $icon = '',
         public int $order = 0,
-        public string $theme = 'slate',
+        public string $color = 'base',
         public bool $pinnable = false,
         public bool $open = false,
         public string $width = '24rem',
@@ -77,22 +77,22 @@ class Drawer extends Component
         $this->classList = trim(implode(' ', array_filter([
             'fixed bottom-0 z-40 flex flex-col shadow-xl transition-transform duration-200 ease-out',
             $isLeft ? 'left-0 border-r' : 'right-0 border-l',
-            SidebarTheme::surface($this->theme),
+            SidebarTheme::surface($this->color),
             $this->class,
         ])));
 
         // Part hooks (fltc-drawer-*) for skin stylesheets, next to the root's fltc-drawer.
-        $this->headerClasses = 'fltc-drawer-header flex shrink-0 items-center justify-between gap-2 border-b px-4 py-3 '.SidebarTheme::divider($this->theme);
+        $this->headerClasses = 'fltc-drawer-header flex shrink-0 items-center justify-between gap-2 border-b px-4 py-3 '.SidebarTheme::divider($this->color);
         $this->titleClasses = 'min-w-0 truncate text-sm font-semibold';
         $this->bodyClasses = 'fltc-drawer-body flex-1 overflow-y-auto p-4';
 
         $buttonBase = 'inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-md transition focus:outline-none focus-visible:ring-2';
-        $this->buttonClasses = $buttonBase.' '.SidebarTheme::inactive($this->theme);
+        $this->buttonClasses = $buttonBase.' '.SidebarTheme::inactive($this->color);
         // The pin button's colours are bound entirely by Alpine (resting vs
         // pinned) so the two states never fight over the same utilities.
         $this->pinClasses = $buttonBase;
-        $this->pinRestingClasses = SidebarTheme::inactive($this->theme);
-        $this->pinActiveClasses = SidebarTheme::active($this->theme);
+        $this->pinRestingClasses = SidebarTheme::inactive($this->color);
+        $this->pinActiveClasses = SidebarTheme::active($this->color);
 
         // Vertical tab: `vertical-rl` stacks icon and label along the tab.
         // Right-side tabs are rotated 180° so the borderless (attached) edge
@@ -103,10 +103,10 @@ class Drawer extends Component
             '[writing-mode:vertical-rl] w-10',
             $isLeft ? '' : 'rotate-180',
             // Teleported into the edge rail, outside the root's hooks, so it carries its own.
-            'fltc-theme-'.$this->theme,
+            'fltc-color-'.$this->color,
         ]));
-        $this->tabRestingClasses = DrawerTheme::tab($this->theme);
-        $this->tabActiveClasses = DrawerTheme::tabActive($this->theme);
+        $this->tabRestingClasses = DrawerTheme::tab($this->color);
+        $this->tabActiveClasses = DrawerTheme::tabActive($this->color);
     }
 
     /**

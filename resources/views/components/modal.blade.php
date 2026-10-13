@@ -18,13 +18,14 @@
     host's attributes (wire:*, x-on:close, id), so events dispatched by close() reach
     them. The overlay is teleported to <body>, out of any transformed or clipped
     ancestor, and carries the classes (host classes and fltc-* hooks) and the
-    data-skin and data-palette of the regions the modal was written in.
+    data-skin, data-theme and data-theme-* of the regions the modal was written in
+    (copied on every open, so changes to the region are picked up).
 --}}
 <div
     @if ($wireModel)
-        x-data="{ open: @entangle($wireModel), close() { if (! {{ $closeable ? 'true' : 'false' }}) return; this.open = false; this.$dispatch('close'); }, region(attr) { const r = this.$root.closest('[' + attr + ']'); return r && r !== document.documentElement ? r.getAttribute(attr) : null; } }"
+        x-data="{ open: @entangle($wireModel), close() { if (! {{ $closeable ? 'true' : 'false' }}) return; this.open = false; this.$dispatch('close'); }, syncRegion(el) { for (const attr of ['data-skin', 'data-theme']) { const r = this.$root.closest('[' + attr + ']'); const from = r && r !== document.documentElement ? r : null; for (const a of [...el.attributes]) if (a.name === attr || (attr === 'data-theme' && a.name.startsWith('data-theme-'))) el.removeAttribute(a.name); if (from) for (const a of [...from.attributes]) if (a.name === attr || (attr === 'data-theme' && a.name.startsWith('data-theme-'))) el.setAttribute(a.name, a.value); } } }"
     @else
-        x-data="{ open: @js((bool) $open), close() { if (! {{ $closeable ? 'true' : 'false' }}) return; this.open = false; this.$dispatch('close'); }, region(attr) { const r = this.$root.closest('[' + attr + ']'); return r && r !== document.documentElement ? r.getAttribute(attr) : null; } }"
+        x-data="{ open: @js((bool) $open), close() { if (! {{ $closeable ? 'true' : 'false' }}) return; this.open = false; this.$dispatch('close'); }, syncRegion(el) { for (const attr of ['data-skin', 'data-theme']) { const r = this.$root.closest('[' + attr + ']'); const from = r && r !== document.documentElement ? r : null; for (const a of [...el.attributes]) if (a.name === attr || (attr === 'data-theme' && a.name.startsWith('data-theme-'))) el.removeAttribute(a.name); if (from) for (const a of [...from.attributes]) if (a.name === attr || (attr === 'data-theme' && a.name.startsWith('data-theme-'))) el.setAttribute(a.name, a.value); } } }"
     @endif
     @if ($name)
         x-on:open-modal.window="if ([$event.detail, $event.detail?.name].includes('{{ $name }}')) open = true"
@@ -38,8 +39,7 @@
         x-show="open"
         x-cloak
         style="display: none;"
-        x-bind:data-skin="open && region('data-skin')"
-        x-bind:data-palette="open && region('data-palette')"
+        x-effect="open && syncRegion($el)"
         class="{{ $attributes->get('class') }} fixed inset-0 z-50 flex items-center justify-center p-4"
     >
         <div

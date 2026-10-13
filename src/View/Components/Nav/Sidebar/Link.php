@@ -27,12 +27,12 @@ class Link extends Component
         public ?string $icon = null,
         ?bool $active = null,
         ?string $activePattern = null,
-        ?string $theme = null,
+        ?string $color = null,
         string $class = '',
     ) {
         $this->href = $href;
-        $resolvedTheme = $theme ?? (app('view')->getShared()['sidebarTheme'] ?? 'slate');
-        $this->hookTheme = $resolvedTheme;
+        $resolvedTheme = $color ?? (app('view')->getShared()['sidebarColor'] ?? 'base');
+        $this->hookColor = $resolvedTheme;
 
         $this->isActive = $active ?? ActiveUrl::matches($href, $activePattern);
 

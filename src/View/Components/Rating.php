@@ -33,7 +33,7 @@ class Rating extends Component
     public function __construct(
         public float $value = 0,
         public int $max = 5,
-        public string $theme = 'slate',
+        public string $color = 'base',
         public string $size = 'md',
         public bool $showValue = false,
         public string $label = '',
@@ -49,10 +49,10 @@ class Rating extends Component
             };
         }
 
-        ['star' => $this->starClasses, 'filled' => $this->filledClasses, 'empty' => $this->emptyClasses] = static::classes($theme, $size);
+        ['star' => $this->starClasses, 'filled' => $this->filledClasses, 'empty' => $this->emptyClasses] = static::classes($color, $size);
 
         $this->classList = 'inline-flex items-center gap-0.5';
-        $this->valueClasses = 'ml-1.5 text-sm tabular-nums '.Shades::secondary($theme);
+        $this->valueClasses = 'ml-1.5 text-sm tabular-nums '.Shades::secondary($color);
 
         if ($this->label === '') {
             $this->label = __(':value out of :max stars', ['value' => rtrim(rtrim(number_format($this->rounded, 1), '0'), '.'), 'max' => $this->max]);
@@ -65,7 +65,7 @@ class Rating extends Component
      *
      * @return array{star: string, filled: string, empty: string}
      */
-    public static function classes(string $theme, string $size): array
+    public static function classes(string $color, string $size): array
     {
         $sizeMap = [
             'sm' => 'h-4 w-4',
@@ -75,8 +75,8 @@ class Rating extends Component
 
         return [
             'star' => 'relative inline-block shrink-0 '.($sizeMap[$size] ?? $sizeMap['md']),
-            'filled' => Shades::tertiary($theme),
-            'empty' => Shades::faint($theme),
+            'filled' => Shades::tertiary($color),
+            'empty' => Shades::faint($color),
         ];
     }
 

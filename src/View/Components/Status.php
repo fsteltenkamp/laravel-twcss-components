@@ -23,26 +23,26 @@ class Status extends Component
     public array $states = [];
 
     /**
-     * @param  ?string  $theme   one theme for every state instead of the per-state ones
+     * @param  ?string  $color   one colour for every state instead of the per-state ones
      * @param  array<string, string>  $labels  state => label overrides
-     * @param  array<string, string>  $themes  state => theme overrides
+     * @param  array<string, string>  $colors  state => colour overrides
      * @param  array<string, string>  $icons   state => Phosphor icon overrides
      */
     public function __construct(
         public string $state = 'saved',
-        public ?string $theme = null,
+        public ?string $color = null,
         public array $labels = [],
-        public array $themes = [],
+        public array $colors = [],
         public array $icons = [],
     ) {
         $this->state = in_array($state, static::STATES, true) ? $state : 'saved';
 
         $defaults = [
-            'live'    => ['label' => __('Live'), 'icon' => 'broadcast', 'theme' => 'emerald'],
-            'unsaved' => ['label' => __('Unsaved changes'), 'icon' => 'pencil-simple', 'theme' => 'amber'],
-            'saving'  => ['label' => __('Saving…'), 'icon' => '', 'theme' => 'sky'],
-            'saved'   => ['label' => __('Saved'), 'icon' => 'check-circle', 'theme' => 'green'],
-            'error'   => ['label' => __('Not saved'), 'icon' => 'warning-circle', 'theme' => 'red'],
+            'live'    => ['label' => __('Live'), 'icon' => 'broadcast', 'color' => 'success'],
+            'unsaved' => ['label' => __('Unsaved changes'), 'icon' => 'pencil-simple', 'color' => 'warning'],
+            'saving'  => ['label' => __('Saving…'), 'icon' => '', 'color' => 'info'],
+            'saved'   => ['label' => __('Saved'), 'icon' => 'check-circle', 'color' => 'success'],
+            'error'   => ['label' => __('Not saved'), 'icon' => 'warning-circle', 'color' => 'danger'],
         ];
 
         // Literal per-state variants so Tailwind's scanner sees them: the chip shows
@@ -56,16 +56,16 @@ class Status extends Component
         ];
 
         foreach ($defaults as $key => $default) {
-            $stateTheme = $themes[$key] ?? $theme ?? $default['theme'];
+            $stateColor = $colors[$key] ?? $color ?? $default['color'];
 
             $this->states[$key] = [
                 'label' => $labels[$key] ?? $default['label'],
                 'icon' => $icons[$key] ?? $default['icon'],
-                'theme' => $stateTheme,
+                'color' => $stateColor,
                 'classes' => trim(implode(' ', [
                     'items-center gap-1.5 rounded-md border px-2.5 py-1 text-xs font-medium',
                     $visibility[$key],
-                    Badge::surface($stateTheme),
+                    Badge::surface($stateColor),
                 ])),
             ];
         }

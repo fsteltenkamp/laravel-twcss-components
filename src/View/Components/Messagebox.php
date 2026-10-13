@@ -17,13 +17,13 @@ class Messagebox extends Component
      * icon, a default title, and room for technical `details` and retry `actions`.
      */
     public function __construct(
-        public ?string $theme = null,
+        public ?string $color = null,
         public string $title = '',
         public string $variant = 'default',
         public string $icon = '',
     ) {
-        $this->theme = $theme ?? ($variant === 'error' ? 'red' : 'slate');
-        $theme = $this->theme;
+        $this->color = $color ?? ($variant === 'error' ? 'danger' : 'base');
+        $color = $this->color;
 
         if ($variant === 'error') {
             $this->title = $title !== '' ? $title : __('Something went wrong');
@@ -57,10 +57,14 @@ class Messagebox extends Component
             'mauve'   => 'border-mauve-200 bg-mauve-50 text-mauve-800 dark:border-mauve-800 dark:bg-mauve-950 dark:text-mauve-200',
             'mist'    => 'border-mist-200 bg-mist-50 text-mist-800 dark:border-mist-800 dark:bg-mist-950 dark:text-mist-200',
             'olive'   => 'border-olive-200 bg-olive-50 text-olive-800 dark:border-olive-800 dark:bg-olive-950 dark:text-olive-200',
-            'palette'    => 'border-palette-200 bg-palette-50 text-palette-800 dark:border-palette-800 dark:bg-palette-950 dark:text-palette-200',
-            'cyberpunk' => 'border-cyberpunk-200 bg-cyberpunk-50 text-cyberpunk-800 dark:border-cyberpunk-800 dark:bg-cyberpunk-950 dark:text-cyberpunk-200',
-            'fantasy' => 'border-fantasy-200 bg-fantasy-50 text-fantasy-800 dark:border-fantasy-800 dark:bg-fantasy-950 dark:text-fantasy-200',
-            'wh40k'   => 'border-wh40k-200 bg-wh40k-50 text-wh40k-800 dark:border-wh40k-800 dark:bg-wh40k-950 dark:text-wh40k-200',
+            'primary'    => 'border-primary-200 bg-primary-50 text-primary-800 dark:border-primary-800 dark:bg-primary-950 dark:text-primary-200',
+            'secondary'  => 'border-secondary-200 bg-secondary-50 text-secondary-800 dark:border-secondary-800 dark:bg-secondary-950 dark:text-secondary-200',
+            'accent'     => 'border-accent-200 bg-accent-50 text-accent-800 dark:border-accent-800 dark:bg-accent-950 dark:text-accent-200',
+            'base'       => 'border-base-200 bg-base-50 text-base-800 dark:border-base-800 dark:bg-base-950 dark:text-base-200',
+            'info'       => 'border-info-200 bg-info-50 text-info-800 dark:border-info-800 dark:bg-info-950 dark:text-info-200',
+            'success'    => 'border-success-200 bg-success-50 text-success-800 dark:border-success-800 dark:bg-success-950 dark:text-success-200',
+            'warning'    => 'border-warning-200 bg-warning-50 text-warning-800 dark:border-warning-800 dark:bg-warning-950 dark:text-warning-200',
+            'danger'     => 'border-danger-200 bg-danger-50 text-danger-800 dark:border-danger-800 dark:bg-danger-950 dark:text-danger-200',
         ];
 
         $titleMap = [
@@ -90,10 +94,14 @@ class Messagebox extends Component
             'mauve'   => 'bg-mauve-200 text-mauve-900 dark:bg-mauve-900 dark:text-mauve-100',
             'mist'    => 'bg-mist-200 text-mist-900 dark:bg-mist-900 dark:text-mist-100',
             'olive'   => 'bg-olive-200 text-olive-900 dark:bg-olive-900 dark:text-olive-100',
-            'palette'    => 'bg-palette-200 text-palette-900 dark:bg-palette-900 dark:text-palette-100',
-            'cyberpunk' => 'bg-cyberpunk-200 text-cyberpunk-900 dark:bg-cyberpunk-900 dark:text-cyberpunk-100',
-            'fantasy' => 'bg-fantasy-200 text-fantasy-900 dark:bg-fantasy-900 dark:text-fantasy-100',
-            'wh40k'   => 'bg-wh40k-200 text-wh40k-900 dark:bg-wh40k-900 dark:text-wh40k-100',
+            'primary'    => 'bg-primary-200 text-primary-900 dark:bg-primary-900 dark:text-primary-100',
+            'secondary'  => 'bg-secondary-200 text-secondary-900 dark:bg-secondary-900 dark:text-secondary-100',
+            'accent'     => 'bg-accent-200 text-accent-900 dark:bg-accent-900 dark:text-accent-100',
+            'base'       => 'bg-base-200 text-base-900 dark:bg-base-900 dark:text-base-100',
+            'info'       => 'bg-info-200 text-info-900 dark:bg-info-900 dark:text-info-100',
+            'success'    => 'bg-success-200 text-success-900 dark:bg-success-900 dark:text-success-100',
+            'warning'    => 'bg-warning-200 text-warning-900 dark:bg-warning-900 dark:text-warning-100',
+            'danger'     => 'bg-danger-200 text-danger-900 dark:bg-danger-900 dark:text-danger-100',
         ];
 
         $titleBorderMap = [
@@ -123,18 +131,22 @@ class Messagebox extends Component
             'mauve'   => 'border-mauve-300 dark:border-mauve-700',
             'mist'    => 'border-mist-300 dark:border-mist-700',
             'olive'   => 'border-olive-300 dark:border-olive-700',
-            'palette'    => 'border-palette-300 dark:border-palette-700',
-            'cyberpunk' => 'border-cyberpunk-300 dark:border-cyberpunk-700',
-            'fantasy' => 'border-fantasy-300 dark:border-fantasy-700',
-            'wh40k'   => 'border-wh40k-300 dark:border-wh40k-700',
+            'primary'    => 'border-primary-300 dark:border-primary-700',
+            'secondary'  => 'border-secondary-300 dark:border-secondary-700',
+            'accent'     => 'border-accent-300 dark:border-accent-700',
+            'base'       => 'border-base-300 dark:border-base-700',
+            'info'       => 'border-info-300 dark:border-info-700',
+            'success'    => 'border-success-300 dark:border-success-700',
+            'warning'    => 'border-warning-300 dark:border-warning-700',
+            'danger'     => 'border-danger-300 dark:border-danger-700',
         ];
 
         $this->boxClasses = 'overflow-hidden rounded-md border text-sm';
-        $this->boxClasses .= ' '.($themeMap[$theme] ?? $themeMap['slate']);
+        $this->boxClasses .= ' '.($themeMap[$color] ?? $themeMap['base']);
         $this->titleClasses = 'flex items-center gap-2 border-b px-4 py-2 font-semibold';
-        $this->titleClasses .= ' '.($titleMap[$theme] ?? $titleMap['slate']);
-        $this->titleClasses .= ' '.($titleBorderMap[$theme] ?? $titleBorderMap['slate']);
-        $this->detailsClasses = 'border-t px-4 py-2 '.($titleBorderMap[$theme] ?? $titleBorderMap['slate']);
+        $this->titleClasses .= ' '.($titleMap[$color] ?? $titleMap['base']);
+        $this->titleClasses .= ' '.($titleBorderMap[$color] ?? $titleBorderMap['base']);
+        $this->detailsClasses = 'border-t px-4 py-2 '.($titleBorderMap[$color] ?? $titleBorderMap['base']);
     }
 
     /**

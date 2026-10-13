@@ -35,7 +35,7 @@ class FileCard extends Component
         public string $src = '',
         public string $excerpt = '',
         public string $meta = '',
-        public string $theme = 'slate',
+        public string $color = 'base',
     ) {
         $this->extension = strtolower($extension !== '' ? ltrim($extension, '.') : pathinfo($name, PATHINFO_EXTENSION));
 
@@ -75,10 +75,14 @@ class FileCard extends Component
             'mauve'     => 'border-mauve-200 bg-white dark:border-mauve-700 dark:bg-mauve-900',
             'mist'      => 'border-mist-200 bg-white dark:border-mist-700 dark:bg-mist-900',
             'olive'     => 'border-olive-200 bg-white dark:border-olive-700 dark:bg-olive-900',
-            'palette'      => 'border-palette-200 bg-white dark:border-palette-700 dark:bg-palette-900',
-            'cyberpunk' => 'border-cyberpunk-200 bg-white dark:border-cyberpunk-700 dark:bg-cyberpunk-900',
-            'fantasy'   => 'border-fantasy-200 bg-white dark:border-fantasy-700 dark:bg-fantasy-900',
-            'wh40k'     => 'border-wh40k-200 bg-white dark:border-wh40k-700 dark:bg-wh40k-900',
+            'primary'      => 'border-primary-200 bg-white dark:border-primary-700 dark:bg-primary-900',
+            'secondary'    => 'border-secondary-200 bg-white dark:border-secondary-700 dark:bg-secondary-900',
+            'accent'       => 'border-accent-200 bg-white dark:border-accent-700 dark:bg-accent-900',
+            'base'         => 'border-base-200 bg-white dark:border-base-700 dark:bg-base-900',
+            'info'         => 'border-info-200 bg-white dark:border-info-700 dark:bg-info-900',
+            'success'      => 'border-success-200 bg-white dark:border-success-700 dark:bg-success-900',
+            'warning'      => 'border-warning-200 bg-white dark:border-warning-700 dark:bg-warning-900',
+            'danger'       => 'border-danger-200 bg-white dark:border-danger-700 dark:bg-danger-900',
         ];
 
         $previewMap = [
@@ -108,17 +112,21 @@ class FileCard extends Component
             'mauve'     => 'border-mauve-200 bg-mauve-50 text-mauve-500 dark:border-mauve-700 dark:bg-mauve-800 dark:text-mauve-400',
             'mist'      => 'border-mist-200 bg-mist-50 text-mist-500 dark:border-mist-700 dark:bg-mist-800 dark:text-mist-400',
             'olive'     => 'border-olive-200 bg-olive-50 text-olive-500 dark:border-olive-700 dark:bg-olive-800 dark:text-olive-400',
-            'palette'      => 'border-palette-200 bg-palette-50 text-palette-500 dark:border-palette-700 dark:bg-palette-800 dark:text-palette-400',
-            'cyberpunk' => 'border-cyberpunk-200 bg-cyberpunk-50 text-cyberpunk-500 dark:border-cyberpunk-700 dark:bg-cyberpunk-800 dark:text-cyberpunk-400',
-            'fantasy'   => 'border-fantasy-200 bg-fantasy-50 text-fantasy-500 dark:border-fantasy-700 dark:bg-fantasy-800 dark:text-fantasy-400',
-            'wh40k'     => 'border-wh40k-200 bg-wh40k-50 text-wh40k-500 dark:border-wh40k-700 dark:bg-wh40k-800 dark:text-wh40k-400',
+            'primary'      => 'border-primary-200 bg-primary-50 text-primary-500 dark:border-primary-700 dark:bg-primary-800 dark:text-primary-400',
+            'secondary'    => 'border-secondary-200 bg-secondary-50 text-secondary-500 dark:border-secondary-700 dark:bg-secondary-800 dark:text-secondary-400',
+            'accent'       => 'border-accent-200 bg-accent-50 text-accent-500 dark:border-accent-700 dark:bg-accent-800 dark:text-accent-400',
+            'base'         => 'border-base-200 bg-base-50 text-base-500 dark:border-base-700 dark:bg-base-800 dark:text-base-400',
+            'info'         => 'border-info-200 bg-info-50 text-info-500 dark:border-info-700 dark:bg-info-800 dark:text-info-400',
+            'success'      => 'border-success-200 bg-success-50 text-success-500 dark:border-success-700 dark:bg-success-800 dark:text-success-400',
+            'warning'      => 'border-warning-200 bg-warning-50 text-warning-500 dark:border-warning-700 dark:bg-warning-800 dark:text-warning-400',
+            'danger'       => 'border-danger-200 bg-danger-50 text-danger-500 dark:border-danger-700 dark:bg-danger-800 dark:text-danger-400',
         ];
 
-        $this->classList = 'flex items-center gap-3 rounded-lg border p-2 pr-3 '.($surfaceMap[$theme] ?? $surfaceMap['slate']);
-        $this->previewClasses = 'relative flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-md border '.($previewMap[$theme] ?? $previewMap['slate']);
-        $this->nameClasses = 'block truncate text-sm font-medium '.Shades::primary($theme);
-        $this->metaClasses = 'block truncate text-xs uppercase tracking-wide '.Shades::tertiary($theme);
-        $this->excerptClasses = 'absolute inset-0 overflow-hidden p-1 font-mono text-[0.45rem] leading-[0.6rem] normal-case '.Shades::secondary($theme);
+        $this->classList = 'flex items-center gap-3 rounded-lg border p-2 pr-3 '.($surfaceMap[$color] ?? $surfaceMap['base']);
+        $this->previewClasses = 'relative flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-md border '.($previewMap[$color] ?? $previewMap['base']);
+        $this->nameClasses = 'block truncate text-sm font-medium '.Shades::primary($color);
+        $this->metaClasses = 'block truncate text-xs uppercase tracking-wide '.Shades::tertiary($color);
+        $this->excerptClasses = 'absolute inset-0 overflow-hidden p-1 font-mono text-[0.45rem] leading-[0.6rem] normal-case '.Shades::secondary($color);
     }
 
     /**

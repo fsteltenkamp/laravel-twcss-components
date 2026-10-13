@@ -13,13 +13,13 @@
             @foreach ($links as $link)
                 @php
                     $buttonClass = $link['label'] !== null ? 'min-w-9 px-3 justify-center !font-medium' : 'px-2.5 justify-center';
-                    $buttonTheme = $link['current'] ? $accentTheme : $mainTheme;
+                    $buttonTheme = $link['current'] ? $accentColor : $mainColor;
                     $buttonVariant = $link['current'] ? 'solid' : 'outline';
                 @endphp
                 @if ($link['url'] !== null)
                     <x-fltc::button.link
                         :href="$link['url']"
-                        :theme="$buttonTheme"
+                        :color="$buttonTheme"
                         :variant="$buttonVariant"
                         width="fit"
                         :class="$buttonClass"
@@ -30,7 +30,7 @@
                     <x-fltc::button
                         :wire:key="$link['key']"
                         :wire:click="$livewire && ! $link['disabled'] ? $wireClick($link['page']) : null"
-                        :theme="$buttonTheme"
+                        :color="$buttonTheme"
                         :variant="$buttonVariant"
                         width="fit"
                         :disabled="$link['disabled']"

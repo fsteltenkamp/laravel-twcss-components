@@ -11,8 +11,8 @@ use Illuminate\Support\Facades\View as ViewFacade;
 /**
  * A progress bar: one fill for `value` of `max`, or a split bar of
  * x-fltc::progress.segment children. `variant="meter"` adds a label and
- * "used / limit" above the bar and switches to `warningTheme` from `threshold`
- * (a fraction of max) and to `dangerTheme` once the limit is reached.
+ * "used / limit" above the bar and switches to `warningColor` from `threshold`
+ * (a fraction of max) and to `dangerColor` once the limit is reached.
  */
 class Progress extends Component
 {
@@ -37,12 +37,12 @@ class Progress extends Component
     public function __construct(
         public float $value = 0,
         public float $max = 100,
-        public string $theme = 'slate',
+        public string $color = 'base',
         public string $label = '',
         public string $variant = 'bar',
         public float $threshold = 0.8,
-        public string $warningTheme = 'amber',
-        public string $dangerTheme = 'red',
+        public string $warningColor = 'warning',
+        public string $dangerColor = 'danger',
         public string $unit = '',
         public string $size = 'md',
         public bool $legend = false,
@@ -53,10 +53,10 @@ class Progress extends Component
 
         $ratio = $value / $this->max;
         $this->resolvedTheme = match (true) {
-            $variant !== 'meter' => $theme,
-            $ratio >= 1 => $dangerTheme,
-            $ratio >= $threshold => $warningTheme,
-            default => $theme,
+            $variant !== 'meter' => $color,
+            $ratio >= 1 => $dangerColor,
+            $ratio >= $threshold => $warningColor,
+            default => $color,
         };
 
         $sizeMap = [
@@ -66,11 +66,11 @@ class Progress extends Component
         ];
 
         $this->classList = 'w-full';
-        $this->trackClasses = 'flex w-full overflow-hidden rounded-full '.($sizeMap[$size] ?? $sizeMap['md']).' '.Shades::track($theme);
+        $this->trackClasses = 'flex w-full overflow-hidden rounded-full '.($sizeMap[$size] ?? $sizeMap['md']).' '.Shades::track($color);
         $this->fillClasses = 'h-full transition-[width] duration-300 '.Shades::fill($this->resolvedTheme);
-        $this->labelClasses = 'text-sm font-medium '.Shades::secondary($theme);
+        $this->labelClasses = 'text-sm font-medium '.Shades::secondary($color);
         $this->valueClasses = 'text-sm tabular-nums '.Shades::tertiary($this->resolvedTheme);
-        $this->legendClasses = 'mt-2 flex flex-wrap gap-x-4 gap-y-1 text-xs '.Shades::secondary($theme);
+        $this->legendClasses = 'mt-2 flex flex-wrap gap-x-4 gap-y-1 text-xs '.Shades::secondary($color);
     }
 
     public static function percentOf(float $value, float $max): float
@@ -78,17 +78,17 @@ class Progress extends Component
         return round(max(0, min(100, $value / $max * 100)), 2);
     }
 
-    public function addSegment(float $value, ?string $theme, string $label): array
+    public function addSegment(float $value, ?string $color, string $label): array
     {
-        $theme ??= $this->theme;
+        $color ??= $this->color;
 
         return $this->registered[] = [
             'value' => $value,
             'percent' => static::percentOf($value, $this->max),
-            'theme' => $theme,
+            'color' => $color,
             'label' => $label,
-            'fillClasses' => 'h-full transition-[width] duration-300 '.Shades::fill($theme),
-            'swatchClasses' => 'inline-block h-2.5 w-2.5 rounded-sm '.Shades::fill($theme),
+            'fillClasses' => 'h-full transition-[width] duration-300 '.Shades::fill($color),
+            'swatchClasses' => 'inline-block h-2.5 w-2.5 rounded-sm '.Shades::fill($color),
         ];
     }
 

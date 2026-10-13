@@ -16,7 +16,7 @@ class Tooltip extends Component
      */
     public function __construct(
         public string $text = '',
-        public string $theme = 'slate',
+        public string $color = 'base',
         string $class = ''
     )
     {
@@ -47,10 +47,14 @@ class Tooltip extends Component
             'mauve'   => 'bg-mauve-600 text-mauve-50 dark:bg-mauve-500 dark:text-mauve-50',
             'mist'    => 'bg-mist-600 text-mist-50 dark:bg-mist-500 dark:text-mist-50',
             'olive'   => 'bg-olive-600 text-olive-50 dark:bg-olive-500 dark:text-olive-50',
-            'palette'    => 'bg-palette-600 text-palette-50 dark:bg-palette-500 dark:text-palette-50',
-            'cyberpunk' => 'bg-cyberpunk-600 text-cyberpunk-50 dark:bg-cyberpunk-500 dark:text-cyberpunk-50',
-            'fantasy' => 'bg-fantasy-600 text-fantasy-50 dark:bg-fantasy-500 dark:text-fantasy-50',
-            'wh40k'   => 'bg-wh40k-600 text-wh40k-50 dark:bg-wh40k-500 dark:text-wh40k-50',
+            'primary'    => 'bg-primary-600 text-primary-50 dark:bg-primary-500 dark:text-primary-50',
+            'secondary'  => 'bg-secondary-600 text-secondary-50 dark:bg-secondary-500 dark:text-secondary-50',
+            'accent'     => 'bg-accent-600 text-accent-50 dark:bg-accent-500 dark:text-accent-50',
+            'base'       => 'bg-base-600 text-base-50 dark:bg-base-500 dark:text-base-50',
+            'info'       => 'bg-info-600 text-info-50 dark:bg-info-500 dark:text-info-50',
+            'success'    => 'bg-success-600 text-success-50 dark:bg-success-500 dark:text-success-50',
+            'warning'    => 'bg-warning-600 text-warning-50 dark:bg-warning-500 dark:text-warning-50',
+            'danger'     => 'bg-danger-600 text-danger-50 dark:bg-danger-500 dark:text-danger-50',
         ];
 
         $this->classList = trim(implode(' ', [
@@ -60,9 +64,9 @@ class Tooltip extends Component
 
         $this->tooltipClassList = trim(implode(' ', [
             'pointer-events-none fixed left-0 top-0 z-[2147483647] w-max max-w-64 -translate-x-1/2 -translate-y-full rounded-md px-3 py-1.5 text-xs font-medium shadow-lg',
-            $themeMap[$theme] ?? $themeMap['slate'],
+            $themeMap[$color] ?? $themeMap['base'],
             // Teleported to <body>, outside the root's hooks, so it carries its own.
-            'fltc-theme-'.$theme,
+            'fltc-color-'.$color,
         ]));
     }
 

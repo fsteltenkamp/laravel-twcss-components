@@ -22,8 +22,8 @@ class Pagination extends Component
     public int $totalPages;
     public int $start;
     public int $end;
-    public string $mainTheme;
-    public string $accentTheme;
+    public string $mainColor;
+    public string $accentColor;
     public bool $livewire;
     public string $pageName;
     public string $summaryClasses;
@@ -49,21 +49,21 @@ class Pagination extends Component
         int $totalPages = 1,
         int $start = 1,
         int $end = 1,
-        public string $theme = 'slate',
-        ?string $accentTheme = null,
-        ?string $mainTheme = null,
+        public string $color = 'base',
+        ?string $accentColor = null,
+        ?string $mainColor = null,
         ?bool $livewire = null,
         bool $showSummary = true,
         int $window = 2,
     ) {
-        // `mainTheme` is the old name of `theme`. The current page is a solid button
+        // `mainColor` is an older alias of `color`. The current page is a solid button
         // among outline ones, so it stands out even without a separate accent.
-        $this->mainTheme = $mainTheme ?? $theme;
-        $this->accentTheme = $accentTheme ?? $this->mainTheme;
-        $this->hookTheme = $this->mainTheme;
+        $this->mainColor = $mainColor ?? $color;
+        $this->accentColor = $accentColor ?? $this->mainColor;
+        $this->hookColor = $this->mainColor;
         $this->livewire = $livewire ?? $paginator === null;
         $this->pageName = $paginator !== null && method_exists($paginator, 'getPageName') ? $paginator->getPageName() : 'page';
-        $this->summaryClasses = 'text-sm '.Shades::secondary($this->mainTheme);
+        $this->summaryClasses = 'text-sm '.Shades::secondary($this->mainColor);
 
         if ($paginator !== null) {
             $currentPage = $paginator->currentPage();

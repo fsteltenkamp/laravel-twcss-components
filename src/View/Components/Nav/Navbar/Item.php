@@ -15,10 +15,10 @@ class Item extends Component
      */
     public function __construct(
         public string $class = '',
-        ?string $theme = null,
+        ?string $color = null,
     ) {
-        $resolvedTheme = $theme ?? (app('view')->getShared()['navbarTheme'] ?? 'slate');
-        $this->hookTheme = $resolvedTheme;
+        $resolvedTheme = $color ?? (app('view')->getShared()['navbarColor'] ?? 'base');
+        $this->hookColor = $resolvedTheme;
 
         $themeMap = [
             'slate'   => 'text-slate-700 dark:text-slate-300',
@@ -47,13 +47,17 @@ class Item extends Component
             'mauve'   => 'text-mauve-700 dark:text-mauve-300',
             'mist'    => 'text-mist-700 dark:text-mist-300',
             'olive'   => 'text-olive-700 dark:text-olive-300',
-            'palette'    => 'text-palette-700 dark:text-palette-300',
-            'cyberpunk' => 'text-cyberpunk-700 dark:text-cyberpunk-300',
-            'fantasy' => 'text-fantasy-700 dark:text-fantasy-300',
-            'wh40k'   => 'text-wh40k-700 dark:text-wh40k-300',
+            'primary'    => 'text-primary-700 dark:text-primary-300',
+            'secondary'  => 'text-secondary-700 dark:text-secondary-300',
+            'accent'     => 'text-accent-700 dark:text-accent-300',
+            'base'       => 'text-base-700 dark:text-base-300',
+            'info'       => 'text-info-700 dark:text-info-300',
+            'success'    => 'text-success-700 dark:text-success-300',
+            'warning'    => 'text-warning-700 dark:text-warning-300',
+            'danger'     => 'text-danger-700 dark:text-danger-300',
         ];
 
-        $themeClasses = $themeMap[$resolvedTheme] ?? $themeMap['slate'];
+        $themeClasses = $themeMap[$resolvedTheme] ?? $themeMap['base'];
 
         $this->classList = trim(implode(' ', array_filter([
             'nav-item inline-flex h-full items-center px-3',

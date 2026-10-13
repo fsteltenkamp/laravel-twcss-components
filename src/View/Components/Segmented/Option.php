@@ -26,9 +26,9 @@ class Option extends Component
         public string $iconVariant = 'regular',
         public bool $disabled = false,
     ) {
-        $group = ViewFacade::shared('fltcSegmented') ?? Segmented::classes('slate') + ['theme' => 'slate', 'value' => '', 'interactive' => true];
+        $group = ViewFacade::shared('fltcSegmented') ?? Segmented::classes('base') + ['color' => 'base', 'value' => '', 'interactive' => true];
 
-        $this->hookTheme = $group['theme'];
+        $this->hookColor = $group['color'];
         $this->activeClasses = $group['active'];
         $this->inactiveClasses = $group['inactive'];
         $this->interactive = $group['interactive'];

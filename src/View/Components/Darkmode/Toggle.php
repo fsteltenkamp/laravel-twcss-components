@@ -19,20 +19,20 @@ class Toggle extends Component
      * @param  string  $variant   `default` renders a three-button segmented control
      *                            (light / dark / system); `toggle` renders the pill
      *                            switch built on the form checkbox toggle component.
-     * @param  string  $theme     Accent colour: the active segment (default variant) or
+     * @param  string  $color     Accent colour: the active segment (default variant) or
      *                            the "on"/dark track (toggle variant). Full palette.
-     * @param  string  $themeOff  The "off"/light track colour for the toggle variant.
+     * @param  string  $colorOff  The "off"/light track colour for the toggle variant.
      * @param  string  $size      Size token forwarded to the toggle variant (sm/md/lg).
      */
     public function __construct(
         public string $variant = 'default',
-        public string $theme = 'slate',
-        public string $themeOff = 'slate',
+        public string $color = 'base',
+        public string $colorOff = 'base',
         public string $size = 'md',
     ) {
         // Stored preference is one of: light | dark | system. A missing value is
         // treated as `system` so the OS setting is the default.
-        $this->storageKey = 'theme';
+        $this->storageKey = 'color';
 
         $this->options = [
             ['value' => 'light',  'label' => 'Light',  'icon' => 'sun'],
@@ -41,7 +41,7 @@ class Toggle extends Component
         ];
 
         // The segmented control's colours: the toggle renders through x-fltc::segmented.
-        ['container' => $this->containerClasses, 'active' => $this->activeClasses, 'inactive' => $this->inactiveClasses] = Segmented::classes($theme);
+        ['container' => $this->containerClasses, 'active' => $this->activeClasses, 'inactive' => $this->inactiveClasses] = Segmented::classes($color);
     }
 
     /**
