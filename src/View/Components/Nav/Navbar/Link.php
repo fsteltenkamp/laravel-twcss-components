@@ -4,22 +4,30 @@ namespace Fsteltenkamp\TwcssComponents\View\Components\Nav\Navbar;
 
 use Closure;
 use Illuminate\Contracts\View\View;
+use Fsteltenkamp\TwcssComponents\Support\ActiveUrl;
 use Fsteltenkamp\TwcssComponents\View\Component;
 
 class Link extends Component
 {
     public string $classList;
     public string $href;
+    public bool $isActive;
 
     /**
      * Create a new component instance.
+     *
+     * @param  bool|null  $active  Force the active state; when null it is derived from the URL.
+     * @param  string|null  $activePattern  Request::is() pattern for active detection (defaults to the href path).
      */
     public function __construct(
         string $class = '',
         string $href = '#',
         ?string $theme = null,
+        ?bool $active = null,
+        ?string $activePattern = null,
     ) {
         $this->href = $href;
+        $this->isActive = $active ?? ActiveUrl::matches($href, $activePattern);
         $resolvedTheme = $theme ?? (app('view')->getShared()['navbarTheme'] ?? 'slate');
         $this->hookTheme = $resolvedTheme;
 
@@ -56,11 +64,48 @@ class Link extends Component
             'wh40k'   => 'text-wh40k-700 hover:bg-wh40k-100 dark:text-wh40k-200 dark:hover:bg-wh40k-800 focus-visible:bg-wh40k-100 focus-visible:ring-wh40k-400 dark:focus-visible:bg-wh40k-800 dark:focus-visible:ring-wh40k-600',
         ];
 
+        // Active: the hover background kept on, plus an underline drawn as an inset
+        // shadow so it runs unbroken under the icon, the gap and the text (a text
+        // underline breaks at the gap of the inline-flex link).
+        $activeMap = [
+            'slate'     => 'bg-slate-100 dark:bg-slate-800',
+            'gray'      => 'bg-gray-100 dark:bg-gray-800',
+            'zinc'      => 'bg-zinc-100 dark:bg-zinc-800',
+            'neutral'   => 'bg-neutral-100 dark:bg-neutral-800',
+            'stone'     => 'bg-stone-100 dark:bg-stone-800',
+            'red'       => 'bg-red-100 dark:bg-red-800',
+            'orange'    => 'bg-orange-100 dark:bg-orange-800',
+            'amber'     => 'bg-amber-100 dark:bg-amber-800',
+            'yellow'    => 'bg-yellow-100 dark:bg-yellow-800',
+            'lime'      => 'bg-lime-100 dark:bg-lime-800',
+            'green'     => 'bg-green-100 dark:bg-green-800',
+            'emerald'   => 'bg-emerald-100 dark:bg-emerald-800',
+            'teal'      => 'bg-teal-100 dark:bg-teal-800',
+            'cyan'      => 'bg-cyan-100 dark:bg-cyan-800',
+            'sky'       => 'bg-sky-100 dark:bg-sky-800',
+            'blue'      => 'bg-blue-100 dark:bg-blue-800',
+            'indigo'    => 'bg-indigo-100 dark:bg-indigo-800',
+            'violet'    => 'bg-violet-100 dark:bg-violet-800',
+            'purple'    => 'bg-purple-100 dark:bg-purple-800',
+            'fuchsia'   => 'bg-fuchsia-100 dark:bg-fuchsia-800',
+            'pink'      => 'bg-pink-100 dark:bg-pink-800',
+            'rose'      => 'bg-rose-100 dark:bg-rose-800',
+            'taupe'     => 'bg-taupe-100 dark:bg-taupe-800',
+            'mauve'     => 'bg-mauve-100 dark:bg-mauve-800',
+            'mist'      => 'bg-mist-100 dark:bg-mist-800',
+            'olive'     => 'bg-olive-100 dark:bg-olive-800',
+            'skin'      => 'bg-skin-100 dark:bg-skin-800',
+            'cyberpunk' => 'bg-cyberpunk-100 dark:bg-cyberpunk-800',
+            'fantasy'   => 'bg-fantasy-100 dark:bg-fantasy-800',
+            'wh40k'     => 'bg-wh40k-100 dark:bg-wh40k-800',
+        ];
+
         $themeClasses = $themeMap[$resolvedTheme] ?? $themeMap['slate'];
 
         $this->classList = trim(implode(' ', array_filter([
             'nav-link inline-flex h-full items-center gap-2 rounded-md px-3 transition focus:outline-none',
             $themeClasses,
+            $this->isActive ? ($activeMap[$resolvedTheme] ?? $activeMap['slate']).' font-semibold shadow-[inset_0_-2px_0_currentColor]' : '',
             $class,
         ])));
     }

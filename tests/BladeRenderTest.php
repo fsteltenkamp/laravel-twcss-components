@@ -1296,3 +1296,23 @@ it('renders an upload drop zone around a real file input', function () {
 
     expect(Blade::render('<x-fltc::form.upload id="cv" />'))->toContain('Drop a file here or click to browse')->not->toContain(' multiple');
 });
+
+it('marks the active navbar link with a continuous underline', function () {
+    $html = Blade::render('<x-fltc::nav.navbar.link href="#" theme="rose" active>Home</x-fltc::nav.navbar.link>');
+
+    expect($html)
+        ->toContain('aria-current="page"')
+        ->toContain('bg-rose-100 dark:bg-rose-800')
+        ->toContain('shadow-[inset_0_-2px_0_currentColor]')
+        ->not->toContain('underline');
+
+    expect(Blade::render('<x-fltc::nav.navbar.link href="#">Home</x-fltc::nav.navbar.link>'))->not->toContain('aria-current');
+});
+
+it('derives the active navbar link from the current URL', function () {
+    $this->get('/invoices/42');
+
+    expect(Blade::render('<x-fltc::nav.navbar.link href="/invoices/42">A</x-fltc::nav.navbar.link>'))->toContain('aria-current="page"')
+        ->and(Blade::render('<x-fltc::nav.navbar.link href="/invoices" activePattern="invoices/*">A</x-fltc::nav.navbar.link>'))->toContain('aria-current="page"')
+        ->and(Blade::render('<x-fltc::nav.navbar.link href="/customers">A</x-fltc::nav.navbar.link>'))->not->toContain('aria-current');
+});

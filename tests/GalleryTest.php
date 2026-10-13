@@ -54,7 +54,7 @@ function galleryGroups(): array
                 ['outline', '<x-fltc::button theme="skin" variant="outline">Delete</x-fltc::button>'],
                 ['disabled', '<x-fltc::button theme="skin" disabled>Disabled</x-fltc::button>'],
                 ['with icon', '<x-fltc::button theme="skin" icon="floppy-disk">Save</x-fltc::button> <x-fltc::button theme="skin" icon="arrow-right" iconPosition="after">Next</x-fltc::button> <x-fltc::button theme="skin" icon="trash" />'],
-                // Fixed colours on purpose: with "Shape every theme" on, they take the skin's shape in their own colour.
+                // Fixed colours on purpose: the page sets data-skin-shape="all", so they take the skin's look in their own colour.
                 ['colour themes', '<x-fltc::button theme="green" icon="check">Approve</x-fltc::button> <x-fltc::button theme="red" icon="x">Reject</x-fltc::button> <x-fltc::button theme="green" variant="outline">Draft</x-fltc::button> <x-fltc::button theme="red" variant="outline">Discard</x-fltc::button>'],
             ],
             'Button link' => [
@@ -166,7 +166,7 @@ request id 7f3a9c</x-slot:details>
     <x-fltc::card.header class="px-4 py-3 font-semibold border-b border-skin-200 dark:border-skin-900">Deployment</x-fltc::card.header>
     <x-fltc::card.body class="p-4">Sections inherit the card theme automatically.</x-fltc::card.body>
 </x-fltc::card>'],
-                // Fixed colours on purpose, like the button demo: shown under "Shape every theme".
+                // Fixed colours on purpose, like the button demo.
                 ['colour themes', '<div class="grid gap-4 sm:grid-cols-2"><x-fltc::card theme="green">
     <x-fltc::card.header class="px-4 py-3 font-semibold">Paid</x-fltc::card.header>
     <x-fltc::card.body class="p-4 space-y-3"><p>A green card.</p><x-fltc::button theme="skin">Skin button</x-fltc::button></x-fltc::card.body>
@@ -567,7 +567,7 @@ function navbarExample(): string
     return <<<'BLADE'
         <x-fltc::nav.navbar theme="skin" class="rounded-xl border shadow-sm">
             <x-slot:left>
-                <x-fltc::nav.navbar.link href="#">Dashboard</x-fltc::nav.navbar.link>
+                <x-fltc::nav.navbar.link href="#" active><i class="ph ph-gauge"></i> Dashboard</x-fltc::nav.navbar.link>
                 <x-fltc::nav.navbar.link href="#">Projects</x-fltc::nav.navbar.link>
                 <x-fltc::nav.navbar.dropdown>
                     <x-slot:trigger>Resources</x-slot:trigger>
@@ -740,17 +740,21 @@ function renderGalleryHtml(array $groups): string
                     HTML;
             }
 
-            $cards .= <<<HTML
-                <div id="{$cardId}" class="scroll-mt-24 rounded-lg border border-skin-200 dark:border-skin-700 bg-white dark:bg-skin-800 overflow-hidden">
-                    <div class="px-6 py-3 text-sm font-semibold text-skin-700 dark:text-skin-200 border-b border-skin-100 dark:border-skin-700">{$componentName}</div>
-                    {$blocks}
-                </div>
-                HTML;
+            // The gallery's own chrome is built from library components too, so a selected
+            // skin restyles the whole page, not just the demos.
+            $cards .= Blade::render(<<<'BLADE'
+                <x-fltc::card theme="skin" :id="$cardId" class="block scroll-mt-24 bg-white dark:bg-skin-800">
+                    <x-fltc::card.header class="text-sm font-semibold">{{ $componentName }}</x-fltc::card.header>
+                    {!! $blocks !!}
+                </x-fltc::card>
+                BLADE, ['cardId' => $cardId, 'componentName' => $componentName, 'blocks' => $blocks]);
         }
+
+        $sectionHeading = Blade::render('<x-fltc::heading level="2" size="lg" theme="skin">{{ $section }}</x-fltc::heading>', ['section' => $section]);
 
         $sections .= <<<HTML
             <section id="{$sectionId}" class="scroll-mt-24 space-y-5">
-                <h2 class="text-lg font-bold text-skin-800 dark:text-skin-100">{$section}</h2>
+                {$sectionHeading}
                 <div class="space-y-5">{$cards}</div>
             </section>
             HTML;
@@ -773,9 +777,6 @@ function renderGalleryHtml(array $groups): string
                     <x-fltc::form.checkbox theme="skin" themeOff="skin" variant="toggle" id="gallery-fx" label="Fonts, rounding and glow" checked
                         onchange="document.getElementById('fltc-fx').disabled = ! this.checked; try { localStorage.setItem('fltc-gallery-fx', this.checked ? 'on' : 'off'); } catch (e) {}" />
                     <x-fltc::text theme="skin" class="block text-xs opacity-75">Fonts, rounding and glow for cyberpunk, fantasy and wh40k; no change for other themes.</x-fltc::text>
-                    <x-fltc::form.checkbox theme="skin" themeOff="skin" variant="toggle" id="gallery-shape" label="Shape every theme"
-                        onchange="if (this.checked) { document.documentElement.dataset.skinShape = 'all'; } else { delete document.documentElement.dataset.skinShape; } try { localStorage.setItem('fltc-gallery-shape', this.checked ? 'all' : ''); } catch (e) {}" />
-                    <x-fltc::text theme="skin" class="block text-xs opacity-75">Sets data-skin-shape="all": components in colour themes (e.g. the green and red buttons) get the skin's look too, in their own colour.</x-fltc::text>
                 </div>
             </div>
         </x-fltc::drawer>
@@ -803,11 +804,17 @@ function renderGalleryHtml(array $groups): string
         </x-fltc::drawer>
         BLADE, ['nav' => $nav]);
 
+    $pageHeading = Blade::render(<<<'BLADE'
+        <x-fltc::heading level="1" size="xl" theme="skin" glitch>fltc component gallery</x-fltc::heading>
+        <x-fltc::subheading theme="skin" class="text-xs">Rendered through real Blade — regenerate with <code>./test.sh tests/GalleryTest.php</code></x-fltc::subheading>
+        BLADE);
+    [$bodyOpen, $bodyClose] = explode('%%content%%', Blade::render('<x-fltc::body theme="skin">%%content%%</x-fltc::body>'));
+
     $main = Blade::render('<x-fltc::container.page width="5xl" class="space-y-12">{!! $sections !!}</x-fltc::container.page>', ['sections' => $sections]);
 
     return <<<HTML
         <!doctype html>
-        <html lang="en" class="">
+        <html lang="en" class="" data-skin-shape="all">
         <head>
             <meta charset="utf-8">
             <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -828,29 +835,26 @@ function renderGalleryHtml(array $groups): string
             <link id="fltc-fx" rel="stylesheet" href="resources/css/skin-effects.css">
             <script>
                 try { document.getElementById('fltc-fx').disabled = localStorage.getItem('fltc-gallery-fx') === 'off'; } catch (e) {}
-                try { if (localStorage.getItem('fltc-gallery-shape') === 'all') document.documentElement.dataset.skinShape = 'all'; } catch (e) {}
             </script>
             <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3/dist/cdn.min.js"></script>
             <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
             <link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Round" rel="stylesheet">
         </head>
-        <body class="min-h-screen bg-skin-100 dark:bg-skin-900">
+        {$bodyOpen}
             <header class="sticky top-0 z-50 flex items-center justify-between px-6 py-4 bg-white/80 dark:bg-skin-800/80 backdrop-blur border-b border-skin-200 dark:border-skin-700">
                 <div>
-                    <h1 class="text-xl font-bold text-skin-900 dark:text-skin-100">fltc component gallery</h1>
-                    <p class="text-xs text-skin-500 dark:text-skin-400">Rendered through real Blade — regenerate with <code>./test.sh tests/GalleryTest.php</code></p>
+                    {$pageHeading}
                 </div>
             </header>
             {$controls}
             {$contents}
             <script>
                 document.getElementById('gallery-fx').checked = ! document.getElementById('fltc-fx').disabled;
-                document.getElementById('gallery-shape').checked = document.documentElement.dataset.skinShape === 'all';
             </script>
             <main class="py-8">
                 {$main}
             </main>
-        </body>
+        {$bodyClose}
         </html>
         HTML;
 }

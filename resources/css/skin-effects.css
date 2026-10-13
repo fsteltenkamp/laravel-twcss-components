@@ -1400,10 +1400,14 @@ div.fltc-spoiler:is(.fltc-theme-cyberpunk, [data-skin="cyberpunk"] .fltc-theme-s
     letter-spacing: 0.1em;
     text-transform: uppercase;
 }
-.fltc-nav-navbar:is(.fltc-theme-cyberpunk, [data-skin="cyberpunk"] .fltc-theme-skin, [data-skin="cyberpunk"]:where([data-skin-shape="all"]) :where([class*="fltc-theme-"]:not(.fltc-theme-cyberpunk, .fltc-theme-fantasy, .fltc-theme-wh40k))) :is(.fltc-nav-navbar-link, .fltc-nav-navbar-onclick, .fltc-nav-navbar-postlink, .fltc-nav-navbar-dropdown > button):hover {
+/* Active links (aria-current="page") look like hovered ones: the inset shadow is one
+   continuous underline beneath icon and text, where a text underline would break. */
+.fltc-nav-navbar:is(.fltc-theme-cyberpunk, [data-skin="cyberpunk"] .fltc-theme-skin, [data-skin="cyberpunk"]:where([data-skin-shape="all"]) :where([class*="fltc-theme-"]:not(.fltc-theme-cyberpunk, .fltc-theme-fantasy, .fltc-theme-wh40k))) :is(.fltc-nav-navbar-link, .fltc-nav-navbar-onclick, .fltc-nav-navbar-postlink, .fltc-nav-navbar-dropdown > button):hover,
+.fltc-nav-navbar:is(.fltc-theme-cyberpunk, [data-skin="cyberpunk"] .fltc-theme-skin, [data-skin="cyberpunk"]:where([data-skin-shape="all"]) :where([class*="fltc-theme-"]:not(.fltc-theme-cyberpunk, .fltc-theme-fantasy, .fltc-theme-wh40k))) .fltc-nav-navbar-link[aria-current="page"] {
     background: rgb(var(--fltc-fx-accent) / 0.1);
     color: rgb(var(--fltc-fx-accent));
     box-shadow: inset 0 -2px 0 rgb(var(--fltc-fx-accent));
+    text-decoration: none;
 }
 .fltc-nav-navbar-dropdown:is(.fltc-theme-cyberpunk, [data-skin="cyberpunk"] .fltc-theme-skin, [data-skin="cyberpunk"]:where([data-skin-shape="all"]) :where([class*="fltc-theme-"]:not(.fltc-theme-cyberpunk, .fltc-theme-fantasy, .fltc-theme-wh40k))) .fltc-nav-navbar-dropdown-menu,
 .fltc-dropdown:is(.fltc-theme-cyberpunk, [data-skin="cyberpunk"] .fltc-theme-skin, [data-skin="cyberpunk"]:where([data-skin-shape="all"]) :where([class*="fltc-theme-"]:not(.fltc-theme-cyberpunk, .fltc-theme-fantasy, .fltc-theme-wh40k))) .fltc-dropdown-menu {

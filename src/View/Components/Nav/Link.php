@@ -11,7 +11,7 @@ class Link extends Component
     public string $classList;
     public string $href;
 
-    public function __construct(string $theme = 'slate', string $class = '', string $href = '#')
+    public function __construct(public string $theme = 'slate', string $class = '', string $href = '#')
     {
         $this->href = $href;
 

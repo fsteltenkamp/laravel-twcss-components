@@ -3,6 +3,7 @@
 namespace Fsteltenkamp\TwcssComponents\View\Components\Nav\Sidebar;
 
 use Closure;
+use Fsteltenkamp\TwcssComponents\Support\ActiveUrl;
 use Fsteltenkamp\TwcssComponents\Support\SidebarTheme;
 use Illuminate\Contracts\View\View;
 use Fsteltenkamp\TwcssComponents\View\Component;
@@ -33,7 +34,7 @@ class Link extends Component
         $resolvedTheme = $theme ?? (app('view')->getShared()['sidebarTheme'] ?? 'slate');
         $this->hookTheme = $resolvedTheme;
 
-        $this->isActive = $active ?? $this->matchesCurrentUrl($href, $activePattern);
+        $this->isActive = $active ?? ActiveUrl::matches($href, $activePattern);
 
         $stateClasses = $this->isActive
             ? SidebarTheme::active($resolvedTheme).' font-semibold'
@@ -49,17 +50,6 @@ class Link extends Component
     /**
      * Determine whether the link points at the current request URL.
      */
-    private function matchesCurrentUrl(string $href, ?string $activePattern): bool
-    {
-        $pattern = $activePattern ?? trim((string) parse_url($href, PHP_URL_PATH), '/');
-
-        if ($pattern === '' || $href === '#') {
-            return false;
-        }
-
-        return request()->is($pattern);
-    }
-
     /**
      * Get the view / contents that represent the component.
      */

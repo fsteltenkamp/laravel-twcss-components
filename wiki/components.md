@@ -218,6 +218,13 @@ Props:
 - Slots: `logo` (optional start-aligned logo box — only rendered when provided), `left` (or the default slot) and `right` for start/end aligned content
 - Children: `x-fltc::nav.navbar.link` (`href`), `x-fltc::nav.navbar.postlink` (`action` — styled like a link but submits a POST form + CSRF, e.g. logout), `x-fltc::nav.navbar.item` (static label), `x-fltc::nav.navbar.onclick` (`onclick` JS string), `x-fltc::nav.navbar.toggle` (sidebar drawer button, see below), and `x-fltc::nav.navbar.dropdown` (`trigger` slot, optional `hover`) with `dropdown.link` (`href`) and `dropdown.postlink` (`action` — POST form + CSRF) menu items. Self-initialising vanilla JS handles open/close, outside-click, Escape and optional hover.
 
+**Navbar link** (`x-fltc::nav.navbar.link`):
+- `href`: link target (default `#`)
+- `active`: force the active state; when omitted it is auto-derived by matching the current request URL (same rules as the sidebar link)
+- `activePattern`: `Request::is()` pattern for active detection (defaults to the href path; supports wildcards like `invoices/*`)
+- `theme`: full palette (default: inherited from the navbar)
+- Active links render `aria-current="page"` and keep the hover background with a continuous underline beneath icon and text (an inset shadow, not a text underline, which breaks at the gap between icon and label). Under the cyberpunk skin they look exactly like hovered links. Use `active` rather than adding `underline` yourself
+
 **Navbar toggle** (`x-fltc::nav.navbar.toggle`): a hamburger button that opens the responsive sidebar drawer on small screens. Place it in the navbar's `left` slot.
 - `target`: the `name` of the sidebar to control — only needed when more than one sidebar is on the page (default: the unnamed sidebar)
 - `label`: accessible label (default: `Toggle navigation`)

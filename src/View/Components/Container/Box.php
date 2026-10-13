@@ -11,7 +11,7 @@ class Box extends Component
     public string $classList;
     public ?string $id;
 
-    public function __construct(string $theme = 'slate', string $class = '', ?string $id = null)
+    public function __construct(public string $theme = 'slate', string $class = '', ?string $id = null)
     {
         $this->id = $id;
 

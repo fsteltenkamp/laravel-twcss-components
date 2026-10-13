@@ -63,7 +63,12 @@ it('renders its hook classes', function (string $tag, string $class) {
         expect(preg_match_all('/\sclass=/', $element))->toBeLessThan(2, "duplicate class attribute: {$element}");
     }
 
-    if (property_exists($class, 'theme')) {
+    // Any component that takes a theme must hook it; a constructor that reads $theme
+    // without storing it (Body, Container\Box once did) leaves the skin rules unmatched.
+    $constructor = (new ReflectionClass($class))->getConstructor();
+    $takesTheme = $constructor && collect($constructor->getParameters())->contains(fn ($p) => $p->getName() === 'theme');
+
+    if ($takesTheme || property_exists($class, 'theme')) {
         expect($html)->toContain('fltc-theme-rose');
     }
 })->with(classBackedComponents());
@@ -194,8 +199,9 @@ it('styles the part hooks of the newer components', function () {
         ->toContain('fltc-form-radio-group-legend')->toContain('fltc-form-radio-label');
 });
 
-it('puts the theme hook on the body so page effects apply', function () {
-    expect(Blade::render('<x-fltc::body theme="cyberpunk">x</x-fltc::body>'))->toMatch('/<body class="[^"]*fltc-body fltc-theme-cyberpunk/');
+it('puts the theme hook on the body and the box so skin effects apply', function () {
+    expect(Blade::render('<x-fltc::body theme="cyberpunk">x</x-fltc::body>'))->toMatch('/<body class="[^"]*fltc-body fltc-theme-cyberpunk/')
+        ->and(Blade::render('<x-fltc::container.box theme="skin">x</x-fltc::container.box>'))->toContain('fltc-container-box fltc-theme-skin');
 });
 
 it('lets data-skin-shape="all" style every themed component, keeping colour themes', function () {
