@@ -1118,3 +1118,165 @@ it('renders every save state and shows the one named by data-state', function ()
     expect(Blade::render('<x-fltc::status theme="skin" :labels="[\'saved\' => \'Stored\']" />'))
         ->toContain('Stored')->toContain('fltc-status-live fltc-theme-skin')->not->toContain('fltc-theme-red');
 });
+
+/*
+ * Import plan, phase 4: media.
+ */
+it('renders a cover with a fixed ratio and a placeholder that takes over on load errors', function () {
+    $html = Blade::render('<x-fltc::cover src="/c.jpg" alt="Dune" ratio="2/3" size="thumb" theme="rose" />');
+
+    expect($html)
+        ->toContain('aspect-[2/3]')
+        ->toContain('w-24')
+        ->toContain('src="/c.jpg"')
+        ->toContain('object-cover')
+        ->toContain('onerror=')
+        ->toMatch('/fltc-cover-fallback[^"]*bg-rose-100[^"]*"\s+hidden/')
+        ->toContain('NO COVER');
+
+    $empty = Blade::render('<x-fltc::cover fallback="Kein Bild" ratio="5/7" />');
+    expect($empty)->not->toContain('<img')->not->toMatch('/fltc-cover-fallback[^"]*"\s+hidden/')
+        ->toContain('Kein Bild')->toContain('aspect-ratio: 5 / 7;');
+});
+
+it('renders a media card with all slots and a stretched title link', function () {
+    $html = Blade::render(<<<'BLADE'
+        <x-fltc::media-card layout="list" href="/books/1" theme="rose" x-bind:data-layout="layout"><x-slot:cover><x-fltc::cover /></x-slot:cover><x-slot:title>Dune</x-slot:title><x-slot:meta>Frank Herbert · 1965</x-slot:meta><x-slot:badges><x-fltc::badge>sci-fi</x-fltc::badge></x-slot:badges><x-slot:footer>412 pages</x-slot:footer><x-slot:actions><x-fltc::button>Read</x-fltc::button></x-slot:actions></x-fltc::media-card>
+        BLADE);
+
+    expect($html)
+        ->toContain('<article data-layout="list"')
+        ->toContain('x-bind:data-layout="layout"')
+        ->toContain('group/media')
+        ->toContain('group-data-[layout=compact]/media:hidden')
+        ->toMatch('/<a href="\/books\/1" class="after:absolute after:inset-0/')
+        ->toContain('fltc-media-card-cover')
+        ->toContain('Frank Herbert')
+        ->toContain('sci-fi')
+        ->toContain('412 pages')
+        ->toContain('fltc-media-card-actions')
+        ->toContain('hover:border-rose-300');
+
+    expect(Blade::render('<x-fltc::media-card layout="poster"><x-slot:title>x</x-slot:title></x-fltc::media-card>'))->toContain('data-layout="card"');
+});
+
+it('renders a sticky action bar and its quiet variant', function () {
+    $html = Blade::render('<x-fltc::action-bar title="Unpublished draft" icon="pencil-simple" sticky offset="4rem" theme="amber">Only you can see it.<x-slot:actions><x-fltc::button>Publish</x-fltc::button></x-slot:actions></x-fltc::action-bar>');
+
+    expect($html)
+        ->toContain('role="region"')
+        ->toContain('aria-label="Unpublished draft"')
+        ->toContain('sticky')
+        ->toContain('top: 4rem;')
+        ->toContain('bg-amber-100')
+        ->toContain('Only you can see it.')
+        ->toContain('Publish');
+
+    expect(Blade::render('<x-fltc::action-bar quiet title="x" />'))->toContain('border-dashed')->not->toContain('sticky');
+});
+
+/*
+ * Phase 5: reveal and context.
+ */
+it('renders an inline spoiler that reveals on click and stays revealed', function () {
+    $html = Blade::render('<x-fltc::spoiler theme="rose">Snape kills Dumbledore</x-fltc::spoiler>');
+
+    expect($html)
+        ->toContain('x-data="{ shown: false, peek: false }"')
+        ->toContain('x-on:click="shown = true"')
+        ->toContain('role="button"')
+        ->toContain('data-revealed="false"')
+        ->toContain('text-transparent')
+        ->toContain('bg-rose-500')
+        ->not->toContain('mouseenter');
+
+    expect(Blade::render('<x-fltc::spoiler reveal="hover">x</x-fltc::spoiler>'))->toContain('x-on:mouseenter="peek = true"');
+});
+
+it('renders a spoiler gate with a blurred body, overlay and replaceable slots', function () {
+    $html = Blade::render('<x-fltc::spoiler variant="gate" title="Ending ahead" buttonLabel="Reveal">Body text</x-fltc::spoiler>');
+
+    expect($html)
+        ->toContain('reveal() { this.shown = true }')
+        ->toContain('blur-md')
+        ->toContain('Ending ahead')
+        ->toContain('x-on:click="reveal()"')
+        ->toContain('Reveal')
+        ->toContain('Body text');
+
+    $custom = Blade::render('<x-fltc::spoiler variant="gate" title="The answer">Body<x-slot:message>Try the riddle first.</x-slot:message><x-slot:button><button x-on:click="reveal()">Show the answer</button></x-slot:button></x-fltc::spoiler>');
+    expect($custom)->toContain('Try the riddle first.')->toContain('Show the answer')->not->toContain('Show anyway');
+});
+
+it('renders an info card with a hover preview and an inline full card', function () {
+    $html = Blade::render('<x-fltc::infocard title="Ada Lovelace" icon="user" image="/ada.jpg" href="/wiki/ada" theme="rose">First programmer.<x-slot:trigger>Ada</x-slot:trigger><x-slot:actions><x-fltc::button>Follow</x-fltc::button></x-slot:actions></x-fltc::infocard>');
+
+    expect($html)
+        ->toContain('fltc-infocard-trigger')
+        ->toContain("window.matchMedia('(hover: hover)')")
+        ->toContain('x-on:mouseenter="if (canHover && ! open) peek = true"')
+        ->toContain('role="tooltip"')
+        ->toContain('fltc-infocard-card')
+        ->toContain('line-clamp-3')
+        ->toContain('href="/wiki/ada"')
+        ->toContain('Read more')
+        ->toContain('Follow')
+        ->and(substr_count($html, 'First programmer.'))->toBe(2);
+
+    expect(Blade::render('<x-fltc::infocard :preview="false">y<x-slot:trigger>x</x-slot:trigger></x-fltc::infocard>'))->not->toContain('role="tooltip"');
+});
+
+it('renders a timeline whose items take its theme', function () {
+    $html = Blade::render('<x-fltc::timeline theme="rose"><x-fltc::timeline.item time="Today" datetime="2026-10-13" title="Chapter 12" href="/c/12">Published.</x-fltc::timeline.item><x-fltc::timeline.item title="Started" icon="flag" theme="amber" /></x-fltc::timeline>');
+
+    expect($html)
+        ->toContain('<ol')
+        ->toContain('border-s-2')
+        ->toContain('<time class="fltc-timeline-time')
+        ->toContain('datetime="2026-10-13"')
+        ->toContain('href="/c/12"')
+        ->toContain('Published.')
+        ->toMatch('/fltc-timeline-item fltc-theme-rose/')
+        ->toMatch('/fltc-timeline-item fltc-theme-amber/')
+        ->toContain('ph-flag');
+});
+
+/*
+ * Phase 6: files.
+ */
+it('chooses the file card preview from the extension', function () {
+    $image = Blade::render('<x-fltc::file-card name="cover.PNG" href="/f/cover.png" :size="1536000" />');
+    expect($image)->toContain('<img src="/f/cover.png"')->toContain('png · 1.5 MB')->toContain('href="/f/cover.png"');
+
+    $text = Blade::render('<x-fltc::file-card name="notes.md" excerpt="# Chapter one" />');
+    expect($text)->toContain('fltc-file-card-excerpt')->toContain('# Chapter one');
+
+    expect(Blade::render('<x-fltc::file-card name="draft.docx" size="12 KB" />'))->toContain('ph-file-doc')->toContain('docx · 12 KB')
+        ->and(Blade::render('<x-fltc::file-card name="notes.md" />'))->toContain('ph-file-text')
+        ->and(Blade::render('<x-fltc::file-card name="archive" extension="zip" />'))->toContain('ph-file-zip')
+        ->and(Blade::render('<x-fltc::file-card name="x.bin" />'))->toMatch('/\bph-file(?![\w-])/');
+
+    $actions = Blade::render('<x-fltc::file-card name="a.pdf"><x-slot:actions><x-fltc::button>Delete</x-fltc::button></x-slot:actions></x-fltc::file-card>');
+    expect($actions)->toContain('ph-file-pdf')->toContain('fltc-file-card-actions')->toContain('Delete');
+});
+
+it('renders an upload drop zone around a real file input', function () {
+    shareErrors(['photos.0' => ['Too large.']]);
+    $html = Blade::render('<x-fltc::form.upload id="photos" name="photos[]" label="Photos" note="Up to 5 MB each." accept="image/*" multiple model="photos" theme="rose" />');
+
+    expect($html)
+        ->toContain('fltc-form-upload')
+        ->toContain('<label')
+        ->toContain('for="photos"')
+        ->toMatch('/<input[^>]*type="file"[^>]*name="photos\[\]"[^>]*class="sr-only"[^>]*accept="image\/\*"[^>]*multiple[^>]*wire:model="photos"/s')
+        ->toContain('x-on:drop.prevent="drop($event)"')
+        ->toContain("dispatchEvent(new Event('change'")
+        ->toContain('Drop files here or click to browse')
+        ->toContain('border-rose-300')
+        ->toContain('x-for="file in files"')
+        ->toContain('Up to 5 MB each.')
+        ->toContain('Too large.')
+        ->toContain('aria-invalid="true"');
+
+    expect(Blade::render('<x-fltc::form.upload id="cv" />'))->toContain('Drop a file here or click to browse')->not->toContain(' multiple');
+});

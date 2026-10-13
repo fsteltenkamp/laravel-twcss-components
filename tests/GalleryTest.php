@@ -342,6 +342,117 @@ request id 7f3a9c</x-slot:details>
             ],
         ],
 
+        'Media' => [
+            'Cover' => [
+                ['ratios and sizes', '<span class="flex flex-wrap items-end gap-4">
+    <x-fltc::cover theme="skin" src="https://picsum.photos/seed/cover/300/450" alt="A cover" size="md" />
+    <x-fltc::cover theme="skin" src="https://picsum.photos/seed/square/300/300" ratio="1/1" size="sm" />
+    <x-fltc::cover theme="skin" src="https://picsum.photos/seed/wide/480/270" ratio="16/9" size="md" />
+    <x-fltc::cover theme="skin" size="thumb" />
+    <x-fltc::cover theme="skin" size="thumb-sm" fallback="" />
+</span>'],
+                ['broken src falls back', '<x-fltc::cover theme="skin" src="https://example.invalid/missing.jpg" alt="Missing" size="sm" fallback="NOT FOUND" fallbackIcon="image-broken" />'],
+            ],
+            'Media card' => [
+                ['layouts (switch with the segmented control)', '<div x-data="{ layout: \'card\' }" class="w-full space-y-4">
+    <x-fltc::segmented theme="skin" value="card" label="Layout" x-model="layout">
+        <x-fltc::segmented.option value="card" icon="squares-four" label="Card" />
+        <x-fltc::segmented.option value="compact" icon="rows" label="Compact" />
+        <x-fltc::segmented.option value="list" icon="list" label="List" />
+    </x-fltc::segmented>
+    <div class="grid gap-4" x-bind:class="layout === \'card\' ? \'grid-cols-2 sm:grid-cols-3\' : \'grid-cols-1\'">
+    <x-fltc::media-card theme="skin" href="#" x-bind:data-layout="layout">
+        <x-slot:cover><x-fltc::cover theme="skin" src="https://picsum.photos/seed/tower/300/450" alt="The Glass Tower" /></x-slot:cover>
+        <x-slot:title>The Glass Tower</x-slot:title>
+        <x-slot:meta>M. Ellery · 2021</x-slot:meta>
+        <x-slot:badges><x-fltc::badge theme="skin">fantasy</x-fltc::badge><x-fltc::badge theme="skin">series</x-fltc::badge></x-slot:badges>
+        <x-slot:footer><span class="flex flex-col gap-2"><x-fltc::rating theme="skin" value="4.5" size="sm" showValue /><x-fltc::progress theme="skin" :value="72" size="sm" /></span></x-slot:footer>
+        <x-slot:actions><x-fltc::button theme="skin" variant="outline" icon="bookmark-simple" aria-label="Bookmark" /></x-slot:actions>
+    </x-fltc::media-card>
+    <x-fltc::media-card theme="skin" href="#" x-bind:data-layout="layout">
+        <x-slot:cover><x-fltc::cover theme="skin" src="https://picsum.photos/seed/moors/300/450" alt="Wind over the Moors" /></x-slot:cover>
+        <x-slot:title>Wind over the Moors</x-slot:title>
+        <x-slot:meta>J. Ashby · 2019</x-slot:meta>
+        <x-slot:badges><x-fltc::badge theme="skin">fantasy</x-fltc::badge><x-fltc::badge theme="skin">series</x-fltc::badge></x-slot:badges>
+        <x-slot:footer><span class="flex flex-col gap-2"><x-fltc::rating theme="skin" value="3.5" size="sm" showValue /><x-fltc::progress theme="skin" :value="15" size="sm" /></span></x-slot:footer>
+        <x-slot:actions><x-fltc::button theme="skin" variant="outline" icon="bookmark-simple" aria-label="Bookmark" /></x-slot:actions>
+    </x-fltc::media-card>
+    <x-fltc::media-card theme="skin" href="#" x-bind:data-layout="layout">
+        <x-slot:cover><x-fltc::cover theme="skin" src="https://picsum.photos/seed/forge/300/450" alt="Forge of Ages" /></x-slot:cover>
+        <x-slot:title>Forge of Ages</x-slot:title>
+        <x-slot:meta>K. Varga · 2024</x-slot:meta>
+        <x-slot:badges><x-fltc::badge theme="skin">fantasy</x-fltc::badge><x-fltc::badge theme="skin">series</x-fltc::badge></x-slot:badges>
+        <x-slot:footer><span class="flex flex-col gap-2"><x-fltc::rating theme="skin" value="5" size="sm" showValue /><x-fltc::progress theme="skin" :value="100" size="sm" /></span></x-slot:footer>
+        <x-slot:actions><x-fltc::button theme="skin" variant="outline" icon="bookmark-simple" aria-label="Bookmark" /></x-slot:actions>
+    </x-fltc::media-card>
+    </div>
+</div>'],
+            ],
+            'Action bar' => [
+                ['draft bar', '<x-fltc::action-bar theme="skin" title="Unpublished draft" icon="pencil-simple" class="w-full">
+    Only you and your beta readers can see this chapter.
+    <x-slot:actions>
+        <x-fltc::button theme="skin" icon="paper-plane-tilt">Publish</x-fltc::button>
+        <x-fltc::button theme="skin" variant="outline">Discard</x-fltc::button>
+    </x-slot:actions>
+</x-fltc::action-bar>'],
+                ['quiet', '<x-fltc::action-bar theme="skin" quiet title="3 chapters selected" icon="check-square" class="w-full">
+    <x-slot:actions><x-fltc::button theme="skin" variant="outline" icon="trash">Delete</x-fltc::button></x-slot:actions>
+</x-fltc::action-bar>'],
+            ],
+        ],
+
+        'Reveal & Context' => [
+            'Spoiler' => [
+                ['inline: click / hover', '<p class="max-w-xl text-sm text-skin-700 dark:text-skin-300">In the last chapter <x-fltc::spoiler theme="skin">the captain was the traitor all along</x-fltc::spoiler>, and on hover: <x-fltc::spoiler theme="skin" reveal="hover">the ship never left port</x-fltc::spoiler>.</p>'],
+                ['gate', '<x-fltc::spoiler variant="gate" theme="skin" title="Spoilers for book 3" class="max-w-xl">
+    <div class="space-y-2 p-6 text-sm text-skin-700 dark:text-skin-300"><p>The tower falls in chapter nine. Mira survives, but loses her sight; the order disbands and the last chapters follow Tomas alone through the moors.</p><p>The epilogue is set twenty years later.</p></div>
+</x-fltc::spoiler>'],
+                ['gate with own slots (puzzle answer)', '<x-fltc::spoiler variant="gate" theme="skin" title="The answer" class="max-w-xl">
+    <div class="p-6 text-sm text-skin-700 dark:text-skin-300">The more you take, the more you leave behind: footsteps.</div>
+    <x-slot:message>Have a go at the riddle before you look.</x-slot:message>
+    <x-slot:button><x-fltc::button theme="skin" icon="lightbulb" x-on:click="reveal()">Show the answer</x-fltc::button></x-slot:button>
+</x-fltc::spoiler>'],
+            ],
+            'Info card' => [
+                ['hover for the preview, click for the card', '<p class="max-w-xl text-sm leading-relaxed text-skin-700 dark:text-skin-300">At dawn
+    <x-fltc::infocard theme="skin" title="Mira Valen" icon="user" image="https://picsum.photos/seed/mira/600/300" href="#">
+        <x-slot:trigger>Mira</x-slot:trigger>
+        Cartographer of the Glass Tower, last of the old order. Appears in books 1–3.
+        <x-slot:actions><x-fltc::button theme="skin" variant="outline" icon="star">Follow</x-fltc::button></x-slot:actions>
+    </x-fltc::infocard>
+    climbed to the top of
+    <x-fltc::infocard theme="skin" title="The Glass Tower" icon="castle-turret">
+        <x-slot:trigger>the tower</x-slot:trigger>
+        A lighthouse turned library on the northern cliffs.
+    </x-fltc::infocard>
+    and looked out over the moors.</p>'],
+            ],
+            'Timeline' => [
+                ['entries with links and icons', '<x-fltc::timeline theme="skin" class="max-w-md">
+    <x-fltc::timeline.item time="Today, 09:12" title="Chapter 12 published" href="#" icon="paper-plane-tilt">Sent to 214 readers.</x-fltc::timeline.item>
+    <x-fltc::timeline.item time="Yesterday" title="Beta feedback">Three comments on chapter 11.</x-fltc::timeline.item>
+    <x-fltc::timeline.item time="12 Oct" title="Draft started" icon="flag" />
+</x-fltc::timeline>'],
+            ],
+        ],
+
+        'Files' => [
+            'File card' => [
+                ['previews by type', '<div class="grid w-full max-w-xl gap-2">
+    <x-fltc::file-card theme="skin" name="cover-art.png" href="#" src="https://picsum.photos/seed/art/120/120" :size="2411724"><x-slot:actions><x-fltc::button theme="skin" variant="outline" icon="trash" aria-label="Delete" /></x-slot:actions></x-fltc::file-card>
+    <x-fltc::file-card theme="skin" name="chapter-01.md" href="#" :size="18304" excerpt="# Chapter One — The wind came off the moors before dawn, carrying salt and smoke. Mira climbed the last stair of the tower and looked north." meta="edited 2 h ago"><x-slot:actions><x-fltc::button theme="skin" variant="outline" icon="pencil-simple" aria-label="Edit" /></x-slot:actions></x-fltc::file-card>
+    <x-fltc::file-card theme="skin" name="manuscript-v3.docx" href="#" :size="812000" />
+    <x-fltc::file-card theme="skin" name="contract.pdf" href="#" size="140 KB" />
+    <x-fltc::file-card theme="skin" name="research.zip" :size="48000000" />
+</div>'],
+            ],
+            'Upload' => [
+                ['drop zone (drop files on it or click)', '<x-fltc::form.upload theme="skin" name="files[]" label="Attachments" note="Images or PDFs, up to 10 MB each." accept="image/*,.pdf" multiple wrapperClass="max-w-xl" />'],
+                ['single file', '<x-fltc::form.upload theme="skin" name="manuscript" label="Manuscript" accept=".docx,.md" icon="file-doc" wrapperClass="max-w-xl" />'],
+            ],
+        ],
+
         'Overlays' => [
             'Modal' => [
                 ['default', '<x-fltc::button theme="skin" x-data x-on:click="$dispatch(\'open-modal\', \'gallery-modal\')">Open modal</x-fltc::button>

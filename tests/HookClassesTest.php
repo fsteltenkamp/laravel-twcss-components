@@ -49,6 +49,7 @@ it('renders its hook classes', function (string $tag, string $class) {
         'nav.navbar.dropdown' => '<x-slot:trigger>Menu</x-slot:trigger>',
         'dropdown' => '<x-slot:trigger>Menu</x-slot:trigger>',
         'progress' => '',
+        'infocard' => '<x-slot:trigger>Ada</x-slot:trigger>',
     ];
 
     $html = Blade::render("<x-fltc::{$tag} theme=\"rose\">".($content[$tag] ?? 'x')."</x-fltc::{$tag}>");

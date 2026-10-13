@@ -394,7 +394,12 @@ body.fltc-theme-cyberpunk::after {
 :is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"], .fltc-theme-cyberpunk, .fltc-theme-fantasy, .fltc-theme-wh40k) .fltc-card-header,
 :is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"], .fltc-theme-cyberpunk, .fltc-theme-fantasy, .fltc-theme-wh40k) .fltc-drawer-header,
 :is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"], .fltc-theme-cyberpunk, .fltc-theme-fantasy, .fltc-theme-wh40k) .fltc-form-section-title,
-:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"], .fltc-theme-cyberpunk, .fltc-theme-fantasy, .fltc-theme-wh40k) .fltc-empty-title {
+:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"], .fltc-theme-cyberpunk, .fltc-theme-fantasy, .fltc-theme-wh40k) .fltc-empty-title,
+:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"], .fltc-theme-cyberpunk, .fltc-theme-fantasy, .fltc-theme-wh40k) .fltc-media-card-title,
+:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"], .fltc-theme-cyberpunk, .fltc-theme-fantasy, .fltc-theme-wh40k) .fltc-action-bar-title,
+:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"], .fltc-theme-cyberpunk, .fltc-theme-fantasy, .fltc-theme-wh40k) .fltc-spoiler-title,
+:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"], .fltc-theme-cyberpunk, .fltc-theme-fantasy, .fltc-theme-wh40k) .fltc-infocard-title,
+:is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"], .fltc-theme-cyberpunk, .fltc-theme-fantasy, .fltc-theme-wh40k) .fltc-timeline-title {
     font-family: var(--fltc-font-display);
     letter-spacing: 0.05em;
 }
@@ -480,7 +485,14 @@ body.fltc-theme-cyberpunk::after {
 .fltc-nav-navbar-dropdown-menu:is(.fltc-theme-cyberpunk, .fltc-theme-fantasy, .fltc-theme-wh40k, [data-skin="cyberpunk"] .fltc-theme-skin, [data-skin="fantasy"] .fltc-theme-skin, [data-skin="wh40k"] .fltc-theme-skin),
 .fltc-dropdown:is(.fltc-theme-cyberpunk, .fltc-theme-fantasy, .fltc-theme-wh40k, [data-skin="cyberpunk"] .fltc-theme-skin, [data-skin="fantasy"] .fltc-theme-skin, [data-skin="wh40k"] .fltc-theme-skin) .fltc-dropdown-menu,
 .fltc-progress:is(.fltc-theme-cyberpunk, .fltc-theme-fantasy, .fltc-theme-wh40k, [data-skin="cyberpunk"] .fltc-theme-skin, [data-skin="fantasy"] .fltc-theme-skin, [data-skin="wh40k"] .fltc-theme-skin) .fltc-progress-track,
-.fltc-status > [data-status]:is(.fltc-theme-cyberpunk, .fltc-theme-fantasy, .fltc-theme-wh40k, [data-skin="cyberpunk"] .fltc-theme-skin, [data-skin="fantasy"] .fltc-theme-skin, [data-skin="wh40k"] .fltc-theme-skin) {
+.fltc-status > [data-status]:is(.fltc-theme-cyberpunk, .fltc-theme-fantasy, .fltc-theme-wh40k, [data-skin="cyberpunk"] .fltc-theme-skin, [data-skin="fantasy"] .fltc-theme-skin, [data-skin="wh40k"] .fltc-theme-skin),
+.fltc-cover:is(.fltc-theme-cyberpunk, .fltc-theme-fantasy, .fltc-theme-wh40k, [data-skin="cyberpunk"] .fltc-theme-skin, [data-skin="fantasy"] .fltc-theme-skin, [data-skin="wh40k"] .fltc-theme-skin),
+.fltc-media-card:is(.fltc-theme-cyberpunk, .fltc-theme-fantasy, .fltc-theme-wh40k, [data-skin="cyberpunk"] .fltc-theme-skin, [data-skin="fantasy"] .fltc-theme-skin, [data-skin="wh40k"] .fltc-theme-skin),
+.fltc-action-bar:is(.fltc-theme-cyberpunk, .fltc-theme-fantasy, .fltc-theme-wh40k, [data-skin="cyberpunk"] .fltc-theme-skin, [data-skin="fantasy"] .fltc-theme-skin, [data-skin="wh40k"] .fltc-theme-skin),
+.fltc-file-card:is(.fltc-theme-cyberpunk, .fltc-theme-fantasy, .fltc-theme-wh40k, [data-skin="cyberpunk"] .fltc-theme-skin, [data-skin="fantasy"] .fltc-theme-skin, [data-skin="wh40k"] .fltc-theme-skin),
+div.fltc-spoiler:is(.fltc-theme-cyberpunk, .fltc-theme-fantasy, .fltc-theme-wh40k, [data-skin="cyberpunk"] .fltc-theme-skin, [data-skin="fantasy"] .fltc-theme-skin, [data-skin="wh40k"] .fltc-theme-skin),
+.fltc-infocard:is(.fltc-theme-cyberpunk, .fltc-theme-fantasy, .fltc-theme-wh40k, [data-skin="cyberpunk"] .fltc-theme-skin, [data-skin="fantasy"] .fltc-theme-skin, [data-skin="wh40k"] .fltc-theme-skin) :is(.fltc-infocard-preview, .fltc-infocard-card),
+.fltc-form-upload:is(.fltc-theme-cyberpunk, .fltc-theme-fantasy, .fltc-theme-wh40k, [data-skin="cyberpunk"] .fltc-theme-skin, [data-skin="fantasy"] .fltc-theme-skin, [data-skin="wh40k"] .fltc-theme-skin) .fltc-form-upload-zone {
     border-radius: var(--fltc-radius);
 }
 :is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"], .fltc-theme-cyberpunk, .fltc-theme-fantasy, .fltc-theme-wh40k) .fltc-modal-panel {
@@ -499,6 +511,9 @@ body.fltc-theme-cyberpunk::after {
 .fltc-toast:is(.fltc-theme-cyberpunk, .fltc-theme-fantasy, .fltc-theme-wh40k, [data-skin="cyberpunk"] .fltc-theme-skin, [data-skin="fantasy"] .fltc-theme-skin, [data-skin="wh40k"] .fltc-theme-skin),
 .fltc-nav-navbar-dropdown-menu:is(.fltc-theme-cyberpunk, .fltc-theme-fantasy, .fltc-theme-wh40k, [data-skin="cyberpunk"] .fltc-theme-skin, [data-skin="fantasy"] .fltc-theme-skin, [data-skin="wh40k"] .fltc-theme-skin),
 .fltc-dropdown:is(.fltc-theme-cyberpunk, .fltc-theme-fantasy, .fltc-theme-wh40k, [data-skin="cyberpunk"] .fltc-theme-skin, [data-skin="fantasy"] .fltc-theme-skin, [data-skin="wh40k"] .fltc-theme-skin) .fltc-dropdown-menu,
+.fltc-media-card:is(.fltc-theme-cyberpunk, .fltc-theme-fantasy, .fltc-theme-wh40k, [data-skin="cyberpunk"] .fltc-theme-skin, [data-skin="fantasy"] .fltc-theme-skin, [data-skin="wh40k"] .fltc-theme-skin),
+.fltc-file-card:is(.fltc-theme-cyberpunk, .fltc-theme-fantasy, .fltc-theme-wh40k, [data-skin="cyberpunk"] .fltc-theme-skin, [data-skin="fantasy"] .fltc-theme-skin, [data-skin="wh40k"] .fltc-theme-skin),
+.fltc-infocard:is(.fltc-theme-cyberpunk, .fltc-theme-fantasy, .fltc-theme-wh40k, [data-skin="cyberpunk"] .fltc-theme-skin, [data-skin="fantasy"] .fltc-theme-skin, [data-skin="wh40k"] .fltc-theme-skin) :is(.fltc-infocard-preview, .fltc-infocard-card),
 :is([data-skin="cyberpunk"], [data-skin="fantasy"], [data-skin="wh40k"], .fltc-theme-cyberpunk, .fltc-theme-fantasy, .fltc-theme-wh40k) .fltc-modal-panel {
     box-shadow:
         0 0 0 1px rgb(var(--fltc-fx-accent) / 0.05) inset,
@@ -564,7 +579,11 @@ body.fltc-theme-cyberpunk::after {
 .fltc-nav-pagination:is(.fltc-theme-cyberpunk, .fltc-theme-fantasy, .fltc-theme-wh40k, [data-skin="cyberpunk"] .fltc-theme-skin, [data-skin="fantasy"] .fltc-theme-skin, [data-skin="wh40k"] .fltc-theme-skin) .fltc-nav-pagination-summary,
 .fltc-progress:is(.fltc-theme-cyberpunk, .fltc-theme-fantasy, .fltc-theme-wh40k, [data-skin="cyberpunk"] .fltc-theme-skin, [data-skin="fantasy"] .fltc-theme-skin, [data-skin="wh40k"] .fltc-theme-skin) :is(.fltc-progress-label, .fltc-progress-value, .fltc-progress-legend),
 .fltc-form-field:is(.fltc-theme-cyberpunk, .fltc-theme-fantasy, .fltc-theme-wh40k, [data-skin="cyberpunk"] .fltc-theme-skin, [data-skin="fantasy"] .fltc-theme-skin, [data-skin="wh40k"] .fltc-theme-skin) .fltc-form-field-note,
-.fltc-status > [data-status]:is(.fltc-theme-cyberpunk, .fltc-theme-fantasy, .fltc-theme-wh40k, [data-skin="cyberpunk"] .fltc-theme-skin, [data-skin="fantasy"] .fltc-theme-skin, [data-skin="wh40k"] .fltc-theme-skin) {
+.fltc-status > [data-status]:is(.fltc-theme-cyberpunk, .fltc-theme-fantasy, .fltc-theme-wh40k, [data-skin="cyberpunk"] .fltc-theme-skin, [data-skin="fantasy"] .fltc-theme-skin, [data-skin="wh40k"] .fltc-theme-skin),
+.fltc-media-card:is(.fltc-theme-cyberpunk, .fltc-theme-fantasy, .fltc-theme-wh40k, [data-skin="cyberpunk"] .fltc-theme-skin, [data-skin="fantasy"] .fltc-theme-skin, [data-skin="wh40k"] .fltc-theme-skin) .fltc-media-card-meta,
+.fltc-file-card:is(.fltc-theme-cyberpunk, .fltc-theme-fantasy, .fltc-theme-wh40k, [data-skin="cyberpunk"] .fltc-theme-skin, [data-skin="fantasy"] .fltc-theme-skin, [data-skin="wh40k"] .fltc-theme-skin) .fltc-file-card-meta,
+.fltc-timeline-item:is(.fltc-theme-cyberpunk, .fltc-theme-fantasy, .fltc-theme-wh40k, [data-skin="cyberpunk"] .fltc-theme-skin, [data-skin="fantasy"] .fltc-theme-skin, [data-skin="wh40k"] .fltc-theme-skin) .fltc-timeline-time,
+.fltc-cover:is(.fltc-theme-cyberpunk, .fltc-theme-fantasy, .fltc-theme-wh40k, [data-skin="cyberpunk"] .fltc-theme-skin, [data-skin="fantasy"] .fltc-theme-skin, [data-skin="wh40k"] .fltc-theme-skin) .fltc-cover-fallback {
     font-family: var(--fltc-font-term);
     letter-spacing: 0.08em;
 }
@@ -854,6 +873,12 @@ body.fltc-theme-cyberpunk::after {
 .fltc-form-checklist:is(.fltc-theme-cyberpunk, [data-skin="cyberpunk"] .fltc-theme-skin) .fltc-form-checklist-list,
 .fltc-nav-stepper:is(.fltc-theme-cyberpunk, [data-skin="cyberpunk"] .fltc-theme-skin) .fltc-nav-stepper-panel,
 .fltc-segmented:is(.fltc-theme-cyberpunk, [data-skin="cyberpunk"] .fltc-theme-skin),
+.fltc-media-card:is(.fltc-theme-cyberpunk, [data-skin="cyberpunk"] .fltc-theme-skin),
+.fltc-file-card:is(.fltc-theme-cyberpunk, [data-skin="cyberpunk"] .fltc-theme-skin),
+.fltc-action-bar:is(.fltc-theme-cyberpunk, [data-skin="cyberpunk"] .fltc-theme-skin),
+div.fltc-spoiler:is(.fltc-theme-cyberpunk, [data-skin="cyberpunk"] .fltc-theme-skin),
+.fltc-infocard:is(.fltc-theme-cyberpunk, [data-skin="cyberpunk"] .fltc-theme-skin) :is(.fltc-infocard-preview, .fltc-infocard-card),
+.fltc-form-upload:is(.fltc-theme-cyberpunk, [data-skin="cyberpunk"] .fltc-theme-skin) .fltc-form-upload-zone,
 .fltc-nav-navbar-dropdown:is(.fltc-theme-cyberpunk, [data-skin="cyberpunk"] .fltc-theme-skin) .fltc-nav-navbar-dropdown-menu,
 .fltc-dropdown:is(.fltc-theme-cyberpunk, [data-skin="cyberpunk"] .fltc-theme-skin) .fltc-dropdown-menu,
 .fltc-form-checkbox-control.border:has(> .fltc-form-checkbox:is(.fltc-theme-cyberpunk, [data-skin="cyberpunk"] .fltc-theme-skin)) {
@@ -874,8 +899,11 @@ body.fltc-theme-cyberpunk::after {
 .fltc-form-checklist:is(.fltc-theme-cyberpunk, [data-skin="cyberpunk"] .fltc-theme-skin) .fltc-form-checklist-list,
 .fltc-nav-stepper:is(.fltc-theme-cyberpunk, [data-skin="cyberpunk"] .fltc-theme-skin) .fltc-nav-stepper-panel,
 .fltc-segmented:is(.fltc-theme-cyberpunk, [data-skin="cyberpunk"] .fltc-theme-skin),
+.fltc-file-card:is(.fltc-theme-cyberpunk, [data-skin="cyberpunk"] .fltc-theme-skin),
+div.fltc-spoiler:is(.fltc-theme-cyberpunk, [data-skin="cyberpunk"] .fltc-theme-skin),
+.fltc-infocard:is(.fltc-theme-cyberpunk, [data-skin="cyberpunk"] .fltc-theme-skin) .fltc-infocard-card,
 .fltc-form-checkbox-control.border:has(> .fltc-form-checkbox:is(.fltc-theme-cyberpunk, [data-skin="cyberpunk"] .fltc-theme-skin)) {
-    position: relative; /* dropdown menus are positioned already */
+    position: relative; /* the media card, action bar (sticky), preview and drop zone are positioned already */ /* dropdown menus are positioned already */
 }
 .fltc-container-box:is(.fltc-theme-cyberpunk, [data-skin="cyberpunk"] .fltc-theme-skin)::after,
 .fltc-card:is(.fltc-theme-cyberpunk, [data-skin="cyberpunk"] .fltc-theme-skin)::after,
@@ -887,6 +915,12 @@ body.fltc-theme-cyberpunk::after {
 .fltc-form-checklist:is(.fltc-theme-cyberpunk, [data-skin="cyberpunk"] .fltc-theme-skin) .fltc-form-checklist-list::after,
 .fltc-nav-stepper:is(.fltc-theme-cyberpunk, [data-skin="cyberpunk"] .fltc-theme-skin) .fltc-nav-stepper-panel::after,
 .fltc-segmented:is(.fltc-theme-cyberpunk, [data-skin="cyberpunk"] .fltc-theme-skin)::after,
+.fltc-media-card:is(.fltc-theme-cyberpunk, [data-skin="cyberpunk"] .fltc-theme-skin)::after,
+.fltc-file-card:is(.fltc-theme-cyberpunk, [data-skin="cyberpunk"] .fltc-theme-skin)::after,
+.fltc-action-bar:is(.fltc-theme-cyberpunk, [data-skin="cyberpunk"] .fltc-theme-skin)::after,
+div.fltc-spoiler:is(.fltc-theme-cyberpunk, [data-skin="cyberpunk"] .fltc-theme-skin)::after,
+.fltc-infocard:is(.fltc-theme-cyberpunk, [data-skin="cyberpunk"] .fltc-theme-skin) :is(.fltc-infocard-preview, .fltc-infocard-card)::after,
+.fltc-form-upload:is(.fltc-theme-cyberpunk, [data-skin="cyberpunk"] .fltc-theme-skin) .fltc-form-upload-zone::after,
 .fltc-nav-navbar-dropdown:is(.fltc-theme-cyberpunk, [data-skin="cyberpunk"] .fltc-theme-skin) .fltc-nav-navbar-dropdown-menu::after,
 .fltc-dropdown:is(.fltc-theme-cyberpunk, [data-skin="cyberpunk"] .fltc-theme-skin) .fltc-dropdown-menu::after,
 .fltc-form-checkbox-control.border:has(> .fltc-form-checkbox:is(.fltc-theme-cyberpunk, [data-skin="cyberpunk"] .fltc-theme-skin))::after {
@@ -1418,4 +1452,158 @@ label.fltc-badge:is(.fltc-theme-cyberpunk, [data-skin="cyberpunk"] .fltc-theme-s
     .fltc-status > .fltc-status-saving {
         animation: none !important;
     }
+}
+
+/* ---- cyberpunk covers ----
+   Both corners cut; the placeholder is a dark panel with scanlines and cyan type. */
+.fltc-cover:is(.fltc-theme-cyberpunk, [data-skin="cyberpunk"] .fltc-theme-skin) {
+    border-radius: 0;
+    clip-path: polygon(var(--fltc-cut) 0, 100% 0, 100% calc(100% - var(--fltc-cut)), calc(100% - var(--fltc-cut)) 100%, 0 100%, 0 var(--fltc-cut));
+}
+.fltc-cover:is(.fltc-theme-cyberpunk, [data-skin="cyberpunk"] .fltc-theme-skin) .fltc-cover-fallback {
+    border-color: rgb(var(--fltc-fx-text) / 0.4);
+    background: repeating-linear-gradient(to bottom, rgb(var(--fltc-fx-text) / 0.06) 0 1px, transparent 1px 3px), rgb(var(--fltc-fx-ink) / 0.85);
+    color: rgb(var(--fltc-fx-text) / 0.7);
+    letter-spacing: 0.15em;
+}
+
+/* ---- cyberpunk media cards ----
+   Cut panels (above); the title glows pink on hover, meta is terminal type. */
+.fltc-media-card:is(.fltc-theme-cyberpunk, [data-skin="cyberpunk"] .fltc-theme-skin) {
+    background-color: rgb(var(--fltc-fx-ink) / 0.6);
+}
+.fltc-media-card:is(.fltc-theme-cyberpunk, [data-skin="cyberpunk"] .fltc-theme-skin):hover {
+    --fltc-line: var(--fltc-fx-accent);
+    --fltc-line-alpha: 0.9;
+    box-shadow: inset 0 0 24px rgb(var(--fltc-fx-accent) / 0.15);
+}
+.fltc-media-card:is(.fltc-theme-cyberpunk, [data-skin="cyberpunk"] .fltc-theme-skin):hover .fltc-media-card-title {
+    color: rgb(var(--fltc-fx-accent));
+    text-shadow: var(--fltc-fx-text-glow);
+}
+.fltc-media-card:is(.fltc-theme-cyberpunk, [data-skin="cyberpunk"] .fltc-theme-skin) .fltc-media-card-meta {
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgb(var(--fltc-fx-text) / 0.65);
+}
+
+/* ---- cyberpunk action bar ----
+   A pink leading bar and an uppercase title; the quiet variant keeps a cyan line. */
+.fltc-action-bar:is(.fltc-theme-cyberpunk, [data-skin="cyberpunk"] .fltc-theme-skin) {
+    --fltc-line: var(--fltc-fx-accent);
+    --fltc-line-alpha: 0.7;
+    background-color: rgb(var(--fltc-fx-ink) / 0.85);
+    box-shadow: inset 3px 0 0 rgb(var(--fltc-fx-accent)), inset 0 0 24px rgb(var(--fltc-fx-accent) / 0.1);
+}
+.fltc-action-bar.border-dashed:is(.fltc-theme-cyberpunk, [data-skin="cyberpunk"] .fltc-theme-skin) {
+    --fltc-line: var(--fltc-fx-text);
+    --fltc-line-alpha: 0.5;
+    box-shadow: inset 3px 0 0 rgb(var(--fltc-fx-text) / 0.6);
+}
+.fltc-action-bar:is(.fltc-theme-cyberpunk, [data-skin="cyberpunk"] .fltc-theme-skin) .fltc-action-bar-title {
+    color: rgb(var(--fltc-fx-accent));
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-shadow: var(--fltc-fx-text-glow);
+}
+
+/* ---- cyberpunk spoilers ----
+   Inline: a redaction bar of cyan scan stripes; once revealed, a faint pink highlight
+   underlined in pink. Gate: the overlay is a dark scanline panel. */
+span.fltc-spoiler:is(.fltc-theme-cyberpunk, [data-skin="cyberpunk"] .fltc-theme-skin)[data-revealed="false"] {
+    border-radius: 0;
+    background: repeating-linear-gradient(90deg, rgb(var(--fltc-fx-text) / 0.55) 0 2px, rgb(var(--fltc-fx-text) / 0.25) 2px 4px);
+}
+span.fltc-spoiler:is(.fltc-theme-cyberpunk, [data-skin="cyberpunk"] .fltc-theme-skin)[data-revealed="true"] {
+    border-radius: 0;
+    background: rgb(var(--fltc-fx-accent) / 0.12);
+    box-shadow: inset 0 -1px 0 rgb(var(--fltc-fx-accent));
+}
+div.fltc-spoiler:is(.fltc-theme-cyberpunk, [data-skin="cyberpunk"] .fltc-theme-skin) .fltc-spoiler-overlay {
+    background: repeating-linear-gradient(to bottom, rgb(var(--fltc-fx-text) / 0.05) 0 1px, transparent 1px 3px), rgb(var(--fltc-fx-ink) / 0.7);
+}
+div.fltc-spoiler:is(.fltc-theme-cyberpunk, [data-skin="cyberpunk"] .fltc-theme-skin) .fltc-spoiler-title {
+    color: rgb(var(--fltc-fx-accent));
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    text-shadow: var(--fltc-fx-text-glow);
+}
+
+/* ---- cyberpunk info cards ----
+   The trigger gets a pink dotted underline; preview and card are cut panels (above). */
+.fltc-infocard:is(.fltc-theme-cyberpunk, [data-skin="cyberpunk"] .fltc-theme-skin) .fltc-infocard-trigger {
+    text-decoration-color: rgb(var(--fltc-fx-accent));
+}
+.fltc-infocard:is(.fltc-theme-cyberpunk, [data-skin="cyberpunk"] .fltc-theme-skin) .fltc-infocard-trigger:is(:hover, :focus-visible, [aria-expanded="true"]) {
+    color: rgb(var(--fltc-fx-accent));
+    text-shadow: var(--fltc-fx-text-glow);
+    box-shadow: none;
+    outline: none;
+}
+.fltc-infocard:is(.fltc-theme-cyberpunk, [data-skin="cyberpunk"] .fltc-theme-skin) :is(.fltc-infocard-preview, .fltc-infocard-card) {
+    --fltc-line: var(--fltc-fx-accent);
+    --fltc-line-alpha: 0.8;
+    background-color: rgb(var(--fltc-fx-ink));
+}
+
+/* ---- cyberpunk timeline ----
+   A cyan rail with glowing pink diamonds for dots. */
+.fltc-timeline:is(.fltc-theme-cyberpunk, [data-skin="cyberpunk"] .fltc-theme-skin) {
+    border-color: rgb(var(--fltc-fx-text) / 0.35);
+}
+.fltc-timeline-item:is(.fltc-theme-cyberpunk, [data-skin="cyberpunk"] .fltc-theme-skin) .fltc-timeline-dot {
+    border-radius: 0;
+    transform: rotate(45deg);
+    background: rgb(var(--fltc-fx-accent));
+    color: rgb(var(--fltc-fx-ink));
+    box-shadow: 0 0 0 3px rgb(var(--fltc-fx-ink)), 0 0 10px rgb(var(--fltc-fx-accent) / 0.8);
+}
+.fltc-timeline-item:is(.fltc-theme-cyberpunk, [data-skin="cyberpunk"] .fltc-theme-skin) .fltc-timeline-dot > * {
+    transform: rotate(-45deg);
+}
+.fltc-timeline-item:is(.fltc-theme-cyberpunk, [data-skin="cyberpunk"] .fltc-theme-skin) .fltc-timeline-time {
+    font-size: 0.9rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgb(var(--fltc-fx-text) / 0.65);
+}
+
+/* ---- cyberpunk file cards ---- */
+.fltc-file-card:is(.fltc-theme-cyberpunk, [data-skin="cyberpunk"] .fltc-theme-skin) {
+    background-color: rgb(var(--fltc-fx-ink) / 0.6);
+}
+.fltc-file-card:is(.fltc-theme-cyberpunk, [data-skin="cyberpunk"] .fltc-theme-skin) .fltc-file-card-preview {
+    border-color: rgb(var(--fltc-fx-text) / 0.4);
+    border-radius: 0;
+    background: rgb(var(--fltc-fx-text) / 0.08);
+    color: rgb(var(--fltc-fx-text));
+}
+.fltc-file-card:is(.fltc-theme-cyberpunk, [data-skin="cyberpunk"] .fltc-theme-skin) .fltc-file-card-meta {
+    font-size: 0.85rem;
+    color: rgb(var(--fltc-fx-text) / 0.65);
+}
+
+/* ---- cyberpunk upload drop zone ----
+   A dashed cyan cut panel; dragging files over it turns it pink and glowing. */
+.fltc-form-upload:is(.fltc-theme-cyberpunk, [data-skin="cyberpunk"] .fltc-theme-skin) .fltc-form-upload-zone {
+    border-style: dashed;
+    background: rgb(var(--fltc-fx-ink) / 0.6);
+    color: rgb(var(--fltc-fx-text) / 0.8);
+}
+.fltc-form-upload:is(.fltc-theme-cyberpunk, [data-skin="cyberpunk"] .fltc-theme-skin) .fltc-form-upload-zone:is(:hover, [data-dragging="true"]) {
+    --fltc-line: var(--fltc-fx-accent);
+    --fltc-line-alpha: 1;
+    background: rgb(var(--fltc-fx-accent) / 0.1);
+    color: rgb(var(--fltc-fx-accent));
+    box-shadow: inset 0 0 24px rgb(var(--fltc-fx-accent) / 0.25);
+}
+.fltc-form-upload:is(.fltc-theme-cyberpunk, [data-skin="cyberpunk"] .fltc-theme-skin) .fltc-form-upload-prompt {
+    font-family: var(--fltc-font-term);
+    font-size: 1rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+.fltc-form-upload:is(.fltc-theme-cyberpunk, [data-skin="cyberpunk"] .fltc-theme-skin) .fltc-form-upload-icon {
+    text-shadow: 0 0 10px currentColor;
 }

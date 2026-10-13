@@ -39,7 +39,14 @@ such as `resources/css/skin-effects.css` target them:
   (`fltc-messagebox-title` / `-details` / `-actions`), fields and sections
   (`fltc-form-field-note`, `fltc-form-section-title` / `-hint`), star ratings
   (`fltc-rating-star` / `-fill`, `fltc-form-rating-star` / `-fill`) and the save status (one
-  `fltc-status-<state>` part per state, each with its own `fltc-theme-*`). The drawer tab
+  `fltc-status-<state>` part per state, each with its own `fltc-theme-*`), the cover
+  (`fltc-cover-image` / `-fallback`), the media card (`fltc-media-card-cover` / `-body` /
+  `-title` / `-meta` / `-badges` / `-footer` / `-actions`, layout in `data-layout`), the action
+  bar (`fltc-action-bar-title` / `-text` / `-actions`), spoilers (`data-revealed`;
+  `fltc-spoiler-content` / `-overlay` / `-title` for the gate), the info card
+  (`fltc-infocard-trigger` / `-preview` / `-card`), the timeline (`fltc-timeline-dot` / `-time` /
+  `-title`), the file card (`fltc-file-card-preview` / `-name` / `-meta` / `-actions`) and the
+  upload (`fltc-form-upload-zone` with `data-dragging`, `-prompt`, `-files`). The drawer tab
   and the tooltip bubble are teleported out of their component, so they repeat the
   `fltc-theme-*` class themselves.
 
@@ -524,6 +531,7 @@ Components:
 - `x-fltc::form.radio`
 - `x-fltc::form.radio.group`
 - `x-fltc::form.rating`
+- `x-fltc::form.upload`
 - `x-fltc::form.otp`
 - `x-fltc::form.container.auth.simple`
 - `x-fltc::form.container.auth.two-col-left`
@@ -600,6 +608,22 @@ uploads with `WithFileUploads`), `theme`, `inline`, `wrapperClass`. `accept` and
 pass through as attributes. For a multiple upload use `name="files[]"`; errors on
 `files` and `files.*` are both shown. (A drop-zone upload control is planned separately.)
 
+**Upload** (`x-fltc::form.upload`): a drop zone around a real `<input type="file">`. Click it
+to browse or drop files on it; dropped files are put into the input and a `change` event is
+fired, so it works in a plain form and with `wire:model` (Livewire `WithFileUploads`) alike.
+The chosen file names are listed under the zone.
+
+```blade
+<x-fltc::form.upload name="attachments[]" label="Attachments" accept="image/*,.pdf" multiple model="attachments" />
+```
+
+- `name` (use `name[]` with `multiple`), `id`, `label`, `note`, `required`, `disabled`
+- `accept` (also shown as a hint), `multiple` (a single-file zone keeps only the first dropped file)
+- `model` / `live`: Livewire binding on the input; other attributes go on the input too
+- `icon` (default `upload-simple`), `prompt` (default "Drop a file / files here or click to browse")
+- `theme`: full palette (default: slate); `inline`, `wrapperClass`
+- Errors on `name` and `name.*` are shown. The plain picker is `x-fltc::form.input.file`
+
 **Radio** (`x-fltc::form.radio`) and **Radio group** (`x-fltc::form.radio.group`): native
 radio buttons, coloured with the theme's accent colour. Inside a group the radios take the
 group's `name`, `model`, `live`, `required` and `theme` unless they set their own.
@@ -674,6 +698,123 @@ Auth container variants:
 - `simple`: minimal login form, no extra edge content
 - `two-col-left`: main content in default slot, side content in side slot (left visual panel)
 - `two-col-right`: side content in side slot (left visual panel), main content in default slot
+
+### Media
+
+**Cover** (`x-fltc::cover`): a fixed-aspect-ratio image — book cover, poster, avatar — with
+`object-cover`. When `src` is empty or the image fails to load, a placeholder takes its place
+(swapped by an inline `onerror`, no Alpine needed).
+- `src`, `alt`
+- `ratio`: `2/3` (default), `3/4`, `1/1`, `4/3`, `3/2`, `16/9`, or any other `w/h` (set inline)
+- `size`: `thumb-sm` (3rem), `thumb` (6rem), `sm`, `md`, `lg`, `full` (default — the container's width)
+- `fallback`: placeholder text (default `NO COVER`; empty for none), `fallbackIcon` (default `image`)
+- `theme`: full palette (default: slate) — the placeholder
+
+**Media card** (`x-fltc::media-card`): a card for a book, story or other item, built from the
+cover, chips, rating and progress components.
+
+```blade
+<x-fltc::media-card :href="route('books.show', $book)" layout="list">
+    <x-slot:cover><x-fltc::cover :src="$book->cover_url" :alt="$book->title" /></x-slot:cover>
+    <x-slot:title>{{ $book->title }}</x-slot:title>
+    <x-slot:meta>{{ $book->author }} · {{ $book->year }}</x-slot:meta>
+    <x-slot:badges>@foreach ($book->tags as $tag)<x-fltc::badge>{{ $tag }}</x-fltc::badge>@endforeach</x-slot:badges>
+    <x-slot:footer><x-fltc::rating :value="$book->rating" size="sm" /></x-slot:footer>
+    <x-slot:actions><x-fltc::button icon="bookmark-simple" variant="outline" /></x-slot:actions>
+</x-fltc::media-card>
+```
+
+- `layout`: `card` (default; cover on top), `compact` (one line: small cover, title, meta,
+  actions — badges and footer hidden), `list` (cover beside the body)
+- The layout is rendered as `data-layout` and every region styles itself per layout, so it can
+  switch in the browser: `x-bind:data-layout="layout"` on the cards with an
+  `x-fltc::segmented x-model="layout"` control (see the gallery)
+- `href`: makes the title a stretched link, so the whole card is clickable; actions stay on top
+- `theme`: full palette (default: slate)
+- Slots: `cover`, `title`, `meta`, `badges`, `footer`, `actions`, and the default slot (extra
+  body content after the badges)
+
+**Action bar** (`x-fltc::action-bar`): a banner with a title, text and actions — e.g. a draft
+bar: "Unpublished draft — Publish / Discard".
+- `title`, `icon`; default slot: the text; `actions` slot: buttons
+- `sticky`: stays at the top while scrolling; `offset`: distance from the top (CSS length,
+  e.g. the height of a sticky navbar)
+- `quiet`: a lighter, dashed variant
+- `theme`: full palette (default: slate)
+
+### Reveal and Context
+
+**Spoiler** (`x-fltc::spoiler`): hidden content. Requires Alpine.
+- Inline (default): blacked out in the text until clicked (or, with `reveal="hover"`, while
+  hovered/focused); a click keeps it revealed. Keyboard: Enter / Space
+- `variant="gate"`: a block whose content is blurred under an overlay with `title` and a reveal
+  button (`buttonLabel`, default "Show anyway"). The `message` and `button` slots replace them;
+  an own button reveals with `x-on:click="reveal()"`, e.g. to hide a puzzle's answer:
+
+```blade
+<x-fltc::spoiler variant="gate" title="The answer">
+    …solution…
+    <x-slot:message>Have a go at the riddle before you look.</x-slot:message>
+    <x-slot:button><x-fltc::button icon="lightbulb" x-on:click="reveal()">Show the answer</x-fltc::button></x-slot:button>
+</x-fltc::spoiler>
+```
+
+- `theme`: full palette (default: slate) — the inline bar, the gate frame and button
+
+**Info card** (`x-fltc::infocard`): context for a term in running text. On pointer devices,
+hovering the trigger shows a small floating preview; a click or tap unfolds the full card inline
+below it (Escape or its ✕ closes it). Requires Alpine.
+
+```blade
+<p>At dawn
+    <x-fltc::infocard title="Mira Valen" icon="user" :image="$mira->portrait" :href="route('characters.show', $mira)">
+        <x-slot:trigger>Mira</x-slot:trigger>
+        Cartographer of the Glass Tower.
+        <x-slot:actions><x-fltc::button wire:click="follow({{ $mira->id }})">Follow</x-fltc::button></x-slot:actions>
+    </x-fltc::infocard>
+    climbed the tower.</p>
+```
+
+- Slots: `trigger` (the inline term), default (the body; clamped to three lines in the
+  preview), `actions` (full card only)
+- `title`, `icon`, `image` (shown at the top), `href` + `linkLabel` (default "Read more")
+- `preview` (default true): false skips the hover preview
+- `theme`: full palette (default: slate)
+- The markup is phrasing content (spans), so it can sit inside a `<p>`
+
+**Timeline** (`x-fltc::timeline` + `x-fltc::timeline.item`): dots on a vertical line, one entry
+each, in the order you give them.
+
+```blade
+<x-fltc::timeline>
+    <x-fltc::timeline.item time="Today" datetime="2026-10-13" title="Chapter 12 published" :href="$url" icon="paper-plane-tilt">
+        Sent to 214 readers.
+    </x-fltc::timeline.item>
+</x-fltc::timeline>
+```
+
+- Timeline: `theme` (full palette, default: slate), inherited by the items
+- Item: `time` (+ `datetime` for the `<time>` element), `title`, `href` (makes the title a link),
+  `icon` (a larger dot with the icon), `theme`; default slot: the entry's content
+
+### Files
+
+**File card** (`x-fltc::file-card`): a file in a list — preview, name, type and size, actions.
+The preview is chosen from the extension: the image itself for images (`src`, or `href`),
+the `excerpt` for text files (`txt`, `md`, `csv`, `json`, …), otherwise an icon for the type
+(PDF, document, spreadsheet, archive, audio, video, code, text, or a generic file).
+
+```blade
+<x-fltc::file-card :name="$file->name" :href="$file->url" :size="$file->size">
+    <x-slot:actions><x-fltc::button icon="trash" variant="outline" wire:click="delete({{ $file->id }})" /></x-slot:actions>
+</x-fltc::file-card>
+```
+
+- `name` (its extension picks the preview), `extension` (override), `href` (name link)
+- `size`: bytes (formatted, e.g. `1.5 MB`) or a ready string
+- `src` (image preview URL), `excerpt` (text preview), `meta` (extra text after the size)
+- `theme`: full palette (default: slate)
+- Slots: `preview` (replaces the chosen preview), `actions`
 
 ### Tables
 
