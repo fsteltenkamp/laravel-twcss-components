@@ -26,6 +26,7 @@ class Text extends Input
         public string $value = '',
         public string $model = '',
         public bool $live = false,
+        public string $debounce = '',
         public string $placeholder = '',
         public string $autocomplete = '',
         public bool $required = false,

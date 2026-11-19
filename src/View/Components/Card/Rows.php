@@ -26,6 +26,13 @@ class Rows extends Component
     public string $rowBorderClasses;
     public string $stripeClasses;
     public string $hoverClasses;
+    public string $stackRowClasses;
+    public string $stackCellClasses;
+    public string $stackValueClasses;
+    public string $stackLabelClasses;
+    public string $stackTitleClasses;
+    public string $stackActionsClasses;
+    public string $stackHideClasses;
 
     public function __construct(
         public ?string $color = null,
@@ -36,6 +43,7 @@ class Rows extends Component
         public bool $responsive = true,
         public bool $floating = false,
         public string $bodyId = '',
+        public string $stack = 'none',
     ) {
         $this->color = $this->color ?? ViewFacade::shared('tailwindCardColor', 'base');
 
@@ -87,9 +95,10 @@ class Rows extends Component
             compact: $this->compact,
             responsive: $this->responsive,
             floating: $this->floating,
+            stack: $this->stack,
         );
 
-        foreach (['headClasses', 'cellClasses', 'cellBorderClasses', 'footClasses', 'rowBorderClasses', 'stripeClasses', 'hoverClasses'] as $key) {
+        foreach (Table::AWARE_KEYS as $key) {
             $this->{$key} = $table->{$key};
         }
     }

@@ -206,6 +206,7 @@ request id 7f3a9c</x-slot:details>
             'Table' => [
                 ['default (bordered grid)', tableExample(false)],
                 ['floating', tableExample(true)],
+                ['stacked into cards (narrow the window below md)', stackedTableExample()],
                 ['with form controls', '<x-fltc::table color="base" class="max-w-2xl">
     <x-fltc::table.head>
         <x-fltc::table.row>
@@ -228,6 +229,13 @@ request id 7f3a9c</x-slot:details>
         <x-fltc::table.cell><x-fltc::button color="green" icon="plus" /></x-fltc::table.cell>
     </x-fltc::table.row>
 </x-fltc::table>'],
+            ],
+        ],
+
+        'Data table' => [
+            'Data table' => [
+                ['toolbar, rows, pagination (narrow the window below md for cards)', dataTableExample(false)],
+                ['empty', dataTableExample(true)],
             ],
         ],
 
@@ -665,6 +673,69 @@ function tableExample(bool $floating): string
             </x-fltc::table.row>
         </x-fltc::table>
         BLADE;
+}
+
+function stackedTableExample(): string
+{
+    return <<<'BLADE'
+        <x-fltc::table color="base" stack="md" class="max-w-2xl">
+            <x-fltc::table.head>
+                <x-fltc::table.row>
+                    <x-fltc::table.cell as="th">Customer</x-fltc::table.cell>
+                    <x-fltc::table.cell as="th">Plan</x-fltc::table.cell>
+                    <x-fltc::table.cell as="th" numeric>Seats</x-fltc::table.cell>
+                    <x-fltc::table.cell as="th"></x-fltc::table.cell>
+                </x-fltc::table.row>
+            </x-fltc::table.head>
+            <x-fltc::table.row>
+                <x-fltc::table.cell card="title" label="Customer">Acme GmbH</x-fltc::table.cell>
+                <x-fltc::table.cell label="Plan"><x-fltc::badge color="primary">Business</x-fltc::badge></x-fltc::table.cell>
+                <x-fltc::table.cell numeric label="Seats">42</x-fltc::table.cell>
+                <x-fltc::table.cell card="actions"><x-fltc::button color="primary" height="xs" icon="pencil-simple">Edit</x-fltc::button></x-fltc::table.cell>
+            </x-fltc::table.row>
+            <x-fltc::table.row>
+                <x-fltc::table.cell card="title" label="Customer">Globex Corporation with a long name</x-fltc::table.cell>
+                <x-fltc::table.cell label="Plan"><x-fltc::badge color="secondary">Starter</x-fltc::badge></x-fltc::table.cell>
+                <x-fltc::table.cell numeric label="Seats">3</x-fltc::table.cell>
+                <x-fltc::table.cell card="actions"><x-fltc::button color="primary" height="xs" icon="pencil-simple">Edit</x-fltc::button></x-fltc::table.cell>
+            </x-fltc::table.row>
+        </x-fltc::table>
+        BLADE;
+}
+
+function dataTableExample(bool $empty): string
+{
+    $blade = <<<'BLADE'
+        @php($p = new \Illuminate\Pagination\LengthAwarePaginator(ITEMS, TOTAL, 5, PAGE, ['path' => '#']))
+        <x-fltc::data-table :paginator="$p" :livewire="false" search="search" per-page="perPage" accent-color="primary" id="gallery-data-table-TOTAL" empty-title="No customers found">
+            <x-slot:filters>
+                <x-fltc::form.checkbox id="gallery-data-table-archived-TOTAL" label="Archived" color="primary" />
+            </x-slot:filters>
+            <x-slot:actions>
+                <x-fltc::button color="primary" icon="plus">New customer</x-fltc::button>
+            </x-slot:actions>
+            <x-slot:head>
+                <x-fltc::table.row>
+                    <x-fltc::table.cell as="th">Customer</x-fltc::table.cell>
+                    <x-fltc::table.cell as="th">City</x-fltc::table.cell>
+                    <x-fltc::table.cell as="th">Status</x-fltc::table.cell>
+                    <x-fltc::table.cell as="th"></x-fltc::table.cell>
+                </x-fltc::table.row>
+            </x-slot:head>
+            @foreach ($p as $n)
+                <x-fltc::table.row>
+                    <x-fltc::table.cell card="title" label="Customer">Customer #{{ $n }}</x-fltc::table.cell>
+                    <x-fltc::table.cell label="City">Berlin</x-fltc::table.cell>
+                    <x-fltc::table.cell label="Status"><x-fltc::badge color="success">active</x-fltc::badge></x-fltc::table.cell>
+                    <x-fltc::table.cell card="actions"><x-fltc::button color="base" variant="outline" height="xs" icon="eye">Open</x-fltc::button></x-fltc::table.cell>
+                </x-fltc::table.row>
+            @endforeach
+        </x-fltc::data-table>
+        BLADE;
+
+    return strtr($blade, $empty
+        ? ['ITEMS' => '[]', 'TOTAL' => '0', 'PAGE' => '1']
+        : ['ITEMS' => 'range(11, 15)', 'TOTAL' => '57', 'PAGE' => '3']);
 }
 
 function cardRowsExample(bool $floating): string

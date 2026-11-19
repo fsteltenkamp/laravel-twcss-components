@@ -18,6 +18,26 @@ class Table extends TableBase
     public string $stripeClasses;
     public string $hoverClasses;
 
+    // Card layout below the `stack` breakpoint; empty strings when stacking is off.
+    public string $stackTableClasses = '';
+    public string $stackRowClasses = '';
+    public string $stackCellClasses = '';
+    public string $stackValueClasses = '';
+    public string $stackLabelClasses = '';
+    public string $stackTitleClasses = '';
+    public string $stackActionsClasses = '';
+    public string $stackHideClasses = '';
+
+    /**
+     * The class strings handed to rows, cells and the head through @aware; wrappers
+     * (card.rows, data-table) re-expose them for rows passed in through their slots.
+     */
+    public const AWARE_KEYS = [
+        'headClasses', 'cellClasses', 'cellBorderClasses', 'footClasses', 'rowBorderClasses',
+        'stripeClasses', 'hoverClasses', 'stackRowClasses', 'stackCellClasses', 'stackValueClasses', 'stackLabelClasses',
+        'stackTitleClasses', 'stackActionsClasses', 'stackHideClasses',
+    ];
+
     public function __construct(
         public string $color = 'base',
         public string $radius = 'xl',
@@ -27,8 +47,14 @@ class Table extends TableBase
         public bool $compact = false,
         public bool $responsive = true,
         public bool $floating = false,
+        public string $stack = 'none',
     ) {
         $colors = $this->getThemeColors($this->color);
+
+        // Floating pills keep their own row layout; stacking applies to the grid variant only.
+        if (! $this->floating) {
+            $this->buildStackClasses($this->stack, $colors);
+        }
 
         // The "floating" variant is a different border/spacing model (rows render as
         // separated rounded pills). It reuses the same theme colors and flows down to
@@ -70,6 +96,63 @@ class Table extends TableBase
         ])));
         $this->stripeClasses = $this->striped ? $colors['stripe'] : '';
         $this->hoverClasses = $this->hover ? $colors['hover'] : '';
+    }
+
+    /**
+     * Below the breakpoint every row becomes a card: the head is hidden, each cell is a
+     * line with its `label` on the left and the value on the right. Cells marked
+     * `card="title"` lead the card, `card="actions"` align right, `card="hide"` drop out.
+     * The literal class strings stay in this map so Tailwind's scanner finds them.
+     */
+    protected function buildStackClasses(string $stack, array $colors): void
+    {
+        $map = [
+            'sm' => [
+                'table' => 'max-sm:block max-sm:[&>tbody]:block max-sm:[&>tbody]:space-y-3 max-sm:[&>thead]:hidden max-sm:[&>tfoot]:block',
+                'row' => 'max-sm:block max-sm:rounded-lg max-sm:border max-sm:py-1 max-sm:shadow-sm',
+                'cell' => 'max-sm:flex max-sm:items-baseline max-sm:justify-between max-sm:gap-4 max-sm:border-0 max-sm:px-3 max-sm:py-1.5',
+                'value' => 'max-sm:text-right',
+                'label' => 'hidden max-sm:block',
+                'title' => 'max-sm:justify-start max-sm:text-left max-sm:text-base max-sm:font-semibold',
+                'actions' => 'max-sm:justify-end max-sm:pt-2',
+                'hide' => 'max-sm:hidden',
+            ],
+            'md' => [
+                'table' => 'max-md:block max-md:[&>tbody]:block max-md:[&>tbody]:space-y-3 max-md:[&>thead]:hidden max-md:[&>tfoot]:block',
+                'row' => 'max-md:block max-md:rounded-lg max-md:border max-md:py-1 max-md:shadow-sm',
+                'cell' => 'max-md:flex max-md:items-baseline max-md:justify-between max-md:gap-4 max-md:border-0 max-md:px-3 max-md:py-1.5',
+                'value' => 'max-md:text-right',
+                'label' => 'hidden max-md:block',
+                'title' => 'max-md:justify-start max-md:text-left max-md:text-base max-md:font-semibold',
+                'actions' => 'max-md:justify-end max-md:pt-2',
+                'hide' => 'max-md:hidden',
+            ],
+            'lg' => [
+                'table' => 'max-lg:block max-lg:[&>tbody]:block max-lg:[&>tbody]:space-y-3 max-lg:[&>thead]:hidden max-lg:[&>tfoot]:block',
+                'row' => 'max-lg:block max-lg:rounded-lg max-lg:border max-lg:py-1 max-lg:shadow-sm',
+                'cell' => 'max-lg:flex max-lg:items-baseline max-lg:justify-between max-lg:gap-4 max-lg:border-0 max-lg:px-3 max-lg:py-1.5',
+                'value' => 'max-lg:text-right',
+                'label' => 'hidden max-lg:block',
+                'title' => 'max-lg:justify-start max-lg:text-left max-lg:text-base max-lg:font-semibold',
+                'actions' => 'max-lg:justify-end max-lg:pt-2',
+                'hide' => 'max-lg:hidden',
+            ],
+        ];
+
+        $classes = $map[strtolower(trim($stack))] ?? null;
+        if ($classes === null) {
+            return;
+        }
+
+        $this->stackTableClasses = $classes['table'];
+        $this->stackRowClasses = $classes['row'].' '.$colors['border'];
+        $this->stackCellClasses = $classes['cell'];
+        // Values sit right of their label; the title cell keeps its own (left) alignment.
+        $this->stackValueClasses = $classes['value'];
+        $this->stackLabelClasses = $classes['label'].' shrink-0 text-left text-xs font-semibold uppercase tracking-wide opacity-70';
+        $this->stackTitleClasses = $classes['title'];
+        $this->stackActionsClasses = $classes['actions'];
+        $this->stackHideClasses = $classes['hide'];
     }
 
     /**

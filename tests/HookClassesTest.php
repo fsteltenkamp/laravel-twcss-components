@@ -175,7 +175,7 @@ const UNSKINNED_COMPONENTS = [
     'form.container.auth.two-col-right', 'nav.breadcrumbs.item', 'nav.link',
     'nav.navbar.dropdown.link', 'nav.navbar.dropdown.postlink', 'nav.navbar.item',
     'nav.navbar.toggle', 'nav.sidebar.footer', 'table.foot', 'tabs.panel', 'text',
-    'toast.container', 'theme.picker', 'badge.cloud',
+    'toast.container', 'theme.picker', 'badge.cloud', 'data-table',
 ];
 
 it('styles every component in the skin effects stylesheet', function (string $tag, string $class) {
