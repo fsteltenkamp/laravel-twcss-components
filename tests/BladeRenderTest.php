@@ -1451,3 +1451,10 @@ it('aligns card values right but keeps the card title left', function () {
     expect($title[0])->toContain('max-md:text-left')->not->toContain('max-md:text-right')
         ->and($value[0])->toContain('max-md:text-right');
 });
+
+it('keeps the icon margin classes literal in the source for Tailwind', function () {
+    $source = file_get_contents(__DIR__.'/../src/View/Components/Icon.php');
+
+    expect($source)->toContain("'me-2'")->toContain("'ms-2'")
+        ->and(Blade::render('<x-fltc::button icon="plus">New</x-fltc::button>'))->toContain('me-2');
+});

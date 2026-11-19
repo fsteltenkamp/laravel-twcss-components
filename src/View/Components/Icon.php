@@ -68,11 +68,25 @@ class Icon extends Component
             $glyphClasses,
             $resolvedColor !== '' ? "text-{$resolvedColor}-500 dark:text-{$resolvedColor}-400" : '',
             $size !== '' ? 'text-' . $size : '',
-            $before !== '' ? 'ms-' . $before : '',
-            $after !== '' ? 'me-' . $after : '',
+            $before !== '' ? (self::MARGIN_START[$before] ?? 'ms-' . $before) : '',
+            $after !== '' ? (self::MARGIN_END[$after] ?? 'me-' . $after) : '',
             $align !== '' ? 'align-' . $align : '',
         ]));
     }
+
+    /**
+     * Literal class strings so Tailwind's scanner generates them; a built `'ms-'.$before`
+     * is invisible to it. Other values still fall back to the built class.
+     */
+    private const MARGIN_START = [
+        '0.5' => 'ms-0.5', '1' => 'ms-1', '1.5' => 'ms-1.5', '2' => 'ms-2', '2.5' => 'ms-2.5',
+        '3' => 'ms-3', '4' => 'ms-4', '5' => 'ms-5', '6' => 'ms-6', '8' => 'ms-8',
+    ];
+
+    private const MARGIN_END = [
+        '0.5' => 'me-0.5', '1' => 'me-1', '1.5' => 'me-1.5', '2' => 'me-2', '2.5' => 'me-2.5',
+        '3' => 'me-3', '4' => 'me-4', '5' => 'me-5', '6' => 'me-6', '8' => 'me-8',
+    ];
 
     private function squish(string $value): string
     {
