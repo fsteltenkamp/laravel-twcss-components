@@ -12,11 +12,12 @@
                     :label="$searchLabel"
                     :placeholder="$searchPlaceholder"
                     :color="$accentColor"
+                    inline
                     wrapper-class="w-full sm:w-72"
                 />
             @endif
             @if ($perPage !== null)
-                <x-fltc::form.input.select :id="$inputId.'-per-page'" :model="$perPage" :live="true" :label="$perPageLabel" :color="$accentColor" wrapper-class="w-28">
+                <x-fltc::form.input.select :id="$inputId.'-per-page'" :model="$perPage" :live="true" :label="$perPageLabel" :color="$accentColor" inline wrapper-class="w-28">
                     @foreach ($perPageOptions as $option)
                         <option value="{{ $option }}">{{ $option }}</option>
                     @endforeach
