@@ -7,6 +7,7 @@
         :compact="$compact"
         :responsive="$responsive"
         :floating="$floating"
+        :stack="$stack"
         radius="0"
     >
         @isset($head)

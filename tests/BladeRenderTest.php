@@ -1332,3 +1332,110 @@ it('derives the active navbar link from the current URL', function () {
         ->and(Blade::render('<x-fltc::nav.navbar.link href="/invoices" activePattern="invoices/*">A</x-fltc::nav.navbar.link>'))->toContain('aria-current="page"')
         ->and(Blade::render('<x-fltc::nav.navbar.link href="/customers">A</x-fltc::nav.navbar.link>'))->not->toContain('aria-current');
 });
+
+/*
+ * Table cards (stack) and the data table.
+ */
+function shareNoErrors(): void
+{
+    \Illuminate\Support\Facades\View::share('errors', new \Illuminate\Support\ViewErrorBag);
+}
+
+it('stacks table rows into cards below the breakpoint', function () {
+    $html = Blade::render('<x-fltc::table stack="md">
+        <x-fltc::table.head><x-fltc::table.row><x-fltc::table.cell as="th">Name</x-fltc::table.cell></x-fltc::table.row></x-fltc::table.head>
+        <tbody><x-fltc::table.row>
+            <x-fltc::table.cell card="title" label="Name">Ada</x-fltc::table.cell>
+            <x-fltc::table.cell label="E-Mail">ada@example.org</x-fltc::table.cell>
+            <x-fltc::table.cell card="actions" label="Aktionen"><button>Edit</button></x-fltc::table.cell>
+            <x-fltc::table.cell card="hide" label="ID">7</x-fltc::table.cell>
+        </x-fltc::table.row></tbody>
+    </x-fltc::table>');
+
+    expect($html)
+        ->toContain('max-md:[&amp;&gt;thead]:hidden')
+        ->toContain('max-md:rounded-lg max-md:border')
+        ->toContain('<span class="fltc-table-cell-label hidden max-md:block')
+        ->toContain('>E-Mail</span>')
+        ->toContain('max-md:hidden')
+        ->toContain('fltc-table-cell-value')
+        // title and actions lead / close the card without a label
+        ->not->toContain('>Name</span>')
+        ->not->toContain('>Aktionen</span>');
+});
+
+it('keeps plain tables and floating tables unstacked', function () {
+    $plain = Blade::render('<x-fltc::table><tbody><x-fltc::table.row><x-fltc::table.cell label="Name">Ada</x-fltc::table.cell></x-fltc::table.row></tbody></x-fltc::table>');
+    $floating = Blade::render('<x-fltc::table floating stack="md"><tbody><x-fltc::table.row><x-fltc::table.cell label="Name">Ada</x-fltc::table.cell></x-fltc::table.row></tbody></x-fltc::table>');
+
+    foreach ([$plain, $floating] as $html) {
+        expect($html)->not->toContain('max-md:')->not->toContain('fltc-table-cell-label')->not->toContain('fltc-table-cell-value');
+    }
+});
+
+it('hands the card layout to rows inside card rows', function () {
+    $html = Blade::render('<x-fltc::card><x-fltc::card.rows stack="sm"><x-fltc::table.row><x-fltc::table.cell label="Name">Ada</x-fltc::table.cell></x-fltc::table.row></x-fltc::card.rows></x-fltc::card>');
+
+    expect($html)->toContain('max-sm:[&amp;&gt;thead]:hidden')->toContain('max-sm:rounded-lg')->toContain('>Name</span>');
+});
+
+it('debounces a live text input', function () {
+    shareNoErrors();
+
+    expect(Blade::render('<x-fltc::form.input.text id="q" model="search" live debounce="500ms" />'))->toContain('wire:model.live.debounce.500ms="search"')
+        ->and(Blade::render('<x-fltc::form.input.text id="q" model="search" live />'))->toContain('wire:model.live="search"')
+        ->and(Blade::render('<x-fltc::form.input.text id="q" model="search" debounce="500ms" />'))->toContain('wire:model="search"')->not->toContain('debounce');
+});
+
+it('renders a data table with toolbar, cards and pagination', function () {
+    shareNoErrors();
+
+    $html = Blade::render('<x-fltc::data-table :paginator="$p" search="search" per-page="perPage" accent-color="primary" id="users">
+        <x-slot:filters><select id="role"></select></x-slot:filters>
+        <x-slot:actions><button>New</button></x-slot:actions>
+        <x-slot:head><x-fltc::table.row><x-fltc::table.cell as="th">Name</x-fltc::table.cell></x-fltc::table.row></x-slot:head>
+        @foreach ($p as $n)
+            <x-fltc::table.row><x-fltc::table.cell card="title" label="Name">User {{ $n }}</x-fltc::table.cell><x-fltc::table.cell label="Nr.">{{ $n }}</x-fltc::table.cell></x-fltc::table.row>
+        @endforeach
+    </x-fltc::data-table>', ['p' => fakePaginator(2)]);
+
+    expect($html)
+        ->toContain('fltc-data-table ')
+        ->toContain('fltc-data-table-toolbar')
+        ->toContain('id="users-search"')
+        ->toContain('wire:model.live.debounce.300ms="search"')
+        ->toContain('id="users-per-page"')
+        ->toContain('wire:model.live="perPage"')
+        ->toContain('<option value="25">25</option>')
+        ->toContain('<select id="role">')
+        ->toContain('fltc-data-table-actions')
+        ->toContain('User 11')
+        ->toContain('User 20')
+        ->not->toContain('User 21')
+        // rows in the slot get the table's card classes through the data table
+        ->toContain('max-md:rounded-lg')
+        ->toContain('>Nr.</span>')
+        ->toContain('wire:click="gotoPage(3')
+        ->toContain('fltc-nav-pagination-summary')
+        ->toContain('wire:loading.class.delay="opacity-60"');
+});
+
+it('shows the empty state of a data table without rows', function () {
+    shareNoErrors();
+
+    $empty = new \Illuminate\Pagination\LengthAwarePaginator([], 0, 10, 1);
+
+    $html = Blade::render('<x-fltc::data-table :paginator="$p" search="search" empty-title="Keine Akten"><x-fltc::table.row><x-fltc::table.cell>never</x-fltc::table.cell></x-fltc::table.row></x-fltc::data-table>', ['p' => $empty]);
+    expect($html)->toContain('Keine Akten')->toContain('fltc-empty')->not->toContain('never')->not->toContain('<table');
+
+    $custom = Blade::render('<x-fltc::data-table :empty="true"><x-slot:empty-state><p>Nothing here</p></x-slot:empty-state></x-fltc::data-table>');
+    expect($custom)->toContain('Nothing here')->not->toContain('fltc-empty')->not->toContain('fltc-data-table-toolbar');
+});
+
+it('renders a data table without Livewire wiring', function () {
+    shareNoErrors();
+
+    $html = Blade::render('<x-fltc::data-table :paginator="$p" :livewire="false" stack="none"><x-fltc::table.row><x-fltc::table.cell label="Nr.">1</x-fltc::table.cell></x-fltc::table.row></x-fltc::data-table>', ['p' => fakePaginator(1)]);
+
+    expect($html)->not->toContain('wire:click')->not->toContain('wire:model')->not->toContain('wire:loading')->not->toContain('fltc-data-table-toolbar')->not->toContain('max-md:')->toContain('href="/customers?page=2"');
+});

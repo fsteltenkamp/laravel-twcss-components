@@ -13,7 +13,9 @@
             id="{{ $id }}"
             name="{{ $fieldName }}"
             @if ($model !== '')
-                @if ($live)
+                @if ($live && $debounce !== '')
+                    wire:model.live.debounce.{{ $debounce }}="{{ $model }}"
+                @elseif ($live)
                     wire:model.live="{{ $model }}"
                 @else
                     wire:model="{{ $model }}"

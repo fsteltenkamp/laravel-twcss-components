@@ -2,6 +2,7 @@
     'stripeClasses' => '',
     'hoverClasses' => '',
     'rowBorderClasses' => '',
+    'stackRowClasses' => '',
 ])
 
 @php
@@ -14,6 +15,7 @@
     $rowBorderClasses,
     $useStriped ? $stripeClasses : '',
     $useHover ? $hoverClasses : '',
+    $stackRowClasses,
 ]) }}>
     {{ $slot }}
 </tr>

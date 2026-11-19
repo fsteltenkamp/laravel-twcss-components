@@ -567,6 +567,8 @@ Common props:
 - `required`
 - `model`: Livewire binding target
 - `live`: use `wire:model.live` when true
+- `debounce`: with `live`, wait this long after typing before updating, e.g. `300ms`
+  (`wire:model.live.debounce.300ms`); text-based inputs only
 - `icon`: a Phosphor icon name (e.g. `user`, `envelope`) on the text/email/password/select inputs. Rendered internally through `x-fltc::icon` — the host app only needs the Phosphor icon stylesheet loaded.
 - `iconVariant`: Phosphor weight for the input icon (default: `regular`) — see Icon below
 - `color`: role or palette (default: base)
@@ -848,6 +850,91 @@ Table props:
 - `floating`: switches to the "floating row" variant — rows are separated by vertical spacing and rendered as themed rounded pills with no cell borders, instead of the default collapsed/bordered grid. Same `color`, `hover`, and child markup (`x-fltc::table.head/row/cell`) apply; `striped`, `bordered`, and `radius` are ignored in this mode (the outer radius is replaced by per-row pill rounding). The variant is computed entirely in `Table.php` and propagated to the section children through the existing `@aware` keys, so no separate floating components exist.
 
 Use `x-fltc::table.cell` as `th` for headers and as `td` for data cells. Keep row actions inside cells rather than building separate mini-layouts.
+
+- `stack`: `none` (default), `sm`, `md` or `lg` — below that breakpoint every row becomes a card:
+  the head is hidden and each cell is a line with its `label` on the left and the value on the
+  right. Ignored with `floating`. `x-fltc::card.rows` and `x-fltc::data-table` take it too.
+
+Cell props for the card layout (no effect without `stack`):
+- `label`: the field name shown before the value, usually the column heading
+- `card`: `title` leads the card (no label, larger), `actions` sits right-aligned at the end
+  (no label), `hide` leaves the cell out of the card (e.g. an ID column)
+
+```blade
+<x-fltc::table stack="md">
+    <x-fltc::table.head><x-fltc::table.row>
+        <x-fltc::table.cell as="th">Customer</x-fltc::table.cell>
+        <x-fltc::table.cell as="th">Plan</x-fltc::table.cell>
+        <x-fltc::table.cell as="th"></x-fltc::table.cell>
+    </x-fltc::table.row></x-fltc::table.head>
+    <tbody>
+        <x-fltc::table.row>
+            <x-fltc::table.cell card="title" label="Customer">Acme GmbH</x-fltc::table.cell>
+            <x-fltc::table.cell label="Plan">Business</x-fltc::table.cell>
+            <x-fltc::table.cell card="actions"><x-fltc::button height="xs">Edit</x-fltc::button></x-fltc::table.cell>
+        </x-fltc::table.row>
+    </tbody>
+</x-fltc::table>
+```
+
+### Data table
+
+**Data table** (`x-fltc::data-table`): a complete list view for Livewire — a toolbar with search,
+rows per page, filters and actions, the table, an empty state and the pagination. Rows turn into
+cards on narrow screens (`stack`, default `md`; give the cells `label` and `card` as above).
+
+```blade
+<x-fltc::data-table :paginator="$users" search="search" per-page="perPage" accent-color="primary"
+    search-placeholder="Name or email…" empty-title="No users found">
+    <x-slot:filters>
+        <x-fltc::form.checkbox id="archived" label="Archived" wire:model.live="archived" />
+    </x-slot:filters>
+    <x-slot:actions>
+        <x-fltc::button color="primary" icon="plus" wire:click="create">New user</x-fltc::button>
+    </x-slot:actions>
+    <x-slot:head>
+        <x-fltc::table.row>
+            <x-fltc::table.cell as="th">Name</x-fltc::table.cell>
+            <x-fltc::table.cell as="th">Email</x-fltc::table.cell>
+            <x-fltc::table.cell as="th"></x-fltc::table.cell>
+        </x-fltc::table.row>
+    </x-slot:head>
+    @foreach ($users as $user)
+        <x-fltc::table.row wire:key="user-{{ $user->id }}">
+            <x-fltc::table.cell card="title" label="Name">{{ $user->name }}</x-fltc::table.cell>
+            <x-fltc::table.cell label="Email">{{ $user->email }}</x-fltc::table.cell>
+            <x-fltc::table.cell card="actions">…</x-fltc::table.cell>
+        </x-fltc::table.row>
+    @endforeach
+</x-fltc::data-table>
+```
+
+The Livewire component owns the state (`WithPagination`, `public string $search = ''`,
+`public int $perPage = 10`, reset the page when they change) and passes the page of rows as
+`paginator`. The data table only renders.
+
+Props:
+- `paginator`: the shown page (`LengthAwarePaginator` or simple `Paginator`); drives the
+  pagination, its "Showing x–y of z" summary and the empty state
+- `search`: Livewire property bound to the search field (`wire:model.live.debounce`); no field
+  when omitted. `searchLabel`, `searchPlaceholder` (default: translated `Search` / `Search…`),
+  `debounce` (default `300ms`)
+- `perPage`: Livewire property bound to the rows-per-page select; `perPageOptions` (default
+  `[10, 25, 50, 100]`), `perPageLabel` (default: translated `Per page`)
+- `empty`: force the empty state (default: the paginator has no rows); `emptyTitle` (default:
+  translated `No entries found`), `emptyIcon` (default `magnifying-glass`)
+- `color` (table, empty state, pagination; default: base), `accentColor` (inputs and the current
+  page; default: `color`)
+- `stack` (default `md`), `radius`, `striped`, `hover`, `bordered`, `compact`: as on the table
+- `livewire`: pagination buttons call `gotoPage()` and the table dims while loading (default:
+  true); false renders plain links
+- `id`: prefix for the toolbar inputs' ids (default: random)
+
+Slots: default (the body rows), `head` (header rows), `foot`, `filters` (after the search and
+per-page fields), `actions` (right-aligned buttons), `emptyState` (replaces the empty state),
+`footer` (below the pagination).
+
+Translatable strings: `Search`, `Search…`, `Per page`, `No entries found`, plus the pagination's.
 
 ### Feedback and Status
 
