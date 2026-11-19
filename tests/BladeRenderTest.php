@@ -1439,3 +1439,15 @@ it('renders a data table without Livewire wiring', function () {
 
     expect($html)->not->toContain('wire:click')->not->toContain('wire:model')->not->toContain('wire:loading')->not->toContain('fltc-data-table-toolbar')->not->toContain('max-md:')->toContain('href="/customers?page=2"');
 });
+
+it('aligns card values right but keeps the card title left', function () {
+    $html = Blade::render('<x-fltc::table stack="md"><tbody><x-fltc::table.row>
+        <x-fltc::table.cell card="title" label="Name" id="t">Ada</x-fltc::table.cell>
+        <x-fltc::table.cell label="Plan" id="v">Pro</x-fltc::table.cell>
+    </x-fltc::table.row></tbody></x-fltc::table>');
+
+    preg_match('/<td[^>]*id="t"[^>]*>/', $html, $title);
+    preg_match('/<td[^>]*id="v"[^>]*>/', $html, $value);
+    expect($title[0])->toContain('max-md:text-left')->not->toContain('max-md:text-right')
+        ->and($value[0])->toContain('max-md:text-right');
+});

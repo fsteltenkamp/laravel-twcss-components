@@ -33,6 +33,7 @@ class DataTable extends Component
     public string $hoverClasses;
     public string $stackRowClasses;
     public string $stackCellClasses;
+    public string $stackValueClasses;
     public string $stackLabelClasses;
     public string $stackTitleClasses;
     public string $stackActionsClasses;

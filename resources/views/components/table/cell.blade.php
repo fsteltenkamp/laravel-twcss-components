@@ -3,6 +3,7 @@
     'cellBorderClasses' => 'border border-gray-200 dark:border-gray-700',
     'compact' => false,
     'stackCellClasses' => '',
+    'stackValueClasses' => '',
     'stackLabelClasses' => '',
     'stackTitleClasses' => '',
     'stackActionsClasses' => '',
@@ -47,6 +48,7 @@
         $nowrapClasses,
         $stacked ? $stackCellClasses : '',
         $stacked ? $cardClasses : '',
+        $stacked && $card !== 'title' ? $stackValueClasses : '',
     ]) }}>
         @if ($stacked)
             @if ($showLabel)<span class="fltc-table-cell-label {{ $stackLabelClasses }}">{{ $label }}</span>@endif

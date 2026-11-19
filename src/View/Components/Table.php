@@ -22,6 +22,7 @@ class Table extends TableBase
     public string $stackTableClasses = '';
     public string $stackRowClasses = '';
     public string $stackCellClasses = '';
+    public string $stackValueClasses = '';
     public string $stackLabelClasses = '';
     public string $stackTitleClasses = '';
     public string $stackActionsClasses = '';
@@ -33,7 +34,7 @@ class Table extends TableBase
      */
     public const AWARE_KEYS = [
         'headClasses', 'cellClasses', 'cellBorderClasses', 'footClasses', 'rowBorderClasses',
-        'stripeClasses', 'hoverClasses', 'stackRowClasses', 'stackCellClasses', 'stackLabelClasses',
+        'stripeClasses', 'hoverClasses', 'stackRowClasses', 'stackCellClasses', 'stackValueClasses', 'stackLabelClasses',
         'stackTitleClasses', 'stackActionsClasses', 'stackHideClasses',
     ];
 
@@ -109,7 +110,8 @@ class Table extends TableBase
             'sm' => [
                 'table' => 'max-sm:block max-sm:[&>tbody]:block max-sm:[&>tbody]:space-y-3 max-sm:[&>thead]:hidden max-sm:[&>tfoot]:block',
                 'row' => 'max-sm:block max-sm:rounded-lg max-sm:border max-sm:py-1 max-sm:shadow-sm',
-                'cell' => 'max-sm:flex max-sm:items-baseline max-sm:justify-between max-sm:gap-4 max-sm:border-0 max-sm:px-3 max-sm:py-1.5 max-sm:text-right',
+                'cell' => 'max-sm:flex max-sm:items-baseline max-sm:justify-between max-sm:gap-4 max-sm:border-0 max-sm:px-3 max-sm:py-1.5',
+                'value' => 'max-sm:text-right',
                 'label' => 'hidden max-sm:block',
                 'title' => 'max-sm:justify-start max-sm:text-left max-sm:text-base max-sm:font-semibold',
                 'actions' => 'max-sm:justify-end max-sm:pt-2',
@@ -118,7 +120,8 @@ class Table extends TableBase
             'md' => [
                 'table' => 'max-md:block max-md:[&>tbody]:block max-md:[&>tbody]:space-y-3 max-md:[&>thead]:hidden max-md:[&>tfoot]:block',
                 'row' => 'max-md:block max-md:rounded-lg max-md:border max-md:py-1 max-md:shadow-sm',
-                'cell' => 'max-md:flex max-md:items-baseline max-md:justify-between max-md:gap-4 max-md:border-0 max-md:px-3 max-md:py-1.5 max-md:text-right',
+                'cell' => 'max-md:flex max-md:items-baseline max-md:justify-between max-md:gap-4 max-md:border-0 max-md:px-3 max-md:py-1.5',
+                'value' => 'max-md:text-right',
                 'label' => 'hidden max-md:block',
                 'title' => 'max-md:justify-start max-md:text-left max-md:text-base max-md:font-semibold',
                 'actions' => 'max-md:justify-end max-md:pt-2',
@@ -127,7 +130,8 @@ class Table extends TableBase
             'lg' => [
                 'table' => 'max-lg:block max-lg:[&>tbody]:block max-lg:[&>tbody]:space-y-3 max-lg:[&>thead]:hidden max-lg:[&>tfoot]:block',
                 'row' => 'max-lg:block max-lg:rounded-lg max-lg:border max-lg:py-1 max-lg:shadow-sm',
-                'cell' => 'max-lg:flex max-lg:items-baseline max-lg:justify-between max-lg:gap-4 max-lg:border-0 max-lg:px-3 max-lg:py-1.5 max-lg:text-right',
+                'cell' => 'max-lg:flex max-lg:items-baseline max-lg:justify-between max-lg:gap-4 max-lg:border-0 max-lg:px-3 max-lg:py-1.5',
+                'value' => 'max-lg:text-right',
                 'label' => 'hidden max-lg:block',
                 'title' => 'max-lg:justify-start max-lg:text-left max-lg:text-base max-lg:font-semibold',
                 'actions' => 'max-lg:justify-end max-lg:pt-2',
@@ -143,6 +147,8 @@ class Table extends TableBase
         $this->stackTableClasses = $classes['table'];
         $this->stackRowClasses = $classes['row'].' '.$colors['border'];
         $this->stackCellClasses = $classes['cell'];
+        // Values sit right of their label; the title cell keeps its own (left) alignment.
+        $this->stackValueClasses = $classes['value'];
         $this->stackLabelClasses = $classes['label'].' shrink-0 text-left text-xs font-semibold uppercase tracking-wide opacity-70';
         $this->stackTitleClasses = $classes['title'];
         $this->stackActionsClasses = $classes['actions'];
