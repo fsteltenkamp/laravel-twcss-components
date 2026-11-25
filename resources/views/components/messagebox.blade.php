@@ -10,6 +10,13 @@
         {{ $slot }}
     </div>
 
+    @isset($items)
+        {{-- Entries under the message (e.g. an x-fltc::list variant="inset" with an action each). --}}
+        <div class="fltc-messagebox-items px-4 pb-3">
+            {{ $items }}
+        </div>
+    @endisset
+
     @isset($details)
         <details class="fltc-messagebox-details {{ $detailsClasses }}">
             <summary class="cursor-pointer select-none text-xs font-medium opacity-80">{{ $details->attributes->get('summary', __('Details')) }}</summary>

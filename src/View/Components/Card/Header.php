@@ -9,6 +9,7 @@ use Fsteltenkamp\TwcssComponents\View\Component;
 
 class Header extends Component
 {
+    public bool $collapsible = false;
     public string $classList;
 
     public function __construct(
@@ -53,6 +54,7 @@ class Header extends Component
             'danger'     => 'bg-danger-200 text-danger-900 border-danger-200 dark:bg-danger-950 dark:text-danger-100 dark:border-danger-900',
         ];
 
+        $this->collapsible = (bool) ViewFacade::shared('fltcCardCollapsible', false);
         $this->classList = 'border-b px-4 py-3 ' . ($themeMap[$this->color] ?? $themeMap['base']);
     }
 

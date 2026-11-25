@@ -3692,3 +3692,301 @@ div.fltc-spoiler:is([data-skin="gothic"] [class*="fltc-color-"]) .fltc-spoiler-t
     letter-spacing: 0.12em;
     text-transform: uppercase;
 }
+
+/* ============ LISTS, DISCLOSURES, THREADS (all skins) ============ */
+/* Lists, single disclosures, description lists, avatars and threads, plus the new
+   parts of cards (collapsible header), counters (pressed), modals (header, footer),
+   accordion items (badges) and clickable table rows. */
+
+/* ---- neon ---- */
+.fltc-list:is([data-skin="neon"] [class*="fltc-color-"]):not(.fltc-list-inset, .fltc-list-plain),
+.fltc-disclosure:is([data-skin="neon"] [class*="fltc-color-"]):not(:has(> .fltc-disclosure-content.pt-2)) {
+    --fltc-line: var(--fltc-fx-text);
+    --fltc-line-alpha: 0.4;
+    position: relative;
+    border-color: rgb(var(--fltc-line) / var(--fltc-line-alpha));
+    border-radius: 0;
+    background-color: rgb(var(--fltc-fx-ink) / 0.6);
+    clip-path: polygon(calc(var(--fltc-cut) + 1px) -1px, calc(100% + 1px) -1px, calc(100% + 1px) calc(100% - var(--fltc-cut) - 1px), calc(100% - var(--fltc-cut) - 1px) calc(100% + 1px), -1px calc(100% + 1px), -1px calc(var(--fltc-cut) + 1px));
+}
+.fltc-list:is([data-skin="neon"] [class*="fltc-color-"]) > * {
+    border-color: rgb(var(--fltc-fx-text) / 0.2);
+}
+.fltc-list-item:is([data-skin="neon"] [class*="fltc-color-"]) .fltc-list-item-link:is(:hover, :focus-visible) {
+    background: rgb(var(--fltc-fx-text) / 0.08);
+    box-shadow: inset 3px 0 0 rgb(var(--fltc-fx-accent));
+}
+.fltc-list-item-highlight:is([data-skin="neon"] [class*="fltc-color-"]) > :first-child {
+    background: rgb(var(--fltc-fx-accent) / 0.1);
+    box-shadow: inset 3px 0 0 rgb(var(--fltc-fx-accent)), inset 0 0 18px rgb(var(--fltc-fx-accent) / 0.12);
+}
+.fltc-list-item:is([data-skin="neon"] [class*="fltc-color-"]) .fltc-list-item-meta,
+.fltc-disclosure:is([data-skin="neon"] [class*="fltc-color-"]) .fltc-disclosure-summary,
+.fltc-description-list-item:is([data-skin="neon"] [class*="fltc-color-"]) .fltc-description-list-term,
+.fltc-thread-message:is([data-skin="neon"] [class*="fltc-color-"]) .fltc-thread-message-meta,
+.fltc-thread-event:is([data-skin="neon"] [class*="fltc-color-"]) {
+    font-family: var(--fltc-font-term);
+    font-size: 1rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+.fltc-disclosure:is([data-skin="neon"] [class*="fltc-color-"])[open] > .fltc-disclosure-summary {
+    color: rgb(var(--fltc-fx-accent));
+    text-shadow: 0 0 10px rgb(var(--fltc-fx-accent) / var(--fltc-fx-glow));
+}
+.fltc-disclosure:is([data-skin="neon"] [class*="fltc-color-"]) .fltc-disclosure-content {
+    border-color: rgb(var(--fltc-fx-text) / 0.25);
+    background: transparent;
+}
+.fltc-description-list-item:is([data-skin="neon"] [class*="fltc-color-"]).fltc-description-list-total > * {
+    border-color: rgb(var(--fltc-fx-accent));
+    color: rgb(var(--fltc-fx-accent));
+}
+.fltc-avatar:is([data-skin="neon"] [class*="fltc-color-"]) .fltc-avatar-face {
+    border-radius: 0;
+    clip-path: polygon(6px -1px, calc(100% + 1px) -1px, calc(100% + 1px) calc(100% - 6px), calc(100% - 6px) calc(100% + 1px), -1px calc(100% + 1px), -1px 6px);
+    background: rgb(var(--fltc-fx-accent) / 0.2);
+    color: rgb(var(--fltc-fx-accent));
+    font-family: var(--fltc-font-term);
+    font-size: 1.1em;
+}
+.fltc-avatar:is([data-skin="neon"] [class*="fltc-color-"]) .fltc-avatar-status {
+    border-radius: 0;
+    box-shadow: 0 0 6px currentColor;
+}
+.fltc-thread:is([data-skin="neon"] [class*="fltc-color-"]) {
+    gap: 1.25rem;
+}
+.fltc-thread-message:is([data-skin="neon"] [class*="fltc-color-"]) .fltc-thread-message-card {
+    --fltc-line: var(--fltc-fx-text);
+    --fltc-line-alpha: 0.4;
+    position: relative;
+    border-color: rgb(var(--fltc-line) / var(--fltc-line-alpha));
+    border-radius: 0;
+    background: rgb(var(--fltc-fx-ink) / 0.7);
+    clip-path: polygon(calc(var(--fltc-cut) + 1px) -1px, calc(100% + 1px) -1px, calc(100% + 1px) calc(100% - var(--fltc-cut) - 1px), calc(100% - var(--fltc-cut) - 1px) calc(100% + 1px), -1px calc(100% + 1px), -1px calc(var(--fltc-cut) + 1px));
+}
+.fltc-thread-message.fltc-thread-message-own:is([data-skin="neon"] [class*="fltc-color-"]) .fltc-thread-message-card {
+    --fltc-line: var(--fltc-fx-accent);
+    --fltc-line-alpha: 0.8;
+    box-shadow: inset 0 0 18px rgb(var(--fltc-fx-accent) / 0.12);
+}
+.fltc-thread-message:is([data-skin="neon"] [class*="fltc-color-"]) .fltc-thread-message-author {
+    color: rgb(var(--fltc-fx-accent));
+}
+.fltc-thread-event:is([data-skin="neon"] [class*="fltc-color-"])::before,
+.fltc-thread-event:is([data-skin="neon"] [class*="fltc-color-"])::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgb(var(--fltc-fx-text) / 0.35));
+}
+.fltc-thread-event:is([data-skin="neon"] [class*="fltc-color-"])::after {
+    background: linear-gradient(270deg, transparent, rgb(var(--fltc-fx-text) / 0.35));
+}
+.fltc-counter:is([data-skin="neon"] [class*="fltc-color-"])[aria-pressed="true"] {
+    --fltc-line: var(--fltc-fx-accent);
+    --fltc-line-alpha: 1;
+    box-shadow: inset 0 0 24px rgb(var(--fltc-fx-accent) / 0.25);
+    --tw-ring-shadow: 0 0 #0000;
+}
+.fltc-card:is([data-skin="neon"] [class*="fltc-color-"]) .fltc-card-toggle:focus-visible {
+    color: rgb(var(--fltc-fx-accent));
+    text-decoration: none;
+}
+[data-skin="neon"] .fltc-modal-panel .fltc-modal-footer {
+    border-top: 1px solid rgb(var(--fltc-fx-text) / 0.25);
+    padding-top: 1rem;
+}
+.fltc-table-scroll:is([data-skin="neon"] [class*="fltc-color-"]) .fltc-table-row-link:focus-visible > :first-child {
+    box-shadow: inset 3px 0 0 rgb(var(--fltc-fx-accent));
+}
+
+/* ---- parchment ---- */
+.fltc-list:is([data-skin="parchment"] [class*="fltc-color-"]):not(.fltc-list-inset, .fltc-list-plain),
+.fltc-disclosure:is([data-skin="parchment"] [class*="fltc-color-"]):not(:has(> .fltc-disclosure-content.pt-2)) {
+    border-color: rgb(var(--fltc-fx-text) / 0.35);
+    background-color: rgb(var(--fltc-fx-ink) / 0.6);
+    box-shadow: 0 1px 2px rgb(var(--fltc-fx-text) / 0.12), 0 8px 20px -12px rgb(var(--fltc-fx-text) / 0.5);
+}
+.fltc-list:is([data-skin="parchment"] [class*="fltc-color-"]) > * {
+    border-color: rgb(var(--fltc-fx-text) / 0.2);
+}
+.fltc-list-item:is([data-skin="parchment"] [class*="fltc-color-"]) .fltc-list-item-link:is(:hover, :focus-visible) {
+    background: rgb(var(--fltc-fx-accent) / 0.06);
+}
+.fltc-list-item-highlight:is([data-skin="parchment"] [class*="fltc-color-"]) > :first-child {
+    box-shadow: inset 3px 0 0 rgb(var(--fltc-fx-accent));
+    background: rgb(var(--fltc-fx-accent) / 0.06);
+}
+.fltc-list-item:is([data-skin="parchment"] [class*="fltc-color-"]) .fltc-list-item-meta,
+.fltc-thread-message:is([data-skin="parchment"] [class*="fltc-color-"]) .fltc-thread-message-meta,
+.fltc-thread-event:is([data-skin="parchment"] [class*="fltc-color-"]) {
+    font-style: italic;
+}
+.fltc-disclosure:is([data-skin="parchment"] [class*="fltc-color-"]) .fltc-disclosure-summary,
+.fltc-description-list-item:is([data-skin="parchment"] [class*="fltc-color-"]) .fltc-description-list-term {
+    font-variant-caps: all-small-caps;
+    letter-spacing: 0.06em;
+    font-size: 1.05em;
+}
+.fltc-disclosure:is([data-skin="parchment"] [class*="fltc-color-"])[open] > .fltc-disclosure-summary {
+    color: rgb(var(--fltc-fx-accent));
+}
+.fltc-disclosure:is([data-skin="parchment"] [class*="fltc-color-"]) .fltc-disclosure-content {
+    border-top: 3px double rgb(var(--fltc-fx-text) / 0.25);
+    background: transparent;
+}
+.fltc-description-list-item:is([data-skin="parchment"] [class*="fltc-color-"]).fltc-description-list-total > * {
+    border-top: 3px double rgb(var(--fltc-fx-text) / 0.45);
+}
+.fltc-avatar:is([data-skin="parchment"] [class*="fltc-color-"]) .fltc-avatar-face {
+    box-shadow: 0 0 0 2px rgb(var(--fltc-fx-ink)), 0 0 0 3px rgb(var(--fltc-fx-accent) / 0.6);
+    font-family: var(--fltc-font-display);
+}
+.fltc-thread-message:is([data-skin="parchment"] [class*="fltc-color-"]) .fltc-thread-message-card {
+    border-color: rgb(var(--fltc-fx-text) / 0.3);
+    background: rgb(var(--fltc-fx-ink));
+    box-shadow: 0 1px 2px rgb(var(--fltc-fx-text) / 0.12), 0 8px 20px -14px rgb(var(--fltc-fx-text) / 0.5);
+}
+.fltc-thread-message.fltc-thread-message-own:is([data-skin="parchment"] [class*="fltc-color-"]) .fltc-thread-message-card {
+    outline: 1px solid rgb(var(--fltc-fx-accent) / 0.35);
+    outline-offset: -4px;
+}
+.fltc-thread-message:is([data-skin="parchment"] [class*="fltc-color-"]) .fltc-thread-message-author {
+    font-family: var(--fltc-font-display);
+    font-size: 0.8rem;
+    letter-spacing: 0.04em;
+    color: rgb(var(--fltc-fx-accent));
+}
+.fltc-thread-event:is([data-skin="parchment"] [class*="fltc-color-"])::before {
+    content: "\2767";
+    font-style: normal;
+    color: rgb(var(--fltc-fx-accent) / 0.6);
+}
+.fltc-counter:is([data-skin="parchment"] [class*="fltc-color-"])[aria-pressed="true"] {
+    outline-color: rgb(var(--fltc-fx-accent));
+    background-image: linear-gradient(rgb(var(--fltc-fx-accent) / 0.08), rgb(var(--fltc-fx-accent) / 0.08));
+}
+.fltc-card:is([data-skin="parchment"] [class*="fltc-color-"]) .fltc-card-toggle {
+    font-family: var(--fltc-font-display);
+}
+[data-skin="parchment"] .fltc-modal-panel .fltc-modal-footer {
+    border-top: 3px double rgb(var(--fltc-fx-text) / 0.25);
+    padding-top: 1rem;
+}
+.fltc-table-scroll:is([data-skin="parchment"] [class*="fltc-color-"]) .fltc-table-row-link:focus-visible {
+    outline: 2px solid rgb(var(--fltc-fx-accent));
+}
+
+/* ---- gothic ---- */
+.fltc-list:is([data-skin="gothic"] [class*="fltc-color-"]):not(.fltc-list-inset, .fltc-list-plain),
+.fltc-disclosure:is([data-skin="gothic"] [class*="fltc-color-"]):not(:has(> .fltc-disclosure-content.pt-2)) {
+    border-color: rgb(var(--fltc-fx-text) / 0.55);
+    border-radius: 0;
+    background-color: rgb(var(--fltc-fx-ink) / 0.6);
+    box-shadow: inset 0 0 0 1px rgb(var(--fltc-fx-ink) / 0.5), inset 0 0 0 2px rgb(var(--fltc-fx-accent) / 0.25), 0 2px 0 rgb(0 0 0 / 0.25);
+}
+.fltc-list:is([data-skin="gothic"] [class*="fltc-color-"]) > * {
+    border-color: rgb(var(--fltc-fx-text) / 0.3);
+}
+.fltc-list-item:is([data-skin="gothic"] [class*="fltc-color-"]) .fltc-list-item-link:is(:hover, :focus-visible) {
+    background: rgb(var(--fltc-fx-text) / 0.08);
+    box-shadow: inset 4px 0 0 rgb(var(--fltc-fx-accent));
+}
+.fltc-list-item-highlight:is([data-skin="gothic"] [class*="fltc-color-"]) > :first-child {
+    box-shadow: inset 4px 0 0 rgb(var(--fltc-fx-accent));
+    background: rgb(var(--fltc-fx-accent) / 0.08);
+}
+.fltc-list-item:is([data-skin="gothic"] [class*="fltc-color-"]) .fltc-list-item-meta,
+.fltc-disclosure:is([data-skin="gothic"] [class*="fltc-color-"]) .fltc-disclosure-summary,
+.fltc-description-list-item:is([data-skin="gothic"] [class*="fltc-color-"]) .fltc-description-list-term,
+.fltc-thread-message:is([data-skin="gothic"] [class*="fltc-color-"]) .fltc-thread-message-meta,
+.fltc-thread-event:is([data-skin="gothic"] [class*="fltc-color-"]) {
+    font-family: var(--fltc-font-term);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+.fltc-disclosure:is([data-skin="gothic"] [class*="fltc-color-"])[open] > .fltc-disclosure-summary {
+    color: rgb(var(--fltc-fx-accent));
+    box-shadow: inset 4px 0 0 rgb(var(--fltc-fx-accent));
+}
+.fltc-disclosure:is([data-skin="gothic"] [class*="fltc-color-"]) .fltc-disclosure-content {
+    border-color: rgb(var(--fltc-fx-text) / 0.4);
+    background: transparent;
+}
+.fltc-description-list-item:is([data-skin="gothic"] [class*="fltc-color-"]).fltc-description-list-total > * {
+    border-top: 2px solid rgb(var(--fltc-fx-accent));
+}
+.fltc-avatar:is([data-skin="gothic"] [class*="fltc-color-"]) .fltc-avatar-face {
+    border-radius: 0;
+    box-shadow: 0 0 0 1px rgb(var(--fltc-fx-ink)), 0 0 0 2px rgb(var(--fltc-fx-accent));
+    font-family: var(--fltc-font-term);
+    font-weight: 700;
+}
+.fltc-avatar:is([data-skin="gothic"] [class*="fltc-color-"]) .fltc-avatar-status {
+    border-radius: 0;
+    transform: rotate(45deg);
+}
+.fltc-thread-message:is([data-skin="gothic"] [class*="fltc-color-"]) .fltc-thread-message-card {
+    border-color: rgb(var(--fltc-fx-text) / 0.5);
+    border-radius: 0;
+    background: rgb(var(--fltc-fx-ink));
+    box-shadow: inset 0 0 0 1px rgb(var(--fltc-fx-ink) / 0.5), 0 2px 0 rgb(0 0 0 / 0.25);
+}
+.fltc-thread-message.fltc-thread-message-own:is([data-skin="gothic"] [class*="fltc-color-"]) .fltc-thread-message-card {
+    box-shadow: inset -4px 0 0 rgb(var(--fltc-fx-accent)), 0 2px 0 rgb(0 0 0 / 0.25);
+}
+.fltc-thread-message:is([data-skin="gothic"] [class*="fltc-color-"]) .fltc-thread-message-author {
+    font-family: var(--fltc-font-term);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgb(var(--fltc-fx-accent));
+}
+.fltc-thread:is([data-skin="gothic"] [class*="fltc-color-"]) {
+    gap: 1.25rem;
+}
+.fltc-thread-event:is([data-skin="gothic"] [class*="fltc-color-"])::before,
+.fltc-thread-event:is([data-skin="gothic"] [class*="fltc-color-"])::after {
+    content: "\25C6";
+    font-size: 0.5rem;
+    color: rgb(var(--fltc-fx-accent) / 0.7);
+}
+.fltc-counter:is([data-skin="gothic"] [class*="fltc-color-"])[aria-pressed="true"] {
+    box-shadow: inset 0 3px 0 rgb(var(--fltc-fx-accent)), inset 0 0 0 2px rgb(var(--fltc-fx-accent) / 0.5);
+    --tw-ring-shadow: 0 0 #0000;
+}
+.fltc-card:is([data-skin="gothic"] [class*="fltc-color-"]) .fltc-card-toggle {
+    font-family: var(--fltc-font-term);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+[data-skin="gothic"] .fltc-modal-panel .fltc-modal-footer {
+    border-top: 1px solid rgb(var(--fltc-fx-text) / 0.4);
+    padding-top: 1rem;
+}
+.fltc-table-scroll:is([data-skin="gothic"] [class*="fltc-color-"]) .fltc-table-row-link:focus-visible > :first-child {
+    box-shadow: inset 4px 0 0 rgb(var(--fltc-fx-accent));
+}
+
+/* Description list values: each skin's figures — slashed zeros (neon), old-style figures
+   (parchment, EB Garamond has them), lining figures (gothic). Threads get room between
+   the messages for their frames. */
+.fltc-description-list:is([data-skin="neon"] [class*="fltc-color-"]) .fltc-description-list-value {
+    font-variant-numeric: tabular-nums slashed-zero;
+}
+.fltc-description-list:is([data-skin="parchment"] [class*="fltc-color-"]) .fltc-description-list-value {
+    font-variant-numeric: oldstyle-nums proportional-nums;
+}
+.fltc-description-list:is([data-skin="parchment"] [class*="fltc-color-"]) .fltc-description-list-value.tabular-nums {
+    font-variant-numeric: oldstyle-nums tabular-nums;
+}
+.fltc-description-list:is([data-skin="gothic"] [class*="fltc-color-"]) .fltc-description-list-value {
+    font-variant-numeric: lining-nums;
+}
+.fltc-thread:is([data-skin="parchment"] [class*="fltc-color-"]) {
+    gap: 1.25rem;
+}

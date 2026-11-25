@@ -34,10 +34,19 @@
             </span>
         </span>
 
+        @isset($badges)
+            <span class="fltc-accordion-item-badges flex shrink-0 flex-wrap items-center gap-1.5">{{ $badges }}</span>
+        @endisset
+
         <x-fltc::icon :name="$chevronClass" data-accordion-chevron />
     </button>
 
     <div class="{{ $contentClass }}" data-accordion-content hidden>
-        {{ $slot }}
+        @if ($lazy)
+            {{-- Rendered into the page only when the item first opens. --}}
+            <template data-accordion-lazy>{{ $slot }}</template>
+        @else
+            {{ $slot }}
+        @endif
     </div>
 </div>

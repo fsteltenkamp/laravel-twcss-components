@@ -35,6 +35,13 @@
                 trigger.setAttribute('aria-expanded', expanded ? 'true' : 'false');
                 content.hidden = !expanded;
 
+                // Lazy items: their content goes into the page on the first open.
+                const lazy = expanded ? content.querySelector(':scope > template[data-accordion-lazy]') : null;
+                if (lazy) {
+                    content.appendChild(lazy.content.cloneNode(true));
+                    lazy.remove();
+                }
+
                 if (chevron) {
                     chevron.classList.toggle('rotate-180', expanded);
                 }

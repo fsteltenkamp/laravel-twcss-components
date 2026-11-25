@@ -11,7 +11,7 @@ class Box extends Component
     public string $classList;
     public ?string $id;
 
-    public function __construct(public string $color = 'base', string $class = '', ?string $id = null)
+    public function __construct(public string $color = 'base', string $class = '', ?string $id = null, public string $variant = 'default')
     {
         $this->id = $id;
 
@@ -57,11 +57,23 @@ class Box extends Component
         // Tailwind generates them for every theme).
         $resolved = isset($themeMap[$color]) ? $color : 'base';
 
+        // outline: only the frame (no fill, no shadow) — a bordered region without a card
+        // header; flat: only the fill.
+        $surface = match ($variant) {
+            'outline' => preg_replace('/(?:^|\s)(?:dark:)?bg-\S+/', '', $themeMap[$resolved]),
+            'flat' => preg_replace('/(?:^|\s)(?:dark:)?border-\S+/', '', $themeMap[$resolved]),
+            default => $themeMap[$resolved],
+        };
+
         $this->classList = trim(implode(' ', [
-            'rounded-xl border p-4 shadow-sm dark:shadow-lg',
+            match ($variant) {
+                'outline' => 'rounded-md border p-4',
+                'flat' => 'rounded-xl p-4',
+                default => 'rounded-xl border p-4 shadow-sm dark:shadow-lg',
+            },
             // Primary Content text so slot content stays legible after a dark-mode switch.
             "text-{$resolved}-900 dark:text-{$resolved}-100",
-            $themeMap[$resolved],
+            trim($surface),
             $class,
         ]));
     }

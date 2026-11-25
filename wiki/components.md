@@ -363,6 +363,18 @@ Props:
   the dimmed backdrop. Pass the same `color` to headings and buttons inside it
 - `teleport`: move the overlay to `<body>` (default: true), so a transformed, filtered or
   clipped ancestor can't trap it. Pass `:teleport="false"` to render it in place
+- `title`, `description`: a header row with a heading; `closeButton`: an ✕ in the header
+  (default: on when there is a title)
+- `cancelLabel`: a cancel button (closes the modal) at the start of the footer
+- Slot `footer`: right-aligned buttons under the content (Save, Delete, …); inside the modal,
+  `close()` closes it
+
+```blade
+<x-fltc::modal name="edit-ticket" title="Edit ticket" cancelLabel="Cancel">
+    …fields…
+    <x-slot:footer><x-fltc::button color="primary" wire:click="save">Save</x-fltc::button></x-slot:footer>
+</x-fltc::modal>
+```
 
 The overlay is teleported, but the modal's wrapper stays where it is written: it holds the
 Alpine scope and the host's attributes (`id`, `wire:*`, `@close`), while `class` and the
@@ -501,6 +513,17 @@ Use cards for grouped content, filter panels, summaries, dashboard blocks, and t
 
 Card props:
 - `class`: extra wrapper classes
+- `variant`: `default` (frame and shadow), `outline` (frame only), `flat` (neither)
+- `collapsible`: the header becomes a button that folds the card down to its header; `open`
+  (default true) is the initial state and `persist` a key that keeps the visitor's choice in
+  `localStorage`. Keep buttons out of a collapsible header (it is a button itself)
+- `fill`: stretch to the height of the row
+
+**Box** (`x-fltc::container.box`): a padded surface without card sections — a framed region
+in a form or a settings page.
+- `color`: role or palette (default: base); `id`
+- `variant`: `default` (fill, frame and shadow), `outline` (frame only, no fill — a bordered
+  region), `flat` (fill only)
 
 Header, body, rows, and footer sections inherit the card's colour automatically. Use `rows` when card content is primarily a table or table rows. Rows is the table-shell section: provide optional head slot and direct `x-fltc::table.row` children. It forwards the table options `striped`, `hover`, `bordered`, `compact`, `responsive`, and `floating` (same meaning as on `x-fltc::table`) down to the underlying table; `floating` switches the rows to the separated rounded-pill variant.
 
@@ -516,6 +539,9 @@ Props:
 - `icon`: Phosphor icon class string (e.g. `ph ph-users`) shown small in the top right
 - `link`: when set, the entire counter renders as an `<a>` and becomes clickable with a pointer cursor and hover elevation
 - `navigate`: adds `wire:navigate` to the link (only when `link` is set; default: false)
+- `button`: render a `<button>` for `wire:click` / `x-on:click` (filters)
+- `active`: `true` / `false` makes it a toggle button with `aria-pressed`; the pressed one gets
+  a ring in its colour
 - `class`: extra wrapper classes
 
 Use for dashboard KPIs and at-a-glance metrics. Description text is intentionally muted and theme-independent.
@@ -539,7 +565,74 @@ Use for stacked expandable sections, sortable checklists, and grouped form/recor
 - `title`: primary label on left side of trigger button
 - `subtext`: optional muted secondary line below title
 - `draggable`: enable/disable drag handle for this item (default: inherited)
+- `lazy`: render the content into the page only when the item first opens (heavy content,
+  editors, many items)
+- Slot `badges`: badges at the end of the trigger, before the chevron
 - `class`: extra item wrapper classes
+
+### Lists and details
+
+Components:
+- `x-fltc::list` + `x-fltc::list.item`
+- `x-fltc::disclosure`
+- `x-fltc::description-list` + `x-fltc::description-list.item`
+- `x-fltc::avatar`
+- `x-fltc::thread` + `x-fltc::thread.message` + `x-fltc::thread.event`
+
+**List** (`x-fltc::list`): rows with dividers — tickets, tokens, search results.
+- `color`: role or palette (default: base), inherited by the items
+- `variant`: `default` (framed box), `inset` (dividers only, for inside a message box or card),
+  `plain` (no lines)
+
+**List item** (`x-fltc::list.item`):
+- `href` (the whole row is the link), `navigate`
+- `icon`; `highlight`: a bar and tint in the item's colour (`highlight`) or another
+  (`highlight="warning"`); `muted`: dimmed
+- Slots: default (title), `meta` (small second line), `aside` (right: badges, a time, actions)
+
+```blade
+<x-fltc::list>
+    <x-fltc::list.item href="{{ route('tickets.show', $t) }}" navigate :highlight="$t->waiting ? 'warning' : false">
+        {{ $t->subject }}
+        <x-slot:meta>#{{ $t->id }} · {{ $t->updated_at->diffForHumans() }}</x-slot:meta>
+        <x-slot:aside><x-fltc::badge>{{ $t->state }}</x-fltc::badge></x-slot:aside>
+    </x-fltc::list.item>
+</x-fltc::list>
+```
+
+Hooks: `fltc-list` (+ `fltc-list-<variant>`), `fltc-list-item` (`-link`, `-title`, `-meta`,
+`-aside`, `-icon`, `-highlight`, `-muted`). `list` and `list.item` are anonymous components
+(`List` is a reserved word in PHP); their colours come from `Support\ListTheme`.
+
+**Disclosure** (`x-fltc::disclosure`): one collapsible section on a native `<details>` — a log,
+a stack trace, "more options". Works without JavaScript; for several sections use the accordion.
+- `summary` (or a `title` slot), `open`, `color`
+- `persist`: a key that keeps the open state in `localStorage`
+- `lazy`: render the content only when first opened
+- `variant`: `bordered` (default) or `plain`
+- Slot `aside`: at the end of the summary row (a badge)
+
+**Description list** (`x-fltc::description-list`): label → value pairs (`<dl>`).
+- `items`: `label => value`, or `[label, value, icon]` rows; and/or `description-list.item` children
+- `layout`: `grid` (labels in a column beside the values, default), `stacked` (label above the
+  value, two columns from `sm`), `inline` (`label: value` in a wrapping row)
+- `size`: `xs`, `sm` (default), `lg`; `color`
+
+**Description list item** (`x-fltc::description-list.item`): `label`, `icon`, the value as slot;
+`numeric` (right-aligned tabular figures), `total` (bold with a rule above — a sum row).
+
+**Avatar** (`x-fltc::avatar`): a picture, initials or icon.
+- `src`, `name` (alt text, tooltip and the source of the initials), `initials`, `icon`
+- `status`: `online`, `away`, `busy`, `offline` — a dot in the status roles
+- `size`: `xs`, `sm`, `md` (default), `lg`, `xl`; `shape`: `circle` (default), `square`; `color`
+
+**Thread** (`x-fltc::thread`): a conversation.
+- `color` (default: base) for other people's messages and the events, `ownColor` (default:
+  primary) for the viewer's own
+- `x-fltc::thread.message`: `author`, `meta` (time, state), `own` (right-aligned, in `ownColor`),
+  `avatar` (picture URL; initials otherwise), `showAvatar`, `color`; the slot is the body, slot
+  `footer` for attachments or actions
+- `x-fltc::thread.event`: a centred system line ("Status changed") — `icon`, `meta`, the text as slot
 
 ### Buttons
 
@@ -929,6 +1022,11 @@ Table props:
 
 Use `x-fltc::table.cell` as `th` for headers and as `td` for data cells. Keep row actions inside cells rather than building separate mini-layouts.
 
+Row props (`x-fltc::table.row`): `href` makes the whole row a link — a click anywhere except on
+the row's own links, buttons and fields (or after selecting text) follows it, Ctrl/⌘/Shift-click
+and middle click open a new tab, Enter follows it from the keyboard; `navigate` uses
+`wire:navigate`. Add `data-row-ignore` to an element whose clicks should not follow the row.
+
 - `stack`: `none` (default), `sm`, `md` or `lg` — below that breakpoint every row becomes a card:
   the head is hidden and each cell is a line with its `label` on the left and the value on the
   right. Ignored with `floating`. `x-fltc::card.rows` and `x-fltc::data-table` take it too.
@@ -1038,7 +1136,8 @@ Use message boxes for alerts, empty-state notices, warnings, and selected-item s
   `__('Something went wrong')` unless you give your own
 - Slots: default (the message), `details` (collapsible `<details>` with preformatted text, e.g.
   a stack trace; its `summary` attribute is the toggle label, default `__('Details')`),
-  `actions` (right-aligned buttons, e.g. Retry)
+  `actions` (right-aligned buttons, e.g. Retry), `items` (entries under the message — an
+  `x-fltc::list variant="inset"` with an action per entry)
 
 ```blade
 <x-fltc::messagebox variant="error">

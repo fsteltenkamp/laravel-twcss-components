@@ -79,6 +79,15 @@ function galleryGroups(): array
                 ['default', '<x-fltc::alert color="base">Heads up — your trial ends soon.</x-fltc::alert>'],
             ],
             'Message box' => [
+                ['with items', '<x-fltc::messagebox color="info" title="Has this been reported already?" icon="info" class="max-w-xl">
+    These tickets look similar:
+    <x-slot:items>
+        <x-fltc::list variant="inset" color="info">
+            <x-fltc::list.item href="#" icon="lifebuoy">#1042 Login fails after update<x-slot:aside><x-fltc::button variant="link" color="info">Same problem</x-fltc::button></x-slot:aside></x-fltc::list.item>
+            <x-fltc::list.item href="#" icon="lifebuoy">#1057 Session expires<x-slot:aside><x-fltc::button variant="link" color="info">Same problem</x-fltc::button></x-slot:aside></x-fltc::list.item>
+        </x-fltc::list>
+    </x-slot:items>
+</x-fltc::messagebox>'],
                 ['default', '<x-fltc::messagebox color="base" title="Note">
     Selected 3 items. Choose an action below.
 </x-fltc::messagebox>'],
@@ -165,6 +174,10 @@ request id 7f3a9c</x-slot:details>
 
         'Cards' => [
             'Card' => [
+                ['collapsible (click the header; remembered)', '<x-fltc::card color="primary" class="max-w-sm" collapsible persist="gallery-pool">
+    <x-fltc::card.header>Ticket pool <x-fltc::badge color="primary">4</x-fltc::badge></x-fltc::card.header>
+    <x-fltc::card.body class="p-4">Unassigned tickets would be listed here.</x-fltc::card.body>
+</x-fltc::card>'],
                 ['sections (header / body / footer)', '<x-fltc::card color="base" class="max-w-sm">
     <x-fltc::card.header class="px-4 py-3 font-semibold border-b border-base-200 dark:border-base-700">Project</x-fltc::card.header>
     <x-fltc::card.body class="p-4">Body content goes here, inheriting the card theme.</x-fltc::card.body>
@@ -195,6 +208,7 @@ request id 7f3a9c</x-slot:details>
 
         'Counters' => [
             'Counter' => [
+                ['filter buttons (pressed / not pressed)', '<div class="flex flex-wrap gap-3"><x-fltc::counter color="warning" title="Open" count="12" :active="true" class="w-40" /><x-fltc::counter color="success" title="Done" count="48" :active="false" class="w-40" /></div>'],
                 ['default', '<x-fltc::counter color="primary" title="Users" count="1,204" description="active this week" icon="ph ph-users" class="max-w-xs" />'],
                 ['linked', '<x-fltc::counter color="primary" title="Revenue" count="€48k" description="this month" icon="ph ph-currency-eur" link="#" class="max-w-xs" />'],
             ],
@@ -202,6 +216,12 @@ request id 7f3a9c</x-slot:details>
 
         'Accordion' => [
             'Accordion' => [
+                ['lazy item with badges in the trigger', '<x-fltc::accordion color="base" class="max-w-md">
+    <x-fltc::accordion.item title="Occurrence 2026-11-24 10:02" lazy>
+        <x-slot:badges><x-fltc::badge color="danger">500</x-fltc::badge><x-fltc::badge>×3</x-fltc::badge></x-slot:badges>
+        Rendered into the page only when opened.
+    </x-fltc::accordion.item>
+</x-fltc::accordion>'],
                 ['default', '<x-fltc::accordion color="base" class="max-w-md">
     <x-fltc::accordion.item title="First section" subtext="open by default">Content of the first item.</x-fltc::accordion.item>
     <x-fltc::accordion.item title="Second section">Content of the second item.</x-fltc::accordion.item>
@@ -211,6 +231,7 @@ request id 7f3a9c</x-slot:details>
 
         'Tables' => [
             'Table' => [
+                ['clickable rows (click, Ctrl/⌘ or middle click, Enter)', '<x-fltc::table color="base"><x-fltc::table.head><x-fltc::table.row><x-fltc::table.cell>#</x-fltc::table.cell><x-fltc::table.cell>Subject</x-fltc::table.cell></x-fltc::table.row></x-fltc::table.head><x-fltc::table.row href="#row-1"><x-fltc::table.cell>1</x-fltc::table.cell><x-fltc::table.cell>Login fails <x-fltc::link href="#other" color="primary">(own link)</x-fltc::link></x-fltc::table.cell></x-fltc::table.row><x-fltc::table.row href="#row-2"><x-fltc::table.cell>2</x-fltc::table.cell><x-fltc::table.cell>Export broken</x-fltc::table.cell></x-fltc::table.row></x-fltc::table>'],
                 ['default (bordered grid)', tableExample(false)],
                 ['floating', tableExample(true)],
                 ['stacked into cards (narrow the window below md)', stackedTableExample()],
@@ -427,6 +448,37 @@ request id 7f3a9c</x-slot:details>
             ],
         ],
 
+        'Lists & Details' => [
+            'List' => [
+                ['linked rows, highlight, muted, meta and aside', '<x-fltc::list color="base" class="max-w-xl">
+    <x-fltc::list.item href="#" icon="lifebuoy" highlight="warning">Login fails after update<x-slot:meta>#1042 · waiting for you · 3 days ago</x-slot:meta><x-slot:aside><x-fltc::badge color="warning">waiting</x-fltc::badge></x-slot:aside></x-fltc::list.item>
+    <x-fltc::list.item href="#" icon="lifebuoy">Export broken<x-slot:meta>#1057 · yesterday</x-slot:meta><x-slot:aside><x-fltc::badge color="info">open</x-fltc::badge></x-slot:aside></x-fltc::list.item>
+    <x-fltc::list.item href="#" icon="lifebuoy" muted>Typo in footer<x-slot:meta>#998 · closed</x-slot:meta></x-fltc::list.item>
+</x-fltc::list>'],
+            ],
+            'Disclosure' => [
+                ['bordered and plain', '<div class="max-w-xl space-y-3"><x-fltc::disclosure summary="Update log" color="base" persist="gallery-log"><pre class="text-xs">10:02 pulled 3 files\n10:03 cleared caches</pre><x-slot:aside><x-fltc::badge color="success">ok</x-fltc::badge></x-slot:aside></x-fltc::disclosure><x-fltc::disclosure summary="Advanced options" variant="plain" color="base">Hidden until opened.</x-fltc::disclosure></div>'],
+            ],
+            'Description list' => [
+                ['grid with numbers and a total', '<x-fltc::description-list color="base" class="max-w-sm" :items="[\'Customer\' => \'Müller GmbH\', [\'Email\', \'info@mueller.example\', \'envelope\']]">
+    <x-fltc::description-list.item label="Net" numeric>1,000.00 €</x-fltc::description-list.item>
+    <x-fltc::description-list.item label="VAT 19 %" numeric>190.00 €</x-fltc::description-list.item>
+    <x-fltc::description-list.item label="Total" numeric total>1,190.00 €</x-fltc::description-list.item>
+</x-fltc::description-list>'],
+                ['stacked and inline', '<div class="space-y-4"><x-fltc::description-list layout="stacked" color="base" :items="[\'Opened\' => \'24.11.2026\', \'Assignee\' => \'Ada\']" /><x-fltc::description-list layout="inline" size="xs" color="base" :items="[\'Version\' => \'4.2.1\', \'Build\' => \'1729\']" /></div>'],
+            ],
+            'Avatar' => [
+                ['initials, icon, picture, presence', '<div class="flex items-center gap-3"><x-fltc::avatar name="Ada Lovelace" status="online" color="primary" /><x-fltc::avatar name="Grace Hopper" status="away" size="lg" color="base" /><x-fltc::avatar icon="robot" status="busy" color="base" /><x-fltc::avatar src="https://picsum.photos/seed/avatar/80/80" name="Alan" status="offline" shape="square" size="xl" /></div>'],
+            ],
+            'Thread' => [
+                ['conversation with system lines', '<x-fltc::thread color="base" ownColor="primary" class="max-w-2xl">
+    <x-fltc::thread.message author="Grace Hopper" meta="24.11. 10:02">The export stops at 50 rows.</x-fltc::thread.message>
+    <x-fltc::thread.event icon="user-switch" meta="10:04">Assigned to Ada</x-fltc::thread.event>
+    <x-fltc::thread.message own author="Ada Lovelace" meta="24.11. 10:15">Fixed in 4.2.1 — please try again.<x-slot:footer><x-fltc::icon name="paperclip" /> changelog.pdf</x-slot:footer></x-fltc::thread.message>
+</x-fltc::thread>'],
+            ],
+        ],
+
         'Media' => [
             'Cover' => [
                 ['ratios and sizes', '<span class="flex flex-wrap items-end gap-4">
@@ -546,6 +598,11 @@ request id 7f3a9c</x-slot:details>
 
         'Overlays' => [
             'Modal' => [
+                ['title, close button, footer', '<x-fltc::button color="primary" x-data x-on:click="$dispatch(\'open-modal\', \'gallery-titled\')">Open titled modal</x-fltc::button>
+<x-fltc::modal name="gallery-titled" color="base" title="Edit ticket" description="Change state and assignee." cancelLabel="Cancel">
+    <x-fltc::form.input.select id="g-state" label="State" color="primary"><option>Open</option><option>Closed</option></x-fltc::form.input.select>
+    <x-slot:footer><x-fltc::button color="primary">Save</x-fltc::button></x-slot:footer>
+</x-fltc::modal>'],
                 ['default', '<x-fltc::button color="primary" x-data x-on:click="$dispatch(\'open-modal\', \'gallery-modal\')">Open modal</x-fltc::button>
 <x-fltc::modal name="gallery-modal" color="base">
     <div class="space-y-4">
@@ -614,6 +671,7 @@ request id 7f3a9c</x-slot:details>
                 ['the gallery itself', '<div class="text-sm">This page\'s content column is an <code>x-fltc::container.page</code>: the drawer tabs on both edges sit in its gutters. Narrow the window and pin a drawer to see the gutters adapt.</div>'],
             ],
             'Container box' => [
+                ['outline (frame only)', '<x-fltc::container.box color="base" variant="outline" class="max-w-sm">A bordered region without a card header.</x-fltc::container.box>'],
                 ['default', '<x-fltc::container.box color="base" class="p-4 max-w-sm">Boxed content.</x-fltc::container.box>'],
                 ['colour themes', '<div class="flex flex-wrap gap-4"><x-fltc::container.box color="green" class="p-4">Green box.</x-fltc::container.box><x-fltc::container.box color="red" class="p-4">Red box.</x-fltc::container.box></div>'],
             ],

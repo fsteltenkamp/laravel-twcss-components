@@ -27,6 +27,7 @@ class Item extends Component
         public ?bool $draggable = null,
         public ?string $color = null,
         public string $class = '',
+        public bool $lazy = false,
     ) {
         $this->color = $this->color ?? ViewFacade::shared('tailwindAccordionColor', 'base');
         $this->isDraggable = $this->draggable ?? (bool) ViewFacade::shared('tailwindAccordionDraggable', false);

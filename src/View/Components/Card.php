@@ -15,6 +15,10 @@ class Card extends Component
         public string $color = 'base',
         public bool $fill = false,
         public string $class = '',
+        public string $variant = 'default',
+        public bool $collapsible = false,
+        public bool $open = true,
+        public string $persist = '',
     ) {
         $themeMap = [
             // Neutral scales
@@ -57,8 +61,16 @@ class Card extends Component
 
         $themeClasses = $themeMap[$this->color] ?? $themeMap['base'];
 
+        // outline: the frame without a shadow; flat: neither frame nor shadow. Collapsed, a
+        // collapsible card shows only its header (data-collapsed, set by the view).
         $this->classList = trim(implode(' ', [
-            'overflow-hidden rounded-xl border shadow-sm dark:shadow-lg',
+            'overflow-hidden rounded-xl',
+            match ($variant) {
+                'outline' => 'border',
+                'flat' => '',
+                default => 'border shadow-sm dark:shadow-lg',
+            },
+            $collapsible ? '[&[data-collapsed=true]>:not([data-card-header])]:hidden' : '',
             $this->fill ? 'h-full' : 'self-start',
             $themeClasses['border'],
             $themeClasses['text'],
@@ -69,6 +81,7 @@ class Card extends Component
     public function render(): View|Closure|string
     {
         ViewFacade::share('tailwindCardColor', $this->color);
+        ViewFacade::share('fltcCardCollapsible', $this->collapsible);
 
         return view('fltc::components.card');
     }
