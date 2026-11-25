@@ -343,6 +343,13 @@ request id 7f3a9c</x-slot:details>
             'Date range' => [
                 ['with presets', '<x-fltc::form.daterange color="primary" inline />'],
             ],
+            'Markdown editor' => [
+                ['toolbar, shortcuts, mention control and preview (the gallery answers the preview event)', '<div class="max-w-2xl" x-data x-on:fltc-markdown-preview.window="$event.detail.render(\'<p>\' + Object.assign(document.createElement(\'div\'), { textContent: $event.detail.value }).innerHTML.replace(/\\*\\*(.+?)\\*\\*/g, \'<strong>$1</strong>\') + \'</p>\')">
+    <x-fltc::form.markdown id="g-md" label="Reply" color="primary" preview rows="5" placeholder="Write a reply… (Ctrl+B for bold)" :buttons="[\'bold\', \'italic\', \'code\', \'link\', \'ul\', \'ol\', \'quote\']">
+        <x-slot:controls><select class="h-8 rounded border border-current/20 bg-transparent px-1 text-sm" x-on:change="insert(\'@\' + $event.target.value + \' \'); $event.target.value = \'\'"><option value="">@ Mention…</option><option>ada</option><option>grace</option></select></x-slot:controls>
+    </x-fltc::form.markdown>
+</div>'],
+            ],
             'Label' => [
                 ['default', '<x-fltc::form.label color="base" for="x" required description="Shown to other members">Display name</x-fltc::form.label>'],
             ],

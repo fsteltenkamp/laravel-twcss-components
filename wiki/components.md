@@ -312,7 +312,10 @@ Components:
 - `x-fltc::heading`
 - `x-fltc::subheading`
 - `x-fltc::text`
-
+- `x-fltc::hint`
+- `x-fltc::prose`
+- `x-fltc::time`
+- `x-fltc::code`
 - `x-fltc::page-header`
 
 `heading` and `subheading` take `align` (`center`, `right`).
@@ -714,6 +717,7 @@ Components:
 - `x-fltc::form.otp`
 - `x-fltc::form.error`
 - `x-fltc::form.daterange`
+- `x-fltc::form.markdown`
 - `x-fltc::form.container.auth.simple`
 - `x-fltc::form.container.auth.two-col-left`
 - `x-fltc::form.container.auth.two-col-right`
@@ -779,6 +783,20 @@ controls, in a table row. Shows `message`, else the slot, else the error bag's f
 for `name` (`name.*` counts too); renders nothing without one.
 - `name`, `message`, `icon`
 - `color`: role or palette (default: `danger`)
+
+**Markdown editor** (`x-fltc::form.markdown`): a Markdown textarea with a formatting toolbar
+and an optional preview, inside the usual field (label, note, error, `aside`).
+- `id`, `name`, `label`, `note`, `value`, `model` / `live`, `placeholder`, `rows` (default 8),
+  `required`, `disabled`, `color`, `inline`, `wrapperClass`, `error`, `errorIcon`, `noteToggle`
+- `buttons`: toolbar buttons in order — `bold`, `italic`, `heading`, `code`, `link`, `ul`, `ol`,
+  `quote` (default: all but `heading`). Shortcuts: Ctrl/⌘+B, I, K
+- Slot `controls`: extra controls at the end of the toolbar; `insert(text)` puts text at the
+  cursor, e.g. a mention picker:
+  `<select x-on:change="insert('@' + $event.target.value + ' ')">…</select>`
+- `preview`: a Write / Preview switch. The HTML comes from `previewMethod` (a Livewire method that
+  gets the text and returns HTML) or, without one, from the host answering the window event
+  `fltc-markdown-preview` (`detail`: `id`, `name`, `value`, `render(html)`). It is shown in
+  `x-fltc::prose` — sanitise it on the server
 
 **Date range** (`x-fltc::form.daterange`): from and to dates side by side with preset
 buttons. A preset fills both dates and fires `input`, so `wire:model` picks it up.
@@ -917,6 +935,9 @@ Auth container variants:
 - `two-col-right`: side content in side slot (left visual panel), main content in default slot
 
 ### Media
+
+Also: `x-fltc::lightbox`, `x-fltc::frame`, `x-fltc::qr` (under Files), `x-fltc::avatar` (under
+Lists and details).
 
 **Cover** (`x-fltc::cover`): a fixed-aspect-ratio image — book cover, poster, avatar — with
 `object-cover`. When `src` is empty or the image fails to load, a placeholder takes its place
@@ -1348,6 +1369,7 @@ Components:
 - `x-fltc::icon`
 - `x-fltc::separator`
 - `x-fltc::spinner`
+- `x-fltc::toolbar` (+ `toolbar.button`, `toolbar.separator`)
 - `x-fltc::segmented`
 - `x-fltc::theme.script`
 - `x-fltc::theme.picker`

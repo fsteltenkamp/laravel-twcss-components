@@ -1836,3 +1836,22 @@ it('ships a base stylesheet with x-cloak and default line colours', function () 
 
     expect($css)->toContain('[x-cloak]')->toContain('@layer base')->toContain('rgb(var(--fltc-base-200))');
 });
+
+/* ---- markdown editor ---- */
+
+it('renders a markdown editor with toolbar, shortcuts, controls and preview', function () {
+    shareErrors();
+    $html = Blade::render('<x-fltc::form.markdown id="body" label="Message" model="body" preview previewMethod="renderPreview" :buttons="[\'bold\', \'link\', \'nope\']"><x-slot:controls><select x-on:change="insert($event.target.value)"><option>@ada</option></select></x-slot:controls></x-fltc::form.markdown>');
+
+    expect($html)
+        ->toContain('fltc-form-markdown fltc-color-base')
+        ->toContain('wire:model="body"')->toContain('id="body"')
+        ->toContain("apply('bold')")->toContain("apply('link')")->not->toContain("apply('nope')")
+        ->toContain('x-on:keydown.ctrl.b.prevent')->toContain('x-on:keydown.meta.k.prevent')
+        ->toContain('insert($event.target.value)')
+        ->toContain("this.\$wire.call('renderPreview', text)")
+        ->toContain('fltc-form-markdown-preview')->toContain('x-html="html"');
+
+    expect(Blade::render('<x-fltc::form.markdown id="b" preview />'))->toContain("new CustomEvent('fltc-markdown-preview'");
+    expect(Blade::render('<x-fltc::form.markdown id="b" />'))->not->toContain('fltc-form-markdown-preview');
+});
