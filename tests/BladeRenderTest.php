@@ -1861,3 +1861,14 @@ it('colours one-time-code boxes with literal classes and separators by role', fu
         ->and(Blade::render('<x-fltc::separator color="primary" />'))->toContain('border-primary-200')->toContain('fltc-color-primary')
         ->and(Blade::render('<x-fltc::separator />'))->toContain('border-zinc-200')->not->toContain('fltc-color-');
 });
+
+it('accepts a pasted or autofilled code in the one-time-code boxes', function () {
+    $html = Blade::render('<x-fltc::form.otp length="6" name="code" />');
+
+    // maxlength="1" made the browser cut a pasted code to its first digit.
+    expect($html)
+        ->not->toContain('maxlength')
+        ->toContain('x-on:paste.prevent="handlePaste(0, $event)"')
+        ->toContain("getData('text')")
+        ->toContain('this.fill(chars.length >= 6 ? 0 : i, chars)');
+});

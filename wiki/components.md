@@ -915,8 +915,9 @@ Shared props: `id`, `name`, `value`, `label`, `model` (Livewire binding), `live`
 (`wire:model.live`), `checked`, `disabled`, `class`.
 
 **OTP** (`x-fltc::form.otp`): a segmented one-time-code input with auto-advance, backspace,
-arrow-key navigation and paste support. Renders `length` single-character boxes backed by a
-hidden input that carries the joined value.
+arrow-key navigation and paste support. Renders `length` digit boxes backed by a hidden input
+that carries the joined value. A pasted or autofilled code is spread over the boxes, with
+spaces and dashes dropped; a full-length code fills from the first box wherever it lands.
 - `length`: number of digit boxes (default: 6)
 - `color`: role or palette (default: base)
 - `name`, `wire:model`, `x-model`: passed through to the hidden input, so the joined value
