@@ -1,10 +1,13 @@
 @php
     $fieldName = $name !== '' ? $name : $id;
-    $hasError = $fieldName !== '' && $errors->has($fieldName);
+    $hasError = $error !== '' || $fieldName !== '' && $errors->has($fieldName);
     $describedBy = \Fsteltenkamp\TwcssComponents\View\Components\Form\Field::describedBy($id, $note, $hasError, $fieldName);
 @endphp
 
-<x-fltc::form.field :label="$label" :note="$note" :for="$id" :name="$fieldName" :required="$required" :color="$color" :inline="$inline" :class="$wrapperClass">
+<x-fltc::form.field :label="$label" :note="$note" :for="$id" :name="$fieldName" :required="$required" :color="$color" :inline="$inline" :class="$wrapperClass" :error="$error" :errorIcon="$errorIcon" :noteToggle="$noteToggle">
+    @isset($aside)
+        <x-slot:aside>{{ $aside }}</x-slot:aside>
+    @endisset
     <textarea
         {{ $attributes->class($classList) }}
         id="{{ $id }}"

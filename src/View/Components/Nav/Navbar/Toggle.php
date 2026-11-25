@@ -23,6 +23,7 @@ class Toggle extends Component
         public string $target = '',
         public string $label = 'Toggle navigation',
         ?string $color = null,
+        public bool $pinnable = false,
     ) {
         $resolvedTheme = $color ?? (app('view')->getShared()['navbarColor'] ?? 'base');
         $this->hookColor = $resolvedTheme;
@@ -69,6 +70,8 @@ class Toggle extends Component
         $this->classList = trim(implode(' ', array_filter([
             'nav-toggle inline-flex h-10 w-10 shrink-0 items-center justify-center self-center rounded-md text-xl transition focus:outline-none focus-visible:ring-2 lg:hidden',
             $themeClasses,
+            // With a pinnable sidebar the toggle also shows from lg up while the sidebar is hidden.
+            $pinnable ? 'lg:[[data-sidebar=collapsed]_&]:inline-flex' : null,
             $class,
         ])));
     }

@@ -907,11 +907,11 @@ it('themes pagination with one theme and marks the current page as the solid but
  * Import plan, phase 1: runtime theme switching.
  */
 it('renders a head script that restores the stored skin, theme and dark mode before paint', function () {
-    $html = Blade::render('<x-fltc::theme.script skinStorageKey="app-skin" themeStorageKey="app-theme" skin="fantasy" theme="dracula" nonce="abc" />');
+    $html = Blade::render('<x-fltc::theme.script skinStorageKey="app-skin" themeStorageKey="app-theme" skin="parchment" theme="dracula" nonce="abc" />');
 
     expect($html)
         ->toMatch('/<script\s+nonce="abc"\s*>/')
-        ->toContain("localStorage.getItem('app-skin') || 'fantasy'")
+        ->toContain("localStorage.getItem('app-skin') || 'parchment'")
         ->toContain("setAttribute('data-skin', skin)")
         ->toContain("localStorage.getItem('app-theme') || 'dracula'")
         ->toContain("setAttribute('data-theme', theme)")
@@ -925,14 +925,14 @@ it('renders a head script that restores the stored skin, theme and dark mode bef
 
 it('renders a theme picker with skin, theme and custom role selects and the dark-mode control', function () {
     shareErrors();
-    $html = Blade::render('<x-fltc::theme.picker :skins="[\'default\', \'wh40k\' => \'Grimdark\']" :themes="[\'default\', \'dracula\', \'custom\']" :palettes="[\'rose\', \'zinc\']" skinStorageKey="app-skin" themeStorageKey="app-theme" color="rose" />');
+    $html = Blade::render('<x-fltc::theme.picker :skins="[\'default\', \'gothic\' => \'Dark gothic\']" :themes="[\'default\', \'dracula\', \'custom\']" :palettes="[\'rose\', \'zinc\']" skinStorageKey="app-skin" themeStorageKey="app-theme" color="rose" />');
 
     expect($html)
         ->toContain('fltc-theme-picker')
         ->toContain('x-model="value"')
         ->toContain("key: 'app-skin'")
         ->toContain("key: 'app-theme'")
-        ->toContain('<option value="wh40k">Grimdark</option>')
+        ->toContain('<option value="gothic">Dark gothic</option>')
         ->toContain('<option value="dracula">Dracula</option>')
         ->toContain('fltc-skin-change')
         ->toContain('fltc-theme-change')
@@ -1457,4 +1457,429 @@ it('keeps the icon margin classes literal in the source for Tailwind', function 
 
     expect($source)->toContain("'me-2'")->toContain("'ms-2'")
         ->and(Blade::render('<x-fltc::button icon="plus">New</x-fltc::button>'))->toContain('me-2');
+});
+
+/* ---- field options: aside, note toggle, explicit error ---- */
+
+it('renders an aside next to the label of every field', function (string $tag) {
+    shareErrors();
+    $html = Blade::render("<x-fltc::{$tag} id=\"f\" label=\"Name\"><x-slot:aside>saved 12:03</x-slot:aside></x-fltc::{$tag}>");
+
+    expect($html)->toContain('fltc-form-field-head')->toMatch('/fltc-form-field-aside[^>]*>saved 12:03</');
+})->with(['form.input.text', 'form.input.select', 'form.input.file', 'form.textarea', 'form.upload', 'form.rating']);
+
+it('hides the note behind an info button with noteToggle', function () {
+    shareErrors();
+    $html = Blade::render('<x-fltc::form.input.text id="iban" label="IBAN" note="Without spaces" noteToggle />');
+
+    expect($html)
+        ->toContain('x-data="{ noteOpen: false }"')
+        ->toContain('aria-controls="iban-note"')
+        ->toMatch('/id="iban-note"[^>]*x-show="noteOpen"/');
+
+    expect(Blade::render('<x-fltc::form.input.text id="iban" label="IBAN" note="Without spaces" />'))
+        ->not->toContain('noteOpen')->not->toContain('fltc-form-field-head');
+});
+
+it('shows an explicit error instead of the error bag, with an icon', function () {
+    shareErrors(['amount' => 'From the bag']);
+    $html = Blade::render('<x-fltc::form.input.number id="amount" label="Amount" error="Too high" errorIcon="warning-circle" />');
+
+    expect($html)
+        ->toContain('Too high')->not->toContain('From the bag')
+        ->toContain('aria-invalid="true"')
+        ->toContain('ph-warning-circle')
+        ->toContain('text-danger-600');
+});
+
+it('renders compact inputs and selects with size sm', function () {
+    shareErrors();
+
+    expect(Blade::render('<x-fltc::form.input.date id="d" size="sm" inline />'))->toContain('h-8 py-1 text-sm')
+        ->and(Blade::render('<x-fltc::form.input.select id="s" size="sm"><option>a</option></x-fltc::form.input.select>'))->toContain('h-8 py-1 text-sm')
+        ->and(Blade::render('<x-fltc::form.input.text id="t" />'))->toContain(' py-2 ')->not->toContain('h-8');
+});
+
+it('offers suggestions through a datalist and sets monospace type', function () {
+    shareErrors();
+    $html = Blade::render('<x-fltc::form.input.text id="key" mono :suggestions="[\'alpha\', \'beta\' => \'Beta (2)\']" />');
+
+    expect($html)
+        ->toContain('list="key-suggestions"')
+        ->toContain('<datalist id="key-suggestions">')
+        ->toContain('<option value="alpha"></option>')
+        ->toContain('<option value="beta">Beta (2)</option>')
+        ->toContain('font-mono');
+});
+
+it('renders upload actions shown once files are chosen', function () {
+    shareErrors();
+    $html = Blade::render('<x-fltc::form.upload id="doc" label="Document"><x-slot:actions><x-fltc::button x-on:click="clear()">Cancel</x-fltc::button></x-slot:actions></x-fltc::form.upload>');
+
+    expect($html)->toContain('fltc-form-upload-actions')->toContain('clear()')->toMatch('/fltc-form-upload-actions[^>]*x-show="files.length"/');
+});
+
+it('puts labels or icons on both sides of a toggle', function () {
+    $html = Blade::render('<x-fltc::form.checkbox variant="toggle" id="t" iconOff="x" iconOn="check" labelOn="yes" />');
+
+    expect($html)
+        ->toMatch('/fltc-form-checkbox-off[^"]*".*ph-x/s')
+        ->toMatch('/fltc-form-checkbox-on[^"]*".*ph-check.*yes/s');
+    expect(strpos($html, 'fltc-form-checkbox-off'))->toBeLessThan(strpos($html, 'fltc-form-checkbox-track'))
+        ->and(strpos($html, 'fltc-form-checkbox-track'))->toBeLessThan(strpos($html, 'fltc-form-checkbox-on'));
+});
+
+it('renders radio options as cards with descriptions', function () {
+    shareErrors();
+    $html = Blade::render('<x-fltc::form.radio.group name="plan" variant="cards" color="primary"><x-fltc::form.radio value="a" label="Basic" description="For one person" /><x-fltc::form.radio value="b" label="Team" /></x-fltc::form.radio.group>');
+
+    expect(substr_count($html, 'fltc-form-radio-card'))->toBe(2)
+        ->and($html)->toContain('has-[:checked]:border-primary-500')
+        ->toContain('fltc-form-radio-description')->toContain('For one person');
+});
+
+it('renders a stand-alone error from the bag, the slot or a message', function () {
+    shareErrors(['items.0' => 'First item is missing']);
+
+    expect(Blade::render('<x-fltc::form.error name="items" icon="warning" />'))
+        ->toContain('First item is missing')->toContain('id="items-error"')->toContain('text-danger-600')->toContain('ph-warning')
+        ->and(Blade::render('<x-fltc::form.error>Typed</x-fltc::form.error>'))->toContain('Typed')
+        ->and(trim(Blade::render('<x-fltc::form.error name="nothing" />')))->toBe('');
+});
+
+it('fills a date range from presets', function () {
+    shareErrors();
+    $html = Blade::render('<x-fltc::form.daterange fromModel="from" toModel="to" :presets="[\'this-month\', \'Q1\' => [\'2026-01-01\', \'2026-03-31\']]" />');
+
+    expect($html)
+        ->toContain('wire:model="from"')->toContain('wire:model="to"')
+        ->toContain('x-ref="from"')->toContain('x-ref="to"')
+        ->toContain("apply('2026-01-01', '2026-03-31')")
+        ->toContain('This month')->toContain('Q1');
+
+    expect(\Fsteltenkamp\TwcssComponents\View\Components\Form\Daterange::range('last-month', \Illuminate\Support\Carbon::parse('2026-03-31')))
+        ->toBe(['label' => 'Last month', 'from' => '2026-02-01', 'to' => '2026-02-28']);
+});
+
+/* ---- navigation: heights, pinnable sidebar, breadcrumbs, links ---- */
+
+it('sets the navbar height and the sidebar head height', function () {
+    expect(Blade::render('<x-fltc::nav.navbar height="sm">x</x-fltc::nav.navbar>'))->toContain('flex h-12 items-center')
+        ->and(Blade::render('<x-fltc::nav.navbar>x</x-fltc::nav.navbar>'))->toContain('flex h-16 items-center')
+        ->and(Blade::render('<x-fltc::nav.sidebar headerHeight="sm"><x-slot:brand>B</x-slot:brand><x-fltc::nav.sidebar.link href="#">x</x-fltc::nav.sidebar.link></x-fltc::nav.sidebar>'))->toMatch('/fltc-nav-sidebar-brand flex h-12/');
+});
+
+it('pins or hides a pinnable sidebar from lg up and keeps the state', function () {
+    $html = Blade::render('<x-fltc::nav.sidebar pinnable persist="app-sidebar"><x-slot:brand>B</x-slot:brand><x-fltc::nav.sidebar.link href="#">x</x-fltc::nav.sidebar.link></x-fltc::nav.sidebar>');
+
+    expect($html)
+        ->toContain("localStorage.getItem(key) === 'collapsed'")
+        ->toContain("})('app-sidebar');")
+        ->toContain('new MutationObserver')
+        ->toContain('lg:[[data-sidebar=collapsed]_&amp;]:-translate-x-full')
+        ->toContain('window.fltcSidebar.collapse()')
+        ->toContain('window.fltcSidebar.pin(); open = false')
+        ->toContain('lg:[[data-sidebar=collapsed]_&amp;]:block');
+
+    expect(Blade::render('<x-fltc::nav.sidebar>x</x-fltc::nav.sidebar>'))->not->toContain('fltcSidebar')->not->toContain('data-sidebar=');
+    expect(Blade::render('<x-fltc::nav.navbar.toggle pinnable />'))->toContain('lg:hidden')->toContain('lg:[[data-sidebar=collapsed]_&amp;]:inline-flex');
+});
+
+it('renders footer links in the sidebar footer', function () {
+    $html = Blade::render('<x-fltc::nav.sidebar.footer :links="[\'Docs\' => \'/docs\', [\'Status\', \'https://status.example\', true]]" />');
+
+    expect($html)->toContain('href="/docs"')->toContain('>Docs</a>')->toContain('target="_blank"')->toContain('·');
+});
+
+it('keeps scrolling breadcrumbs on one line', function () {
+    $html = Blade::render('<x-fltc::nav.breadcrumbs scroll :crumbs="[[\'label\' => \'A\', \'href\' => \'/\'], [\'label\' => \'B\']]" />');
+
+    expect($html)->toContain('flex-nowrap')->toContain('overflow-x-auto')->not->toContain('flex-wrap');
+});
+
+it('renders text links: navigate, external and underline', function () {
+    expect(Blade::render('<x-fltc::link href="/a" navigate color="primary">A</x-fltc::link>'))
+        ->toContain('href="/a"')->toContain('wire:navigate')->toContain('text-primary-600')->toContain('hover:underline')->toContain('fltc-link')
+        ->and(Blade::render('<x-fltc::link href="https://x.test" external>X</x-fltc::link>'))
+        ->toContain('target="_blank"')->toContain('rel="noopener noreferrer"')->toContain('ph-arrow-square-out')->not->toContain('wire:navigate')
+        ->and(Blade::render('<x-fltc::link href="#" underline="always">U</x-fltc::link>'))->toMatch('/class="[^"]*\bunderline\b/');
+});
+
+it('opens a drawer from a button or a badge', function () {
+    expect(Blade::render('<x-fltc::button drawer="notes">Notes</x-fltc::button>'))->toContain('data-fltc-drawer-trigger="notes"')
+        ->and(Blade::render('<x-fltc::badge drawer="notes">3</x-fltc::badge>'))->toMatch('/<button[^>]*type="button"[^>]*data-fltc-drawer-trigger="notes"/')
+        ->and(Blade::render('<x-fltc::drawer name="d" label="D">x</x-fltc::drawer>'))->toContain("closest?.('[data-fltc-drawer-trigger]')?.getAttribute('data-fltc-drawer-trigger')");
+});
+
+it('renders a page header with title, description and actions', function () {
+    $html = Blade::render('<x-fltc::page-header title="Customers" description="All of them" color="primary"><x-slot:actions><x-fltc::button>New</x-fltc::button></x-slot:actions></x-fltc::page-header>');
+
+    expect($html)->toContain('<h1')->toContain('Customers')->toContain('All of them')->toContain('fltc-page-header-actions')->toContain('fltc-color-primary');
+});
+
+it('aligns headings and subheadings', function () {
+    expect(Blade::render('<x-fltc::heading align="center">T</x-fltc::heading>'))->toContain('text-center')
+        ->and(Blade::render('<x-fltc::subheading align="center">S</x-fltc::subheading>'))->toContain('text-center');
+});
+
+/* ---- containers: lists, disclosure, description list, thread, options ---- */
+
+it('renders a list with linked, highlighted and muted rows and meta/aside slots', function () {
+    $html = Blade::render(<<<'BLADE'
+        <x-fltc::list color="primary">
+            <x-fltc::list.item href="/t/1" navigate highlight="warning" icon="lifebuoy">Login fails<x-slot:meta>#1042 · 3 days ago</x-slot:meta><x-slot:aside><x-fltc::badge>open</x-fltc::badge></x-slot:aside></x-fltc::list.item>
+            <x-fltc::list.item muted>Closed one</x-fltc::list.item>
+        </x-fltc::list>
+        BLADE);
+
+    expect($html)
+        ->toMatch('/<ul role="list" class="fltc-list fltc-color-primary fltc-list-default divide-y/')
+        ->toContain('href="/t/1"')->toContain('wire:navigate')
+        ->toContain('shadow-warning-500')->toContain('fltc-list-item-highlight')
+        ->toContain('fltc-list-item-meta')->toContain('#1042')->toContain('fltc-list-item-aside')
+        ->toContain('opacity-60')
+        ->toContain('fltc-list-item fltc-color-primary');
+
+    expect(Blade::render('<x-fltc::list variant="inset"><x-fltc::list.item>a</x-fltc::list.item></x-fltc::list>'))
+        ->not->toContain('rounded-lg border')->toContain('fltc-list-inset');
+});
+
+it('renders a disclosure that persists and renders its content lazily', function () {
+    $html = Blade::render('<x-fltc::disclosure summary="Log" persist="update-log" lazy color="primary"><pre>lines</pre></x-fltc::disclosure>');
+
+    expect($html)
+        ->toContain('<details')->toContain('<summary')->toContain('Log')
+        ->toContain("key: 'fltc-disclosure:update-log'")
+        ->toContain('x-on:toggle="toggled()"')
+        ->toMatch('/<template x-ref="lazy">\s*<pre>lines<\/pre>/');
+
+    expect(Blade::render('<x-fltc::disclosure summary="More" open>x</x-fltc::disclosure>'))->toMatch('/<details[^>]*\sopen\b/')->not->toContain('x-data');
+});
+
+it('renders a description list from items and children, with totals', function () {
+    $html = Blade::render(<<<'BLADE'
+        <x-fltc::description-list :items="['Name' => 'Ada', ['Email', 'ada@example.com', 'envelope']]">
+            <x-fltc::description-list.item label="Net" numeric>100.00</x-fltc::description-list.item>
+            <x-fltc::description-list.item label="Total" numeric total>119.00</x-fltc::description-list.item>
+        </x-fltc::description-list>
+        BLADE);
+
+    expect($html)
+        ->toContain('<dl')->toContain('grid-cols-[auto_1fr]')
+        ->toMatch('/<dt[^>]*>\s*Name\s*<\/dt>\s*<dd[^>]*>\s*Ada/')
+        ->toContain('ph-envelope')
+        ->toContain('text-right tabular-nums')
+        ->toContain('fltc-description-list-total')->toContain('border-t');
+
+    expect(Blade::render('<x-fltc::description-list layout="inline" :items="[\'A\' => \'1\']" />'))->toContain('A:');
+});
+
+it('renders avatars with initials, pictures and presence', function () {
+    expect(Blade::render('<x-fltc::avatar name="Ada Lovelace" status="online" />'))
+        ->toContain('>AL<')->toContain('bg-success-500')->toContain('aria-label="Online"')->toContain('title="Ada Lovelace"')
+        ->and(Blade::render('<x-fltc::avatar src="/a.png" name="Ada" shape="square" />'))->toContain('<img src="/a.png" alt="Ada"')->toContain('rounded-md');
+});
+
+it('renders a thread with own messages on the right and system events', function () {
+    $html = Blade::render(<<<'BLADE'
+        <x-fltc::thread ownColor="primary">
+            <x-fltc::thread.message author="Support" meta="10:02">Hello</x-fltc::thread.message>
+            <x-fltc::thread.event icon="check">Status changed</x-fltc::thread.event>
+            <x-fltc::thread.message own author="Ada" meta="10:05">Thanks<x-slot:footer>1 attachment</x-slot:footer></x-fltc::thread.message>
+        </x-fltc::thread>
+        BLADE);
+
+    expect($html)
+        ->toContain('fltc-thread-message-own')->toContain('ml-auto max-w-[85%] flex-row-reverse')
+        ->toContain('bg-primary-50')->toContain('bg-base-50')
+        ->toContain('fltc-thread-event')->toContain('Status changed')
+        ->toContain('fltc-thread-message-footer')->toContain('>A<');
+});
+
+it('collapses a card from its header and keeps the state', function () {
+    $html = Blade::render('<x-fltc::card collapsible :open="false" persist="pool"><x-fltc::card.header>Pool</x-fltc::card.header><x-fltc::card.body>x</x-fltc::card.body></x-fltc::card>');
+
+    expect($html)
+        ->toContain('data-collapsed="true"')
+        ->toContain("const key = 'fltc-card:pool'")
+        ->toContain('[&amp;[data-collapsed=true]&gt;:not([data-card-header])]:hidden')
+        ->toContain('fltc-card-toggle');
+
+    expect(Blade::render('<x-fltc::card><x-fltc::card.header>Plain</x-fltc::card.header></x-fltc::card>'))->not->toContain('fltc-card-toggle');
+});
+
+it('draws boxes and cards as outline or flat', function () {
+    expect(Blade::render('<x-fltc::container.box variant="outline" color="rose">x</x-fltc::container.box>'))
+        ->toContain('rounded-md border p-4')->toContain('border-rose-200')->not->toContain('bg-white')->not->toContain('shadow-sm')
+        ->and(Blade::render('<x-fltc::card variant="flat">x</x-fltc::card>'))->not->toContain('shadow-sm')->not->toMatch('/class="[^"]*\bborder(?![-\w])/');
+});
+
+it('makes a counter a pressed filter button', function () {
+    $html = Blade::render('<x-fltc::counter title="Open" count="4" :active="true" wire:click="filter(\'open\')" color="warning" />');
+
+    expect($html)->toContain('<button')->toContain('type="button"')->toContain('aria-pressed="true"')->toContain('ring-warning-500')->toContain('wire:click');
+    expect(Blade::render('<x-fltc::counter title="Open" count="4" :active="false" />'))->toContain('aria-pressed="false"')->not->toContain('ring-2 ring-');
+});
+
+it('makes a table row a link', function () {
+    $html = Blade::render('<x-fltc::table><x-fltc::table.row href="/tickets/7" navigate><x-fltc::table.cell>7</x-fltc::table.cell></x-fltc::table.row></x-fltc::table>');
+
+    expect($html)
+        ->toContain('data-href="/tickets/7"')->toContain('tabindex="0"')
+        ->toContain('x-on:click="follow($event)"')->toContain('x-on:auxclick')
+        ->toContain('window.Livewire?.navigate')->toContain('fltc-table-row-link');
+});
+
+it('gives a modal a title, a close button and a footer', function () {
+    $html = Blade::render('<x-fltc::modal name="m" title="Edit ticket" description="Change the state" cancelLabel="Cancel">Body<x-slot:footer><x-fltc::button>Save</x-fltc::button></x-slot:footer></x-fltc::modal>');
+
+    expect($html)
+        ->toContain('fltc-modal-header')->toContain('Edit ticket')->toContain('Change the state')
+        ->toContain('fltc-modal-close')->toContain('fltc-modal-footer')->toContain('Cancel')->toContain('Save');
+
+    expect(Blade::render('<x-fltc::modal name="m">Body</x-fltc::modal>'))->not->toContain('fltc-modal-header')->not->toContain('fltc-modal-footer');
+});
+
+it('renders message box items, lazy accordion items and trigger badges', function () {
+    expect(Blade::render('<x-fltc::messagebox title="Already reported?">Look first<x-slot:items><x-fltc::list variant="inset"><x-fltc::list.item>#1</x-fltc::list.item></x-fltc::list></x-slot:items></x-fltc::messagebox>'))
+        ->toContain('fltc-messagebox-items')->toContain('fltc-list-inset');
+
+    $accordion = Blade::render('<x-fltc::accordion><x-fltc::accordion.item title="Trace" lazy><x-slot:badges><x-fltc::badge>3</x-fltc::badge></x-slot:badges><p>heavy</p></x-fltc::accordion.item></x-fltc::accordion>');
+    expect($accordion)
+        ->toMatch('/<template data-accordion-lazy>\s*<p>heavy<\/p>/')
+        ->toContain('fltc-accordion-item-badges')
+        ->toContain("querySelector(':scope > template[data-accordion-lazy]')");
+});
+
+/* ---- media and text: lightbox, frame, code, prose, time, qr, toolbar, toasts ---- */
+
+it('opens images of a group in the lightbox', function () {
+    $html = Blade::render('<x-fltc::lightbox color="primary" />');
+
+    expect($html)
+        ->toContain('x-on:click.window="click($event)"')->toContain('x-on:fltc-lightbox.window')
+        ->toContain("closest?.('[data-fltc-lightbox]')")->toContain('fltc-lightbox-overlay fltc-color-primary')
+        ->toContain('download');
+
+    $card = Blade::render('<x-fltc::file-card name="scan.png" href="/files/scan.png" lightbox="ticket" />');
+    expect($card)->toContain('data-fltc-lightbox="ticket"')->toContain('data-fltc-lightbox-name="scan.png"')->toContain('cursor-zoom-in');
+    expect(Blade::render('<x-fltc::file-card name="a.pdf" href="/a.pdf" lightbox="ticket" />'))->not->toContain('data-fltc-lightbox');
+});
+
+it('embeds a document in a frame with a light and a dark source', function () {
+    $html = Blade::render('<x-fltc::frame src="/doc/light" srcDark="/doc/dark" title="Invoice" height="60vh" sandbox="" resizable />');
+
+    expect($html)
+        ->toContain('src="/doc/light"')->toContain('src="/doc/dark"')->toContain('dark:hidden')->toContain('dark:block')
+        ->toContain('sandbox=""')->toContain('title="Invoice"')->toContain('height: 60vh;')->toContain('resize-y')
+        ->toContain('x-on:load="loading = false"');
+
+    expect(Blade::render('<x-fltc::frame srcdoc="<p>Hi</p>" />'))->toContain('srcdoc="&lt;p&gt;Hi&lt;/p&gt;"')->not->toContain('sandbox=');
+});
+
+it('renders code inline and as a block with copy, wrap and line numbers', function () {
+    expect(Blade::render('<x-fltc::code inline>token_123</x-fltc::code>'))->toMatch('/<code class="[^"]*font-mono[^"]*">token_123<\/code>/');
+
+    $block = Blade::render('<x-fltc::code language="json" :value="$v" lines maxHeight="10rem" />', ['v' => "{\n  \"a\": \"<b>\"\n}"]);
+    expect($block)
+        ->toContain('data-language="json"')->toContain('fltc-code-copy')->toContain('fltc-code-wrap')
+        ->toContain('&lt;b&gt;')->not->toContain('<b>')
+        ->toContain('counter-increment:fltc-line')->toContain('max-height: 10rem;')
+        ->toContain("new CustomEvent('fltc:toast'");
+});
+
+it('styles rendered HTML with prose', function () {
+    expect(Blade::render('<x-fltc::prose color="primary"><p>Hi</p></x-fltc::prose>'))
+        ->toContain('[&amp;_ul]:list-disc')->toContain('[&amp;_a]:text-primary-600')->toContain('fltc-prose')->toContain('<p>Hi</p>');
+});
+
+it('renders a relative time with the exact one as tooltip', function () {
+    \Illuminate\Support\Carbon::setTestNow('2026-11-25 12:00:00');
+    $html = Blade::render('<x-fltc::time value="2026-11-25 11:57:00" />');
+
+    expect($html)->toContain('datetime="2026-11-25T11:57:00')->toContain('3 minutes ago')->toMatch('/title="[^"]*2026/');
+    expect(trim(Blade::render('<x-fltc::time />')))->toBe('');
+    \Illuminate\Support\Carbon::setTestNow();
+});
+
+it('frames a QR code and shows a spinner while it is empty', function () {
+    expect(Blade::render('<x-fltc::qr label="Scan me"><svg></svg></x-fltc::qr>'))->toContain('bg-white')->toContain('aria-label="Scan me"')->not->toContain('animate-spin')
+        ->and(Blade::render('<x-fltc::qr />'))->toContain('animate-spin');
+});
+
+it('renders a toolbar that shares its button classes with scripts', function () {
+    $html = Blade::render('<x-fltc::toolbar label="Format" color="primary"><x-fltc::toolbar.button icon="text-b" label="Bold" :active="true" /><x-fltc::toolbar.separator /></x-fltc::toolbar>');
+
+    expect($html)
+        ->toContain('role="toolbar"')->toContain('aria-label="Format"')
+        ->toContain('data-fltc-toolbar-button-class="fltc-toolbar-button')
+        ->toContain('aria-pressed="true"')->toContain('title="Bold"')->toContain('hover:bg-primary-100')
+        ->toContain('fltc-toolbar-separator');
+});
+
+it('shows a toast for a window event and offers a script API', function () {
+    $html = Blade::render('<x-fltc::toast.on event="profile-saved" title="Saved." />');
+
+    expect($html)->toContain('<span')->toContain('hidden')->toContain("window.addEventListener('profile-saved'")->toContain('Saved.')->toContain('success');
+    expect(Blade::render('<x-fltc::toast.container />'))->toContain('window.fltc.toast = toast')->toContain('toast.error = toast.danger');
+});
+
+it('renders spinner text, alert icons, muted text and hints', function () {
+    expect(Blade::render('<x-fltc::spinner text="Loading tickets" />'))->toContain('fltc-spinner-icon')->toContain('Loading tickets')->toContain('role="status"')
+        ->and(Blade::render('<x-fltc::alert icon="info">Note</x-fltc::alert>'))->toContain('fltc-alert-icon')->toContain('ph-info')
+        ->and(Blade::render('<x-fltc::text muted size="xs">x</x-fltc::text>'))->toContain('text-base-500')->toContain('text-xs')
+        ->and(Blade::render('<x-fltc::hint icon="info">Optional</x-fltc::hint>'))->toContain('<p')->toContain('text-xs')->toContain('Optional');
+});
+
+it('ships a base stylesheet with x-cloak and default line colours', function () {
+    $css = file_get_contents(__DIR__.'/../resources/css/base.css');
+
+    expect($css)->toContain('[x-cloak]')->toContain('@layer base')->toContain('rgb(var(--fltc-base-200))');
+});
+
+/* ---- markdown editor ---- */
+
+it('renders a markdown editor with toolbar, shortcuts, controls and preview', function () {
+    shareErrors();
+    $html = Blade::render('<x-fltc::form.markdown id="body" label="Message" model="body" preview previewMethod="renderPreview" :buttons="[\'bold\', \'link\', \'nope\']"><x-slot:controls><select x-on:change="insert($event.target.value)"><option>@ada</option></select></x-slot:controls></x-fltc::form.markdown>');
+
+    expect($html)
+        ->toContain('fltc-form-markdown fltc-color-base')
+        ->toContain('wire:model="body"')->toContain('id="body"')
+        ->toContain("apply('bold')")->toContain("apply('link')")->not->toContain("apply('nope')")
+        ->toContain('x-on:keydown.ctrl.b.prevent')->toContain('x-on:keydown.meta.k.prevent')
+        ->toContain('insert($event.target.value)')
+        ->toContain("this.\$wire.call('renderPreview', text)")
+        ->toContain('fltc-form-markdown-preview')->toContain('x-html="html"');
+
+    expect(Blade::render('<x-fltc::form.markdown id="b" preview />'))->toContain("new CustomEvent('fltc-markdown-preview'");
+    expect(Blade::render('<x-fltc::form.markdown id="b" />'))->not->toContain('fltc-form-markdown-preview');
+});
+
+it('colours one-time-code boxes with literal classes and separators by role', function () {
+    expect(Blade::render('<x-fltc::form.otp color="primary" />'))->toContain('border-primary-300')->toContain('focus:ring-primary-500')->not->toContain('{{')
+        ->and(Blade::render('<x-fltc::separator color="primary" />'))->toContain('border-primary-200')->toContain('fltc-color-primary')
+        ->and(Blade::render('<x-fltc::separator />'))->toContain('border-zinc-200')->not->toContain('fltc-color-');
+});
+
+it('accepts a pasted or autofilled code in the one-time-code boxes', function () {
+    $html = Blade::render('<x-fltc::form.otp length="6" name="code" />');
+
+    // maxlength="1" made the browser cut a pasted code to its first digit.
+    expect($html)
+        ->not->toContain('maxlength')
+        ->toContain('x-on:paste.prevent="handlePaste(0, $event)"')
+        ->toContain("getData('text')")
+        ->toContain('this.fill(chars.length >= 6 ? 0 : i, chars)');
+});
+
+it('links the stepper panel to the neighbouring steps without host scripts', function () {
+    $html = Blade::render('<x-fltc::nav.stepper :steps="[1 => \'One\', 2 => \'Two\', 3 => \'Three\']" :stepIndex="2" savebtn onclick="save()" />');
+
+    expect($html)
+        ->toContain('step=1')->toContain('step=3')
+        ->toContain('onclick="save();"')
+        ->toContain('type="submit"')->toContain('data-fltc-stepper-save')
+        ->toContain('Back')->toContain('Next')->toContain('Step 2 / 3: Two')
+        ->not->toContain('util.')->not->toContain('submit()')->not->toContain('id="');
 });

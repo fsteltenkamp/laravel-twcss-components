@@ -25,7 +25,13 @@ class Modal extends Component
         public bool $closeable = true,
         public string $color = 'base',
         public bool $teleport = true,
+        public string $title = '',
+        public string $description = '',
+        public ?bool $closeButton = null,
+        public string $cancelLabel = '',
     ) {
+        // A titled modal gets a close button in its header unless told otherwise.
+        $this->closeButton = $closeButton ?? $title !== '';
         $widthMap = [
             'sm'   => 'max-w-sm',
             'md'   => 'max-w-md',

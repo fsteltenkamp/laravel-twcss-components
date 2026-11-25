@@ -56,7 +56,32 @@
             aria-modal="true"
             class="fltc-modal-panel {{ $panelClasses }}"
         >
+            @if ($title !== '' || ($closeButton && $closeable))
+                <div class="fltc-modal-header mb-4 flex items-start justify-between gap-4">
+                    <div class="min-w-0 space-y-1">
+                        @if ($title !== '')
+                            <x-fltc::heading level="2" size="lg" :color="$color">{{ $title }}</x-fltc::heading>
+                        @endif
+                        @if ($description !== '')
+                            <x-fltc::subheading :color="$color">{{ $description }}</x-fltc::subheading>
+                        @endif
+                    </div>
+                    @if ($closeButton && $closeable)
+                        <x-fltc::button variant="ghost" square height="xs" icon="x" :color="$color" class="fltc-modal-close -mr-2 -mt-1" x-on:click="close()" :aria-label="__('Close')" />
+                    @endif
+                </div>
+            @endif
+
             {{ $slot }}
+
+            @if (isset($footer) || $cancelLabel !== '')
+                <div class="fltc-modal-footer mt-6 flex flex-wrap items-center justify-end gap-2">
+                    @if ($cancelLabel !== '')
+                        <x-fltc::button variant="outline" :color="$color" x-on:click="close()">{{ $cancelLabel }}</x-fltc::button>
+                    @endif
+                    {{ $footer ?? '' }}
+                </div>
+            @endif
         </div>
     </div>
     @if ($teleport)</template>@endif

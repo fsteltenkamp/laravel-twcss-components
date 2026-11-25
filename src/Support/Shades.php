@@ -280,4 +280,49 @@ class Shades
 
         return $map[$color] ?? $map['base'];
     }
+
+    /**
+     * A text control on the page: frame, fill, text and focus ring (the one-time-code boxes).
+     */
+    public static function control(?string $color): string
+    {
+        $map = [
+            'slate'     => 'border-slate-300 bg-white text-slate-900 focus:border-slate-500 focus:ring-slate-500 dark:border-slate-600 dark:bg-slate-950 dark:text-slate-100 dark:focus:border-slate-400 dark:focus:ring-slate-400',
+            'gray'      => 'border-gray-300 bg-white text-gray-900 focus:border-gray-500 focus:ring-gray-500 dark:border-gray-600 dark:bg-gray-950 dark:text-gray-100 dark:focus:border-gray-400 dark:focus:ring-gray-400',
+            'zinc'      => 'border-zinc-300 bg-white text-zinc-900 focus:border-zinc-500 focus:ring-zinc-500 dark:border-zinc-600 dark:bg-zinc-950 dark:text-zinc-100 dark:focus:border-zinc-400 dark:focus:ring-zinc-400',
+            'neutral'   => 'border-neutral-300 bg-white text-neutral-900 focus:border-neutral-500 focus:ring-neutral-500 dark:border-neutral-600 dark:bg-neutral-950 dark:text-neutral-100 dark:focus:border-neutral-400 dark:focus:ring-neutral-400',
+            'stone'     => 'border-stone-300 bg-white text-stone-900 focus:border-stone-500 focus:ring-stone-500 dark:border-stone-600 dark:bg-stone-950 dark:text-stone-100 dark:focus:border-stone-400 dark:focus:ring-stone-400',
+            'red'       => 'border-red-300 bg-white text-red-900 focus:border-red-500 focus:ring-red-500 dark:border-red-600 dark:bg-red-950 dark:text-red-100 dark:focus:border-red-400 dark:focus:ring-red-400',
+            'orange'    => 'border-orange-300 bg-white text-orange-900 focus:border-orange-500 focus:ring-orange-500 dark:border-orange-600 dark:bg-orange-950 dark:text-orange-100 dark:focus:border-orange-400 dark:focus:ring-orange-400',
+            'amber'     => 'border-amber-300 bg-white text-amber-900 focus:border-amber-500 focus:ring-amber-500 dark:border-amber-600 dark:bg-amber-950 dark:text-amber-100 dark:focus:border-amber-400 dark:focus:ring-amber-400',
+            'yellow'    => 'border-yellow-300 bg-white text-yellow-900 focus:border-yellow-500 focus:ring-yellow-500 dark:border-yellow-600 dark:bg-yellow-950 dark:text-yellow-100 dark:focus:border-yellow-400 dark:focus:ring-yellow-400',
+            'lime'      => 'border-lime-300 bg-white text-lime-900 focus:border-lime-500 focus:ring-lime-500 dark:border-lime-600 dark:bg-lime-950 dark:text-lime-100 dark:focus:border-lime-400 dark:focus:ring-lime-400',
+            'green'     => 'border-green-300 bg-white text-green-900 focus:border-green-500 focus:ring-green-500 dark:border-green-600 dark:bg-green-950 dark:text-green-100 dark:focus:border-green-400 dark:focus:ring-green-400',
+            'emerald'   => 'border-emerald-300 bg-white text-emerald-900 focus:border-emerald-500 focus:ring-emerald-500 dark:border-emerald-600 dark:bg-emerald-950 dark:text-emerald-100 dark:focus:border-emerald-400 dark:focus:ring-emerald-400',
+            'teal'      => 'border-teal-300 bg-white text-teal-900 focus:border-teal-500 focus:ring-teal-500 dark:border-teal-600 dark:bg-teal-950 dark:text-teal-100 dark:focus:border-teal-400 dark:focus:ring-teal-400',
+            'cyan'      => 'border-cyan-300 bg-white text-cyan-900 focus:border-cyan-500 focus:ring-cyan-500 dark:border-cyan-600 dark:bg-cyan-950 dark:text-cyan-100 dark:focus:border-cyan-400 dark:focus:ring-cyan-400',
+            'sky'       => 'border-sky-300 bg-white text-sky-900 focus:border-sky-500 focus:ring-sky-500 dark:border-sky-600 dark:bg-sky-950 dark:text-sky-100 dark:focus:border-sky-400 dark:focus:ring-sky-400',
+            'blue'      => 'border-blue-300 bg-white text-blue-900 focus:border-blue-500 focus:ring-blue-500 dark:border-blue-600 dark:bg-blue-950 dark:text-blue-100 dark:focus:border-blue-400 dark:focus:ring-blue-400',
+            'indigo'    => 'border-indigo-300 bg-white text-indigo-900 focus:border-indigo-500 focus:ring-indigo-500 dark:border-indigo-600 dark:bg-indigo-950 dark:text-indigo-100 dark:focus:border-indigo-400 dark:focus:ring-indigo-400',
+            'violet'    => 'border-violet-300 bg-white text-violet-900 focus:border-violet-500 focus:ring-violet-500 dark:border-violet-600 dark:bg-violet-950 dark:text-violet-100 dark:focus:border-violet-400 dark:focus:ring-violet-400',
+            'purple'    => 'border-purple-300 bg-white text-purple-900 focus:border-purple-500 focus:ring-purple-500 dark:border-purple-600 dark:bg-purple-950 dark:text-purple-100 dark:focus:border-purple-400 dark:focus:ring-purple-400',
+            'fuchsia'   => 'border-fuchsia-300 bg-white text-fuchsia-900 focus:border-fuchsia-500 focus:ring-fuchsia-500 dark:border-fuchsia-600 dark:bg-fuchsia-950 dark:text-fuchsia-100 dark:focus:border-fuchsia-400 dark:focus:ring-fuchsia-400',
+            'pink'      => 'border-pink-300 bg-white text-pink-900 focus:border-pink-500 focus:ring-pink-500 dark:border-pink-600 dark:bg-pink-950 dark:text-pink-100 dark:focus:border-pink-400 dark:focus:ring-pink-400',
+            'rose'      => 'border-rose-300 bg-white text-rose-900 focus:border-rose-500 focus:ring-rose-500 dark:border-rose-600 dark:bg-rose-950 dark:text-rose-100 dark:focus:border-rose-400 dark:focus:ring-rose-400',
+            'taupe'     => 'border-taupe-300 bg-white text-taupe-900 focus:border-taupe-500 focus:ring-taupe-500 dark:border-taupe-600 dark:bg-taupe-950 dark:text-taupe-100 dark:focus:border-taupe-400 dark:focus:ring-taupe-400',
+            'mauve'     => 'border-mauve-300 bg-white text-mauve-900 focus:border-mauve-500 focus:ring-mauve-500 dark:border-mauve-600 dark:bg-mauve-950 dark:text-mauve-100 dark:focus:border-mauve-400 dark:focus:ring-mauve-400',
+            'mist'      => 'border-mist-300 bg-white text-mist-900 focus:border-mist-500 focus:ring-mist-500 dark:border-mist-600 dark:bg-mist-950 dark:text-mist-100 dark:focus:border-mist-400 dark:focus:ring-mist-400',
+            'olive'     => 'border-olive-300 bg-white text-olive-900 focus:border-olive-500 focus:ring-olive-500 dark:border-olive-600 dark:bg-olive-950 dark:text-olive-100 dark:focus:border-olive-400 dark:focus:ring-olive-400',
+            'primary'   => 'border-primary-300 bg-white text-primary-900 focus:border-primary-500 focus:ring-primary-500 dark:border-primary-600 dark:bg-primary-950 dark:text-primary-100 dark:focus:border-primary-400 dark:focus:ring-primary-400',
+            'secondary' => 'border-secondary-300 bg-white text-secondary-900 focus:border-secondary-500 focus:ring-secondary-500 dark:border-secondary-600 dark:bg-secondary-950 dark:text-secondary-100 dark:focus:border-secondary-400 dark:focus:ring-secondary-400',
+            'accent'    => 'border-accent-300 bg-white text-accent-900 focus:border-accent-500 focus:ring-accent-500 dark:border-accent-600 dark:bg-accent-950 dark:text-accent-100 dark:focus:border-accent-400 dark:focus:ring-accent-400',
+            'base'      => 'border-base-300 bg-white text-base-900 focus:border-base-500 focus:ring-base-500 dark:border-base-600 dark:bg-base-950 dark:text-base-100 dark:focus:border-base-400 dark:focus:ring-base-400',
+            'info'      => 'border-info-300 bg-white text-info-900 focus:border-info-500 focus:ring-info-500 dark:border-info-600 dark:bg-info-950 dark:text-info-100 dark:focus:border-info-400 dark:focus:ring-info-400',
+            'success'   => 'border-success-300 bg-white text-success-900 focus:border-success-500 focus:ring-success-500 dark:border-success-600 dark:bg-success-950 dark:text-success-100 dark:focus:border-success-400 dark:focus:ring-success-400',
+            'warning'   => 'border-warning-300 bg-white text-warning-900 focus:border-warning-500 focus:ring-warning-500 dark:border-warning-600 dark:bg-warning-950 dark:text-warning-100 dark:focus:border-warning-400 dark:focus:ring-warning-400',
+            'danger'    => 'border-danger-300 bg-white text-danger-900 focus:border-danger-500 focus:ring-danger-500 dark:border-danger-600 dark:bg-danger-950 dark:text-danger-100 dark:focus:border-danger-400 dark:focus:ring-danger-400',
+        ];
+
+        return $map[$color] ?? $map['base'];
+    }
 }

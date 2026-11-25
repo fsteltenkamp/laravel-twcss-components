@@ -60,7 +60,7 @@ DEFAULT = {
 # 50/950 page, 100/900 surface and primary text, 300/700 secondary text (light/dark
 # mode pairs, see the README "Color shades"), so its anchors are set shade by shade.
 THEMES = {
-    'cyberpunk': {
+    'neon': {
         'base': dict(zip(SHADES, ['#f6f2fb', '#d8fbff', '#82fdf9', '#00fff0', '#ff2bd6', '#e216b2', '#c4008f', '#00707c', '#053b4a', '#0a0618', '#04020a'])),
         'primary': {400: '#ff2bd6', 600: '#c4008f'},
         'secondary': {300: '#00fff0', 700: '#00707c'},
@@ -70,7 +70,7 @@ THEMES = {
         'warning': {400: '#fcee0a', 600: '#a89a00'},
         'danger': {400: '#ff3b3b', 600: '#d31c1c'},
     },
-    'fantasy': {
+    'parchment': {
         'base': dict(zip(SHADES, ['#f0e6cf', '#f3e9cf', '#eee2c2', '#e6d7ae', '#d98e32', '#b27422', '#8a5a12', '#503c1e', '#3a2b16', '#241a0e', '#140f08'])),
         'primary': {400: '#d98e32', 600: '#8a5a12'},
         'secondary': {400: '#7fb069', 600: '#3f6b2e'},
@@ -80,7 +80,7 @@ THEMES = {
         'warning': {400: '#f2c94c', 600: '#a8761a'},
         'danger': {400: '#e0604f', 600: '#9b2c22'},
     },
-    'wh40k': {
+    'gothic': {
         'base': dict(zip(SHADES, ['#e7e3d7', '#ded7c2', '#d6cfba', '#c9c2ad', '#bf2a1f', '#a7241a', '#8f1d14', '#3a3630', '#282626', '#17171b', '#0b0b0d'])),
         'primary': {400: '#bf2a1f', 600: '#8f1d14'},
         'secondary': {400: '#c9a227', 600: '#7a5f16'},

@@ -54,8 +54,8 @@ class Picker extends Component
      * @param  array<int|string, string>  $palettes  palettes offered per role in the custom theme
      */
     public function __construct(
-        public array $skins = ['default', 'cyberpunk', 'fantasy', 'wh40k'],
-        public array $themes = ['default', 'cyberpunk', 'fantasy', 'wh40k', 'dracula', 'nord', 'catppuccin', 'solarized', 'gruvbox', 'custom'],
+        public array $skins = ['default', 'neon', 'parchment', 'gothic'],
+        public array $themes = ['default', 'neon', 'parchment', 'gothic', 'dracula', 'nord', 'catppuccin', 'solarized', 'gruvbox', 'custom'],
         public array $palettes = self::PALETTES,
         public string $skinStorageKey = 'fltc-skin',
         public string $themeStorageKey = 'fltc-theme',

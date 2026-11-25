@@ -4,7 +4,7 @@
     $inputAttributes = $tag === 'label' ? $attributes->whereStartsWith(['wire:model', 'x-model']) : null;
     $chipAttributes = $tag === 'label' ? $attributes->whereDoesntStartWith(['wire:model', 'x-model']) : $attributes;
 @endphp
-<{{ $tag }} {{ $chipAttributes->class([$classList]) }} @if ($tag === 'a') href="{{ $href }}" @endif>
+<{{ $tag }} {{ $chipAttributes->class([$classList])->merge($tag === 'button' ? ['type' => 'button', 'data-fltc-drawer-trigger' => $drawer, 'aria-haspopup' => 'dialog'] : []) }} @if ($tag === 'a') href="{{ $href }}" @endif>
     @if ($tag === 'label')
         <input {{ $inputAttributes }} type="checkbox" class="peer sr-only" @if ($name !== '') name="{{ $name }}" @endif value="{{ $value !== '' ? $value : '1' }}" @checked($checked) />
     @endif

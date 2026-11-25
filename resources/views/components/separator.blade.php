@@ -1,16 +1,21 @@
 @props([
     'vertical' => false,
     'variant' => 'default',
+    'color' => null,
 ])
 @php
-    $borderClasses = $variant === 'subtle'
-        ? 'border-zinc-100 dark:border-zinc-800'
-        : 'border-zinc-200 dark:border-zinc-700';
+    // Without a colour the rule keeps its neutral zinc; with one it takes that colour's
+    // divider shades (role or palette).
+    $borderClasses = $color
+        ? \Fsteltenkamp\TwcssComponents\Support\SidebarTheme::divider($color)
+        : ($variant === 'subtle'
+            ? 'border-zinc-100 dark:border-zinc-800'
+            : 'border-zinc-200 dark:border-zinc-700');
 
     $orientation = $vertical ? 'h-full border-l' : 'w-full border-t';
 @endphp
 <div
     role="separator"
     aria-orientation="{{ $vertical ? 'vertical' : 'horizontal' }}"
-    {{ $attributes->class(['fltc-separator', $orientation, $borderClasses]) }}
+    {{ $attributes->class(['fltc-separator', 'fltc-color-'.$color => $color, $orientation, $borderClasses]) }}
 ></div>

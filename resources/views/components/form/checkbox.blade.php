@@ -20,6 +20,10 @@
         @disabled($disabled)
     />
 
+    @if ($labelOff !== '' || $iconOff !== '')
+        <span class="fltc-form-checkbox-off {{ $sideClasses }} group-has-[:checked]/toggle:opacity-40" aria-hidden="true">@if ($iconOff !== '')<x-fltc::icon :name="$iconOff" />@endif{{ $labelOff }}</span>
+    @endif
+
     <span class="fltc-form-checkbox-track relative inline-flex flex-shrink-0 items-center rounded-full transition-colors duration-300 {{ $trackSize }} {{ $trackOff }} {{ $trackOn }}">
         <span class="fltc-form-checkbox-knob absolute left-0.5 top-0.5 inline-flex items-center justify-center rounded-full bg-white shadow transform transition-transform duration-300 {{ $knobSize }} {{ $knobTranslate }}">
             @if ($iconUnchecked)
@@ -30,6 +34,10 @@
             @endif
         </span>
     </span>
+
+    @if ($labelOn !== '' || $iconOn !== '')
+        <span class="fltc-form-checkbox-on {{ $sideClasses }} opacity-40 group-has-[:checked]/toggle:opacity-100" aria-hidden="true">@if ($iconOn !== '')<x-fltc::icon :name="$iconOn" />@endif{{ $labelOn }}</span>
+    @endif
 
     @if ($label)
         <span class="{{ $labelClasses }}">{{ $label }}</span>

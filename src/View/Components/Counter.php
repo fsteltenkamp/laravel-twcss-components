@@ -9,6 +9,7 @@ use Fsteltenkamp\TwcssComponents\View\Component;
 
 class Counter extends Component
 {
+    public string $tag;
     public string $classList;
     public string $counterClasses;
     public string $titleClasses;
@@ -24,7 +25,48 @@ class Counter extends Component
         public string $link = '',
         public bool $navigate = false,
         public string $class = '',
+        public bool $button = false,
+        public ?bool $active = null,
     ) {
+        // A counter that filters: a <button> (wire:click, x-on:click) with aria-pressed.
+        $this->tag = filled($link) ? 'a' : (($button || $active !== null) ? 'button' : 'div');
+        $ringMap = [
+            'slate'     => 'ring-2 ring-slate-500 ring-offset-2 dark:ring-slate-400 dark:ring-offset-slate-950',
+            'gray'      => 'ring-2 ring-gray-500 ring-offset-2 dark:ring-gray-400 dark:ring-offset-gray-950',
+            'zinc'      => 'ring-2 ring-zinc-500 ring-offset-2 dark:ring-zinc-400 dark:ring-offset-zinc-950',
+            'neutral'   => 'ring-2 ring-neutral-500 ring-offset-2 dark:ring-neutral-400 dark:ring-offset-neutral-950',
+            'stone'     => 'ring-2 ring-stone-500 ring-offset-2 dark:ring-stone-400 dark:ring-offset-stone-950',
+            'red'       => 'ring-2 ring-red-500 ring-offset-2 dark:ring-red-400 dark:ring-offset-red-950',
+            'orange'    => 'ring-2 ring-orange-500 ring-offset-2 dark:ring-orange-400 dark:ring-offset-orange-950',
+            'amber'     => 'ring-2 ring-amber-500 ring-offset-2 dark:ring-amber-400 dark:ring-offset-amber-950',
+            'yellow'    => 'ring-2 ring-yellow-500 ring-offset-2 dark:ring-yellow-400 dark:ring-offset-yellow-950',
+            'lime'      => 'ring-2 ring-lime-500 ring-offset-2 dark:ring-lime-400 dark:ring-offset-lime-950',
+            'green'     => 'ring-2 ring-green-500 ring-offset-2 dark:ring-green-400 dark:ring-offset-green-950',
+            'emerald'   => 'ring-2 ring-emerald-500 ring-offset-2 dark:ring-emerald-400 dark:ring-offset-emerald-950',
+            'teal'      => 'ring-2 ring-teal-500 ring-offset-2 dark:ring-teal-400 dark:ring-offset-teal-950',
+            'cyan'      => 'ring-2 ring-cyan-500 ring-offset-2 dark:ring-cyan-400 dark:ring-offset-cyan-950',
+            'sky'       => 'ring-2 ring-sky-500 ring-offset-2 dark:ring-sky-400 dark:ring-offset-sky-950',
+            'blue'      => 'ring-2 ring-blue-500 ring-offset-2 dark:ring-blue-400 dark:ring-offset-blue-950',
+            'indigo'    => 'ring-2 ring-indigo-500 ring-offset-2 dark:ring-indigo-400 dark:ring-offset-indigo-950',
+            'violet'    => 'ring-2 ring-violet-500 ring-offset-2 dark:ring-violet-400 dark:ring-offset-violet-950',
+            'purple'    => 'ring-2 ring-purple-500 ring-offset-2 dark:ring-purple-400 dark:ring-offset-purple-950',
+            'fuchsia'   => 'ring-2 ring-fuchsia-500 ring-offset-2 dark:ring-fuchsia-400 dark:ring-offset-fuchsia-950',
+            'pink'      => 'ring-2 ring-pink-500 ring-offset-2 dark:ring-pink-400 dark:ring-offset-pink-950',
+            'rose'      => 'ring-2 ring-rose-500 ring-offset-2 dark:ring-rose-400 dark:ring-offset-rose-950',
+            'taupe'     => 'ring-2 ring-taupe-500 ring-offset-2 dark:ring-taupe-400 dark:ring-offset-taupe-950',
+            'mauve'     => 'ring-2 ring-mauve-500 ring-offset-2 dark:ring-mauve-400 dark:ring-offset-mauve-950',
+            'mist'      => 'ring-2 ring-mist-500 ring-offset-2 dark:ring-mist-400 dark:ring-offset-mist-950',
+            'olive'     => 'ring-2 ring-olive-500 ring-offset-2 dark:ring-olive-400 dark:ring-offset-olive-950',
+            'primary'   => 'ring-2 ring-primary-500 ring-offset-2 dark:ring-primary-400 dark:ring-offset-primary-950',
+            'secondary' => 'ring-2 ring-secondary-500 ring-offset-2 dark:ring-secondary-400 dark:ring-offset-secondary-950',
+            'accent'    => 'ring-2 ring-accent-500 ring-offset-2 dark:ring-accent-400 dark:ring-offset-accent-950',
+            'base'      => 'ring-2 ring-base-500 ring-offset-2 dark:ring-base-400 dark:ring-offset-base-950',
+            'info'      => 'ring-2 ring-info-500 ring-offset-2 dark:ring-info-400 dark:ring-offset-info-950',
+            'success'   => 'ring-2 ring-success-500 ring-offset-2 dark:ring-success-400 dark:ring-offset-success-950',
+            'warning'   => 'ring-2 ring-warning-500 ring-offset-2 dark:ring-warning-400 dark:ring-offset-warning-950',
+            'danger'    => 'ring-2 ring-danger-500 ring-offset-2 dark:ring-danger-400 dark:ring-offset-danger-950',
+        ];
+
         $themeMap = [
             // Neutral scales
             'slate'   => ['bg' => 'bg-white dark:bg-slate-900', 'border' => 'border-slate-200 dark:border-slate-700', 'count' => 'text-slate-900 dark:text-slate-100'],
@@ -70,7 +112,8 @@ class Counter extends Component
             'flex flex-col rounded-xl border p-5 shadow-sm dark:shadow-lg',
             $themeClasses['bg'],
             $themeClasses['border'],
-            filled($this->link) ? 'cursor-pointer transition hover:shadow-md dark:hover:shadow-xl' : '',
+            $this->tag !== 'div' ? 'cursor-pointer text-left transition hover:shadow-md focus:outline-none focus-visible:ring-2 dark:hover:shadow-xl' : '',
+            $active ? ($ringMap[$this->color] ?? $ringMap['base']) : '',
             $this->class,
         ]));
 

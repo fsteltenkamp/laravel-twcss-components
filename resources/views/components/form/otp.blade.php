@@ -18,15 +18,28 @@
             const el = this.$refs['box' + i];
             if (el) { el.focus(); el.select(); }
         },
-        handleInput(i, e) {
-            const cleaned = (e.target.value || '').replace(/\D/g, '');
-            if (cleaned === '') { this.digits[i] = ''; this.sync(); return; }
-            const chars = cleaned.split('');
-            for (let k = 0; k < chars.length && (i + k) < {{ $length }}; k++) {
-                this.digits[i + k] = chars[k];
+        // Spread digits over the boxes from box `start`, then focus the box after the last.
+        fill(start, chars) {
+            for (let k = 0; k < chars.length && (start + k) < {{ $length }}; k++) {
+                this.digits[start + k] = chars[k];
             }
             this.sync();
-            this.focusBox(Math.min(i + chars.length, {{ $length }} - 1));
+            this.focusBox(Math.min(start + chars.length, {{ $length }} - 1));
+        },
+        // Typing, and autofill (one-time-code), which puts the whole code into one box: the
+        // boxes have no length limit, so a box can briefly hold several digits.
+        handleInput(i, e) {
+            const chars = (e.target.value || '').replace(/\D/g, '').split('');
+            if (! chars.length) { this.digits[i] = ''; e.target.value = ''; this.sync(); return; }
+            this.fill(i, chars);
+            e.target.value = this.digits[i];
+        },
+        // A pasted code ('123456', '123 456', '12-34-56'): a full code fills from the first
+        // box wherever it is pasted, a shorter one from the box it is pasted into.
+        handlePaste(i, e) {
+            const chars = (e.clipboardData?.getData('text') || '').replace(/\D/g, '').split('');
+            if (! chars.length) return;
+            this.fill(chars.length >= {{ $length }} ? 0 : i, chars);
         },
         handleKeydown(i, e) {
             if (e.key === 'Backspace' && this.digits[i] === '' && i > 0) {
@@ -47,13 +60,13 @@
             type="text"
             inputmode="numeric"
             autocomplete="one-time-code"
-            maxlength="1"
             x-ref="box{{ $i }}"
             x-model="digits[{{ $i }}]"
             x-on:input="handleInput({{ $i }}, $event)"
+            x-on:paste.prevent="handlePaste({{ $i }}, $event)"
             x-on:keydown="handleKeydown({{ $i }}, $event)"
             x-on:focus="$event.target.select()"
-            class="h-12 w-11 rounded-md border border-{{ $color }}-300 bg-white text-center text-lg font-semibold text-{{ $color }}-900 shadow-sm transition focus:border-{{ $color }}-500 focus:outline-none focus:ring-2 focus:ring-{{ $color }}-500 dark:border-{{ $color }}-600 dark:bg-{{ $color }}-950 dark:text-{{ $color }}-100 dark:focus:border-{{ $color }}-400 dark:focus:ring-{{ $color }}-400"
+            class="fltc-form-otp-box h-12 w-11 rounded-md border text-center text-lg font-semibold shadow-sm transition focus:outline-none focus:ring-2 {{ \Fsteltenkamp\TwcssComponents\Support\Shades::control($color) }}"
         />
     @endfor
 

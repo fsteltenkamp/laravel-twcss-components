@@ -1,7 +1,6 @@
-@php($tag = filled($link) ? 'a' : 'div')
 <{{ $tag }}
     @if (filled($link)) href="{{ $link }}" @if ($navigate) wire:navigate @endif @endif
-    {{ $attributes->class([$classList]) }}
+    {{ $attributes->class([$classList])->merge($tag === 'button' ? ['type' => 'button'] + ($active !== null ? ['aria-pressed' => $active ? 'true' : 'false'] : []) : []) }}
 >
     <div class="flex items-start justify-between gap-3">
         @if (filled($title))

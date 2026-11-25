@@ -18,6 +18,7 @@ const PALETTES = [
 
 const ALL_COLORS = [...PALETTES, ...ROLES];
 
-const THEMES = ['default', 'cyberpunk', 'fantasy', 'wh40k', 'dracula', 'nord', 'catppuccin', 'solarized', 'gruvbox'];
+const SKINS = ['neon', 'parchment', 'gothic'];
+const THEMES = ['default', 'neon', 'parchment', 'gothic', 'dracula', 'nord', 'catppuccin', 'solarized', 'gruvbox'];
 
 const SHADES = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950];

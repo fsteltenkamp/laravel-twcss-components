@@ -52,8 +52,13 @@ For components with multiple class properties, name them according to placement 
 those hooks — never put skin-specific classes into a component's class strings.
 `tests/HookClassesTest.php` enforces the hooks, and that every component's hook appears in
 `skin-effects.css` (or in its `UNSKINNED_COMPONENTS` allowlist): a new component needs its
-hook added to the shared `:is(...)` lists there (shape, panels, controls) and, for
-cyberpunk, rules of its own where its markup differs (cut corners, neon lines).
+hook added to the shared `:is(...)` lists there (shape, panels, controls) **and rules of
+its own in each skin's section** (NEON / PARCHMENT / GOTHIC) — the test fails when a skin
+has no rules scoped to it for a component. Each skin has its own vocabulary: neon cut
+corners and neon lines, parchment double rules / small capitals / embossing, gothic heavy
+frames / bevels / inscription capitals. Labels go through the skin variables
+(`--fltc-caps`, `--fltc-caps-variant`, `--fltc-label-spacing`, `--fltc-fx-halo`), never
+hard-coded uppercase or glow in a shared rule.
 
 ### Rules
 
@@ -120,11 +125,11 @@ Three separate settings (README "Colours, themes and skins"):
   palette plus `taupe`, `mauve`, `mist`, `olive`, which the host's Tailwind config must
   define). Every colour map needs an entry for all of them — build role entries from the
   same class strings as the palettes — enforced by `tests/CustomThemesTest.php`.
-- **Theme** — `data-theme` (default, cyberpunk, fantasy, wh40k, dracula, nord, catppuccin,
+- **Theme** — `data-theme` (default, neon, parchment, gothic, dracula, nord, catppuccin,
   solarized, gruvbox, custom): which palette each role uses. `resources/css/themes.css`,
   `colors.css` and `resources/js/colors.js` are **generated** by `tools/themes.py`; edit the
   themes there and rerun `python3 tools/themes.py`, never the generated files.
-- **Skin** — `data-skin` (default, cyberpunk, fantasy, wh40k): the look, from
+- **Skin** — `data-skin` (default, neon, parchment, gothic): the look, from
   `resources/css/skin-effects.css`, applied to every component inside a skin region in that
   component's own colour.
 

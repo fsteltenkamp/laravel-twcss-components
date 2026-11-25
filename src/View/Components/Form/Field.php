@@ -10,17 +10,24 @@ use Illuminate\Contracts\View\View;
 /**
  * Label, note and validation error around any control. The library's inputs render
  * their own field through this; use it directly for custom controls.
+ *
+ * Slot `aside`: content at the right end of the label row (a save status, a hint).
  */
 class Field extends Component
 {
     public string $classList;
     public string $noteClasses;
     public string $errorKey;
+    public string $asideClasses;
+    public string $toggleClasses;
 
     /**
      * @param  string  $for   id of the control the label points at
      * @param  string  $name  field name for the validation error (default: `for`); a
      *                        trailing [] is dropped and name.* errors count too
+     * @param  string  $error  error text to show instead of the error bag's
+     * @param  string  $errorIcon  icon before the error text
+     * @param  bool  $noteToggle  hide the note behind an info button next to the label
      */
     public function __construct(
         public string $label = '',
@@ -30,8 +37,13 @@ class Field extends Component
         public bool $required = false,
         public string $color = 'base',
         public bool $inline = false,
+        public string $error = '',
+        public string $errorIcon = '',
+        public bool $noteToggle = false,
     ) {
         $this->errorKey = rtrim($name !== '' ? $name : $for, '[]');
+        $this->asideClasses = 'mb-1 text-xs '.Shades::tertiary($color);
+        $this->toggleClasses = 'mb-1 inline-flex rounded-full text-sm transition hover:opacity-80 focus:outline-none focus-visible:ring-2 focus-visible:ring-current '.Shades::tertiary($color);
         $this->classList = $inline ? '' : 'mb-4';
         $this->noteClasses = 'mt-1 text-xs '.Shades::tertiary($color);
     }
@@ -41,7 +53,7 @@ class Field extends Component
      */
     public static function describedBy(string $id, string $note, bool $hasError, string $errorKey): string
     {
-        return trim(($note !== '' ? $id.'-note ' : '').($hasError ? $errorKey.'-error' : ''));
+        return trim(($note !== '' ? $id.'-note ' : '').($hasError ? ($errorKey !== '' ? $errorKey : $id).'-error' : ''));
     }
 
     public function render(): View|Closure|string

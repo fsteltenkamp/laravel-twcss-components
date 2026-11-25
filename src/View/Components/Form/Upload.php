@@ -37,6 +37,9 @@ class Upload extends Component
         public string $color = 'base',
         public bool $inline = false,
         public string $wrapperClass = '',
+        public string $error = '',
+        public string $errorIcon = '',
+        public bool $noteToggle = false,
     ) {
         $idleMap = [
             'slate'     => 'border-slate-300 bg-slate-50/60 hover:border-slate-400 dark:border-slate-600 dark:bg-slate-900/40 dark:hover:border-slate-500',

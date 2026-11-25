@@ -1,15 +1,23 @@
 @php
     $fieldName = $name !== '' ? $name : $id;
     $errorKey = rtrim($fieldName, '[]');
-    $hasError = $errorKey !== '' && ($errors->has($errorKey) || $errors->has($errorKey.'.*'));
+    $hasError = $error !== '' || $errorKey !== '' && ($errors->has($errorKey) || $errors->has($errorKey.'.*'));
     $describedBy = \Fsteltenkamp\TwcssComponents\View\Components\Form\Field::describedBy($id, $note, $hasError, $errorKey);
 @endphp
-<x-fltc::form.field :label="$label" :note="$note" :for="$id" :name="$fieldName" :required="$required" :color="$color" :inline="$inline" :class="$wrapperClass">
+<x-fltc::form.field :label="$label" :note="$note" :for="$id" :name="$fieldName" :required="$required" :color="$color" :inline="$inline" :class="$wrapperClass" :error="$error" :errorIcon="$errorIcon" :noteToggle="$noteToggle">
+    @isset($aside)
+        <x-slot:aside>{{ $aside }}</x-slot:aside>
+    @endisset
     <div
         x-data="{
             dragging: false,
             files: [],
             sync() { this.files = [...this.$refs.input.files].map((file) => file.name); },
+            clear() {
+                this.$refs.input.value = '';
+                this.files = [];
+                this.$refs.input.dispatchEvent(new Event('change', { bubbles: true }));
+            },
             drop(event) {
                 this.dragging = false;
                 if (@js($disabled) || ! event.dataTransfer?.files?.length) return;
@@ -61,5 +69,12 @@
                 <li class="flex items-center gap-2 truncate"><x-fltc::icon name="file" aria-hidden="true" /><span class="truncate" x-text="file"></span></li>
             </template>
         </ul>
+
+        @isset($actions)
+            {{-- Shown once files are chosen; `clear()` empties the selection (a cancel button). --}}
+            <div class="fltc-form-upload-actions mt-3 flex flex-wrap items-center justify-end gap-2" x-show="files.length" x-cloak style="display: none;">
+                {{ $actions }}
+            </div>
+        @endisset
     </div>
 </x-fltc::form.field>

@@ -1,0 +1,1 @@
+<button {{ $attributes->class([$classList])->merge(['type' => 'button'] + ($label !== '' ? ['title' => $label, 'aria-label' => $label] : []) + ($active !== null ? ['aria-pressed' => $active ? 'true' : 'false'] : [])) }}>@if ($icon !== '')<x-fltc::icon :name="$icon" />@endif{{ $slot }}</button>

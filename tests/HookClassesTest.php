@@ -166,7 +166,7 @@ it('hooks the theme that navbar and sidebar children inherit', function () {
 
 /*
  * Every component either gets skin effects or is listed here on purpose: a new
- * component that skin-effects.css never mentions would look plain under cyberpunk.
+ * component that skin-effects.css never mentions would look plain under neon.
  * These are structural parts styled through their parent, or layout wrappers.
  */
 const UNSKINNED_COMPONENTS = [
@@ -175,13 +175,13 @@ const UNSKINNED_COMPONENTS = [
     'form.container.auth.two-col-right', 'nav.breadcrumbs.item', 'nav.link',
     'nav.navbar.dropdown.link', 'nav.navbar.dropdown.postlink', 'nav.navbar.item',
     'nav.navbar.toggle', 'nav.sidebar.footer', 'table.foot', 'tabs.panel', 'text',
-    'toast.container', 'theme.picker', 'badge.cloud', 'data-table',
+    'toast.container', 'theme.picker', 'badge.cloud', 'data-table', 'toast.on',
 ];
 
 it('styles every component in the skin effects stylesheet', function (string $tag, string $class) {
     $css = file_get_contents(__DIR__.'/../resources/css/skin-effects.css');
     // Components whose effects target the part that carries their look.
-    $hook = ['table' => 'fltc-table-scroll', 'tooltip' => 'fltc-tooltip-bubble', 'modal' => 'fltc-modal-panel'][$tag] ?? $class::hookName();
+    $hook = ['table' => 'fltc-table-scroll', 'tooltip' => 'fltc-tooltip-bubble', 'modal' => 'fltc-modal-panel', 'lightbox' => 'fltc-lightbox-overlay'][$tag] ?? $class::hookName();
     $styled = preg_match('/\.'.preg_quote($hook, '/').'(?![\w-])/', $css) === 1;
 
     expect($styled || in_array($tag, UNSKINNED_COMPONENTS, true))
@@ -200,7 +200,7 @@ it('styles the part hooks of the newer components', function () {
 });
 
 it('puts the theme hook on the body and the box so skin effects apply', function () {
-    expect(Blade::render('<x-fltc::body color="cyberpunk">x</x-fltc::body>'))->toMatch('/<body class="[^"]*fltc-body fltc-color-cyberpunk/')
+    expect(Blade::render('<x-fltc::body color="neon">x</x-fltc::body>'))->toMatch('/<body class="[^"]*fltc-body fltc-color-neon/')
         ->and(Blade::render('<x-fltc::container.box color="primary">x</x-fltc::container.box>'))->toContain('fltc-container-box fltc-color-primary');
 });
 
@@ -211,14 +211,94 @@ it('takes the look only from data-skin and draws in every colour', function () {
     $looks = preg_replace('#/\* =+ COLOURS =+ \*/.*?/\* =+ PAGE =+ \*/#s', '', $css);
     expect($looks)->not->toBe($css);
     expect($looks)
-        ->not->toMatch('/\.fltc-color-(cyberpunk|fantasy|wh40k)(?![\w-])/')
+        ->not->toMatch('/\.fltc-color-(neon|parchment|gothic)(?![\w-])/')
         ->not->toContain('fltc-theme-')
         ->not->toContain('data-skin-shape')
         ->not->toContain('data-theme')
-        ->toContain('[data-skin="cyberpunk"] [class*="fltc-color-"]');
+        ->toContain('[data-skin="neon"] [class*="fltc-color-"]');
 
     // Every colour (palettes and roles) sets the roles the skins draw in, light and dark.
     foreach ([...PALETTES, ...ROLES] as $color) {
         expect(substr_count($css, ".fltc-color-{$color},\n"))->toBe(2, "{$color} needs light and dark colour roles");
+    }
+});
+
+/**
+ * Hooks named in rules scoped to one skin (not the rules every skin shares), per skin.
+ *
+ * @return array<string, array<string, true>>
+ */
+function skinScopedHooks(): array
+{
+    static $hooks = null;
+
+    if ($hooks !== null) {
+        return $hooks;
+    }
+
+    $css = preg_replace('#/\*.*?\*/#s', '', file_get_contents(__DIR__.'/../resources/css/skin-effects.css'));
+    preg_match_all('/([^{}]+)\{[^{}]*\}/', $css, $rules);
+    $hooks = array_fill_keys(SKINS, []);
+
+    foreach ($rules[1] as $selector) {
+        $skins = array_values(array_filter(SKINS, fn ($skin) => str_contains($selector, "[data-skin=\"{$skin}\"]")));
+
+        if (count($skins) === 1 && preg_match_all('/\.(fltc-[a-z0-9-]+)/', $selector, $m)) {
+            $hooks[$skins[0]] += array_fill_keys($m[1], true);
+        }
+    }
+
+    return $hooks;
+}
+
+/*
+ * Each skin draws every component its own way: beyond the shared rules (fonts,
+ * rounding, glow), a component needs rules scoped to each skin, or it looks the same
+ * in all of them. Wrappers styled through the components inside them are listed here.
+ */
+const SKINNED_THROUGH_CHILDREN = ['darkmode.toggle'];
+
+it('styles every component in each skin', function (string $tag, string $class) {
+    if (in_array($tag, [...UNSKINNED_COMPONENTS, ...SKINNED_THROUGH_CHILDREN], true)) {
+        expect(true)->toBeTrue();
+
+        return;
+    }
+
+    $hook = ['table' => 'fltc-table-scroll', 'tooltip' => 'fltc-tooltip-bubble', 'modal' => 'fltc-modal-panel', 'lightbox' => 'fltc-lightbox-overlay'][$tag] ?? $class::hookName();
+
+    foreach (SKINS as $skin) {
+        expect(isset(skinScopedHooks()[$skin][$hook]))
+            ->toBeTrue("{$hook} has no rules of its own for the {$skin} skin");
+    }
+})->with(classBackedComponents());
+
+it('hooks the toasts dispatched at runtime and their parts', function () {
+    $container = Blade::render('<x-fltc::toast.container />');
+
+    expect($container)
+        ->toContain("'fltc-toast fltc-toast-' + toast.variant + ' fltc-color-' + color")
+        ->toContain("'fltc-toast-icon'")->toContain("'fltc-toast-close'")->toContain("'fltc-toast-message'")
+        ->toContain('fltc-toast-title');
+
+    expect(Blade::render('<x-fltc::toast color="success" variant="card" title="Saved" message="All good" icon="check" />'))
+        ->toMatch('/class="[^"]*fltc-toast-card[^"]*"/')
+        ->toContain('fltc-color-success')
+        ->toContain('fltc-toast-title')->toContain('fltc-toast-message')->toContain('fltc-toast-icon')->toContain('fltc-toast-close');
+});
+
+it('hooks the breadcrumb parts', function () {
+    $html = Blade::render('<x-fltc::nav.breadcrumbs :crumbs="[[\'label\' => \'Home\', \'href\' => \'/\'], [\'label\' => \'Here\']]" />');
+
+    expect($html)->toContain('fltc-nav-breadcrumbs-crumb')->toContain('fltc-nav-breadcrumbs-separator');
+});
+
+it('uses label fonts that suit each skin', function () {
+    $css = file_get_contents(__DIR__.'/../resources/css/skin-effects.css');
+
+    // The technical faces belong to the neon skin only.
+    foreach (['parchment', 'gothic'] as $skin) {
+        preg_match('/\[data-skin="'.$skin.'"\] \{(.*?)\}/s', $css, $m);
+        expect($m[1])->not->toContain('Share Tech Mono')->not->toContain('VT323')->not->toContain('Orbitron');
     }
 });

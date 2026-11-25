@@ -1,11 +1,14 @@
 @php
     $fieldName = $name !== '' ? $name : $id;
     $errorKey = rtrim($fieldName, '[]');
-    $hasError = $errorKey !== '' && ($errors->has($errorKey) || $errors->has($errorKey.'.*'));
+    $hasError = $error !== '' || $errorKey !== '' && ($errors->has($errorKey) || $errors->has($errorKey.'.*'));
     $describedBy = \Fsteltenkamp\TwcssComponents\View\Components\Form\Field::describedBy($id, $note, $hasError, $errorKey);
 @endphp
 
-<x-fltc::form.field :label="$label" :note="$note" :for="$id" :name="$fieldName" :required="$required" :color="$color" :inline="$inline" :class="$wrapperClass">
+<x-fltc::form.field :label="$label" :note="$note" :for="$id" :name="$fieldName" :required="$required" :color="$color" :inline="$inline" :class="$wrapperClass" :error="$error" :errorIcon="$errorIcon" :noteToggle="$noteToggle">
+    @isset($aside)
+        <x-slot:aside>{{ $aside }}</x-slot:aside>
+    @endisset
     <div class="relative">
         <select
             {{ $attributes->class(trim($hasError ? $errorClasses : $normalClasses)) }}

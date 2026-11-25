@@ -20,10 +20,11 @@ class Link extends Button
         string $icon = '',
         string $iconVariant = 'regular',
         string $iconPosition = 'before',
-        string $class = ''
+        string $class = '',
+        bool $square = false,
     )
     {
-        parent::__construct(color: $color, width: $width, height: $height, tooltip: $tooltip, disabled: $disabled, variant: $variant, icon: $icon, iconVariant: $iconVariant, iconPosition: $iconPosition, class: $class);
+        parent::__construct(color: $color, width: $width, height: $height, tooltip: $tooltip, disabled: $disabled, variant: $variant, icon: $icon, iconVariant: $iconVariant, iconPosition: $iconPosition, class: $class, square: $square);
     }
 
     public function render(): View|Closure|string

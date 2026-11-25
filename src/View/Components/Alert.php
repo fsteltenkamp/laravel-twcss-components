@@ -13,7 +13,7 @@ class Alert extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct(public string $color = 'base')
+    public function __construct(public string $color = 'base', public string $icon = '')
     {
         $map = [
             'slate'   => 'border-slate-200 bg-slate-50 text-slate-700 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300',

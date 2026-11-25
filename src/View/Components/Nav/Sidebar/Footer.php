@@ -10,6 +10,7 @@ use Fsteltenkamp\TwcssComponents\View\Component;
 class Footer extends Component
 {
     public string $classList;
+    public string $linksClasses;
 
     /**
      * Create a new component instance.
@@ -17,9 +18,12 @@ class Footer extends Component
     public function __construct(
         ?string $color = null,
         string $class = '',
+        public array $links = [],
     ) {
         $resolvedTheme = $color ?? (app('view')->getShared()['sidebarColor'] ?? 'base');
         $this->hookColor = $resolvedTheme;
+
+        $this->linksClasses = 'fltc-nav-sidebar-footer-links flex flex-wrap items-center gap-x-1.5 px-3 text-xs '.SidebarTheme::inactive($resolvedTheme);
 
         $this->classList = trim(implode(' ', array_filter([
             'mt-auto shrink-0 space-y-1 border-t px-3 py-3',

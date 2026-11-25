@@ -17,6 +17,11 @@ class File extends Input
 
     // The input has no text padding of its own: the "Choose file" button (the
     // ::file-selector-button, styled with file:) fills the left edge.
+    protected function sizeClasses(): string
+    {
+        return '';
+    }
+
     protected string $baseClasses = 'block w-full cursor-pointer rounded-md border text-sm shadow-sm transition duration-150 focus:outline-none focus:ring-2 disabled:cursor-not-allowed disabled:opacity-60 dark:[color-scheme:dark] file:mr-3 file:cursor-pointer file:border-0 file:px-4 file:py-2 file:text-sm file:font-semibold file:transition';
 
     public function __construct(
@@ -32,6 +37,9 @@ class File extends Input
         public bool $inline = false,
         public string $note = '',
         public string $wrapperClass = '',
+        public string $error = '',
+        public string $errorIcon = '',
+        public bool $noteToggle = false,
     ) {
         $buttonMap = [
             'slate'     => 'file:bg-slate-100 file:text-slate-700 hover:file:bg-slate-200 dark:file:bg-slate-800 dark:file:text-slate-200 dark:hover:file:bg-slate-700',

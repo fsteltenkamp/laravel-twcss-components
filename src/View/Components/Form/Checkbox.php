@@ -24,6 +24,7 @@ class Checkbox extends Component
     public string $knobIconSize;
     public string $iconColorOn;
     public string $iconColorOff;
+    public string $sideClasses;
 
     public function __construct(
         public string $id = '',
@@ -42,7 +43,13 @@ class Checkbox extends Component
         public string $variant = 'default',
         public string $size = 'md',
         public string $colorOff = 'base',
+        public string $labelOff = '',
+        public string $labelOn = '',
+        public string $iconOff = '',
+        public string $iconOn = '',
     ) {
+        // Toggle sides: the off side reads while unchecked, the on side while checked.
+        $this->sideClasses = 'inline-flex items-center gap-1 text-sm font-medium transition-opacity duration-300 '.Shades::secondary($color);
         $iconColorMap = [
             'slate'   => 'text-slate-500 dark:text-slate-400',
             'gray'    => 'text-gray-500 dark:text-gray-400',

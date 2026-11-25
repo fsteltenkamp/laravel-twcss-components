@@ -12,7 +12,7 @@
         <legend class="fltc-form-radio-group-legend {{ $legendClasses }}">
             {{ $label }}
             @if ($required)
-                <span class="ml-1 text-red-500 dark:text-red-400">*</span>
+                <span class="ml-1 text-danger-500 dark:text-danger-400">*</span>
             @endif
         </legend>
     @endif
@@ -22,6 +22,6 @@
     </div>
 
     @if ($hasError)
-        <p id="{{ $name }}-error" class="mt-2 text-sm text-red-600 dark:text-red-400">{{ $errors->first($name) }}</p>
+        <p id="{{ $name }}-error" class="fltc-form-field-error mt-2 text-sm text-danger-600 dark:text-danger-400">{{ $errors->first($name) }}</p>
     @endif
 </fieldset>

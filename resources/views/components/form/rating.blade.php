@@ -1,5 +1,8 @@
 @php($star = \Fsteltenkamp\TwcssComponents\View\Components\Rating::STAR_PATH)
-<x-fltc::form.field :label="$label" :note="$note" :for="$id" :name="$name" :required="$required" :color="$color" :inline="$inline" :class="$wrapperClass">
+<x-fltc::form.field :label="$label" :note="$note" :for="$id" :name="$name" :required="$required" :color="$color" :inline="$inline" :class="$wrapperClass" :error="$error" :errorIcon="$errorIcon" :noteToggle="$noteToggle">
+    @isset($aside)
+        <x-slot:aside>{{ $aside }}</x-slot:aside>
+    @endisset
     <div
         x-data="{
             value: @js($current),
