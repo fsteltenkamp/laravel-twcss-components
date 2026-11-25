@@ -325,7 +325,31 @@ left, actions on the right, wrapping on narrow screens.
 
 **Text** (`x-fltc::text`): inline text in the theme's Primary Content colour.
 - `color`: role or palette (default: base). Ignored when `color` is set
+- `muted`: the Tertiary Content shade instead (remarks, secondary info); `size`: `xs`, `sm`,
+  `md`, `lg`
 - `color`, `ff`, `fs` (pt), `fw`, `ta`, `lh`, `ls`: inline font/colour overrides
+
+**Hint** (`x-fltc::hint`): muted help text under a form or in a modal (a small `<p>`).
+- `icon`, `size` (`xs` default, `sm`), `color`
+
+**Prose** (`x-fltc::prose`): typography for rendered HTML — Markdown, a rich-text field:
+paragraphs, headings, lists, links, quotes, inline code and code blocks, tables, rules, images
+and `.mention` spans, without Tailwind's typography plugin. The slot is output as given:
+sanitise untrusted HTML before passing it in (`{!! $html !!}`).
+- `color`: role or palette for links, quotes, code and rules (default: base)
+- `size`: `xs`, `sm` (default), `md`, `lg`
+
+**Time** (`x-fltc::time`): a `<time>` — relative ("3 minutes ago") with the exact time as
+tooltip, or formatted.
+- `value`: a date, a parseable string or a timestamp (nothing renders without one)
+- `relative` (default true), `format`: isoFormat of the exact time (default `LLL`, localised)
+
+**Code** (`x-fltc::code`): code or a token to copy.
+- `inline`: a `<code>` in running text; otherwise a block with a head row
+- `value` (escaped) or the slot (as given); `language` (shown, and `data-language` /
+  `language-*` for a host's highlighter — the component does not colour syntax)
+- `copy` (default true: a copy button, a toast confirms it), `wrap` (initial line wrapping; a
+  toggle switches it), `lines` (line numbers), `maxHeight` (e.g. `20rem`), `color`
 
 Use for section titles and supporting copy. Both use the neutral Primary/Tertiary Content
 roles so they flip cleanly in dark mode.
@@ -1007,7 +1031,26 @@ the `excerpt` for text files (`txt`, `md`, `csv`, `json`, …), otherwise an ico
 - `size`: bytes (formatted, e.g. `1.5 MB`) or a ready string
 - `src` (image preview URL), `excerpt` (text preview), `meta` (extra text after the size)
 - `color`: role or palette (default: base)
+- `lightbox`: a group name — the image preview (and the name) open `x-fltc::lightbox`, with every
+  card of the same group as a page of it
 - Slots: `preview` (replaces the chosen preview), `actions`
+
+**Lightbox** (`x-fltc::lightbox`): one image viewer for the page — put it in the layout once.
+It opens for a click on any element with `data-fltc-lightbox="group"` (its `href`, `src` or
+`data-fltc-lightbox-src`; the name from `data-fltc-lightbox-name`, `title` or `alt`); all
+elements of the same group are its pages (arrow keys, buttons), Escape closes it. Scripts open
+it with the window event `fltc-lightbox`: `{ src, name }` or `{ items: [{ src, name }], index }`.
+- `download` (default true: the file name as a download link), `color`
+
+**Frame** (`x-fltc::frame`): an embedded page or document (`<iframe>`) in a frame, with a spinner
+until it has loaded — a PDF or mail preview, a signature.
+- `src` or `srcdoc`, `srcDark` (another source shown in dark mode), `title`
+- `height` (CSS, default `24rem`), `resizable` (drag it taller), `sandbox` (the iframe's tokens;
+  `""` for the strictest; none by default), `color`
+
+**QR frame** (`x-fltc::qr`): a square frame for a QR code, always on white so it scans in dark
+mode; shows a spinner while the slot (the SVG) is empty.
+- `size`: `sm`, `md` (default), `lg`; `label` (accessible name); `color`
 
 ### Tables
 
@@ -1128,6 +1171,8 @@ Components:
 - `x-fltc::empty`
 
 Use message boxes for alerts, empty-state notices, warnings, and selected-item summaries. Use alerts for simple inline messages with theme support. Badge is for compact labels and status chips.
+
+**Alert** (`x-fltc::alert`): a simple tinted notice. `color` (default: base), `icon` (before the text).
 
 **Message box** (`x-fltc::messagebox`): a bordered box with an optional title bar.
 - `title`, `icon` (Phosphor, shown in the title bar)
@@ -1272,6 +1317,16 @@ $this->dispatch('fltc:toast', title: 'Saved!', color: 'success')
 window.dispatchEvent(new CustomEvent('fltc:toast', { detail: { title: 'Saved!', icon: 'ph ph-check-circle' } }))
 ```
 
+**Toast on an event** (`x-fltc::toast.on`): shows a toast whenever a window event fires — a
+Livewire event or any `CustomEvent` — instead of hand-written listeners:
+`<x-fltc::toast.on event="profile-saved" title="Saved." />`. Props: `event`, `title`, `message`,
+`icon`, `color` (default `success`), `variant`, `duration`. An event's `detail.toast` object
+overrides them.
+
+**Script API:** the container defines `fltc.toast('Saved')` / `fltc.toast({ … })` and
+`fltc.toast.success(title, message)`, `.info`, `.warning`, `.danger` (alias `.error`) — handy as a
+bridge for existing `toastr` calls.
+
 **Flux compatibility:** the container also listens for `flux:toast` events and maps Flux semantic variants to the matching roles (`success`, `warning`, `danger`, `info`; `default` → `base`).
 
 Dispatched toasts take `title`, `message`, `icon` (a full icon class string), `color`,
@@ -1355,6 +1410,13 @@ Attributes pass through, so it pairs with Livewire's loading states:
   surrounding text colour (inside buttons)
 - `size`: `xs`, `sm`, `md` (default), `lg`, `xl`
 - `label`: accessible name (default: `__('Loading')`)
+- `text`: a visible label beside it ("Loading tickets…")
+
+**Toolbar** (`x-fltc::toolbar`): a row of compact icon buttons — an editor's formatting bar.
+`label` (accessible name), `color`; children `x-fltc::toolbar.button` (`icon`, `label` — tooltip and
+accessible name, `active` — pressed state, `color` inherited) and `x-fltc::toolbar.separator`.
+Buttons created by JavaScript can look the same: read the classes from the toolbar's
+`data-fltc-toolbar-button-class` attribute (`Toolbar::buttonClasses($color)` in PHP).
 
 **Separator** (`x-fltc::separator`): a thin divider rule.
 - `vertical`: render a vertical rule instead of horizontal (default: false)

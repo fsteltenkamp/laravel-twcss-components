@@ -1,0 +1,24 @@
+/*
+ * Base rules for fsteltenkamp/laravel-twcss-components — optional, import it after
+ * Tailwind:
+ *     @import '../../vendor/fsteltenkamp/laravel-twcss-components/resources/css/base.css';
+ *
+ * - [x-cloak] hides Alpine content until Alpine has started (several components use it).
+ * - Lines without a colour of their own (a host's `border`, `divide-y`) take the base
+ *   role's faint shade instead of Tailwind 4's currentColor, in light and dark mode.
+ *   In a cascade layer, so any border-* utility still wins.
+ */
+
+[x-cloak] {
+    display: none !important;
+}
+
+@layer base {
+    *, ::before, ::after, ::backdrop {
+        border-color: rgb(var(--fltc-base-200));
+    }
+
+    .dark *, .dark ::before, .dark ::after, .dark ::backdrop {
+        border-color: rgb(var(--fltc-base-700));
+    }
+}

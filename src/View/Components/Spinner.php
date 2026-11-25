@@ -14,13 +14,17 @@ use Illuminate\Contracts\View\View;
  */
 class Spinner extends Component
 {
+    public string $textClasses;
     public string $classList;
 
     public function __construct(
         public string $color = 'base',
         public string $size = 'md',
         public string $label = '',
+        public string $text = '',
     ) {
+        // `text`: a visible label beside the spinner ("Loading tickets…").
+        $this->textClasses = 'inline-flex items-center gap-2 text-sm '.Shades::secondary($color === 'current' ? 'base' : $color);
         $sizeMap = [
             'xs' => 'h-3 w-3',
             'sm' => 'h-4 w-4',

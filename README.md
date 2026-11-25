@@ -94,6 +94,8 @@ Load the theme variables and register the role colours with Tailwind. **Tailwind
 @import '../../vendor/fsteltenkamp/laravel-twcss-components/resources/css/themes.css';
 /* optional: the skins */
 @import '../../vendor/fsteltenkamp/laravel-twcss-components/resources/css/skin-effects.css';
+/* optional: [x-cloak] and the base role's faint shade as the default line colour */
+@import '../../vendor/fsteltenkamp/laravel-twcss-components/resources/css/base.css';
 ```
 
 **Tailwind v3**: merge the roles into `tailwind.config.js` and import `themes.css` (and

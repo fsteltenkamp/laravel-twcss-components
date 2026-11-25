@@ -1750,3 +1750,89 @@ it('renders message box items, lazy accordion items and trigger badges', functio
         ->toContain('fltc-accordion-item-badges')
         ->toContain("querySelector(':scope > template[data-accordion-lazy]')");
 });
+
+/* ---- media and text: lightbox, frame, code, prose, time, qr, toolbar, toasts ---- */
+
+it('opens images of a group in the lightbox', function () {
+    $html = Blade::render('<x-fltc::lightbox color="primary" />');
+
+    expect($html)
+        ->toContain('x-on:click.window="click($event)"')->toContain('x-on:fltc-lightbox.window')
+        ->toContain("closest?.('[data-fltc-lightbox]')")->toContain('fltc-lightbox-overlay fltc-color-primary')
+        ->toContain('download');
+
+    $card = Blade::render('<x-fltc::file-card name="scan.png" href="/files/scan.png" lightbox="ticket" />');
+    expect($card)->toContain('data-fltc-lightbox="ticket"')->toContain('data-fltc-lightbox-name="scan.png"')->toContain('cursor-zoom-in');
+    expect(Blade::render('<x-fltc::file-card name="a.pdf" href="/a.pdf" lightbox="ticket" />'))->not->toContain('data-fltc-lightbox');
+});
+
+it('embeds a document in a frame with a light and a dark source', function () {
+    $html = Blade::render('<x-fltc::frame src="/doc/light" srcDark="/doc/dark" title="Invoice" height="60vh" sandbox="" resizable />');
+
+    expect($html)
+        ->toContain('src="/doc/light"')->toContain('src="/doc/dark"')->toContain('dark:hidden')->toContain('dark:block')
+        ->toContain('sandbox=""')->toContain('title="Invoice"')->toContain('height: 60vh;')->toContain('resize-y')
+        ->toContain('x-on:load="loading = false"');
+
+    expect(Blade::render('<x-fltc::frame srcdoc="<p>Hi</p>" />'))->toContain('srcdoc="&lt;p&gt;Hi&lt;/p&gt;"')->not->toContain('sandbox=');
+});
+
+it('renders code inline and as a block with copy, wrap and line numbers', function () {
+    expect(Blade::render('<x-fltc::code inline>token_123</x-fltc::code>'))->toMatch('/<code class="[^"]*font-mono[^"]*">token_123<\/code>/');
+
+    $block = Blade::render('<x-fltc::code language="json" :value="$v" lines maxHeight="10rem" />', ['v' => "{\n  \"a\": \"<b>\"\n}"]);
+    expect($block)
+        ->toContain('data-language="json"')->toContain('fltc-code-copy')->toContain('fltc-code-wrap')
+        ->toContain('&lt;b&gt;')->not->toContain('<b>')
+        ->toContain('counter-increment:fltc-line')->toContain('max-height: 10rem;')
+        ->toContain("new CustomEvent('fltc:toast'");
+});
+
+it('styles rendered HTML with prose', function () {
+    expect(Blade::render('<x-fltc::prose color="primary"><p>Hi</p></x-fltc::prose>'))
+        ->toContain('[&amp;_ul]:list-disc')->toContain('[&amp;_a]:text-primary-600')->toContain('fltc-prose')->toContain('<p>Hi</p>');
+});
+
+it('renders a relative time with the exact one as tooltip', function () {
+    \Illuminate\Support\Carbon::setTestNow('2026-11-25 12:00:00');
+    $html = Blade::render('<x-fltc::time value="2026-11-25 11:57:00" />');
+
+    expect($html)->toContain('datetime="2026-11-25T11:57:00')->toContain('3 minutes ago')->toMatch('/title="[^"]*2026/');
+    expect(trim(Blade::render('<x-fltc::time />')))->toBe('');
+    \Illuminate\Support\Carbon::setTestNow();
+});
+
+it('frames a QR code and shows a spinner while it is empty', function () {
+    expect(Blade::render('<x-fltc::qr label="Scan me"><svg></svg></x-fltc::qr>'))->toContain('bg-white')->toContain('aria-label="Scan me"')->not->toContain('animate-spin')
+        ->and(Blade::render('<x-fltc::qr />'))->toContain('animate-spin');
+});
+
+it('renders a toolbar that shares its button classes with scripts', function () {
+    $html = Blade::render('<x-fltc::toolbar label="Format" color="primary"><x-fltc::toolbar.button icon="text-b" label="Bold" :active="true" /><x-fltc::toolbar.separator /></x-fltc::toolbar>');
+
+    expect($html)
+        ->toContain('role="toolbar"')->toContain('aria-label="Format"')
+        ->toContain('data-fltc-toolbar-button-class="fltc-toolbar-button')
+        ->toContain('aria-pressed="true"')->toContain('title="Bold"')->toContain('hover:bg-primary-100')
+        ->toContain('fltc-toolbar-separator');
+});
+
+it('shows a toast for a window event and offers a script API', function () {
+    $html = Blade::render('<x-fltc::toast.on event="profile-saved" title="Saved." />');
+
+    expect($html)->toContain('<span')->toContain('hidden')->toContain("window.addEventListener('profile-saved'")->toContain('Saved.')->toContain('success');
+    expect(Blade::render('<x-fltc::toast.container />'))->toContain('window.fltc.toast = toast')->toContain('toast.error = toast.danger');
+});
+
+it('renders spinner text, alert icons, muted text and hints', function () {
+    expect(Blade::render('<x-fltc::spinner text="Loading tickets" />'))->toContain('fltc-spinner-icon')->toContain('Loading tickets')->toContain('role="status"')
+        ->and(Blade::render('<x-fltc::alert icon="info">Note</x-fltc::alert>'))->toContain('fltc-alert-icon')->toContain('ph-info')
+        ->and(Blade::render('<x-fltc::text muted size="xs">x</x-fltc::text>'))->toContain('text-base-500')->toContain('text-xs')
+        ->and(Blade::render('<x-fltc::hint icon="info">Optional</x-fltc::hint>'))->toContain('<p')->toContain('text-xs')->toContain('Optional');
+});
+
+it('ships a base stylesheet with x-cloak and default line colours', function () {
+    $css = file_get_contents(__DIR__.'/../resources/css/base.css');
+
+    expect($css)->toContain('[x-cloak]')->toContain('@layer base')->toContain('rgb(var(--fltc-base-200))');
+});

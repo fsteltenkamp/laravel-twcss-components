@@ -44,6 +44,7 @@ function galleryGroups(): array
                 ['default', '<x-fltc::subheading>// 42 volumes in the library</x-fltc::subheading>'],
             ],
             'Text' => [
+                ['muted, sizes and hint', '<div class="space-y-1"><x-fltc::text color="base" muted size="xs">Muted extra-small remark.</x-fltc::text><x-fltc::hint color="base" icon="info">Changes are saved automatically every few seconds.</x-fltc::hint></div>'],
                 ['default', '<x-fltc::text color="base">The quick brown fox jumps over the lazy dog.</x-fltc::text>'],
             ],
         ],
@@ -76,6 +77,7 @@ function galleryGroups(): array
                 ['themes', '<x-fltc::badge color="primary">available</x-fltc::badge> <x-fltc::badge color="primary">no stock</x-fltc::badge> <x-fltc::badge color="primary">start sale</x-fltc::badge>'],
             ],
             'Alert' => [
+                ['with icon', '<x-fltc::alert color="warning" icon="warning">The deed has not been signed yet.</x-fltc::alert>'],
                 ['default', '<x-fltc::alert color="base">Heads up — your trial ends soon.</x-fltc::alert>'],
             ],
             'Message box' => [
@@ -576,6 +578,11 @@ request id 7f3a9c</x-slot:details>
 
         'Files' => [
             'File card' => [
+                ['images open in the lightbox (click a preview, use the arrow keys)', '<x-fltc::lightbox color="base" />
+<div class="grid w-full max-w-xl gap-2">
+    <x-fltc::file-card color="base" name="scan-page-1.jpg" href="https://picsum.photos/seed/scan1/1200/900" src="https://picsum.photos/seed/scan1/120/120" lightbox="gallery-scans" />
+    <x-fltc::file-card color="base" name="scan-page-2.jpg" href="https://picsum.photos/seed/scan2/1200/900" src="https://picsum.photos/seed/scan2/120/120" lightbox="gallery-scans" />
+</div>'],
                 ['previews by type', '<div class="grid w-full max-w-xl gap-2">
     <x-fltc::file-card color="base" name="cover-art.png" href="#" src="https://picsum.photos/seed/art/120/120" :size="2411724"><x-slot:actions><x-fltc::button color="primary" variant="outline" icon="trash" aria-label="Delete" /></x-slot:actions></x-fltc::file-card>
     <x-fltc::file-card color="base" name="chapter-01.md" href="#" :size="18304" excerpt="# Chapter One — The wind came off the moors before dawn, carrying salt and smoke. Mira climbed the last stair of the tower and looked north." meta="edited 2 h ago"><x-slot:actions><x-fltc::button color="primary" variant="outline" icon="pencil-simple" aria-label="Edit" /></x-slot:actions></x-fltc::file-card>
@@ -650,11 +657,36 @@ request id 7f3a9c</x-slot:details>
             ],
         ],
 
+        'Code & Content' => [
+            'Code' => [
+                ['inline and block (copy, wrap, line numbers)', '<div class="w-full max-w-2xl space-y-3"><p class="text-sm">Your token: <x-fltc::code inline color="base">mcp_7f3a…c91e</x-fltc::code></p><x-fltc::code language="json" lines maxHeight="12rem" color="base" :value="$json" /></div>', ['json' => "{\n  \"ticket\": 1042,\n  \"state\": \"open\",\n  \"trace\": [\"App\\\\Http\\\\Kernel::handle\", \"Illuminate\\\\Pipeline\\\\Pipeline->then\"]\n}"]],
+            ],
+            'Prose' => [
+                ['rendered Markdown', '<x-fltc::prose color="primary" class="max-w-2xl"><h2>Release notes</h2><p>The export now handles <strong>more than 50 rows</strong>. See <a href="#">the changelog</a> or ask <span class="mention">@ada</span>.</p><ul><li>Faster search</li><li>New <code>--dry-run</code> flag</li></ul><blockquote>It just works now.</blockquote><hr><pre>php artisan export --all</pre></x-fltc::prose>'],
+            ],
+            'Time' => [
+                ['relative with the exact time on hover', '<span class="text-sm">Updated <x-fltc::time :value="now()->subMinutes(3)" color="base" />, created <x-fltc::time :value="now()->subDays(12)" :relative="false" format="LL" color="base" /></span>'],
+            ],
+            'Frame' => [
+                ['embedded document (srcdoc)', '<x-fltc::frame color="base" title="Preview" height="10rem" srcdoc="<body style=&quot;font-family:sans-serif;padding:1rem&quot;><h3>Invoice 2026-114</h3><p>Total: 1,190.00 €</p></body>" class="max-w-xl" />'],
+            ],
+            'QR frame' => [
+                ['code and loading', '<div class="flex items-end gap-4"><x-fltc::qr size="sm" color="base" label="Two-factor code"><svg viewBox="0 0 21 21" shape-rendering="crispEdges"><path fill="currentColor" d="M0 0h7v7H0zM14 0h7v7h-7zM0 14h7v7H0zM2 2v3h3V2zM16 2v3h3V2zM2 16v3h3v-3zM9 1h2v2H9zM9 5h3v2H9zM8 9h5v2H8zM14 9h2v3h-2zM9 13h2v4H9zM13 14h3v2h-3zM17 13h3v2h-3zM14 18h4v2h-4zM18 16h2v2h-2z"/></svg></x-fltc::qr><x-fltc::qr size="sm" color="base" /></div>'],
+            ],
+            'Toolbar' => [
+                ['formatting bar', '<x-fltc::toolbar color="base" label="Format" class="w-fit"><x-fltc::toolbar.button icon="text-b" label="Bold" :active="true" /><x-fltc::toolbar.button icon="text-italic" label="Italic" /><x-fltc::toolbar.button icon="code" label="Code" /><x-fltc::toolbar.separator /><x-fltc::toolbar.button icon="list-bullets" label="List" /><x-fltc::toolbar.button icon="quotes" label="Quote" /></x-fltc::toolbar>'],
+            ],
+            'Toast on event' => [
+                ['a window event shows a toast', '<x-fltc::toast.on event="gallery-saved" title="Saved." color="success" icon="ph ph-check" /><x-fltc::button color="primary" x-data x-on:click="window.dispatchEvent(new CustomEvent(\'gallery-saved\'))">Fire gallery-saved</x-fltc::button> <x-fltc::button color="base" variant="outline" x-data x-on:click="fltc.toast.warning(\'Heads up\', \'Called through fltc.toast.warning()\')">fltc.toast.warning()</x-fltc::button>'],
+            ],
+        ],
+
         'Utility' => [
             'Theme picker' => [
                 ['skin + theme + mode (also in the Style drawer)', '<x-fltc::theme.picker :themes="[\'default\', \'dracula\', \'nord\', \'custom\']" skinStorageKey="fltc-gallery-skin" themeStorageKey="fltc-gallery-theme" />'],
             ],
             'Spinner' => [
+                ['with text', '<x-fltc::spinner color="primary" size="sm" text="Loading tickets…" />'],
                 ['sizes', '<span class="inline-flex items-center gap-4"><x-fltc::spinner color="primary" size="xs" /><x-fltc::spinner color="primary" size="sm" /><x-fltc::spinner color="primary" /><x-fltc::spinner color="primary" size="lg" /><x-fltc::spinner color="primary" size="xl" /></span>'],
                 ['in a button (color="current")', '<x-fltc::button color="primary" x-data="{ busy: false }" x-on:click="busy = true; setTimeout(() => busy = false, 1500)"><x-fltc::spinner color="current" size="sm" class="mr-2" x-show="busy" x-cloak />Save</x-fltc::button>'],
             ],

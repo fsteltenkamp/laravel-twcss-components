@@ -36,6 +36,7 @@ class FileCard extends Component
         public string $excerpt = '',
         public string $meta = '',
         public string $color = 'base',
+        public string $lightbox = '',
     ) {
         $this->extension = strtolower($extension !== '' ? ltrim($extension, '.') : pathinfo($name, PATHINFO_EXTENSION));
 

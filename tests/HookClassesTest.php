@@ -175,13 +175,13 @@ const UNSKINNED_COMPONENTS = [
     'form.container.auth.two-col-right', 'nav.breadcrumbs.item', 'nav.link',
     'nav.navbar.dropdown.link', 'nav.navbar.dropdown.postlink', 'nav.navbar.item',
     'nav.navbar.toggle', 'nav.sidebar.footer', 'table.foot', 'tabs.panel', 'text',
-    'toast.container', 'theme.picker', 'badge.cloud', 'data-table',
+    'toast.container', 'theme.picker', 'badge.cloud', 'data-table', 'toast.on',
 ];
 
 it('styles every component in the skin effects stylesheet', function (string $tag, string $class) {
     $css = file_get_contents(__DIR__.'/../resources/css/skin-effects.css');
     // Components whose effects target the part that carries their look.
-    $hook = ['table' => 'fltc-table-scroll', 'tooltip' => 'fltc-tooltip-bubble', 'modal' => 'fltc-modal-panel'][$tag] ?? $class::hookName();
+    $hook = ['table' => 'fltc-table-scroll', 'tooltip' => 'fltc-tooltip-bubble', 'modal' => 'fltc-modal-panel', 'lightbox' => 'fltc-lightbox-overlay'][$tag] ?? $class::hookName();
     $styled = preg_match('/\.'.preg_quote($hook, '/').'(?![\w-])/', $css) === 1;
 
     expect($styled || in_array($tag, UNSKINNED_COMPONENTS, true))
@@ -265,7 +265,7 @@ it('styles every component in each skin', function (string $tag, string $class) 
         return;
     }
 
-    $hook = ['table' => 'fltc-table-scroll', 'tooltip' => 'fltc-tooltip-bubble', 'modal' => 'fltc-modal-panel'][$tag] ?? $class::hookName();
+    $hook = ['table' => 'fltc-table-scroll', 'tooltip' => 'fltc-tooltip-bubble', 'modal' => 'fltc-modal-panel', 'lightbox' => 'fltc-lightbox-overlay'][$tag] ?? $class::hookName();
 
     foreach (SKINS as $skin) {
         expect(isset(skinScopedHooks()[$skin][$hook]))
