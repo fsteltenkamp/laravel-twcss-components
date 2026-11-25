@@ -72,6 +72,13 @@
             }, 200);
         },
 
+        // Hook classes for skin stylesheets: the component, its variant and its colour
+        // (an unknown colour renders as base, so it hooks as base).
+        hookClasses(toast) {
+            const color = this.themeMap[toast.color] ? toast.color : 'base';
+            return 'fltc-toast fltc-toast-' + toast.variant + ' fltc-color-' + color;
+        },
+
         wrapperClasses(toast) {
             return (this.themeMap[toast.color]?.[toast.variant] ?? this.themeMap.base?.toast)?.wrapper ?? '';
         },
@@ -107,15 +114,15 @@
             {{-- Card variant: header with title + body with message --}}
             <template x-if="toast.variant === 'card'">
                 <div
-                    :class="[wrapperClasses(toast), 'rounded-xl overflow-hidden']"
+                    :class="[hookClasses(toast), wrapperClasses(toast), 'rounded-xl overflow-hidden']"
                 >
                     <div class="flex items-center gap-2.5 px-4 py-2.5 border-b border-current/10">
                         <template x-if="toast.icon">
-                            <i :class="[toast.icon, iconClasses(toast), 'shrink-0']" aria-hidden="true"></i>
+                            <i :class="['fltc-toast-icon', toast.icon, iconClasses(toast), 'shrink-0']" aria-hidden="true"></i>
                         </template>
-                        <p class="flex-1 text-sm font-semibold leading-snug" x-text="toast.title"></p>
+                        <p class="fltc-toast-title flex-1 text-sm font-semibold leading-snug" x-text="toast.title"></p>
                         <button
-                            :class="[closeClasses(toast), '-mr-0.5 rounded p-0.5 focus:outline-none focus:ring-2 focus:ring-current']"
+                            :class="['fltc-toast-close', closeClasses(toast), '-mr-0.5 rounded p-0.5 focus:outline-none focus:ring-2 focus:ring-current']"
                             x-on:click="dismiss(toast.id)"
                             aria-label="{{ __('Dismiss') }}"
                         >
@@ -124,7 +131,7 @@
                     </div>
                     <p
                         x-show="toast.message"
-                        :class="[descClasses(toast), 'px-4 py-3 text-sm leading-relaxed']"
+                        :class="['fltc-toast-message', descClasses(toast), 'px-4 py-3 text-sm leading-relaxed']"
                         x-text="toast.message"
                     ></p>
                 </div>
@@ -133,21 +140,21 @@
             {{-- Baguette variant: centered ~80% wide solid-fill banner --}}
             <template x-if="toast.variant === 'baguette'">
                 <div
-                    :class="[wrapperClasses(toast), 'mx-auto flex w-4/5 items-center gap-4 rounded-xl px-6 py-3.5 text-sm']"
+                    :class="[hookClasses(toast), wrapperClasses(toast), 'mx-auto flex w-4/5 items-center gap-4 rounded-xl px-6 py-3.5 text-sm']"
                 >
                     <template x-if="toast.icon">
-                        <i :class="[toast.icon, iconClasses(toast), 'text-lg shrink-0']" aria-hidden="true"></i>
+                        <i :class="['fltc-toast-icon', toast.icon, iconClasses(toast), 'text-lg shrink-0']" aria-hidden="true"></i>
                     </template>
                     <div class="flex min-w-0 flex-1 items-baseline gap-2">
-                        <span class="font-medium" x-text="toast.title"></span>
+                        <span class="fltc-toast-title font-medium" x-text="toast.title"></span>
                         <span
                             x-show="toast.message"
-                            :class="[descClasses(toast), 'truncate text-xs']"
+                            :class="['fltc-toast-message', descClasses(toast), 'truncate text-xs']"
                             x-text="toast.message"
                         ></span>
                     </div>
                     <button
-                        :class="[closeClasses(toast), 'shrink-0 rounded p-0.5 focus:outline-none focus:ring-2 focus:ring-white/50']"
+                        :class="['fltc-toast-close', closeClasses(toast), 'shrink-0 rounded p-0.5 focus:outline-none focus:ring-2 focus:ring-white/50']"
                         x-on:click="dismiss(toast.id)"
                         aria-label="{{ __('Dismiss') }}"
                     >
@@ -159,21 +166,21 @@
             {{-- Toast variant (default): compact solid-fill horizontal bar --}}
             <template x-if="toast.variant === 'toast'">
                 <div
-                    :class="[wrapperClasses(toast), 'flex items-center gap-4 rounded-lg px-4 py-3 text-sm']"
+                    :class="[hookClasses(toast), wrapperClasses(toast), 'flex items-center gap-4 rounded-lg px-4 py-3 text-sm']"
                 >
                     <template x-if="toast.icon">
-                        <i :class="[toast.icon, iconClasses(toast), 'text-lg shrink-0']" aria-hidden="true"></i>
+                        <i :class="['fltc-toast-icon', toast.icon, iconClasses(toast), 'text-lg shrink-0']" aria-hidden="true"></i>
                     </template>
                     <div class="flex min-w-0 flex-1 items-baseline gap-2">
-                        <span class="font-medium" x-text="toast.title"></span>
+                        <span class="fltc-toast-title font-medium" x-text="toast.title"></span>
                         <span
                             x-show="toast.message"
-                            :class="[descClasses(toast), 'truncate text-xs']"
+                            :class="['fltc-toast-message', descClasses(toast), 'truncate text-xs']"
                             x-text="toast.message"
                         ></span>
                     </div>
                     <button
-                        :class="[closeClasses(toast), 'shrink-0 rounded p-0.5 focus:outline-none focus:ring-2 focus:ring-white/50']"
+                        :class="['fltc-toast-close', closeClasses(toast), 'shrink-0 rounded p-0.5 focus:outline-none focus:ring-2 focus:ring-white/50']"
                         x-on:click="dismiss(toast.id)"
                         aria-label="{{ __('Dismiss') }}"
                     >
@@ -185,19 +192,19 @@
             {{-- Pill variant: lightweight bordered pill --}}
             <template x-if="toast.variant === 'pill'">
                 <div
-                    :class="[wrapperClasses(toast), 'flex items-center gap-2.5 rounded-full px-4 py-2 text-sm']"
+                    :class="[hookClasses(toast), wrapperClasses(toast), 'flex items-center gap-2.5 rounded-full px-4 py-2 text-sm']"
                 >
                     <template x-if="toast.icon">
-                        <i :class="[toast.icon, iconClasses(toast), 'shrink-0']" aria-hidden="true"></i>
+                        <i :class="['fltc-toast-icon', toast.icon, iconClasses(toast), 'shrink-0']" aria-hidden="true"></i>
                     </template>
-                    <span class="min-w-0 flex-1 font-medium leading-snug" x-text="toast.title"></span>
+                    <span class="fltc-toast-title min-w-0 flex-1 font-medium leading-snug" x-text="toast.title"></span>
                     <span
                         x-show="toast.message"
-                        :class="[descClasses(toast), 'shrink-0 text-xs']"
+                        :class="['fltc-toast-message', descClasses(toast), 'shrink-0 text-xs']"
                         x-text="toast.message"
                     ></span>
                     <button
-                        :class="[closeClasses(toast), 'shrink-0 rounded-full p-0.5 focus:outline-none focus:ring-2 focus:ring-current']"
+                        :class="['fltc-toast-close', closeClasses(toast), 'shrink-0 rounded-full p-0.5 focus:outline-none focus:ring-2 focus:ring-current']"
                         x-on:click="dismiss(toast.id)"
                         aria-label="{{ __('Dismiss') }}"
                     >

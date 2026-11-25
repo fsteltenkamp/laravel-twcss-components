@@ -190,14 +190,14 @@ under the neon skin is drawn in the theme's primary neon lines, a `green` one in
 
 `resources/css/skin-effects.css` holds the skins: their fonts (Orbitron, Share Tech Mono,
 VT323, Cinzel, EB Garamond, Grenze Gotisch — shipped in `resources/fonts`, SIL Open Font
-License), corner rounding, glowing panels, buttons and focus rings, and page backgrounds —
-including neon's scanlines and grid. Neon also restyles the controls in the style
-of Neon 2077: buttons with cut corners, thin full-strength lines and a solid fill on
-hover; square inputs with the bottom-right corner cut that light up on focus (add the class
-`fltc-corner-tick` to an input for a filled corner tick instead), a drawn select arrow and
-calendar icon; square checkboxes and toggles; tag-style badges; framed drawer handles.
-Boxes, cards, tables, the checklist, stepper, dropdowns and the segmented dark-mode toggle
-get the same cut corners; navbar and sidebar turn square with an accent edge.
+License), corner rounding, panels, buttons, fields, navigation and page backgrounds. Each
+skin restyles every component its own way:
+
+| Skin | Type | Look |
+| --- | --- | --- |
+| `neon` | Orbitron headings, Share Tech Mono text, VT323 labels | a futuristic heads-up display: buttons and panels with cut corners, thin full-strength lines and a solid fill on hover, glow in dark mode; square inputs with the bottom-right corner cut that light up on focus (add the class `fltc-corner-tick` to an input for a filled corner tick instead), a drawn select arrow and calendar icon; tag-style badges and breadcrumbs as a path; scanlines and a grid behind the page |
+| `parchment` | Cinzel headings, EB Garamond text, small-capital labels | a manuscript: paper panels framed by a double rule, embossed buttons that lift on hover, fields with an inked underline, bookmark tabs, fleurons between breadcrumbs and in separators, letters for toasts, seals on the timeline; the page darkens towards its edges |
+| `gothic` | Grenze Gotisch headings with an illuminated first letter, EB Garamond text, Cinzel inscription capitals for labels | iron and stone: square plates with a heavy frame, a bar along the top and rivets in the corners, bevelled metal buttons that sink when pressed, recessed fields, plates for the current tab and breadcrumb, lozenges on the timeline; a faint stone hatching behind the page |
 
 A skin draws each component with three colours taken from its `color`: an accent (lines,
 fills, glow, shade 600 / 400 in dark mode), a text colour (700 / 300) and a third colour
@@ -209,7 +209,10 @@ Native popups stay native: the select's list is fully styled only in browsers wi
 customizable selects (Chromium 135+), elsewhere it takes the option colours where the OS
 allows; the date picker's calendar only follows light/dark (`color-scheme`), which all
 inputs set in dark mode. `<x-fltc::heading glitch>` adds neon's glitching logo text.
-Text glow shows in dark mode only.
+Text glow shows in dark mode only, and only neon glows strongly.
+
+The skin and theme names describe the look, not a source. To show your own names, pass
+labels to the picker: `:skins="['neon' => 'Night shift', 'parchment' => 'Classic']"`.
 
 Vite bundles the fonts the skins reference. Without a bundler, publish the stylesheets and
 fonts with `php artisan vendor:publish --tag=fltc-assets` and link the files under

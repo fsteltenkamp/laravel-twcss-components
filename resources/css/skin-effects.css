@@ -277,6 +277,10 @@
     --fltc-font-body: "Share Tech Mono", monospace;
     --fltc-font-term: "VT323", monospace;
     --fltc-radius: 0;
+    --fltc-caps: uppercase;
+    --fltc-caps-variant: normal;
+    --fltc-label-spacing: 0.1em;
+    --fltc-fx-halo: 1;
     --fltc-fx-accent: var(--fltc-base-600);
     --fltc-fx-text: var(--fltc-base-700);
     --fltc-fx-third: var(--fltc-accent-500);
@@ -295,7 +299,11 @@
     --fltc-font-display: "Cinzel", serif;
     --fltc-font-body: "EB Garamond", Georgia, serif;
     --fltc-font-term: "EB Garamond", Georgia, serif;
-    --fltc-radius: 0.25rem;
+    --fltc-radius: 0.375rem;
+    --fltc-caps: none;
+    --fltc-caps-variant: all-small-caps;
+    --fltc-label-spacing: 0.06em;
+    --fltc-fx-halo: 0;
     --fltc-fx-accent: var(--fltc-base-600);
     --fltc-fx-text: var(--fltc-base-700);
     --fltc-fx-third: var(--fltc-accent-500);
@@ -307,14 +315,18 @@
     --fltc-fx-text: var(--fltc-base-300);
     --fltc-fx-third: var(--fltc-accent-400);
     --fltc-fx-ink: 20 15 8;
-    --fltc-fx-glow: 0.6;
+    --fltc-fx-glow: 0.35;
 }
 
 [data-skin="gothic"] {
     --fltc-font-display: "Grenze Gotisch", serif;
     --fltc-font-body: "EB Garamond", Georgia, serif;
-    --fltc-font-term: "Share Tech Mono", monospace;
+    --fltc-font-term: "Cinzel", serif;
     --fltc-radius: 0;
+    --fltc-caps: uppercase;
+    --fltc-caps-variant: normal;
+    --fltc-label-spacing: 0.12em;
+    --fltc-fx-halo: 0;
     --fltc-fx-accent: var(--fltc-base-600);
     --fltc-fx-text: var(--fltc-base-700);
     --fltc-fx-third: var(--fltc-accent-500);
@@ -326,7 +338,7 @@
     --fltc-fx-text: var(--fltc-base-300);
     --fltc-fx-third: var(--fltc-accent-400);
     --fltc-fx-ink: 11 11 13;
-    --fltc-fx-glow: 0.6;
+    --fltc-fx-glow: 0.3;
 }
 
 /* ============ COLOURS ============ */
@@ -936,8 +948,8 @@ div.fltc-spoiler:is(:is([data-skin="neon"], [data-skin="parchment"], [data-skin=
 :is([data-skin="neon"], [data-skin="parchment"], [data-skin="gothic"]) .fltc-modal-panel {
     box-shadow:
         0 0 0 1px rgb(var(--fltc-fx-accent) / 0.05) inset,
-        0 0 18px rgb(var(--fltc-fx-accent) / 0.12),
-        0 0 40px rgb(var(--fltc-fx-text) / 0.05);
+        0 0 18px rgb(var(--fltc-fx-accent) / calc(0.12 * var(--fltc-fx-halo))),
+        0 0 40px rgb(var(--fltc-fx-text) / calc(0.05 * var(--fltc-fx-halo)));
 }
 .fltc-card:is(:is([data-skin="neon"], [data-skin="parchment"], [data-skin="gothic"]) [class*="fltc-color-"]),
 .fltc-container-box:is(:is([data-skin="neon"], [data-skin="parchment"], [data-skin="gothic"]) [class*="fltc-color-"]),
@@ -963,19 +975,21 @@ div.fltc-spoiler:is(:is([data-skin="neon"], [data-skin="parchment"], [data-skin=
 
 /* ============ CONTROLS ============ */
 
-.fltc-button:is(:is([data-skin="neon"], [data-skin="parchment"], [data-skin="gothic"]) [class*="fltc-color-"]),
-.fltc-button-link:is(:is([data-skin="neon"], [data-skin="parchment"], [data-skin="gothic"]) [class*="fltc-color-"]) {
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
+.fltc-button:where(:not(.fltc-button-textlink)):is(:is([data-skin="neon"], [data-skin="parchment"], [data-skin="gothic"]) [class*="fltc-color-"]),
+.fltc-button-link:where(:not(.fltc-button-textlink)):is(:is([data-skin="neon"], [data-skin="parchment"], [data-skin="gothic"]) [class*="fltc-color-"]) {
+    text-transform: var(--fltc-caps);
+    font-variant-caps: var(--fltc-caps-variant);
+    letter-spacing: var(--fltc-label-spacing);
 }
-.fltc-button:is(:is([data-skin="neon"], [data-skin="parchment"], [data-skin="gothic"]) [class*="fltc-color-"]):hover,
-.fltc-button-link:is(:is([data-skin="neon"], [data-skin="parchment"], [data-skin="gothic"]) [class*="fltc-color-"]):hover {
-    box-shadow: 0 0 12px rgb(var(--fltc-fx-accent) / 0.8);
+.fltc-button:where(:not(.fltc-button-textlink)):is(:is([data-skin="neon"], [data-skin="parchment"], [data-skin="gothic"]) [class*="fltc-color-"]):hover,
+.fltc-button-link:where(:not(.fltc-button-textlink)):is(:is([data-skin="neon"], [data-skin="parchment"], [data-skin="gothic"]) [class*="fltc-color-"]):hover {
+    box-shadow: 0 0 12px rgb(var(--fltc-fx-accent) / calc(0.8 * var(--fltc-fx-halo)));
 }
 .fltc-badge:is(:is([data-skin="neon"], [data-skin="parchment"], [data-skin="gothic"]) [class*="fltc-color-"]) {
     font-family: var(--fltc-font-term);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
+    letter-spacing: var(--fltc-label-spacing);
+    text-transform: var(--fltc-caps);
+    font-variant-caps: var(--fltc-caps-variant);
 }
 .fltc-form-input-text:is(:is([data-skin="neon"], [data-skin="parchment"], [data-skin="gothic"]) [class*="fltc-color-"]):focus,
 .fltc-form-input-email:is(:is([data-skin="neon"], [data-skin="parchment"], [data-skin="gothic"]) [class*="fltc-color-"]):focus,
@@ -988,7 +1002,7 @@ div.fltc-spoiler:is(:is([data-skin="neon"], [data-skin="parchment"], [data-skin=
 .fltc-form-input-file:is(:is([data-skin="neon"], [data-skin="parchment"], [data-skin="gothic"]) [class*="fltc-color-"]):focus,
 .fltc-form-textarea:is(:is([data-skin="neon"], [data-skin="parchment"], [data-skin="gothic"]) [class*="fltc-color-"]):focus {
     border-color: rgb(var(--fltc-fx-accent));
-    box-shadow: 0 0 10px rgb(var(--fltc-fx-accent) / 0.3);
+    box-shadow: 0 0 10px rgb(var(--fltc-fx-accent) / calc(0.3 * var(--fltc-fx-halo)));
 }
 .fltc-drawer-tab:is(:is([data-skin="neon"], [data-skin="parchment"], [data-skin="gothic"]) [class*="fltc-color-"]),
 .fltc-nav-navbar-link:is(:is([data-skin="neon"], [data-skin="parchment"], [data-skin="gothic"]) [class*="fltc-color-"]),
@@ -1034,8 +1048,8 @@ div.fltc-spoiler:is(:is([data-skin="neon"], [data-skin="parchment"], [data-skin=
     --fltc-fx-danger: var(--fltc-danger-400);
 }
 
-.fltc-button:is([data-skin="neon"] [class*="fltc-color-"]),
-.fltc-button-link:is([data-skin="neon"] [class*="fltc-color-"]) {
+.fltc-button:where(.fltc-button-solid, .fltc-button-outline):is([data-skin="neon"] [class*="fltc-color-"]),
+.fltc-button-link:where(.fltc-button-solid, .fltc-button-outline):is([data-skin="neon"] [class*="fltc-color-"]) {
     --fltc-line: var(--fltc-fx-accent);
     position: relative;
     isolation: isolate;
@@ -1050,8 +1064,8 @@ div.fltc-spoiler:is(:is([data-skin="neon"], [data-skin="parchment"], [data-skin=
 .fltc-button-outline:is([data-skin="neon"] [class*="fltc-color-"]) {
     --fltc-line: var(--fltc-fx-text);
 }
-.fltc-button:is([data-skin="neon"] [class*="fltc-color-"])::before,
-.fltc-button-link:is([data-skin="neon"] [class*="fltc-color-"])::before {
+.fltc-button:where(.fltc-button-solid, .fltc-button-outline):is([data-skin="neon"] [class*="fltc-color-"])::before,
+.fltc-button-link:where(.fltc-button-solid, .fltc-button-outline):is([data-skin="neon"] [class*="fltc-color-"])::before {
     content: "";
     position: absolute;
     inset: 1px;
@@ -1062,21 +1076,21 @@ div.fltc-spoiler:is(:is([data-skin="neon"], [data-skin="parchment"], [data-skin=
     clip-path: polygon(calc(var(--fltc-cut) - 0.5px) 0, 100% 0, 100% calc(100% - var(--fltc-cut) + 0.5px), calc(100% - var(--fltc-cut) + 0.5px) 100%, 0 100%, 0 calc(var(--fltc-cut) - 0.5px));
     transition: background 0.15s;
 }
-.fltc-button:is([data-skin="neon"] [class*="fltc-color-"]):is(:hover, :focus-visible),
-.fltc-button-link:is([data-skin="neon"] [class*="fltc-color-"]):is(:hover, :focus-visible) {
+.fltc-button:where(.fltc-button-solid, .fltc-button-outline):is([data-skin="neon"] [class*="fltc-color-"]):is(:hover, :focus-visible),
+.fltc-button-link:where(.fltc-button-solid, .fltc-button-outline):is([data-skin="neon"] [class*="fltc-color-"]):is(:hover, :focus-visible) {
     /* restated so Tailwind's (dark:)hover:bg-* can't repaint the drawn border */
     background: rgb(var(--fltc-line));
     color: rgb(var(--fltc-fx-ink));
     box-shadow: none;
     outline: none;
 }
-.fltc-button:is([data-skin="neon"] [class*="fltc-color-"]):is(:hover, :focus-visible)::before,
-.fltc-button-link:is([data-skin="neon"] [class*="fltc-color-"]):is(:hover, :focus-visible)::before {
+.fltc-button:where(.fltc-button-solid, .fltc-button-outline):is([data-skin="neon"] [class*="fltc-color-"]):is(:hover, :focus-visible)::before,
+.fltc-button-link:where(.fltc-button-solid, .fltc-button-outline):is([data-skin="neon"] [class*="fltc-color-"]):is(:hover, :focus-visible)::before {
     background: rgb(var(--fltc-line));
 }
 /* Keyboard focus: a dashed inner frame on top of the fill, since clip-path hides rings. */
-.fltc-button:is([data-skin="neon"] [class*="fltc-color-"]):focus-visible::after,
-.fltc-button-link:is([data-skin="neon"] [class*="fltc-color-"]):focus-visible::after {
+.fltc-button:where(.fltc-button-solid, .fltc-button-outline):is([data-skin="neon"] [class*="fltc-color-"]):focus-visible::after,
+.fltc-button-link:where(.fltc-button-solid, .fltc-button-outline):is([data-skin="neon"] [class*="fltc-color-"]):focus-visible::after {
     content: "";
     position: absolute;
     inset: 3px;
@@ -1084,16 +1098,16 @@ div.fltc-spoiler:is(:is([data-skin="neon"], [data-skin="parchment"], [data-skin=
     pointer-events: none;
 }
 /* Inside a button group (pagination too) the buttons and button links butt together, so only the group's ends are cut. */
-.fltc-buttongroup > :is(.fltc-button, .fltc-button-link):is([data-skin="neon"] [class*="fltc-color-"]),
-.fltc-buttongroup > :is(.fltc-button, .fltc-button-link):is([data-skin="neon"] [class*="fltc-color-"])::before {
+.fltc-buttongroup > :is(.fltc-button, .fltc-button-link):where(.fltc-button-solid, .fltc-button-outline):is([data-skin="neon"] [class*="fltc-color-"]),
+.fltc-buttongroup > :is(.fltc-button, .fltc-button-link):where(.fltc-button-solid, .fltc-button-outline):is([data-skin="neon"] [class*="fltc-color-"])::before {
     clip-path: none;
 }
-.fltc-buttongroup > :is(.fltc-button, .fltc-button-link):is([data-skin="neon"] [class*="fltc-color-"]):first-child,
-.fltc-buttongroup > :is(.fltc-button, .fltc-button-link):is([data-skin="neon"] [class*="fltc-color-"]):first-child::before {
+.fltc-buttongroup > :is(.fltc-button, .fltc-button-link):where(.fltc-button-solid, .fltc-button-outline):is([data-skin="neon"] [class*="fltc-color-"]):first-child,
+.fltc-buttongroup > :is(.fltc-button, .fltc-button-link):where(.fltc-button-solid, .fltc-button-outline):is([data-skin="neon"] [class*="fltc-color-"]):first-child::before {
     clip-path: polygon(calc(var(--fltc-cut) + 1px) -1px, calc(100% + 1px) -1px, calc(100% + 1px) calc(100% + 1px), -1px calc(100% + 1px), -1px calc(var(--fltc-cut) + 1px));
 }
-.fltc-buttongroup > :is(.fltc-button, .fltc-button-link):is([data-skin="neon"] [class*="fltc-color-"]):last-child,
-.fltc-buttongroup > :is(.fltc-button, .fltc-button-link):is([data-skin="neon"] [class*="fltc-color-"]):last-child::before {
+.fltc-buttongroup > :is(.fltc-button, .fltc-button-link):where(.fltc-button-solid, .fltc-button-outline):is([data-skin="neon"] [class*="fltc-color-"]):last-child,
+.fltc-buttongroup > :is(.fltc-button, .fltc-button-link):where(.fltc-button-solid, .fltc-button-outline):is([data-skin="neon"] [class*="fltc-color-"]):last-child::before {
     clip-path: polygon(-1px -1px, calc(100% + 1px) -1px, calc(100% + 1px) calc(100% - var(--fltc-cut) - 1px), calc(100% - var(--fltc-cut) - 1px) calc(100% + 1px), -1px calc(100% + 1px));
 }
 
@@ -1707,8 +1721,8 @@ div.fltc-spoiler:is([data-skin="neon"] [class*="fltc-color-"])::after,
 /* ---- neon pagination ----
    The current page is filled like a hovered button, so it stands out even when the
    accent and main themes are the same; the summary is terminal type with pink numbers. */
-:is(.fltc-button, .fltc-button-link):is([data-skin="neon"] [class*="fltc-color-"])[aria-current="page"],
-:is(.fltc-button, .fltc-button-link):is([data-skin="neon"] [class*="fltc-color-"])[aria-current="page"]::before {
+:is(.fltc-button, .fltc-button-link):where(.fltc-button-solid, .fltc-button-outline):is([data-skin="neon"] [class*="fltc-color-"])[aria-current="page"],
+:is(.fltc-button, .fltc-button-link):where(.fltc-button-solid, .fltc-button-outline):is([data-skin="neon"] [class*="fltc-color-"])[aria-current="page"]::before {
     background: rgb(var(--fltc-line));
     color: rgb(var(--fltc-fx-ink));
 }
@@ -2034,4 +2048,1419 @@ div.fltc-spoiler:is([data-skin="neon"] [class*="fltc-color-"]) .fltc-spoiler-tit
 }
 .fltc-form-upload:is([data-skin="neon"] [class*="fltc-color-"]) .fltc-form-upload-icon {
     text-shadow: 0 0 10px currentColor;
+}
+
+/* ---- neon breadcrumbs ----
+   A path: square crumbs in terminal type with slashes between them; the current crumb
+   is a tag in the accent colour. */
+.fltc-nav-breadcrumbs:is([data-skin="neon"] [class*="fltc-color-"]) {
+    font-size: 1.1rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+.fltc-nav-breadcrumbs:is([data-skin="neon"] [class*="fltc-color-"]) .fltc-nav-breadcrumbs-crumb {
+    border-radius: 0;
+    padding-inline: 0.5rem;
+    background: transparent;
+    color: rgb(var(--fltc-fx-text) / 0.7);
+}
+.fltc-nav-breadcrumbs:is([data-skin="neon"] [class*="fltc-color-"]) a.fltc-nav-breadcrumbs-crumb:is(:hover, :focus-visible) {
+    background: rgb(var(--fltc-fx-text) / 0.12);
+    color: rgb(var(--fltc-fx-text));
+    box-shadow: inset 0 -1px 0 rgb(var(--fltc-fx-text));
+    outline: none;
+}
+.fltc-nav-breadcrumbs:is([data-skin="neon"] [class*="fltc-color-"]) .fltc-nav-breadcrumbs-crumb[aria-current="page"] {
+    border: 1px solid rgb(var(--fltc-fx-accent));
+    background: rgb(var(--fltc-fx-accent) / 0.15);
+    color: rgb(var(--fltc-fx-accent));
+    text-shadow: 0 0 10px rgb(var(--fltc-fx-accent) / var(--fltc-fx-glow));
+}
+.fltc-nav-breadcrumbs:is([data-skin="neon"] [class*="fltc-color-"]) .fltc-nav-breadcrumbs-separator > * {
+    display: none;
+}
+.fltc-nav-breadcrumbs:is([data-skin="neon"] [class*="fltc-color-"]) .fltc-nav-breadcrumbs-separator::before {
+    content: "/";
+    color: rgb(var(--fltc-fx-accent) / 0.7);
+}
+
+/* ---- neon toasts ----
+   Dark cut panels with a glowing accent bar on the leading edge, terminal type for the
+   title and a close button that fills like a hovered button. */
+.fltc-toast:is([data-skin="neon"] [class*="fltc-color-"]) {
+    --fltc-line: var(--fltc-fx-accent);
+    --fltc-line-alpha: 0.8;
+    position: relative;
+    border-color: rgb(var(--fltc-line) / var(--fltc-line-alpha));
+    background-color: rgb(var(--fltc-fx-ink) / 0.94);
+    color: rgb(var(--fltc-fx-text));
+    clip-path: polygon(calc(var(--fltc-cut) + 1px) -1px, calc(100% + 1px) -1px, calc(100% + 1px) calc(100% - var(--fltc-cut) - 1px), calc(100% - var(--fltc-cut) - 1px) calc(100% + 1px), -1px calc(100% + 1px), -1px calc(var(--fltc-cut) + 1px));
+    box-shadow: inset 3px 0 0 rgb(var(--fltc-fx-accent)), inset 0 0 24px rgb(var(--fltc-fx-accent) / 0.12);
+}
+.fltc-toast:is([data-skin="neon"] [class*="fltc-color-"])::after {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    z-index: 1;
+    pointer-events: none;
+    background: linear-gradient(to bottom right, transparent 50%, rgb(var(--fltc-line) / var(--fltc-line-alpha)) 50%, rgb(var(--fltc-line) / var(--fltc-line-alpha)) calc(50% + 1.2px), transparent calc(50% + 1.2px)) top left / var(--fltc-cut) var(--fltc-cut) no-repeat, linear-gradient(to top left, transparent 50%, rgb(var(--fltc-line) / var(--fltc-line-alpha)) 50%, rgb(var(--fltc-line) / var(--fltc-line-alpha)) calc(50% + 1.2px), transparent calc(50% + 1.2px)) bottom right / var(--fltc-cut) var(--fltc-cut) no-repeat;
+}
+.fltc-toast:is([data-skin="neon"] [class*="fltc-color-"]) .fltc-toast-title {
+    font-family: var(--fltc-font-term);
+    font-size: 1.15rem;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgb(var(--fltc-fx-accent));
+    text-shadow: 0 0 10px rgb(var(--fltc-fx-accent) / var(--fltc-fx-glow));
+}
+.fltc-toast:is([data-skin="neon"] [class*="fltc-color-"]) .fltc-toast-message {
+    color: rgb(var(--fltc-fx-text) / 0.8);
+}
+.fltc-toast:is([data-skin="neon"] [class*="fltc-color-"]) .fltc-toast-icon {
+    color: rgb(var(--fltc-fx-accent));
+    filter: drop-shadow(0 0 4px currentColor);
+}
+.fltc-toast:is([data-skin="neon"] [class*="fltc-color-"]) .fltc-toast-close {
+    border-radius: 0;
+    color: rgb(var(--fltc-fx-text) / 0.7);
+}
+.fltc-toast:is([data-skin="neon"] [class*="fltc-color-"]) .fltc-toast-close:is(:hover, :focus-visible) {
+    background: rgb(var(--fltc-fx-accent));
+    color: rgb(var(--fltc-fx-ink));
+    box-shadow: none;
+    outline: none;
+}
+
+/* ---- neon tooltips, modals, separators and one-time codes ---- */
+.fltc-tooltip-bubble:is([data-skin="neon"] [class*="fltc-color-"]) {
+    border: 1px solid rgb(var(--fltc-fx-accent));
+    background: rgb(var(--fltc-fx-ink) / 0.95);
+    color: rgb(var(--fltc-fx-text));
+    font-family: var(--fltc-font-term);
+    font-size: 1rem;
+    letter-spacing: 0.06em;
+    box-shadow: 0 0 12px rgb(var(--fltc-fx-accent) / 0.35);
+}
+[data-skin="neon"] .fltc-modal-panel {
+    --fltc-line: var(--fltc-fx-accent);
+    --fltc-line-alpha: 0.8;
+    border: 1px solid rgb(var(--fltc-line) / var(--fltc-line-alpha));
+    clip-path: polygon(calc(var(--fltc-cut) + 1px) -1px, calc(100% + 1px) -1px, calc(100% + 1px) calc(100% - var(--fltc-cut) - 1px), calc(100% - var(--fltc-cut) - 1px) calc(100% + 1px), -1px calc(100% + 1px), -1px calc(var(--fltc-cut) + 1px));
+    box-shadow: inset 0 0 32px rgb(var(--fltc-fx-accent) / 0.12);
+}
+[data-skin="neon"] .fltc-modal-panel::after {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    z-index: 1;
+    pointer-events: none;
+    background: linear-gradient(to bottom right, transparent 50%, rgb(var(--fltc-line) / var(--fltc-line-alpha)) 50%, rgb(var(--fltc-line) / var(--fltc-line-alpha)) calc(50% + 1.2px), transparent calc(50% + 1.2px)) top left / var(--fltc-cut) var(--fltc-cut) no-repeat, linear-gradient(to top left, transparent 50%, rgb(var(--fltc-line) / var(--fltc-line-alpha)) 50%, rgb(var(--fltc-line) / var(--fltc-line-alpha)) calc(50% + 1.2px), transparent calc(50% + 1.2px)) bottom right / var(--fltc-cut) var(--fltc-cut) no-repeat;
+}
+/* A line that fades out towards both ends. */
+[data-skin="neon"] .fltc-separator[aria-orientation="horizontal"] {
+    border-image: linear-gradient(90deg, transparent, rgb(var(--fltc-fx-accent) / 0.7), transparent) 1;
+}
+[data-skin="neon"] .fltc-separator[aria-orientation="vertical"] {
+    border-image: linear-gradient(to bottom, transparent, rgb(var(--fltc-fx-accent) / 0.7), transparent) 1;
+}
+.fltc-form-otp:is([data-skin="neon"] [class*="fltc-color-"]) .fltc-form-otp-box {
+    border: 1px solid rgb(var(--fltc-fx-text) / 0.5);
+    border-radius: 0;
+    background: rgb(var(--fltc-fx-ink) / 0.6);
+    color: rgb(var(--fltc-fx-accent));
+    font-family: var(--fltc-font-term);
+    font-size: 1.6rem;
+    box-shadow: none;
+}
+.fltc-form-otp:is([data-skin="neon"] [class*="fltc-color-"]) .fltc-form-otp-box:focus {
+    border-color: rgb(var(--fltc-fx-accent));
+    box-shadow: inset 0 0 10px rgb(var(--fltc-fx-accent) / 0.3);
+    outline: none;
+}
+.fltc-form-field:is([data-skin="neon"] [class*="fltc-color-"]) .fltc-form-field-error {
+    font-family: var(--fltc-font-term);
+    font-size: 1rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgb(var(--fltc-fx-danger));
+}
+
+/* ---- neon ghost and text-link buttons ----
+   No frame: ghost buttons light up on hover, text links are terminal type with an
+   accent underline. */
+.fltc-button-ghost:is([data-skin="neon"] [class*="fltc-color-"]) {
+    border-radius: 0;
+    color: rgb(var(--fltc-fx-text));
+}
+.fltc-button-ghost:is([data-skin="neon"] [class*="fltc-color-"]):is(:hover, :focus-visible) {
+    background: rgb(var(--fltc-fx-text) / 0.12);
+    color: rgb(var(--fltc-fx-accent));
+    box-shadow: inset 0 -1px 0 rgb(var(--fltc-fx-accent));
+    outline: none;
+}
+.fltc-button-textlink:is([data-skin="neon"] [class*="fltc-color-"]) {
+    border-radius: 0;
+    font-family: var(--fltc-font-term);
+    font-size: 1.1em;
+    letter-spacing: 0.06em;
+    color: rgb(var(--fltc-fx-text));
+    text-decoration-color: rgb(var(--fltc-fx-accent));
+}
+.fltc-button-textlink:is([data-skin="neon"] [class*="fltc-color-"]):is(:hover, :focus-visible) {
+    color: rgb(var(--fltc-fx-accent));
+    text-shadow: 0 0 10px rgb(var(--fltc-fx-accent) / var(--fltc-fx-glow));
+    box-shadow: none;
+}
+
+/* ---- neon card parts and drawers ----
+   Card header and footer are divided off by a faint line; the header is in the accent.
+   Drawers are dark panels edged in the accent. */
+.fltc-card-header:is([data-skin="neon"] [class*="fltc-color-"]) {
+    border-color: rgb(var(--fltc-fx-text) / 0.25);
+    color: rgb(var(--fltc-fx-accent));
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+.fltc-card-footer:is([data-skin="neon"] [class*="fltc-color-"]) {
+    border-color: rgb(var(--fltc-fx-text) / 0.25);
+    background-color: rgb(var(--fltc-fx-text) / 0.04);
+}
+.fltc-drawer:is([data-skin="neon"] [class*="fltc-color-"]) {
+    border-color: rgb(var(--fltc-fx-accent) / 0.6);
+    border-radius: 0;
+    background-color: rgb(var(--fltc-fx-ink) / 0.96);
+}
+
+/* ============ PARCHMENT ============ */
+/* A manuscript: warm paper panels framed by a double rule (the border plus a hairline
+   inside it in the accent), serif type with small-capital labels, embossed buttons,
+   inked underlines on fields, fleurons between breadcrumbs and in separators. Shadows
+   are soft and warm; nothing glows. Lines use the text colour, highlights the accent. */
+
+[data-skin="parchment"] {
+    --fltc-fx-danger: var(--fltc-danger-600);
+}
+:is(.dark[data-skin="parchment"], .dark [data-skin="parchment"]) {
+    --fltc-fx-danger: var(--fltc-danger-400);
+}
+
+/* Page: the edges darken like an old page. */
+[data-skin="parchment"] body::after,
+body[data-skin="parchment"]::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    pointer-events: none;
+    box-shadow: inset 0 0 160px rgb(var(--fltc-fx-text) / 0.16);
+}
+.dark[data-skin="parchment"] body::after,
+.dark body[data-skin="parchment"]::after {
+    box-shadow: inset 0 0 160px rgb(0 0 0 / 0.55);
+}
+
+/* ---- parchment type ---- */
+[data-skin="parchment"] .fltc-heading {
+    letter-spacing: 0.04em;
+}
+[data-skin="parchment"] .fltc-subheading {
+    font-style: italic;
+}
+/* A rule with a fleuron in the middle (not inside menus, where it stays a hairline). */
+[data-skin="parchment"] .fltc-separator[aria-orientation="horizontal"]:not(:is(.fltc-dropdown-menu, .fltc-nav-navbar-dropdown-menu) .fltc-separator) {
+    position: relative;
+    height: 1rem;
+    border: 0;
+    background:
+        linear-gradient(rgb(var(--fltc-fx-text) / 0.35), rgb(var(--fltc-fx-text) / 0.35)) left center / calc(50% - 1rem) 1px no-repeat,
+        linear-gradient(rgb(var(--fltc-fx-text) / 0.35), rgb(var(--fltc-fx-text) / 0.35)) right center / calc(50% - 1rem) 1px no-repeat;
+}
+[data-skin="parchment"] .fltc-separator[aria-orientation="horizontal"]:not(:is(.fltc-dropdown-menu, .fltc-nav-navbar-dropdown-menu) .fltc-separator)::before {
+    content: "\2766";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 0.9rem;
+    line-height: 1;
+    color: rgb(var(--fltc-fx-accent) / 0.75);
+}
+[data-skin="parchment"] .fltc-separator {
+    border-color: rgb(var(--fltc-fx-text) / 0.3);
+}
+
+/* ---- parchment panels ----
+   Paper with a double rule: the border, and a hairline in the accent 4px inside it
+   (an outline, so the gap stays transparent). Panels whose content runs to the edge
+   (media and file cards, tables, menus, accordions) keep a single rule. */
+:is(.fltc-card, .fltc-container-box, .fltc-counter, .fltc-alert, .fltc-messagebox, .fltc-toast):is([data-skin="parchment"] [class*="fltc-color-"]),
+.fltc-infocard:is([data-skin="parchment"] [class*="fltc-color-"]) .fltc-infocard-card,
+.fltc-nav-stepper:is([data-skin="parchment"] [class*="fltc-color-"]) .fltc-nav-stepper-panel,
+[data-skin="parchment"] .fltc-modal-panel {
+    border-color: rgb(var(--fltc-fx-text) / 0.35);
+    outline: 1px solid rgb(var(--fltc-fx-accent) / 0.35);
+    outline-offset: -4px;
+    box-shadow: 0 1px 2px rgb(var(--fltc-fx-text) / 0.12), 0 8px 20px -12px rgb(var(--fltc-fx-text) / 0.5);
+}
+:is(.fltc-accordion, .fltc-media-card, .fltc-file-card, .fltc-action-bar, .fltc-table-scroll, .fltc-drawer):is([data-skin="parchment"] [class*="fltc-color-"]),
+.fltc-form-checklist:is([data-skin="parchment"] [class*="fltc-color-"]) .fltc-form-checklist-list,
+.fltc-infocard:is([data-skin="parchment"] [class*="fltc-color-"]) .fltc-infocard-preview,
+:is(.fltc-dropdown, .fltc-nav-navbar-dropdown):is([data-skin="parchment"] [class*="fltc-color-"]) :is(.fltc-dropdown-menu, .fltc-nav-navbar-dropdown-menu),
+.fltc-nav-sidebar-profile:is([data-skin="parchment"] [class*="fltc-color-"]) .fltc-nav-sidebar-profile-menu {
+    border-color: rgb(var(--fltc-fx-text) / 0.35);
+    box-shadow: 0 1px 2px rgb(var(--fltc-fx-text) / 0.12), 0 8px 20px -12px rgb(var(--fltc-fx-text) / 0.5);
+}
+/* No neon strip along the top: the frame is the ornament. */
+:is(.fltc-card, .fltc-container-box, .fltc-counter):is([data-skin="parchment"] [class*="fltc-color-"])::before,
+[data-skin="parchment"] .fltc-modal-panel::before {
+    content: none;
+}
+.fltc-card:is([data-skin="parchment"] [class*="fltc-color-"]) .fltc-card-header {
+    border-bottom: 3px double rgb(var(--fltc-fx-text) / 0.3);
+}
+.fltc-card:is([data-skin="parchment"] [class*="fltc-color-"]) .fltc-card-footer {
+    border-top: 3px double rgb(var(--fltc-fx-text) / 0.3);
+}
+.fltc-alert:is([data-skin="parchment"] [class*="fltc-color-"]), .fltc-messagebox:is([data-skin="parchment"] [class*="fltc-color-"]) {
+    border-left: 3px solid rgb(var(--fltc-fx-accent));
+}
+
+/* ---- parchment buttons ----
+   Embossed: a sheen over the fill, a highlight along the top edge and a soft shadow
+   that grows as the button lifts on hover. Outline buttons get a double rule, labels
+   are small capitals. */
+:is(.fltc-button, .fltc-button-link):where(.fltc-button-solid, .fltc-button-outline, .fltc-button-ghost):is([data-skin="parchment"] [class*="fltc-color-"]) {
+    font-size: 1rem;
+    transition: transform 0.15s, box-shadow 0.15s, background-color 0.15s, color 0.15s;
+}
+:is(.fltc-button, .fltc-button-link).fltc-button-solid:is([data-skin="parchment"] [class*="fltc-color-"]) {
+    background-image: linear-gradient(to bottom, rgb(255 255 255 / 0.2), rgb(255 255 255 / 0) 50%, rgb(0 0 0 / 0.08));
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.3), inset 0 -1px 0 rgb(0 0 0 / 0.15), 0 1px 2px rgb(var(--fltc-fx-text) / 0.35);
+    text-shadow: 0 1px 0 rgb(0 0 0 / 0.15);
+}
+:is(.fltc-button, .fltc-button-link).fltc-button-outline:is([data-skin="parchment"] [class*="fltc-color-"]) {
+    border-style: double;
+    border-width: 3px;
+}
+:is(.fltc-button, .fltc-button-link):is(.fltc-button-solid, .fltc-button-outline):is([data-skin="parchment"] [class*="fltc-color-"]):hover {
+    transform: translateY(-1px);
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.3), 0 4px 10px -4px rgb(var(--fltc-fx-text) / 0.5);
+}
+:is(.fltc-button, .fltc-button-link):is(.fltc-button-solid, .fltc-button-outline):is([data-skin="parchment"] [class*="fltc-color-"]):active {
+    transform: none;
+    box-shadow: inset 0 2px 4px rgb(0 0 0 / 0.2);
+}
+:is(.fltc-button, .fltc-button-link):is([data-skin="parchment"] [class*="fltc-color-"]):focus-visible {
+    outline: 2px solid rgb(var(--fltc-fx-accent));
+    outline-offset: 2px;
+}
+:is(.fltc-button, .fltc-button-link).fltc-button-textlink:is([data-skin="parchment"] [class*="fltc-color-"]) {
+    font-style: italic;
+    text-underline-offset: 3px;
+}
+/* The current page of a pagination: a ring around the button. */
+:is(.fltc-button, .fltc-button-link):is([data-skin="parchment"] [class*="fltc-color-"])[aria-current="page"] {
+    outline: 1px solid rgb(var(--fltc-fx-accent));
+    outline-offset: 2px;
+}
+.fltc-nav-pagination:is([data-skin="parchment"] [class*="fltc-color-"]) .fltc-nav-pagination-summary {
+    font-style: italic;
+    letter-spacing: 0;
+}
+
+/* ---- parchment fields ----
+   Paper-tinted with a hairline frame and an inked underline that turns to the accent
+   on focus; placeholders are italic. */
+:is(.fltc-form-input-text, .fltc-form-input-email, .fltc-form-input-password, .fltc-form-input-number, .fltc-form-input-date, .fltc-form-input-time, .fltc-form-input-datetime, .fltc-form-input-file, .fltc-form-input-select, .fltc-form-textarea):is([data-skin="parchment"] [class*="fltc-color-"]),
+.fltc-form-otp:is([data-skin="parchment"] [class*="fltc-color-"]) .fltc-form-otp-box {
+    border-color: rgb(var(--fltc-fx-text) / 0.3);
+    border-bottom-color: rgb(var(--fltc-fx-text) / 0.65);
+    background-color: rgb(var(--fltc-fx-ink) / 0.55);
+    color: rgb(var(--fltc-fx-text));
+    box-shadow: inset 0 1px 3px rgb(var(--fltc-fx-text) / 0.12);
+}
+:is(.fltc-form-input-text, .fltc-form-input-email, .fltc-form-input-password, .fltc-form-input-number, .fltc-form-input-date, .fltc-form-input-time, .fltc-form-input-datetime, .fltc-form-input-file, .fltc-form-input-select, .fltc-form-textarea):is([data-skin="parchment"] [class*="fltc-color-"]):focus,
+.fltc-form-otp:is([data-skin="parchment"] [class*="fltc-color-"]) .fltc-form-otp-box:focus {
+    border-color: rgb(var(--fltc-fx-accent) / 0.6);
+    border-bottom-color: rgb(var(--fltc-fx-accent));
+    box-shadow: inset 0 -1px 0 rgb(var(--fltc-fx-accent)), 0 0 0 3px rgb(var(--fltc-fx-accent) / 0.15);
+    outline: none;
+}
+:is(.fltc-form-input-text, .fltc-form-input-email, .fltc-form-input-password, .fltc-form-input-number, .fltc-form-input-date, .fltc-form-input-time, .fltc-form-input-datetime, .fltc-form-input-file, .fltc-form-input-select, .fltc-form-textarea):is([data-skin="parchment"] [class*="fltc-color-"])::placeholder {
+    font-style: italic;
+    color: rgb(var(--fltc-fx-text) / 0.45);
+}
+:is(.fltc-form-input-text, .fltc-form-input-email, .fltc-form-input-password, .fltc-form-input-number, .fltc-form-input-date, .fltc-form-input-time, .fltc-form-input-datetime, .fltc-form-input-file, .fltc-form-input-select, .fltc-form-textarea):is([data-skin="parchment"] [class*="fltc-color-"])[aria-invalid="true"] {
+    border-color: rgb(var(--fltc-fx-danger) / 0.6);
+    border-bottom-color: rgb(var(--fltc-fx-danger));
+}
+.fltc-form-input-file:is([data-skin="parchment"] [class*="fltc-color-"])::file-selector-button {
+    border: 0;
+    border-right: 1px solid rgb(var(--fltc-fx-text) / 0.3);
+    background: rgb(var(--fltc-fx-text) / 0.08);
+    color: rgb(var(--fltc-fx-text));
+    font-family: var(--fltc-font-body);
+    font-variant-caps: all-small-caps;
+    letter-spacing: 0.06em;
+}
+.fltc-form-label:is([data-skin="parchment"] [class*="fltc-color-"]),
+.fltc-form-radio-group:is([data-skin="parchment"] [class*="fltc-color-"]) .fltc-form-radio-group-legend {
+    font-size: 1rem;
+    font-weight: 600;
+    font-variant-caps: all-small-caps;
+    letter-spacing: 0.06em;
+    color: rgb(var(--fltc-fx-text) / 0.85);
+}
+.fltc-form-field:is([data-skin="parchment"] [class*="fltc-color-"]) .fltc-form-field-note {
+    font-style: italic;
+    letter-spacing: 0;
+}
+.fltc-form-field:is([data-skin="parchment"] [class*="fltc-color-"]) .fltc-form-field-error {
+    font-style: italic;
+    color: rgb(var(--fltc-fx-danger));
+}
+.fltc-form-section:is([data-skin="parchment"] [class*="fltc-color-"]) {
+    border-color: rgb(var(--fltc-fx-text) / 0.25);
+}
+.fltc-form-section:is([data-skin="parchment"] [class*="fltc-color-"]) .fltc-form-section-title {
+    color: rgb(var(--fltc-fx-accent));
+}
+
+/* Toggles: an inset groove with a bead for a knob, the groove filling with the accent
+   when on. */
+.fltc-form-checkbox:is([data-skin="parchment"] [class*="fltc-color-"]) ~ .fltc-form-checkbox-track {
+    background: rgb(var(--fltc-fx-text) / 0.18);
+    box-shadow: inset 0 1px 3px rgb(var(--fltc-fx-text) / 0.35);
+}
+.fltc-form-checkbox:is([data-skin="parchment"] [class*="fltc-color-"]):checked ~ .fltc-form-checkbox-track {
+    background: rgb(var(--fltc-fx-accent));
+    box-shadow: inset 0 1px 3px rgb(0 0 0 / 0.3);
+}
+.fltc-form-checkbox:is([data-skin="parchment"] [class*="fltc-color-"]) ~ .fltc-form-checkbox-track .fltc-form-checkbox-knob {
+    background: radial-gradient(circle at 35% 30%, rgb(255 255 255 / 0.95), rgb(var(--fltc-fx-ink)) 75%);
+    box-shadow: 0 1px 2px rgb(0 0 0 / 0.35);
+}
+.fltc-form-checkbox:is([data-skin="parchment"] [class*="fltc-color-"]):checked ~ .fltc-icon,
+.fltc-form-radio:is([data-skin="parchment"] [class*="fltc-color-"]):checked ~ .fltc-form-radio-label {
+    color: rgb(var(--fltc-fx-accent));
+}
+.fltc-form-checkbox:is([data-skin="parchment"] [class*="fltc-color-"]):focus-visible ~ :is(.fltc-form-checkbox-track, .fltc-icon) {
+    outline: 2px solid rgb(var(--fltc-fx-accent));
+    outline-offset: 2px;
+}
+.fltc-form-checklist:is([data-skin="parchment"] [class*="fltc-color-"]) .fltc-form-checklist-list > * {
+    border-color: rgb(var(--fltc-fx-text) / 0.2);
+}
+.fltc-form-checklist:is([data-skin="parchment"] [class*="fltc-color-"]) .fltc-form-checklist-row:hover {
+    background-color: rgb(var(--fltc-fx-accent) / 0.06);
+}
+.fltc-form-checklist:is([data-skin="parchment"] [class*="fltc-color-"]) .fltc-form-checklist-track,
+.fltc-progress:is([data-skin="parchment"] [class*="fltc-color-"]) .fltc-progress-track {
+    border: 1px solid rgb(var(--fltc-fx-text) / 0.2);
+    background: rgb(var(--fltc-fx-text) / 0.12);
+    box-shadow: inset 0 1px 3px rgb(var(--fltc-fx-text) / 0.3);
+}
+.fltc-form-checklist:is([data-skin="parchment"] [class*="fltc-color-"]) .fltc-form-checklist-fill,
+.fltc-progress:is([data-skin="parchment"] [class*="fltc-color-"]) :is(.fltc-progress-fill, .fltc-progress-segment) {
+    background-image: linear-gradient(rgb(255 255 255 / 0.3), rgb(255 255 255 / 0) 60%, rgb(0 0 0 / 0.1));
+}
+.fltc-progress:is([data-skin="parchment"] [class*="fltc-color-"]) :is(.fltc-progress-label, .fltc-progress-legend) {
+    font-style: italic;
+    letter-spacing: 0;
+}
+.fltc-form-upload:is([data-skin="parchment"] [class*="fltc-color-"]) .fltc-form-upload-zone {
+    border-color: rgb(var(--fltc-fx-text) / 0.4);
+    background: rgb(var(--fltc-fx-ink) / 0.4);
+}
+.fltc-form-upload:is([data-skin="parchment"] [class*="fltc-color-"]) .fltc-form-upload-zone:is(:hover, [data-dragging="true"]) {
+    border-color: rgb(var(--fltc-fx-accent));
+    background: rgb(var(--fltc-fx-accent) / 0.08);
+    color: rgb(var(--fltc-fx-accent));
+}
+.fltc-form-upload:is([data-skin="parchment"] [class*="fltc-color-"]) .fltc-form-upload-prompt {
+    font-style: italic;
+}
+
+/* ---- parchment badges and status ----
+   Small labels stay in lower case italics: small capitals at badge size would be too
+   small to read. */
+.fltc-badge:is([data-skin="parchment"] [class*="fltc-color-"]) {
+    border: 1px solid rgb(var(--fltc-fx-text) / 0.3);
+    border-radius: 0.25rem;
+    background-image: linear-gradient(rgb(255 255 255 / 0.15), transparent);
+    font-style: italic;
+    font-variant-caps: normal;
+    letter-spacing: 0.02em;
+    text-transform: none;
+}
+a.fltc-badge:is([data-skin="parchment"] [class*="fltc-color-"]):is(:hover, :focus-visible),
+label.fltc-badge:is([data-skin="parchment"] [class*="fltc-color-"]):hover {
+    border-color: rgb(var(--fltc-fx-accent));
+    color: rgb(var(--fltc-fx-accent));
+}
+label.fltc-badge:is([data-skin="parchment"] [class*="fltc-color-"]):has(:checked) {
+    border-color: rgb(var(--fltc-fx-accent));
+    background: rgb(var(--fltc-fx-accent));
+    color: rgb(var(--fltc-fx-ink));
+}
+.fltc-status > [data-status]:is([data-skin="parchment"] [class*="fltc-color-"]) {
+    font-style: italic;
+    letter-spacing: 0.02em;
+}
+
+/* ---- parchment navigation ----
+   Breadcrumbs are an italic trail with fleurons between the crumbs; the current one is
+   in small capitals. Tabs are bookmarks; navbar and sidebar are edged with a double rule. */
+.fltc-nav-breadcrumbs:is([data-skin="parchment"] [class*="fltc-color-"]) {
+    font-style: italic;
+    letter-spacing: 0;
+}
+.fltc-nav-breadcrumbs:is([data-skin="parchment"] [class*="fltc-color-"]) .fltc-nav-breadcrumbs-crumb {
+    border-radius: 0;
+    padding-inline: 0.25rem;
+    background: transparent;
+    color: rgb(var(--fltc-fx-text) / 0.75);
+}
+.fltc-nav-breadcrumbs:is([data-skin="parchment"] [class*="fltc-color-"]) a.fltc-nav-breadcrumbs-crumb:is(:hover, :focus-visible) {
+    background: transparent;
+    color: rgb(var(--fltc-fx-accent));
+    text-decoration: underline;
+    text-decoration-color: rgb(var(--fltc-fx-accent) / 0.5);
+    text-underline-offset: 3px;
+    box-shadow: none;
+    outline: none;
+}
+.fltc-nav-breadcrumbs:is([data-skin="parchment"] [class*="fltc-color-"]) .fltc-nav-breadcrumbs-crumb[aria-current="page"] {
+    font-style: normal;
+    font-weight: 600;
+    font-variant-caps: all-small-caps;
+    letter-spacing: 0.06em;
+    font-size: 1.1em;
+    color: rgb(var(--fltc-fx-accent));
+}
+.fltc-nav-breadcrumbs:is([data-skin="parchment"] [class*="fltc-color-"]) .fltc-nav-breadcrumbs-separator > * {
+    display: none;
+}
+.fltc-nav-breadcrumbs:is([data-skin="parchment"] [class*="fltc-color-"]) .fltc-nav-breadcrumbs-separator::before {
+    content: "\2767";
+    font-style: normal;
+    color: rgb(var(--fltc-fx-accent) / 0.7);
+}
+.fltc-tabs:is([data-skin="parchment"] [class*="fltc-color-"]) .fltc-tabs-list {
+    border-color: rgb(var(--fltc-fx-text) / 0.3);
+}
+.fltc-tabs-tab:is([data-skin="parchment"] [class*="fltc-color-"]) {
+    border-radius: var(--fltc-radius) var(--fltc-radius) 0 0;
+    font-family: var(--fltc-font-display);
+    font-size: 0.8rem;
+    letter-spacing: 0.06em;
+    color: rgb(var(--fltc-fx-text) / 0.7);
+}
+.fltc-tabs-tab:is([data-skin="parchment"] [class*="fltc-color-"]):is(:hover, :focus-visible) {
+    background: rgb(var(--fltc-fx-text) / 0.06);
+    color: rgb(var(--fltc-fx-text));
+}
+.fltc-tabs-tab:is([data-skin="parchment"] [class*="fltc-color-"])[aria-selected="true"] {
+    border-bottom: 3px double rgb(var(--fltc-fx-accent));
+    background: linear-gradient(to top, rgb(var(--fltc-fx-accent) / 0.1), transparent);
+    color: rgb(var(--fltc-fx-accent));
+}
+.fltc-nav-navbar:is([data-skin="parchment"] [class*="fltc-color-"]) {
+    border-bottom: 3px double rgb(var(--fltc-fx-text) / 0.35);
+    box-shadow: 0 6px 14px -12px rgb(var(--fltc-fx-text) / 0.6);
+}
+.fltc-nav-navbar:is([data-skin="parchment"] [class*="fltc-color-"]) :is(.fltc-nav-navbar-link, .fltc-nav-navbar-onclick, .fltc-nav-navbar-postlink, .fltc-nav-navbar-dropdown > button) {
+    font-family: var(--fltc-font-display);
+    font-size: 0.8rem;
+    letter-spacing: 0.06em;
+}
+.fltc-nav-navbar:is([data-skin="parchment"] [class*="fltc-color-"]) :is(.fltc-nav-navbar-link, .fltc-nav-navbar-onclick, .fltc-nav-navbar-postlink, .fltc-nav-navbar-dropdown > button):hover,
+.fltc-nav-navbar:is([data-skin="parchment"] [class*="fltc-color-"]) .fltc-nav-navbar-link[aria-current="page"] {
+    background: rgb(var(--fltc-fx-accent) / 0.08);
+    color: rgb(var(--fltc-fx-accent));
+    box-shadow: inset 0 -2px 0 rgb(var(--fltc-fx-accent));
+    text-decoration: none;
+}
+.fltc-nav-sidebar:is([data-skin="parchment"] [class*="fltc-color-"]) {
+    border-right: 3px double rgb(var(--fltc-fx-text) / 0.3);
+}
+.fltc-nav-sidebar:is([data-skin="parchment"] [class*="fltc-color-"]) .fltc-nav-sidebar-group > button {
+    font-family: var(--fltc-font-display);
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+}
+.fltc-nav-sidebar:is([data-skin="parchment"] [class*="fltc-color-"]) :is(.fltc-nav-sidebar-link, .fltc-nav-sidebar-postlink):hover {
+    background: rgb(var(--fltc-fx-text) / 0.06);
+    color: rgb(var(--fltc-fx-text));
+}
+.fltc-nav-sidebar:is([data-skin="parchment"] [class*="fltc-color-"]) .fltc-nav-sidebar-link[aria-current="page"] {
+    background: rgb(var(--fltc-fx-accent) / 0.1);
+    color: rgb(var(--fltc-fx-accent));
+    box-shadow: inset 3px 0 0 rgb(var(--fltc-fx-accent));
+}
+.fltc-nav-sidebar-profile:is([data-skin="parchment"] [class*="fltc-color-"]) .fltc-nav-sidebar-profile-avatar {
+    box-shadow: 0 0 0 2px rgb(var(--fltc-fx-ink)), 0 0 0 3px rgb(var(--fltc-fx-accent) / 0.7);
+}
+:is(.fltc-dropdown, .fltc-nav-navbar-dropdown):is([data-skin="parchment"] [class*="fltc-color-"]) :is(.fltc-dropdown-menu, .fltc-nav-navbar-dropdown-menu) {
+    background-color: rgb(var(--fltc-fx-ink));
+}
+.fltc-dropdown:is([data-skin="parchment"] [class*="fltc-color-"]) .fltc-dropdown-item:is(:hover, :focus-visible),
+.fltc-nav-navbar-dropdown:is([data-skin="parchment"] [class*="fltc-color-"]) .fltc-nav-navbar-dropdown-menu :is(a, button):is(:hover, :focus-visible) {
+    background: rgb(var(--fltc-fx-accent) / 0.1);
+    color: rgb(var(--fltc-fx-accent));
+}
+.fltc-segmented:is([data-skin="parchment"] [class*="fltc-color-"]) {
+    border-color: rgb(var(--fltc-fx-text) / 0.3);
+    background: rgb(var(--fltc-fx-text) / 0.08);
+    box-shadow: inset 0 1px 3px rgb(var(--fltc-fx-text) / 0.2);
+}
+.fltc-segmented:is([data-skin="parchment"] [class*="fltc-color-"]) .fltc-segmented-option {
+    font-variant-caps: all-small-caps;
+    letter-spacing: 0.06em;
+    font-size: 1rem;
+}
+.fltc-segmented:is([data-skin="parchment"] [class*="fltc-color-"]) .fltc-segmented-option[aria-pressed="true"] {
+    background: rgb(var(--fltc-fx-ink));
+    color: rgb(var(--fltc-fx-accent));
+    box-shadow: 0 1px 2px rgb(var(--fltc-fx-text) / 0.35);
+}
+.fltc-nav-stepper:is([data-skin="parchment"] [class*="fltc-color-"]) .fltc-nav-stepper-step {
+    font-size: 1rem;
+    font-variant-caps: all-small-caps;
+    letter-spacing: 0.06em;
+}
+.fltc-nav-stepper:is([data-skin="parchment"] [class*="fltc-color-"]) .fltc-nav-stepper-step[aria-current="step"] {
+    border-color: rgb(var(--fltc-fx-accent));
+    color: rgb(var(--fltc-fx-accent));
+}
+.fltc-drawer-tab:is([data-skin="parchment"] [class*="fltc-color-"]) {
+    border-color: rgb(var(--fltc-fx-text) / 0.35);
+    background-image: linear-gradient(rgb(255 255 255 / 0.15), transparent);
+    font-family: var(--fltc-font-display);
+    font-size: 0.75rem;
+}
+.fltc-drawer-tab:is([data-skin="parchment"] [class*="fltc-color-"])[aria-expanded="true"] {
+    background: rgb(var(--fltc-fx-accent));
+    color: rgb(var(--fltc-fx-ink));
+}
+
+/* ---- parchment tables ----
+   Ruled like a ledger: small-capital headings over a double rule. */
+.fltc-table-scroll:is([data-skin="parchment"] [class*="fltc-color-"]) .fltc-table-head {
+    font-family: var(--fltc-font-display);
+    letter-spacing: 0.06em;
+    color: rgb(var(--fltc-fx-accent));
+}
+.fltc-table-scroll:is([data-skin="parchment"] [class*="fltc-color-"]):not(.fltc-table-floating) .fltc-table-head .fltc-table-cell {
+    border-bottom: 3px double rgb(var(--fltc-fx-accent) / 0.5);
+}
+.fltc-table-scroll:is([data-skin="parchment"] [class*="fltc-color-"]):not(.fltc-table-floating) .fltc-table-cell {
+    border-color: rgb(var(--fltc-fx-text) / 0.2);
+}
+.fltc-table-scroll:is([data-skin="parchment"] [class*="fltc-color-"]) tbody .fltc-table-row:hover {
+    background-color: rgb(var(--fltc-fx-accent) / 0.06);
+}
+
+/* ---- parchment content ----
+   Toasts are letters, tooltips little notes; timeline dots are seals. */
+.fltc-toast:is([data-skin="parchment"] [class*="fltc-color-"]) {
+    background-color: rgb(var(--fltc-fx-ink));
+    color: rgb(var(--fltc-fx-text));
+}
+.fltc-toast:is([data-skin="parchment"] [class*="fltc-color-"]) .fltc-toast-title {
+    font-family: var(--fltc-font-display);
+    font-size: 0.85rem;
+    letter-spacing: 0.04em;
+    color: rgb(var(--fltc-fx-accent));
+}
+.fltc-toast:is([data-skin="parchment"] [class*="fltc-color-"]) .fltc-toast-message {
+    font-style: italic;
+    color: rgb(var(--fltc-fx-text) / 0.8);
+}
+.fltc-toast:is([data-skin="parchment"] [class*="fltc-color-"]) .fltc-toast-icon {
+    color: rgb(var(--fltc-fx-accent));
+}
+.fltc-tooltip-bubble:is([data-skin="parchment"] [class*="fltc-color-"]) {
+    border: 1px solid rgb(var(--fltc-fx-text) / 0.4);
+    background: rgb(var(--fltc-fx-ink));
+    color: rgb(var(--fltc-fx-text));
+    font-style: italic;
+    box-shadow: 0 4px 12px -4px rgb(var(--fltc-fx-text) / 0.45);
+}
+.fltc-timeline:is([data-skin="parchment"] [class*="fltc-color-"]) {
+    border-color: rgb(var(--fltc-fx-text) / 0.3);
+}
+.fltc-timeline-item:is([data-skin="parchment"] [class*="fltc-color-"]) .fltc-timeline-dot {
+    background: rgb(var(--fltc-fx-accent));
+    color: rgb(var(--fltc-fx-ink));
+    box-shadow: 0 0 0 2px rgb(var(--fltc-fx-ink)), 0 0 0 3px rgb(var(--fltc-fx-accent) / 0.6);
+}
+.fltc-timeline-item:is([data-skin="parchment"] [class*="fltc-color-"]) .fltc-timeline-time,
+.fltc-media-card:is([data-skin="parchment"] [class*="fltc-color-"]) .fltc-media-card-meta,
+.fltc-file-card:is([data-skin="parchment"] [class*="fltc-color-"]) .fltc-file-card-meta {
+    font-style: italic;
+    letter-spacing: 0;
+}
+.fltc-media-card:is([data-skin="parchment"] [class*="fltc-color-"]):hover .fltc-media-card-title {
+    color: rgb(var(--fltc-fx-accent));
+}
+.fltc-file-card:is([data-skin="parchment"] [class*="fltc-color-"]) .fltc-file-card-preview {
+    border-color: rgb(var(--fltc-fx-text) / 0.3);
+    background: rgb(var(--fltc-fx-text) / 0.06);
+}
+.fltc-action-bar:is([data-skin="parchment"] [class*="fltc-color-"]) {
+    box-shadow: inset 3px 0 0 rgb(var(--fltc-fx-accent)), 0 8px 20px -12px rgb(var(--fltc-fx-text) / 0.5);
+}
+.fltc-action-bar:is([data-skin="parchment"] [class*="fltc-color-"]) .fltc-action-bar-title {
+    color: rgb(var(--fltc-fx-accent));
+}
+.fltc-empty:is([data-skin="parchment"] [class*="fltc-color-"]) {
+    border-color: rgb(var(--fltc-fx-text) / 0.35);
+}
+.fltc-empty:is([data-skin="parchment"] [class*="fltc-color-"]) .fltc-empty-icon {
+    color: rgb(var(--fltc-fx-accent) / 0.6);
+}
+.fltc-empty:is([data-skin="parchment"] [class*="fltc-color-"]) .fltc-empty-title {
+    color: rgb(var(--fltc-fx-accent));
+}
+.fltc-cover:is([data-skin="parchment"] [class*="fltc-color-"]) .fltc-cover-fallback {
+    border-color: rgb(var(--fltc-fx-text) / 0.3);
+    background: radial-gradient(ellipse at 50% 40%, rgb(var(--fltc-fx-ink)), rgb(var(--fltc-fx-text) / 0.12));
+    color: rgb(var(--fltc-fx-accent));
+    font-family: var(--fltc-font-display);
+}
+span.fltc-spoiler:is([data-skin="parchment"] [class*="fltc-color-"])[data-revealed="false"] {
+    background: rgb(var(--fltc-fx-text) / 0.8);
+}
+span.fltc-spoiler:is([data-skin="parchment"] [class*="fltc-color-"])[data-revealed="true"] {
+    background: rgb(var(--fltc-fx-accent) / 0.12);
+    box-shadow: inset 0 -1px 0 rgb(var(--fltc-fx-accent) / 0.5);
+}
+div.fltc-spoiler:is([data-skin="parchment"] [class*="fltc-color-"]) .fltc-spoiler-overlay {
+    background: radial-gradient(ellipse at center, rgb(var(--fltc-fx-ink) / 0.75), rgb(var(--fltc-fx-ink) / 0.95));
+}
+.fltc-infocard:is([data-skin="parchment"] [class*="fltc-color-"]) .fltc-infocard-trigger {
+    text-decoration-color: rgb(var(--fltc-fx-accent));
+}
+.fltc-infocard:is([data-skin="parchment"] [class*="fltc-color-"]) .fltc-infocard-trigger:is(:hover, :focus-visible, [aria-expanded="true"]) {
+    color: rgb(var(--fltc-fx-accent));
+}
+.fltc-messagebox:is([data-skin="parchment"] [class*="fltc-color-"]) .fltc-messagebox-details summary {
+    font-variant-caps: all-small-caps;
+    letter-spacing: 0.06em;
+}
+:is(.fltc-rating, .fltc-form-rating):is([data-skin="parchment"] [class*="fltc-color-"]) :is(.fltc-rating-fill, .fltc-form-rating-fill) {
+    filter: drop-shadow(0 1px 0 rgb(0 0 0 / 0.2));
+}
+.fltc-form-rating:is([data-skin="parchment"] [class*="fltc-color-"]) .fltc-form-rating-star:focus-visible {
+    outline: 2px solid rgb(var(--fltc-fx-accent));
+    outline-offset: 1px;
+}
+
+/* ============ GOTHIC ============ */
+/* Iron and stone: square plates with a heavy frame (the border plus an inner line in
+   the accent), a solid bar along the top of panels and rivets in their corners,
+   bevelled metal buttons, recessed fields, blackletter headings with an illuminated
+   first letter, and inscription capitals (Cinzel) for labels. Nothing glows. */
+
+[data-skin="gothic"] {
+    --fltc-fx-danger: var(--fltc-danger-600);
+}
+:is(.dark[data-skin="gothic"], .dark [data-skin="gothic"]) {
+    --fltc-fx-danger: var(--fltc-danger-400);
+}
+
+/* Page: a faint stone hatching behind the content, and darkened edges. */
+[data-skin="gothic"] body::after,
+body[data-skin="gothic"]::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image:
+        repeating-linear-gradient(45deg, rgb(var(--fltc-fx-text) / 0.03) 0 1px, transparent 1px 7px),
+        repeating-linear-gradient(-45deg, rgb(var(--fltc-fx-text) / 0.03) 0 1px, transparent 1px 7px);
+}
+[data-skin="gothic"] body::before,
+body[data-skin="gothic"]::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    pointer-events: none;
+    box-shadow: inset 0 0 140px rgb(0 0 0 / 0.18);
+}
+.dark[data-skin="gothic"] body::before,
+.dark body[data-skin="gothic"]::before {
+    box-shadow: inset 0 0 160px rgb(0 0 0 / 0.6);
+}
+
+/* ---- gothic type ----
+   Headings in the text colour with an illuminated first letter in the accent. */
+[data-skin="gothic"] .fltc-heading {
+    color: rgb(var(--fltc-fx-text));
+    letter-spacing: 0.02em;
+}
+[data-skin="gothic"] .fltc-heading:not(.fltc-glitch)::first-letter {
+    color: rgb(var(--fltc-fx-accent));
+    font-size: 1.3em;
+}
+[data-skin="gothic"] .fltc-subheading {
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+[data-skin="gothic"] .fltc-separator[aria-orientation="horizontal"] {
+    border-top: 3px double rgb(var(--fltc-fx-text) / 0.45);
+}
+[data-skin="gothic"] .fltc-separator[aria-orientation="vertical"] {
+    border-left: 3px double rgb(var(--fltc-fx-text) / 0.45);
+}
+
+/* ---- gothic panels ----
+   A heavy frame: the border, a dark line and an accent line inside it, a hard ledge
+   below and a deep shadow. */
+:is(.fltc-card, .fltc-container-box, .fltc-counter, .fltc-alert, .fltc-messagebox, .fltc-toast, .fltc-accordion, .fltc-media-card, .fltc-file-card, .fltc-action-bar, .fltc-table-scroll, .fltc-drawer):is([data-skin="gothic"] [class*="fltc-color-"]),
+.fltc-form-checklist:is([data-skin="gothic"] [class*="fltc-color-"]) .fltc-form-checklist-list,
+.fltc-nav-stepper:is([data-skin="gothic"] [class*="fltc-color-"]) .fltc-nav-stepper-panel,
+.fltc-infocard:is([data-skin="gothic"] [class*="fltc-color-"]) :is(.fltc-infocard-preview, .fltc-infocard-card),
+:is(.fltc-dropdown, .fltc-nav-navbar-dropdown):is([data-skin="gothic"] [class*="fltc-color-"]) :is(.fltc-dropdown-menu, .fltc-nav-navbar-dropdown-menu),
+.fltc-nav-sidebar-profile:is([data-skin="gothic"] [class*="fltc-color-"]) .fltc-nav-sidebar-profile-menu,
+[data-skin="gothic"] .fltc-modal-panel {
+    border-color: rgb(var(--fltc-fx-text) / 0.55);
+    box-shadow:
+        inset 0 0 0 1px rgb(var(--fltc-fx-ink) / 0.5),
+        inset 0 0 0 2px rgb(var(--fltc-fx-accent) / 0.3),
+        0 2px 0 rgb(0 0 0 / 0.25),
+        0 10px 24px -12px rgb(0 0 0 / 0.55);
+}
+/* A solid bar along the top instead of the neon strip. */
+:is(.fltc-card, .fltc-container-box, .fltc-counter):is([data-skin="gothic"] [class*="fltc-color-"])::before,
+[data-skin="gothic"] .fltc-modal-panel::before {
+    height: 3px;
+    background: rgb(var(--fltc-fx-accent));
+    filter: none;
+    opacity: 1;
+}
+/* Rivets in the four corners. */
+:is(.fltc-card, .fltc-container-box, .fltc-counter):is([data-skin="gothic"] [class*="fltc-color-"])::after,
+[data-skin="gothic"] .fltc-modal-panel::after {
+    content: "";
+    position: absolute;
+    inset: 8px 6px 6px;
+    pointer-events: none;
+    background:
+        radial-gradient(circle, rgb(var(--fltc-fx-text) / 0.5) 0 1.5px, transparent 2px) top left / 6px 6px no-repeat,
+        radial-gradient(circle, rgb(var(--fltc-fx-text) / 0.5) 0 1.5px, transparent 2px) top right / 6px 6px no-repeat,
+        radial-gradient(circle, rgb(var(--fltc-fx-text) / 0.5) 0 1.5px, transparent 2px) bottom left / 6px 6px no-repeat,
+        radial-gradient(circle, rgb(var(--fltc-fx-text) / 0.5) 0 1.5px, transparent 2px) bottom right / 6px 6px no-repeat;
+}
+.fltc-card:is([data-skin="gothic"] [class*="fltc-color-"]) .fltc-card-header {
+    border-bottom: 1px solid rgb(var(--fltc-fx-text) / 0.4);
+    background-image: linear-gradient(rgb(var(--fltc-fx-text) / 0.08), transparent);
+}
+.fltc-card:is([data-skin="gothic"] [class*="fltc-color-"]) .fltc-card-footer {
+    border-top: 1px solid rgb(var(--fltc-fx-text) / 0.4);
+}
+.fltc-alert:is([data-skin="gothic"] [class*="fltc-color-"]), .fltc-messagebox:is([data-skin="gothic"] [class*="fltc-color-"]) {
+    border-left: 4px solid rgb(var(--fltc-fx-accent));
+}
+.fltc-messagebox:is([data-skin="gothic"] [class*="fltc-color-"]) .fltc-messagebox-title {
+    font-family: var(--fltc-font-term);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+/* ---- gothic buttons ----
+   Bevelled metal: a highlight along the top, a dark lip along the bottom and a ledge
+   below; pressing sinks the plate. Labels are inscription capitals. */
+:is(.fltc-button, .fltc-button-link):where(.fltc-button-solid, .fltc-button-outline, .fltc-button-ghost):is([data-skin="gothic"] [class*="fltc-color-"]) {
+    font-family: var(--fltc-font-term);
+    font-size: 0.8rem;
+    font-weight: 700;
+    transition: filter 0.15s, transform 0.1s, box-shadow 0.1s, background-color 0.15s, color 0.15s;
+}
+:is(.fltc-button, .fltc-button-link).fltc-button-solid:is([data-skin="gothic"] [class*="fltc-color-"]) {
+    border: 1px solid rgb(0 0 0 / 0.35);
+    background-image: linear-gradient(to bottom, rgb(255 255 255 / 0.16), rgb(255 255 255 / 0) 45%, rgb(0 0 0 / 0.18));
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.25), inset 0 -2px 0 rgb(0 0 0 / 0.25), 0 2px 0 rgb(0 0 0 / 0.3);
+    text-shadow: 0 1px 0 rgb(0 0 0 / 0.35);
+}
+:is(.fltc-button, .fltc-button-link).fltc-button-outline:is([data-skin="gothic"] [class*="fltc-color-"]) {
+    box-shadow: inset 0 0 0 1px rgb(var(--fltc-fx-accent) / 0.35), 0 2px 0 rgb(0 0 0 / 0.2);
+}
+:is(.fltc-button, .fltc-button-link):is(.fltc-button-solid, .fltc-button-outline):is([data-skin="gothic"] [class*="fltc-color-"]):hover {
+    filter: brightness(1.08);
+}
+:is(.fltc-button, .fltc-button-link).fltc-button-solid:is([data-skin="gothic"] [class*="fltc-color-"]):hover {
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.25), inset 0 -2px 0 rgb(0 0 0 / 0.25), 0 2px 0 rgb(0 0 0 / 0.3);
+}
+:is(.fltc-button, .fltc-button-link):is(.fltc-button-solid, .fltc-button-outline):is([data-skin="gothic"] [class*="fltc-color-"]):active {
+    transform: translateY(1px);
+    box-shadow: inset 0 2px 3px rgb(0 0 0 / 0.35);
+}
+:is(.fltc-button, .fltc-button-link):is([data-skin="gothic"] [class*="fltc-color-"]):focus-visible {
+    outline: 2px solid rgb(var(--fltc-fx-accent));
+    outline-offset: 2px;
+}
+:is(.fltc-button, .fltc-button-link).fltc-button-ghost:is([data-skin="gothic"] [class*="fltc-color-"]):hover {
+    background: rgb(var(--fltc-fx-text) / 0.1);
+    color: rgb(var(--fltc-fx-accent));
+}
+:is(.fltc-button, .fltc-button-link).fltc-button-textlink:is([data-skin="gothic"] [class*="fltc-color-"]) {
+    text-decoration-thickness: 2px;
+    text-decoration-color: rgb(var(--fltc-fx-accent) / 0.6);
+    text-underline-offset: 3px;
+}
+:is(.fltc-button, .fltc-button-link):is([data-skin="gothic"] [class*="fltc-color-"])[aria-current="page"] {
+    outline: 2px solid rgb(var(--fltc-fx-accent));
+    outline-offset: 1px;
+}
+.fltc-nav-pagination:is([data-skin="gothic"] [class*="fltc-color-"]) .fltc-nav-pagination-summary {
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+.fltc-nav-pagination:is([data-skin="gothic"] [class*="fltc-color-"]) .fltc-nav-pagination-summary .font-medium {
+    color: rgb(var(--fltc-fx-accent));
+}
+
+/* ---- gothic fields ----
+   Recessed into the stone: an inner shadow, a square frame that the accent rims on
+   focus. */
+:is(.fltc-form-input-text, .fltc-form-input-email, .fltc-form-input-password, .fltc-form-input-number, .fltc-form-input-date, .fltc-form-input-time, .fltc-form-input-datetime, .fltc-form-input-file, .fltc-form-input-select, .fltc-form-textarea):is([data-skin="gothic"] [class*="fltc-color-"]),
+.fltc-form-otp:is([data-skin="gothic"] [class*="fltc-color-"]) .fltc-form-otp-box {
+    border-color: rgb(var(--fltc-fx-text) / 0.5);
+    border-radius: 0;
+    background-color: rgb(var(--fltc-fx-ink) / 0.6);
+    color: rgb(var(--fltc-fx-text));
+    box-shadow: inset 0 2px 4px rgb(0 0 0 / 0.25);
+}
+:is(.fltc-form-input-text, .fltc-form-input-email, .fltc-form-input-password, .fltc-form-input-number, .fltc-form-input-date, .fltc-form-input-time, .fltc-form-input-datetime, .fltc-form-input-file, .fltc-form-input-select, .fltc-form-textarea):is([data-skin="gothic"] [class*="fltc-color-"]):focus,
+.fltc-form-otp:is([data-skin="gothic"] [class*="fltc-color-"]) .fltc-form-otp-box:focus {
+    border-color: rgb(var(--fltc-fx-accent));
+    box-shadow: inset 0 2px 4px rgb(0 0 0 / 0.25), 0 0 0 1px rgb(var(--fltc-fx-accent));
+    outline: none;
+}
+:is(.fltc-form-input-text, .fltc-form-input-email, .fltc-form-input-password, .fltc-form-input-number, .fltc-form-input-date, .fltc-form-input-time, .fltc-form-input-datetime, .fltc-form-input-file, .fltc-form-input-select, .fltc-form-textarea):is([data-skin="gothic"] [class*="fltc-color-"])::placeholder {
+    color: rgb(var(--fltc-fx-text) / 0.45);
+}
+:is(.fltc-form-input-text, .fltc-form-input-email, .fltc-form-input-password, .fltc-form-input-number, .fltc-form-input-date, .fltc-form-input-time, .fltc-form-input-datetime, .fltc-form-input-file, .fltc-form-input-select, .fltc-form-textarea):is([data-skin="gothic"] [class*="fltc-color-"])[aria-invalid="true"] {
+    border-color: rgb(var(--fltc-fx-danger));
+    box-shadow: inset 0 2px 4px rgb(0 0 0 / 0.25), 0 0 0 1px rgb(var(--fltc-fx-danger));
+}
+.fltc-form-input-file:is([data-skin="gothic"] [class*="fltc-color-"])::file-selector-button {
+    border: 0;
+    border-right: 1px solid rgb(var(--fltc-fx-text) / 0.5);
+    border-radius: 0;
+    background: rgb(var(--fltc-fx-text) / 0.12);
+    color: rgb(var(--fltc-fx-text));
+    font-family: var(--fltc-font-term);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+.fltc-form-label:is([data-skin="gothic"] [class*="fltc-color-"]),
+.fltc-form-radio-group:is([data-skin="gothic"] [class*="fltc-color-"]) .fltc-form-radio-group-legend {
+    font-family: var(--fltc-font-term);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgb(var(--fltc-fx-text) / 0.85);
+}
+.fltc-form-field:is([data-skin="gothic"] [class*="fltc-color-"]) .fltc-form-field-note {
+    font-family: var(--fltc-font-body);
+    letter-spacing: 0;
+}
+.fltc-form-field:is([data-skin="gothic"] [class*="fltc-color-"]) .fltc-form-field-error {
+    font-family: var(--fltc-font-term);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgb(var(--fltc-fx-danger));
+}
+.fltc-form-section:is([data-skin="gothic"] [class*="fltc-color-"]) {
+    border-color: rgb(var(--fltc-fx-text) / 0.4);
+}
+.fltc-form-section:is([data-skin="gothic"] [class*="fltc-color-"]) .fltc-form-section-title {
+    color: rgb(var(--fltc-fx-accent));
+}
+
+/* Checkboxes, toggles and radios: square iron, the groove filling with the accent. */
+.fltc-form-checkbox:is([data-skin="gothic"] [class*="fltc-color-"]) ~ .fltc-form-checkbox-track {
+    border: 1px solid rgb(var(--fltc-fx-text) / 0.55);
+    border-radius: 0;
+    background: rgb(var(--fltc-fx-ink) / 0.6);
+    box-shadow: inset 0 2px 3px rgb(0 0 0 / 0.3);
+}
+.fltc-form-checkbox:is([data-skin="gothic"] [class*="fltc-color-"]):checked ~ .fltc-form-checkbox-track {
+    border-color: rgb(0 0 0 / 0.4);
+    background: rgb(var(--fltc-fx-accent));
+}
+.fltc-form-checkbox:is([data-skin="gothic"] [class*="fltc-color-"]) ~ .fltc-form-checkbox-track .fltc-form-checkbox-knob {
+    top: 1px;
+    left: 1px;
+    border-radius: 0;
+    background: linear-gradient(to bottom, rgb(var(--fltc-fx-text)), rgb(var(--fltc-fx-text) / 0.75));
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.3), 0 1px 0 rgb(0 0 0 / 0.4);
+}
+.fltc-form-checkbox:is([data-skin="gothic"] [class*="fltc-color-"]):checked ~ .fltc-form-checkbox-track .fltc-form-checkbox-knob {
+    background: linear-gradient(to bottom, rgb(var(--fltc-fx-ink)), rgb(var(--fltc-fx-ink) / 0.85));
+}
+.fltc-form-checkbox:is([data-skin="gothic"] [class*="fltc-color-"]):checked ~ .fltc-icon {
+    color: rgb(var(--fltc-fx-accent));
+}
+.fltc-form-checkbox:is([data-skin="gothic"] [class*="fltc-color-"]):focus-visible ~ :is(.fltc-form-checkbox-track, .fltc-icon) {
+    outline: 2px solid rgb(var(--fltc-fx-accent));
+    outline-offset: 2px;
+}
+.fltc-form-checkbox:is([data-skin="gothic"] [class*="fltc-color-"]) ~ .ph-circle::before,
+.fltc-form-checklist:is([data-skin="gothic"] [class*="fltc-color-"]) .ph-circle::before {
+    content: "\e45e"; /* ph-square */
+}
+.fltc-form-checkbox:is([data-skin="gothic"] [class*="fltc-color-"]) ~ .ph-check-circle::before,
+.fltc-form-checklist:is([data-skin="gothic"] [class*="fltc-color-"]) .ph-check-circle::before {
+    content: "\e186"; /* ph-check-square */
+}
+.fltc-form-radio:is([data-skin="gothic"] [class*="fltc-color-"]) {
+    appearance: none;
+    width: 0.9rem;
+    height: 0.9rem;
+    border: 1px solid rgb(var(--fltc-fx-text) / 0.6);
+    border-radius: 0;
+    background: rgb(var(--fltc-fx-ink) / 0.6);
+    box-shadow: inset 0 1px 2px rgb(0 0 0 / 0.3);
+}
+.fltc-form-radio:is([data-skin="gothic"] [class*="fltc-color-"]):checked {
+    border-color: rgb(var(--fltc-fx-accent));
+    background: rgb(var(--fltc-fx-accent));
+    box-shadow: inset 0 0 0 2px rgb(var(--fltc-fx-ink));
+}
+.fltc-form-radio:is([data-skin="gothic"] [class*="fltc-color-"]):focus-visible {
+    outline: 2px solid rgb(var(--fltc-fx-accent));
+    outline-offset: 2px;
+}
+.fltc-form-radio:is([data-skin="gothic"] [class*="fltc-color-"]):checked ~ .fltc-form-radio-label {
+    color: rgb(var(--fltc-fx-accent));
+}
+.fltc-form-checkbox-control.border:has(> .fltc-form-checkbox:is([data-skin="gothic"] [class*="fltc-color-"])) {
+    border-radius: 0;
+    border-color: rgb(var(--fltc-fx-text) / 0.45);
+}
+.fltc-form-checklist:is([data-skin="gothic"] [class*="fltc-color-"]) .fltc-form-checklist-list > * {
+    border-color: rgb(var(--fltc-fx-text) / 0.25);
+}
+.fltc-form-checklist:is([data-skin="gothic"] [class*="fltc-color-"]) .fltc-form-checklist-row:hover {
+    background-color: rgb(var(--fltc-fx-text) / 0.06);
+    box-shadow: inset 3px 0 0 rgb(var(--fltc-fx-accent));
+}
+.fltc-form-checklist:is([data-skin="gothic"] [class*="fltc-color-"]) .fltc-form-checklist-track,
+.fltc-progress:is([data-skin="gothic"] [class*="fltc-color-"]) .fltc-progress-track {
+    border: 1px solid rgb(var(--fltc-fx-text) / 0.45);
+    border-radius: 0;
+    background: rgb(var(--fltc-fx-ink) / 0.6);
+    box-shadow: inset 0 2px 3px rgb(0 0 0 / 0.3);
+}
+/* Fills are plates riveted together: a bevel and a seam every 20px. */
+.fltc-form-checklist:is([data-skin="gothic"] [class*="fltc-color-"]) .fltc-form-checklist-fill,
+.fltc-progress:is([data-skin="gothic"] [class*="fltc-color-"]) :is(.fltc-progress-fill, .fltc-progress-segment) {
+    border-radius: 0;
+    background-image:
+        repeating-linear-gradient(90deg, transparent 0 18px, rgb(0 0 0 / 0.25) 18px 20px),
+        linear-gradient(rgb(255 255 255 / 0.2), rgb(0 0 0 / 0.15));
+}
+.fltc-progress:is([data-skin="gothic"] [class*="fltc-color-"]) :is(.fltc-progress-label, .fltc-progress-legend) {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+.fltc-form-upload:is([data-skin="gothic"] [class*="fltc-color-"]) .fltc-form-upload-zone {
+    border-color: rgb(var(--fltc-fx-text) / 0.5);
+    background: rgb(var(--fltc-fx-ink) / 0.5);
+    box-shadow: inset 0 2px 6px rgb(0 0 0 / 0.2);
+}
+.fltc-form-upload:is([data-skin="gothic"] [class*="fltc-color-"]) .fltc-form-upload-zone:is(:hover, [data-dragging="true"]) {
+    border-color: rgb(var(--fltc-fx-accent));
+    background: rgb(var(--fltc-fx-accent) / 0.08);
+    color: rgb(var(--fltc-fx-accent));
+}
+.fltc-form-upload:is([data-skin="gothic"] [class*="fltc-color-"]) .fltc-form-upload-prompt {
+    font-family: var(--fltc-font-term);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+/* ---- gothic badges and status ---- */
+.fltc-badge:is([data-skin="gothic"] [class*="fltc-color-"]) {
+    border: 1px solid rgb(var(--fltc-fx-text) / 0.45);
+    border-radius: 0;
+    background-image: linear-gradient(rgb(255 255 255 / 0.1), rgb(0 0 0 / 0.08));
+    font-size: 0.68rem;
+    font-weight: 700;
+}
+a.fltc-badge:is([data-skin="gothic"] [class*="fltc-color-"]):is(:hover, :focus-visible),
+label.fltc-badge:is([data-skin="gothic"] [class*="fltc-color-"]):hover {
+    border-color: rgb(var(--fltc-fx-accent));
+    color: rgb(var(--fltc-fx-accent));
+}
+label.fltc-badge:is([data-skin="gothic"] [class*="fltc-color-"]):has(:checked) {
+    border-color: rgb(0 0 0 / 0.4);
+    background: rgb(var(--fltc-fx-accent));
+    color: rgb(var(--fltc-fx-ink));
+}
+.fltc-badge:is([data-skin="gothic"] [class*="fltc-color-"]) :is(.fltc-badge-count, .fltc-badge-remove) {
+    border-radius: 0;
+}
+.fltc-status > [data-status]:is([data-skin="gothic"] [class*="fltc-color-"]) {
+    border-radius: 0;
+    font-family: var(--fltc-font-term);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+/* ---- gothic navigation ----
+   Breadcrumbs in inscription capitals with lozenges between them, the current crumb a
+   plate in the accent. Tabs, navbar and sidebar carry an accent bar on the edge. */
+.fltc-nav-breadcrumbs:is([data-skin="gothic"] [class*="fltc-color-"]) {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+}
+.fltc-nav-breadcrumbs:is([data-skin="gothic"] [class*="fltc-color-"]) .fltc-nav-breadcrumbs-crumb {
+    border-radius: 0;
+    background: transparent;
+    color: rgb(var(--fltc-fx-text) / 0.75);
+}
+.fltc-nav-breadcrumbs:is([data-skin="gothic"] [class*="fltc-color-"]) a.fltc-nav-breadcrumbs-crumb:is(:hover, :focus-visible) {
+    background: rgb(var(--fltc-fx-accent) / 0.08);
+    color: rgb(var(--fltc-fx-accent));
+    box-shadow: inset 0 -2px 0 rgb(var(--fltc-fx-accent));
+    outline: none;
+}
+.fltc-nav-breadcrumbs:is([data-skin="gothic"] [class*="fltc-color-"]) .fltc-nav-breadcrumbs-crumb[aria-current="page"] {
+    background: rgb(var(--fltc-fx-accent));
+    color: rgb(var(--fltc-fx-ink));
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.2), 0 1px 0 rgb(0 0 0 / 0.3);
+}
+.fltc-nav-breadcrumbs:is([data-skin="gothic"] [class*="fltc-color-"]) .fltc-nav-breadcrumbs-separator > * {
+    display: none;
+}
+.fltc-nav-breadcrumbs:is([data-skin="gothic"] [class*="fltc-color-"]) .fltc-nav-breadcrumbs-separator::before {
+    content: "\25C6";
+    font-size: 0.55rem;
+    color: rgb(var(--fltc-fx-accent) / 0.8);
+}
+.fltc-tabs:is([data-skin="gothic"] [class*="fltc-color-"]) .fltc-tabs-list {
+    border-color: rgb(var(--fltc-fx-text) / 0.45);
+}
+.fltc-tabs-tab:is([data-skin="gothic"] [class*="fltc-color-"]) {
+    border-radius: 0;
+    font-family: var(--fltc-font-term);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgb(var(--fltc-fx-text) / 0.7);
+}
+.fltc-tabs-tab:is([data-skin="gothic"] [class*="fltc-color-"]):is(:hover, :focus-visible) {
+    background: rgb(var(--fltc-fx-text) / 0.08);
+    color: rgb(var(--fltc-fx-text));
+}
+.fltc-tabs-tab:is([data-skin="gothic"] [class*="fltc-color-"])[aria-selected="true"] {
+    border-bottom-color: rgb(var(--fltc-fx-accent));
+    background: rgb(var(--fltc-fx-accent));
+    color: rgb(var(--fltc-fx-ink));
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.2);
+}
+.fltc-nav-navbar:is([data-skin="gothic"] [class*="fltc-color-"]) {
+    border-radius: 0;
+    box-shadow: inset 0 -3px 0 rgb(var(--fltc-fx-accent)), 0 4px 12px -6px rgb(0 0 0 / 0.5);
+}
+.fltc-nav-navbar:is([data-skin="gothic"] [class*="fltc-color-"]) :is(.fltc-nav-navbar-link, .fltc-nav-navbar-onclick, .fltc-nav-navbar-postlink, .fltc-nav-navbar-dropdown > button) {
+    border-radius: 0;
+    font-family: var(--fltc-font-term);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+.fltc-nav-navbar:is([data-skin="gothic"] [class*="fltc-color-"]) :is(.fltc-nav-navbar-link, .fltc-nav-navbar-onclick, .fltc-nav-navbar-postlink, .fltc-nav-navbar-dropdown > button):hover,
+.fltc-nav-navbar:is([data-skin="gothic"] [class*="fltc-color-"]) .fltc-nav-navbar-link[aria-current="page"] {
+    background: rgb(var(--fltc-fx-accent) / 0.1);
+    color: rgb(var(--fltc-fx-accent));
+    box-shadow: inset 0 -3px 0 rgb(var(--fltc-fx-accent));
+    text-decoration: none;
+}
+.fltc-nav-sidebar:is([data-skin="gothic"] [class*="fltc-color-"]) {
+    border-radius: 0;
+    box-shadow: inset -3px 0 0 rgb(var(--fltc-fx-accent));
+}
+.fltc-nav-sidebar:is([data-skin="gothic"] [class*="fltc-color-"]) :is(.fltc-nav-sidebar-link, .fltc-nav-sidebar-postlink, .fltc-nav-sidebar-group > button) {
+    border-radius: 0;
+}
+.fltc-nav-sidebar:is([data-skin="gothic"] [class*="fltc-color-"]) .fltc-nav-sidebar-group > button {
+    font-family: var(--fltc-font-term);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+.fltc-nav-sidebar:is([data-skin="gothic"] [class*="fltc-color-"]) :is(.fltc-nav-sidebar-link, .fltc-nav-sidebar-postlink):hover {
+    background: rgb(var(--fltc-fx-text) / 0.08);
+    color: rgb(var(--fltc-fx-text));
+}
+.fltc-nav-sidebar:is([data-skin="gothic"] [class*="fltc-color-"]) .fltc-nav-sidebar-link[aria-current="page"] {
+    background: rgb(var(--fltc-fx-accent) / 0.12);
+    color: rgb(var(--fltc-fx-accent));
+    box-shadow: inset 3px 0 0 rgb(var(--fltc-fx-accent));
+}
+.fltc-nav-sidebar-profile:is([data-skin="gothic"] [class*="fltc-color-"]) :is(.fltc-nav-sidebar-profile-trigger, .fltc-nav-sidebar-profile-menu) {
+    border-radius: 0;
+}
+.fltc-nav-sidebar-profile:is([data-skin="gothic"] [class*="fltc-color-"]) .fltc-nav-sidebar-profile-avatar {
+    border-radius: 0;
+    box-shadow: 0 0 0 1px rgb(var(--fltc-fx-ink)), 0 0 0 2px rgb(var(--fltc-fx-accent));
+}
+:is(.fltc-dropdown, .fltc-nav-navbar-dropdown):is([data-skin="gothic"] [class*="fltc-color-"]) :is(.fltc-dropdown-menu, .fltc-nav-navbar-dropdown-menu) {
+    background-color: rgb(var(--fltc-fx-ink));
+}
+.fltc-dropdown:is([data-skin="gothic"] [class*="fltc-color-"]) .fltc-dropdown-item,
+.fltc-nav-navbar-dropdown:is([data-skin="gothic"] [class*="fltc-color-"]) .fltc-nav-navbar-dropdown-menu :is(a, button) {
+    border-radius: 0;
+}
+.fltc-dropdown:is([data-skin="gothic"] [class*="fltc-color-"]) .fltc-dropdown-item:is(:hover, :focus-visible),
+.fltc-nav-navbar-dropdown:is([data-skin="gothic"] [class*="fltc-color-"]) .fltc-nav-navbar-dropdown-menu :is(a, button):is(:hover, :focus-visible) {
+    background: rgb(var(--fltc-fx-accent));
+    color: rgb(var(--fltc-fx-ink));
+}
+.fltc-dropdown:is([data-skin="gothic"] [class*="fltc-color-"]) .fltc-dropdown-menu .fltc-separator {
+    border-top-width: 1px;
+    border-top-style: solid;
+}
+.fltc-segmented:is([data-skin="gothic"] [class*="fltc-color-"]) {
+    border-color: rgb(var(--fltc-fx-text) / 0.5);
+    background: rgb(var(--fltc-fx-ink) / 0.6);
+    box-shadow: inset 0 2px 3px rgb(0 0 0 / 0.3);
+}
+.fltc-segmented:is([data-skin="gothic"] [class*="fltc-color-"]) .fltc-segmented-option {
+    border-radius: 0;
+    font-family: var(--fltc-font-term);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+.fltc-segmented:is([data-skin="gothic"] [class*="fltc-color-"]) .fltc-segmented-option[aria-pressed="true"] {
+    background: rgb(var(--fltc-fx-accent));
+    color: rgb(var(--fltc-fx-ink));
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.2), 0 1px 0 rgb(0 0 0 / 0.3);
+}
+.fltc-nav-stepper:is([data-skin="gothic"] [class*="fltc-color-"]) .fltc-nav-stepper-step {
+    border-radius: 0;
+    font-family: var(--fltc-font-term);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+.fltc-nav-stepper:is([data-skin="gothic"] [class*="fltc-color-"]) .fltc-nav-stepper-step[aria-current="step"] {
+    border-color: rgb(var(--fltc-fx-accent));
+    color: rgb(var(--fltc-fx-accent));
+}
+.fltc-drawer-tab:is([data-skin="gothic"] [class*="fltc-color-"]) {
+    border-color: rgb(0 0 0 / 0.35);
+    background-image: linear-gradient(rgb(255 255 255 / 0.12), rgb(0 0 0 / 0.12));
+    font-family: var(--fltc-font-term);
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+.fltc-drawer-tab:is([data-skin="gothic"] [class*="fltc-color-"])[aria-expanded="true"] {
+    background: rgb(var(--fltc-fx-accent));
+    color: rgb(var(--fltc-fx-ink));
+}
+
+/* ---- gothic tables ----
+   An engraved head row over an accent rule; hovered rows get a bar on the leading edge. */
+.fltc-table-scroll:is([data-skin="gothic"] [class*="fltc-color-"]) .fltc-table-head {
+    font-family: var(--fltc-font-term);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgb(var(--fltc-fx-accent));
+}
+.fltc-table-scroll:is([data-skin="gothic"] [class*="fltc-color-"]):not(.fltc-table-floating) .fltc-table-head .fltc-table-cell {
+    border-bottom: 2px solid rgb(var(--fltc-fx-accent));
+    background-image: linear-gradient(rgb(var(--fltc-fx-text) / 0.1), rgb(var(--fltc-fx-text) / 0.04));
+}
+.fltc-table-scroll:is([data-skin="gothic"] [class*="fltc-color-"]):not(.fltc-table-floating) .fltc-table-cell {
+    border-color: rgb(var(--fltc-fx-text) / 0.25);
+}
+.fltc-table-scroll:is([data-skin="gothic"] [class*="fltc-color-"]) tbody .fltc-table-row:hover > :first-child {
+    box-shadow: inset 3px 0 0 rgb(var(--fltc-fx-accent));
+}
+.fltc-table-scroll.fltc-table-floating:is([data-skin="gothic"] [class*="fltc-color-"]) .fltc-table-row > * {
+    border-radius: 0;
+}
+
+/* ---- gothic content ----
+   Toasts are iron plaques with an accent bar; tooltips are dark labels; timeline dots are
+   lozenges. */
+.fltc-toast:is([data-skin="gothic"] [class*="fltc-color-"]) {
+    background-color: rgb(var(--fltc-fx-ink));
+    color: rgb(var(--fltc-fx-text));
+    box-shadow:
+        inset 4px 0 0 rgb(var(--fltc-fx-accent)),
+        inset 0 0 0 1px rgb(var(--fltc-fx-ink) / 0.5),
+        0 2px 0 rgb(0 0 0 / 0.25),
+        0 10px 24px -12px rgb(0 0 0 / 0.55);
+}
+.fltc-toast:is([data-skin="gothic"] [class*="fltc-color-"]) .fltc-toast-title {
+    font-family: var(--fltc-font-term);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgb(var(--fltc-fx-accent));
+}
+.fltc-toast:is([data-skin="gothic"] [class*="fltc-color-"]) .fltc-toast-icon {
+    color: rgb(var(--fltc-fx-accent));
+}
+.fltc-toast:is([data-skin="gothic"] [class*="fltc-color-"]) .fltc-toast-close {
+    border-radius: 0;
+}
+.fltc-toast:is([data-skin="gothic"] [class*="fltc-color-"]) .fltc-toast-close:is(:hover, :focus-visible) {
+    background: rgb(var(--fltc-fx-accent));
+    color: rgb(var(--fltc-fx-ink));
+}
+.fltc-tooltip-bubble:is([data-skin="gothic"] [class*="fltc-color-"]) {
+    border: 1px solid rgb(var(--fltc-fx-text) / 0.6);
+    background: rgb(var(--fltc-fx-ink));
+    color: rgb(var(--fltc-fx-text));
+    font-family: var(--fltc-font-term);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    box-shadow: inset 0 0 0 1px rgb(var(--fltc-fx-accent) / 0.3), 0 4px 10px -2px rgb(0 0 0 / 0.5);
+}
+.fltc-timeline:is([data-skin="gothic"] [class*="fltc-color-"]) {
+    border-color: rgb(var(--fltc-fx-text) / 0.45);
+}
+.fltc-timeline-item:is([data-skin="gothic"] [class*="fltc-color-"]) .fltc-timeline-dot {
+    border-radius: 0;
+    transform: rotate(45deg);
+    background: rgb(var(--fltc-fx-accent));
+    color: rgb(var(--fltc-fx-ink));
+    box-shadow: 0 0 0 2px rgb(var(--fltc-fx-ink)), 0 0 0 3px rgb(var(--fltc-fx-text) / 0.6);
+}
+.fltc-timeline-item:is([data-skin="gothic"] [class*="fltc-color-"]) .fltc-timeline-dot > * {
+    transform: rotate(-45deg);
+}
+.fltc-timeline-item:is([data-skin="gothic"] [class*="fltc-color-"]) .fltc-timeline-time,
+.fltc-media-card:is([data-skin="gothic"] [class*="fltc-color-"]) .fltc-media-card-meta,
+.fltc-file-card:is([data-skin="gothic"] [class*="fltc-color-"]) .fltc-file-card-meta {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+.fltc-media-card:is([data-skin="gothic"] [class*="fltc-color-"]):hover .fltc-media-card-title {
+    color: rgb(var(--fltc-fx-accent));
+}
+.fltc-file-card:is([data-skin="gothic"] [class*="fltc-color-"]) .fltc-file-card-preview {
+    border-color: rgb(var(--fltc-fx-text) / 0.45);
+    border-radius: 0;
+    background: rgb(var(--fltc-fx-text) / 0.08);
+}
+.fltc-action-bar:is([data-skin="gothic"] [class*="fltc-color-"]) {
+    box-shadow: inset 4px 0 0 rgb(var(--fltc-fx-accent)), 0 2px 0 rgb(0 0 0 / 0.25), 0 10px 24px -12px rgb(0 0 0 / 0.55);
+}
+.fltc-action-bar:is([data-skin="gothic"] [class*="fltc-color-"]) .fltc-action-bar-title {
+    color: rgb(var(--fltc-fx-accent));
+}
+.fltc-empty:is([data-skin="gothic"] [class*="fltc-color-"]) {
+    border-color: rgb(var(--fltc-fx-text) / 0.45);
+    border-radius: 0;
+}
+.fltc-empty:is([data-skin="gothic"] [class*="fltc-color-"]) .fltc-empty-icon {
+    color: rgb(var(--fltc-fx-text) / 0.45);
+}
+.fltc-empty:is([data-skin="gothic"] [class*="fltc-color-"]) .fltc-empty-title {
+    color: rgb(var(--fltc-fx-accent));
+}
+.fltc-cover:is([data-skin="gothic"] [class*="fltc-color-"]) .fltc-cover-fallback {
+    border-color: rgb(var(--fltc-fx-text) / 0.45);
+    background: linear-gradient(rgb(var(--fltc-fx-text) / 0.12), rgb(var(--fltc-fx-ink)));
+    color: rgb(var(--fltc-fx-accent));
+    font-family: var(--fltc-font-display);
+}
+span.fltc-spoiler:is([data-skin="gothic"] [class*="fltc-color-"])[data-revealed="false"] {
+    border-radius: 0;
+    background: repeating-linear-gradient(-45deg, rgb(var(--fltc-fx-text) / 0.85) 0 4px, rgb(var(--fltc-fx-text) / 0.7) 4px 8px);
+}
+span.fltc-spoiler:is([data-skin="gothic"] [class*="fltc-color-"])[data-revealed="true"] {
+    border-radius: 0;
+    background: rgb(var(--fltc-fx-accent) / 0.12);
+    box-shadow: inset 0 -2px 0 rgb(var(--fltc-fx-accent));
+}
+div.fltc-spoiler:is([data-skin="gothic"] [class*="fltc-color-"]) .fltc-spoiler-overlay {
+    background: rgb(var(--fltc-fx-ink) / 0.88);
+}
+div.fltc-spoiler:is([data-skin="gothic"] [class*="fltc-color-"]) .fltc-spoiler-title {
+    color: rgb(var(--fltc-fx-accent));
+}
+.fltc-infocard:is([data-skin="gothic"] [class*="fltc-color-"]) .fltc-infocard-trigger {
+    text-decoration-style: solid;
+    text-decoration-color: rgb(var(--fltc-fx-accent));
+}
+.fltc-infocard:is([data-skin="gothic"] [class*="fltc-color-"]) .fltc-infocard-trigger:is(:hover, :focus-visible, [aria-expanded="true"]) {
+    color: rgb(var(--fltc-fx-accent));
+}
+.fltc-messagebox:is([data-skin="gothic"] [class*="fltc-color-"]) .fltc-messagebox-details summary {
+    font-family: var(--fltc-font-term);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+:is(.fltc-rating, .fltc-form-rating):is([data-skin="gothic"] [class*="fltc-color-"]) :is(.fltc-rating-fill, .fltc-form-rating-fill) {
+    filter: drop-shadow(0 1px 0 rgb(0 0 0 / 0.35));
+}
+.fltc-form-rating:is([data-skin="gothic"] [class*="fltc-color-"]) .fltc-form-rating-star {
+    border-radius: 0;
+}
+.fltc-form-rating:is([data-skin="gothic"] [class*="fltc-color-"]) .fltc-form-rating-star:focus-visible {
+    outline: 2px solid rgb(var(--fltc-fx-accent));
+    outline-offset: 1px;
+}
+.fltc-spinner:is([data-skin="gothic"] [class*="fltc-color-"]) {
+    animation-timing-function: steps(8);
+}
+
+/* ---- button groups and spinners ----
+   Grouped buttons butt together, so they neither lift (parchment) nor sink (gothic). */
+.fltc-buttongroup:is([data-skin="parchment"] *) > :is(.fltc-button, .fltc-button-link):is(.fltc-button-solid, .fltc-button-outline)[class*="fltc-color-"]:is(:hover, :active) {
+    transform: none;
+}
+.fltc-buttongroup:is([data-skin="gothic"] *) > :is(.fltc-button, .fltc-button-link):is(.fltc-button-solid, .fltc-button-outline)[class*="fltc-color-"]:active {
+    transform: none;
+}
+.fltc-buttongroup:is([data-skin="gothic"] *) > :is(.fltc-button, .fltc-button-link) + :is(.fltc-button, .fltc-button-link) {
+    border-left-color: rgb(0 0 0 / 0.45);
+}
+/* The parchment spinner turns slowly. */
+.fltc-spinner:is([data-skin="parchment"] [class*="fltc-color-"]) {
+    animation-duration: 1.6s;
 }

@@ -23,7 +23,11 @@ such as `resources/css/skin-effects.css` target them:
   the protected `$hookColor` in its constructor
 - Part hooks for regions a skin styles separately: `fltc-drawer-tab` / `-header` / `-body`,
   `fltc-modal-panel`, `fltc-nav-navbar-dropdown-menu`, `fltc-tooltip-bubble`, the button variant
-  (`fltc-button-solid` / `fltc-button-outline`), and the checkbox's visible parts
+  (`fltc-button-solid` / `-outline` / `-ghost` / `-textlink`, plus `fltc-button-square`), toasts
+  (`fltc-toast-<variant>`, `fltc-toast-icon` / `-title` / `-message` / `-close`; dispatched toasts
+  carry the same hooks), breadcrumbs (`fltc-nav-breadcrumbs-crumb` with `aria-current` for the
+  current one, `fltc-nav-breadcrumbs-separator`), the one-time-code boxes (`fltc-form-otp-box`),
+  and the checkbox's visible parts
   (`fltc-form-checkbox-control` on the label, `-track` / `-knob` for the toggle; the
   `fltc-form-checkbox` hooks sit on the hidden `<input>`, so style the parts with `~`),
   the table's scroll wrapper (`fltc-table-scroll`, with its own `fltc-color-*` and
@@ -58,6 +62,10 @@ class every component extends; anonymous components add theirs in the view.
 It also fails when `skin-effects.css` has no rules for a component's hook, unless the
 component is listed in `UNSKINNED_COMPONENTS` there (structural parts styled through their
 parent, layout wrappers) — so give a new component its skin effects, or list it on purpose.
+Beyond that, every skinned component needs rules scoped to **each** skin (`neon`,
+`parchment`, `gothic`), not only the rules the skins share, so it never looks the same in all
+of them; wrappers styled through the components inside them are listed in
+`SKINNED_THROUGH_CHILDREN`.
 
 ### Supported Colours
 
@@ -516,13 +524,17 @@ Shared props:
 - `width`: fit or full
 - `height`: xs, sm, md, lg, xl, auto, or numeric pixel value
 - `disabled`: true or false
-- `variant`: solid or outline
+- `variant`: `solid` (default), `outline`, `ghost` (no fill or frame until hovered — toolbars, icon buttons) or `link` (text that acts as a button, underlined on hover; no padding or fixed height, so it sits in running text)
+- `square`: as wide as it is high, for icon-only buttons (`<x-fltc::button variant="ghost" icon="push-pin" square tooltip="Pin" />`)
 - `tooltip`: plain text tooltip; when set, button renders inside `x-fltc::tooltip`
 - `icon`: Phosphor icon name rendered via `x-fltc::icon` (e.g. `floppy-disk`). Automatically spaced from the label
 - `iconVariant`: Phosphor weight for the icon (default: `regular`) — see Icon below
 - `iconPosition`: `before` (default) or `after` the label
 
-Default button text is white. Use color names for semantic meaning.
+Default button text is white (solid). Use color names for semantic meaning. Hooks:
+`fltc-button-solid`, `fltc-button-outline`, `fltc-button-ghost`, `fltc-button-textlink`
+(the link variant; `fltc-button-link` is `x-fltc::button.link`'s own hook) and
+`fltc-button-square`.
 
 **Button Link** additional props:
 - `href`: link target
@@ -1058,10 +1070,10 @@ Components:
 
 **Static toast** (`x-fltc::toast`): renders a single, self-dismissing toast in-place.
 - `color`: role or palette (default: `base`)
-- `variant`: `simple` (pill, default), `card` (rounded box with separate description row), `baguette` (wide solid-fill horizontal bar)
-- `message`: primary text (falls back to the default slot)
-- `description`: optional secondary line
-- `icon`: Phosphor icon class string (e.g. `ph ph-check-circle`)
+- `variant`: `toast` (compact bar, default), `pill`, `card` (title row over a message row), `baguette` (wide centred banner)
+- `title`: primary text (falls back to the default slot)
+- `message`: optional secondary line
+- `icon`: Phosphor icon name (e.g. `check-circle`)
 - `duration`: auto-dismiss delay in milliseconds (`0` = no auto-dismiss, default `0`)
 - `dismissible`: show/hide the close button (default `true`)
 
@@ -1070,7 +1082,7 @@ Components:
 Props:
 - `position`: `top-left`, `top-center`, `top-right`, `bottom-left`, `bottom-center`, `bottom-right` (default: `bottom-right`)
 - `color`: default colour applied to toasts that don't specify their own (default: `base`)
-- `variant`: default variant for incoming toasts (default: `simple`)
+- `variant`: default variant for incoming toasts (default: `toast`)
 - `duration`: default auto-dismiss delay in ms (default: `4000`)
 - `width`: Tailwind width class for the container column (default: `w-80`; use `w-full max-w-2xl` for baguette-only setups)
 
@@ -1084,19 +1096,24 @@ Props:
 **Dispatching toasts:**
 ```blade
 {{-- Alpine --}}
-$dispatch('fltc:toast', { message: 'Saved!', color: 'success', variant: 'card', description: 'Changes persisted.' })
+$dispatch('fltc:toast', { title: 'Saved!', color: 'success', variant: 'card', message: 'Changes persisted.' })
 
 {{-- Livewire --}}
-$this->dispatch('fltc:toast', message: 'Saved!', color: 'success')
+$this->dispatch('fltc:toast', title: 'Saved!', color: 'success')
 
 {{-- Plain JS --}}
-window.dispatchEvent(new CustomEvent('fltc:toast', { detail: { message: 'Saved!', icon: 'ph ph-check-circle' } }))
+window.dispatchEvent(new CustomEvent('fltc:toast', { detail: { title: 'Saved!', icon: 'ph ph-check-circle' } }))
 ```
 
 **Flux compatibility:** the container also listens for `flux:toast` events and maps Flux semantic variants to the matching roles (`success`, `warning`, `danger`, `info`; `default` → `base`).
 
+Dispatched toasts take `title`, `message`, `icon` (a full icon class string), `color`,
+`variant` and `duration`, and carry the same hook classes as static ones, so the skins
+style both.
+
 **Variant visual guide:**
-- `simple`: lightweight pill — good for brief confirmations
+- `toast`: compact bar — the default
+- `pill`: lightweight pill — good for brief confirmations
 - `card`: bordered card with distinct title + description areas — good for richer messages
 - `baguette`: wide, solid-filled horizontal bar — good for system-level notices or when you want high visual contrast
 

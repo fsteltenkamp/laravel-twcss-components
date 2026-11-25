@@ -28,16 +28,16 @@
 >
     @if ($variant === 'card')
         {{-- Card: proper header with title + body with message --}}
-        <div {{ $attributes->class([$classList, 'rounded-xl overflow-hidden']) }}>
+        <div {{ $attributes->class([$classList, 'fltc-toast-'.$variant, 'rounded-xl overflow-hidden']) }}>
             <div class="flex items-center gap-2.5 px-4 py-2.5 border-b {{ $borderClasses }}">
                 @if ($icon)
-                    <x-fltc::icon :name="$icon" :class="$iconClasses . ' shrink-0'" aria-hidden="true" />
+                    <x-fltc::icon :name="$icon" :class="'fltc-toast-icon ' . $iconClasses . ' shrink-0'" aria-hidden="true" />
                 @endif
-                <p class="flex-1 text-sm font-semibold leading-snug">{!! $resolvedTitle !!}</p>
+                <p class="fltc-toast-title flex-1 text-sm font-semibold leading-snug">{!! $resolvedTitle !!}</p>
                 @if ($dismissible)
                     <button
                         x-on:click="dismiss()"
-                        class="{{ $closeClasses }} -mr-0.5 rounded p-0.5 focus:outline-none focus:ring-2 focus:ring-current"
+                        class="fltc-toast-close {{ $closeClasses }} -mr-0.5 rounded p-0.5 focus:outline-none focus:ring-2 focus:ring-current"
                         aria-label="{{ __('Dismiss') }}"
                     >
                         <x-fltc::icon name="x" size="sm" aria-hidden="true" />
@@ -45,26 +45,26 @@
                 @endif
             </div>
             @if ($message)
-                <div class="px-4 py-3 text-sm leading-relaxed {{ $descClasses }}">{!! $message !!}</div>
+                <div class="fltc-toast-message px-4 py-3 text-sm leading-relaxed {{ $descClasses }}">{!! $message !!}</div>
             @endif
         </div>
 
     @elseif ($variant === 'baguette')
         {{-- Baguette: centered ~80% wide solid-fill banner --}}
-        <div {{ $attributes->class([$classList, 'mx-auto flex w-4/5 items-center gap-4 rounded-xl px-6 py-3.5 text-sm']) }}>
+        <div {{ $attributes->class([$classList, 'fltc-toast-'.$variant, 'mx-auto flex w-4/5 items-center gap-4 rounded-xl px-6 py-3.5 text-sm']) }}>
             @if ($icon)
-                <x-fltc::icon :name="$icon" :class="$iconClasses . ' text-lg shrink-0'" aria-hidden="true" />
+                <x-fltc::icon :name="$icon" :class="'fltc-toast-icon ' . $iconClasses . ' text-lg shrink-0'" aria-hidden="true" />
             @endif
             <div class="flex min-w-0 flex-1 items-baseline gap-2">
-                <span class="font-medium">{!! $resolvedTitle !!}</span>
+                <span class="fltc-toast-title font-medium">{!! $resolvedTitle !!}</span>
                 @if ($message)
-                    <span class="truncate text-xs {{ $descClasses }}">{{ $message }}</span>
+                    <span class="fltc-toast-message truncate text-xs {{ $descClasses }}">{{ $message }}</span>
                 @endif
             </div>
             @if ($dismissible)
                 <button
                     x-on:click="dismiss()"
-                    class="{{ $closeClasses }} shrink-0 rounded p-0.5 focus:outline-none focus:ring-2 focus:ring-current/50"
+                    class="fltc-toast-close {{ $closeClasses }} shrink-0 rounded p-0.5 focus:outline-none focus:ring-2 focus:ring-current/50"
                     aria-label="{{ __('Dismiss') }}"
                 >
                     <x-fltc::icon name="x" size="sm" aria-hidden="true" />
@@ -74,20 +74,20 @@
 
     @elseif ($variant === 'toast')
         {{-- Toast (default): compact solid-fill horizontal bar --}}
-        <div {{ $attributes->class([$classList, 'flex w-full items-center gap-4 rounded-lg px-4 py-3 text-sm']) }}>
+        <div {{ $attributes->class([$classList, 'fltc-toast-'.$variant, 'flex w-full items-center gap-4 rounded-lg px-4 py-3 text-sm']) }}>
             @if ($icon)
-                <x-fltc::icon :name="$icon" :class="$iconClasses . ' text-lg shrink-0'" aria-hidden="true" />
+                <x-fltc::icon :name="$icon" :class="'fltc-toast-icon ' . $iconClasses . ' text-lg shrink-0'" aria-hidden="true" />
             @endif
             <div class="flex min-w-0 flex-1 items-baseline gap-2">
-                <span class="font-medium">{!! $resolvedTitle !!}</span>
+                <span class="fltc-toast-title font-medium">{!! $resolvedTitle !!}</span>
                 @if ($message)
-                    <span class="truncate text-xs {{ $descClasses }}">{{ $message }}</span>
+                    <span class="fltc-toast-message truncate text-xs {{ $descClasses }}">{{ $message }}</span>
                 @endif
             </div>
             @if ($dismissible)
                 <button
                     x-on:click="dismiss()"
-                    class="{{ $closeClasses }} shrink-0 rounded p-0.5 focus:outline-none focus:ring-2 focus:ring-current/50"
+                    class="fltc-toast-close {{ $closeClasses }} shrink-0 rounded p-0.5 focus:outline-none focus:ring-2 focus:ring-current/50"
                     aria-label="{{ __('Dismiss') }}"
                 >
                     <x-fltc::icon name="x" size="sm" aria-hidden="true" />
@@ -97,18 +97,18 @@
 
     @else
         {{-- Pill: lightweight bordered pill --}}
-        <div {{ $attributes->class([$classList, 'flex items-center gap-2.5 rounded-full px-4 py-2 text-sm']) }}>
+        <div {{ $attributes->class([$classList, 'fltc-toast-'.$variant, 'flex items-center gap-2.5 rounded-full px-4 py-2 text-sm']) }}>
             @if ($icon)
-                <x-fltc::icon :name="$icon" :class="$iconClasses . ' shrink-0'" aria-hidden="true" />
+                <x-fltc::icon :name="$icon" :class="'fltc-toast-icon ' . $iconClasses . ' shrink-0'" aria-hidden="true" />
             @endif
-            <span class="min-w-0 flex-1 font-medium leading-snug">{!! $resolvedTitle !!}</span>
+            <span class="fltc-toast-title min-w-0 flex-1 font-medium leading-snug">{!! $resolvedTitle !!}</span>
             @if ($message)
-                <span class="shrink-0 text-xs {{ $descClasses }}">{{ $message }}</span>
+                <span class="fltc-toast-message shrink-0 text-xs {{ $descClasses }}">{{ $message }}</span>
             @endif
             @if ($dismissible)
                 <button
                     x-on:click="dismiss()"
-                    class="{{ $closeClasses }} shrink-0 rounded-full p-0.5 focus:outline-none focus:ring-2 focus:ring-current"
+                    class="fltc-toast-close {{ $closeClasses }} shrink-0 rounded-full p-0.5 focus:outline-none focus:ring-2 focus:ring-current"
                     aria-label="{{ __('Dismiss') }}"
                 >
                     <x-fltc::icon name="x" size="sm" aria-hidden="true" />

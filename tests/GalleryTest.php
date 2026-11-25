@@ -53,6 +53,7 @@ function galleryGroups(): array
                 ['solid', '<x-fltc::button color="primary">Save</x-fltc::button>'],
                 ['outline', '<x-fltc::button color="primary" variant="outline">Delete</x-fltc::button>'],
                 ['disabled', '<x-fltc::button color="primary" disabled>Disabled</x-fltc::button>'],
+                ['ghost and link', '<x-fltc::button color="primary" variant="ghost" icon="push-pin">Pin</x-fltc::button> <x-fltc::button color="primary" variant="ghost" icon="eye-slash" square tooltip="Hide" /> <x-fltc::button color="primary" variant="link">Show the log</x-fltc::button>'],
                 ['with icon', '<x-fltc::button color="primary" icon="floppy-disk">Save</x-fltc::button> <x-fltc::button color="primary" icon="arrow-right" iconPosition="after">Next</x-fltc::button> <x-fltc::button color="primary" icon="trash" />'],
                 ['colour roles (follow the theme)', '<x-fltc::button color="primary">Primary</x-fltc::button> <x-fltc::button color="secondary">Secondary</x-fltc::button> <x-fltc::button color="accent">Accent</x-fltc::button> <x-fltc::button color="base">Base</x-fltc::button> <x-fltc::button color="info">Info</x-fltc::button> <x-fltc::button color="success">Success</x-fltc::button> <x-fltc::button color="warning">Warning</x-fltc::button> <x-fltc::button color="danger">Danger</x-fltc::button>'],
                 // Fixed colours on purpose: they keep their colour in every theme and skin.
@@ -90,6 +91,12 @@ function galleryGroups(): array
                 ['pill — lightweight bordered pill', '<x-fltc::toast variant="pill" title="File saved" color="base" />'],
                 ['card — header + body', '<x-fltc::toast variant="card" color="base" title="Profile updated" message="Your changes have been saved successfully." />'],
                 ['baguette — centered 80% banner', '<div class="w-full py-2"><x-fltc::toast variant="baguette" color="base" title="Deploying to production…" message="This may take a moment." /></div>'],
+                ['dispatched with fltc:toast (bottom right of the page)', '<x-fltc::toast.container position="bottom-right" />
+<div class="flex flex-wrap gap-2">
+    <x-fltc::button color="success" x-on:click="$dispatch(\'fltc:toast\', { title: \'Saved\', message: \'Your changes are safe.\', color: \'success\', icon: \'ph ph-check\' })">toast</x-fltc::button>
+    <x-fltc::button color="primary" x-on:click="$dispatch(\'fltc:toast\', { title: \'Profile updated\', message: \'Your changes have been saved.\', color: \'primary\', variant: \'card\', icon: \'ph ph-user\' })">card</x-fltc::button>
+    <x-fltc::button color="danger" x-on:click="$dispatch(\'fltc:toast\', { title: \'Upload failed\', color: \'danger\', variant: \'pill\', icon: \'ph ph-warning\' })">pill</x-fltc::button>
+</div>'],
             ],
             'Chips' => [
                 ['link, icon and count', '<x-fltc::badge.cloud color="primary" label="Tags">
