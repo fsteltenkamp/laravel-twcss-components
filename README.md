@@ -74,9 +74,9 @@ Three independent settings decide how a component looks:
 | **Skin** | the look: fonts, corners, lines, glow, page effects | `data-skin` on `<html>` or a region |
 
 ```blade
-<html data-theme="dracula" data-skin="cyberpunk">
+<html data-theme="dracula" data-skin="neon">
     ...
-    <x-fltc::button color="primary">Save</x-fltc::button>       {{-- Dracula purple, cyberpunk shape --}}
+    <x-fltc::button color="primary">Save</x-fltc::button>       {{-- Dracula purple, neon shape --}}
     <x-fltc::button color="danger">Delete</x-fltc::button>      {{-- Dracula red --}}
     <x-fltc::badge color="green">paid</x-fltc::badge>           {{-- always Tailwind green --}}
 ```
@@ -131,9 +131,9 @@ Status components default to their role: `x-fltc::status` uses `success`, `warni
 | Theme | |
 | --- | --- |
 | `default` | Tailwind palettes (see Roles); the theme without any `data-theme` |
-| `cyberpunk` | neon pink, cyan and violet on ink |
-| `fantasy` | gold, forest and royal purple on parchment and leather |
-| `wh40k` | blood red, brass and ultramarine on bone and gunmetal |
+| `neon` | neon pink, cyan and violet on ink |
+| `parchment` | gold, forest and royal purple on parchment and leather |
+| `gothic` | blood red, brass and ultramarine on bone and gunmetal |
 | `dracula` | Dracula in dark mode, its light variant Alucard in light mode |
 | `nord` | Nord's polar night, snow storm, frost and aurora |
 | `catppuccin` | Catppuccin Latte in light mode, Mocha in dark mode |
@@ -177,22 +177,22 @@ Notes:
 - **Nesting stays shallow** — at most a surface on a page; there is no fourth background
   level to reason about.
 
-The themes' `base` scales follow the same pairs, which is why some (cyberpunk, fantasy,
-wh40k) change hue along the ladder: page and surface shades are the look's backgrounds,
+The themes' `base` scales follow the same pairs, which is why some (neon, parchment,
+gothic) change hue along the ladder: page and surface shades are the look's backgrounds,
 the content shades its text colours.
 
 ### Skins
 
 A skin is the look, independent of colour and theme: `default` (plain Tailwind),
-`cyberpunk`, `fantasy` and `wh40k`. Choose it with `data-skin` on `<html>` (or on a
+`neon`, `parchment` and `gothic`. Choose it with `data-skin` on `<html>` (or on a
 region); every component inside takes the skin **in its own colour**: a `primary` button
-under the cyberpunk skin is drawn in the theme's primary neon lines, a `green` one in green.
+under the neon skin is drawn in the theme's primary neon lines, a `green` one in green.
 
 `resources/css/skin-effects.css` holds the skins: their fonts (Orbitron, Share Tech Mono,
 VT323, Cinzel, EB Garamond, Grenze Gotisch — shipped in `resources/fonts`, SIL Open Font
 License), corner rounding, glowing panels, buttons and focus rings, and page backgrounds —
-including cyberpunk's scanlines and grid. Cyberpunk also restyles the controls in the style
-of Cyberpunk 2077: buttons with cut corners, thin full-strength lines and a solid fill on
+including neon's scanlines and grid. Neon also restyles the controls in the style
+of Neon 2077: buttons with cut corners, thin full-strength lines and a solid fill on
 hover; square inputs with the bottom-right corner cut that light up on focus (add the class
 `fltc-corner-tick` to an input for a filled corner tick instead), a drawn select arrow and
 calendar icon; square checkboxes and toggles; tag-style badges; framed drawer handles.
@@ -208,7 +208,7 @@ any theme.
 Native popups stay native: the select's list is fully styled only in browsers with
 customizable selects (Chromium 135+), elsewhere it takes the option colours where the OS
 allows; the date picker's calendar only follows light/dark (`color-scheme`), which all
-inputs set in dark mode. `<x-fltc::heading glitch>` adds cyberpunk's glitching logo text.
+inputs set in dark mode. `<x-fltc::heading glitch>` adds neon's glitching logo text.
 Text glow shows in dark mode only.
 
 Vite bundles the fonts the skins reference. Without a bundler, publish the stylesheets and
@@ -239,7 +239,7 @@ before the first paint:
     @vite('resources/css/app.css')
 </head>
 ...
-<x-fltc::theme.picker :skins="['default', 'cyberpunk']" :themes="['default', 'dracula', 'nord', 'custom']" />
+<x-fltc::theme.picker :skins="['default', 'neon']" :themes="['default', 'dracula', 'nord', 'custom']" />
 ```
 
 Pass an empty list to hide a select (`:skins="[]"` for a theme-only picker).
@@ -253,8 +253,8 @@ Earlier versions had one `theme` prop for colour, scheme and look. Now:
 | `theme="rose"` (any component) | `color="rose"` |
 | default `theme="slate"` | default `color="base"` (slate in the default theme) |
 | `theme="skin"` + `data-skin="rose"` | `color="base"` (or another role) + `data-theme="custom" data-theme-base="rose"`, or a named theme |
-| `data-skin="cyberpunk"` (colour + look) | `data-skin="cyberpunk" data-theme="cyberpunk"` |
-| `theme="cyberpunk"` / `fantasy` / `wh40k` | `data-theme="cyberpunk"` on a region, with roles on the components |
+| `data-skin="neon"` (colour + look) | `data-skin="neon" data-theme="neon"` |
+| `theme="neon"` / `parchment` / `gothic` | `data-theme="neon"` on a region, with roles on the components |
 | `themeOff`, `cancelTheme`, `warningTheme`, `dangerTheme`, `accentTheme`, `mainTheme`, status `themes` | `colorOff`, `cancelColor`, `warningColor`, `dangerColor`, `accentColor`, `mainColor`, `colors` |
 | `bg-skin-500` etc. (host classes) | `bg-base-500`, `bg-primary-500`, … |
 | `resources/css/themes.css` + `resources/js/themes.js` (custom palettes) | `resources/css/colors.css` / `resources/js/colors.js` (roles) |

@@ -166,7 +166,7 @@ it('hooks the theme that navbar and sidebar children inherit', function () {
 
 /*
  * Every component either gets skin effects or is listed here on purpose: a new
- * component that skin-effects.css never mentions would look plain under cyberpunk.
+ * component that skin-effects.css never mentions would look plain under neon.
  * These are structural parts styled through their parent, or layout wrappers.
  */
 const UNSKINNED_COMPONENTS = [
@@ -200,7 +200,7 @@ it('styles the part hooks of the newer components', function () {
 });
 
 it('puts the theme hook on the body and the box so skin effects apply', function () {
-    expect(Blade::render('<x-fltc::body color="cyberpunk">x</x-fltc::body>'))->toMatch('/<body class="[^"]*fltc-body fltc-color-cyberpunk/')
+    expect(Blade::render('<x-fltc::body color="neon">x</x-fltc::body>'))->toMatch('/<body class="[^"]*fltc-body fltc-color-neon/')
         ->and(Blade::render('<x-fltc::container.box color="primary">x</x-fltc::container.box>'))->toContain('fltc-container-box fltc-color-primary');
 });
 
@@ -211,11 +211,11 @@ it('takes the look only from data-skin and draws in every colour', function () {
     $looks = preg_replace('#/\* =+ COLOURS =+ \*/.*?/\* =+ PAGE =+ \*/#s', '', $css);
     expect($looks)->not->toBe($css);
     expect($looks)
-        ->not->toMatch('/\.fltc-color-(cyberpunk|fantasy|wh40k)(?![\w-])/')
+        ->not->toMatch('/\.fltc-color-(neon|parchment|gothic)(?![\w-])/')
         ->not->toContain('fltc-theme-')
         ->not->toContain('data-skin-shape')
         ->not->toContain('data-theme')
-        ->toContain('[data-skin="cyberpunk"] [class*="fltc-color-"]');
+        ->toContain('[data-skin="neon"] [class*="fltc-color-"]');
 
     // Every colour (palettes and roles) sets the roles the skins draw in, light and dark.
     foreach ([...PALETTES, ...ROLES] as $color) {

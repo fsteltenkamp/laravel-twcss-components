@@ -60,8 +60,8 @@
     --fltc-danger-50: var(--fltc-red-50); --fltc-danger-100: var(--fltc-red-100); --fltc-danger-200: var(--fltc-red-200); --fltc-danger-300: var(--fltc-red-300); --fltc-danger-400: var(--fltc-red-400); --fltc-danger-500: var(--fltc-red-500); --fltc-danger-600: var(--fltc-red-600); --fltc-danger-700: var(--fltc-red-700); --fltc-danger-800: var(--fltc-red-800); --fltc-danger-900: var(--fltc-red-900); --fltc-danger-950: var(--fltc-red-950);
 }
 
-/* cyberpunk */
-[data-theme="cyberpunk"] {
+/* neon */
+[data-theme="neon"] {
     --fltc-primary-50: 255 242 250; --fltc-primary-100: 255 223 244; --fltc-primary-200: 255 195 236; --fltc-primary-300: 255 145 225; --fltc-primary-400: 255 43 214; --fltc-primary-500: 225 25 178; --fltc-primary-600: 196 0 143; --fltc-primary-700: 166 0 120; --fltc-primary-800: 134 0 97; --fltc-primary-900: 110 9 80; --fltc-primary-950: 71 2 49;
     --fltc-secondary-50: 238 255 253; --fltc-secondary-100: 212 255 250; --fltc-secondary-200: 168 255 246; --fltc-secondary-300: 0 255 240; --fltc-secondary-400: 0 217 210; --fltc-secondary-500: 0 181 180; --fltc-secondary-600: 0 146 152; --fltc-secondary-700: 0 112 124; --fltc-secondary-800: 3 90 100; --fltc-secondary-900: 11 74 82; --fltc-secondary-950: 2 46 51;
     --fltc-accent-50: 245 239 255; --fltc-accent-100: 232 217 255; --fltc-accent-200: 214 185 255; --fltc-accent-300: 187 130 255; --fltc-accent-400: 157 0 255; --fltc-accent-500: 139 22 231; --fltc-accent-600: 122 31 208; --fltc-accent-700: 103 22 177; --fltc-accent-800: 82 18 143; --fltc-accent-900: 67 19 116; --fltc-accent-950: 41 7 75;
@@ -72,8 +72,8 @@
     --fltc-danger-50: 255 242 240; --fltc-danger-100: 255 223 219; --fltc-danger-200: 255 195 188; --fltc-danger-300: 255 146 136; --fltc-danger-400: 255 59 59; --fltc-danger-500: 233 44 44; --fltc-danger-600: 211 28 28; --fltc-danger-700: 179 18 20; --fltc-danger-800: 145 15 15; --fltc-danger-900: 119 19 16; --fltc-danger-950: 77 6 6;
 }
 
-/* fantasy */
-[data-theme="fantasy"] {
+/* parchment */
+[data-theme="parchment"] {
     --fltc-primary-50: 255 245 235; --fltc-primary-100: 253 231 209; --fltc-primary-200: 250 210 171; --fltc-primary-300: 239 179 115; --fltc-primary-400: 217 142 50; --fltc-primary-500: 177 115 34; --fltc-primary-600: 138 90 18; --fltc-primary-700: 116 75 11; --fltc-primary-800: 93 59 8; --fltc-primary-900: 76 49 11; --fltc-primary-950: 47 28 3;
     --fltc-secondary-50: 242 249 239; --fltc-secondary-100: 226 240 220; --fltc-secondary-200: 202 227 191; --fltc-secondary-300: 166 205 149; --fltc-secondary-400: 127 176 105; --fltc-secondary-500: 94 141 75; --fltc-secondary-600: 63 107 46; --fltc-secondary-700: 51 90 37; --fltc-secondary-800: 40 71 28; --fltc-secondary-900: 34 59 24; --fltc-secondary-950: 18 35 11;
     --fltc-accent-50: 249 243 255; --fltc-accent-100: 240 227 255; --fltc-accent-200: 227 204 254; --fltc-accent-300: 206 168 245; --fltc-accent-400: 176 127 224; --fltc-accent-500: 141 95 192; --fltc-accent-600: 107 63 160; --fltc-accent-700: 90 51 136; --fltc-accent-800: 71 40 109; --fltc-accent-900: 58 34 89; --fltc-accent-950: 35 18 56;
@@ -84,8 +84,8 @@
     --fltc-danger-50: 255 241 239; --fltc-danger-100: 255 222 216; --fltc-danger-200: 255 194 183; --fltc-danger-300: 250 147 131; --fltc-danger-400: 224 96 79; --fltc-danger-500: 189 70 56; --fltc-danger-600: 155 44 34; --fltc-danger-700: 131 35 26; --fltc-danger-800: 105 27 20; --fltc-danger-900: 86 23 17; --fltc-danger-950: 54 10 7;
 }
 
-/* wh40k */
-[data-theme="wh40k"] {
+/* gothic */
+[data-theme="gothic"] {
     --fltc-primary-50: 255 237 234; --fltc-primary-100: 255 211 203; --fltc-primary-200: 251 174 161; --fltc-primary-300: 231 116 101; --fltc-primary-400: 191 42 31; --fltc-primary-500: 167 35 25; --fltc-primary-600: 143 29 20; --fltc-primary-700: 121 21 14; --fltc-primary-800: 97 16 10; --fltc-primary-900: 79 15 9; --fltc-primary-950: 49 5 3;
     --fltc-secondary-50: 252 247 234; --fltc-secondary-100: 246 236 208; --fltc-secondary-200: 239 220 169; --fltc-secondary-300: 224 194 112; --fltc-secondary-400: 201 162 39; --fltc-secondary-500: 161 128 30; --fltc-secondary-600: 122 95 22; --fltc-secondary-700: 103 79 15; --fltc-secondary-800: 82 63 11; --fltc-secondary-900: 67 52 12; --fltc-secondary-950: 41 30 4;
     --fltc-accent-50: 237 243 255; --fltc-accent-100: 213 226 254; --fltc-accent-200: 180 202 252; --fltc-accent-300: 131 164 238; --fltc-accent-400: 79 116 208; --fltc-accent-500: 54 89 175; --fltc-accent-600: 31 63 143; --fltc-accent-700: 24 52 121; --fltc-accent-800: 18 40 97; --fltc-accent-900: 14 33 78; --fltc-accent-950: 6 17 49;

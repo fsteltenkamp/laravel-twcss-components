@@ -38,7 +38,7 @@ function galleryGroups(): array
         'Typography' => [
             'Heading' => [
                 ['default', '<x-fltc::heading size="2xl">Chapter 12 — The Archive</x-fltc::heading>'],
-                ['glitch (cyberpunk skin)', '<x-fltc::heading size="2xl" glitch>SYSTEM ONLINE</x-fltc::heading>'],
+                ['glitch (neon skin)', '<x-fltc::heading size="2xl" glitch>SYSTEM ONLINE</x-fltc::heading>'],
             ],
             'Subheading' => [
                 ['default', '<x-fltc::subheading>// 42 volumes in the library</x-fltc::subheading>'],
@@ -93,7 +93,7 @@ function galleryGroups(): array
             ],
             'Chips' => [
                 ['link, icon and count', '<x-fltc::badge.cloud color="primary" label="Tags">
-    <x-fltc::badge href="#" icon="tag" :count="12">fantasy</x-fltc::badge>
+    <x-fltc::badge href="#" icon="tag" :count="12">novel</x-fltc::badge>
     <x-fltc::badge href="#" icon="tag" :count="4">romance</x-fltc::badge>
     <x-fltc::badge href="#" icon="tag" :count="31">mystery</x-fltc::badge>
 </x-fltc::badge.cloud>'],
@@ -406,7 +406,7 @@ request id 7f3a9c</x-slot:details>
         <x-slot:cover><x-fltc::cover color="base" src="https://picsum.photos/seed/tower/300/450" alt="The Glass Tower" /></x-slot:cover>
         <x-slot:title>The Glass Tower</x-slot:title>
         <x-slot:meta>M. Ellery · 2021</x-slot:meta>
-        <x-slot:badges><x-fltc::badge color="primary">fantasy</x-fltc::badge><x-fltc::badge color="primary">series</x-fltc::badge></x-slot:badges>
+        <x-slot:badges><x-fltc::badge color="primary">novel</x-fltc::badge><x-fltc::badge color="primary">series</x-fltc::badge></x-slot:badges>
         <x-slot:footer><span class="flex flex-col gap-2"><x-fltc::rating color="primary" value="4.5" size="sm" showValue /><x-fltc::progress color="primary" :value="72" size="sm" /></span></x-slot:footer>
         <x-slot:actions><x-fltc::button color="primary" variant="outline" icon="bookmark-simple" aria-label="Bookmark" /></x-slot:actions>
     </x-fltc::media-card>
@@ -414,7 +414,7 @@ request id 7f3a9c</x-slot:details>
         <x-slot:cover><x-fltc::cover color="base" src="https://picsum.photos/seed/moors/300/450" alt="Wind over the Moors" /></x-slot:cover>
         <x-slot:title>Wind over the Moors</x-slot:title>
         <x-slot:meta>J. Ashby · 2019</x-slot:meta>
-        <x-slot:badges><x-fltc::badge color="primary">fantasy</x-fltc::badge><x-fltc::badge color="primary">series</x-fltc::badge></x-slot:badges>
+        <x-slot:badges><x-fltc::badge color="primary">novel</x-fltc::badge><x-fltc::badge color="primary">series</x-fltc::badge></x-slot:badges>
         <x-slot:footer><span class="flex flex-col gap-2"><x-fltc::rating color="primary" value="3.5" size="sm" showValue /><x-fltc::progress color="primary" :value="15" size="sm" /></span></x-slot:footer>
         <x-slot:actions><x-fltc::button color="primary" variant="outline" icon="bookmark-simple" aria-label="Bookmark" /></x-slot:actions>
     </x-fltc::media-card>
@@ -422,7 +422,7 @@ request id 7f3a9c</x-slot:details>
         <x-slot:cover><x-fltc::cover color="base" src="https://picsum.photos/seed/forge/300/450" alt="Forge of Ages" /></x-slot:cover>
         <x-slot:title>Forge of Ages</x-slot:title>
         <x-slot:meta>K. Varga · 2024</x-slot:meta>
-        <x-slot:badges><x-fltc::badge color="primary">fantasy</x-fltc::badge><x-fltc::badge color="primary">series</x-fltc::badge></x-slot:badges>
+        <x-slot:badges><x-fltc::badge color="primary">novel</x-fltc::badge><x-fltc::badge color="primary">series</x-fltc::badge></x-slot:badges>
         <x-slot:footer><span class="flex flex-col gap-2"><x-fltc::rating color="primary" value="5" size="sm" showValue /><x-fltc::progress color="primary" :value="100" size="sm" /></span></x-slot:footer>
         <x-slot:actions><x-fltc::button color="primary" variant="outline" icon="bookmark-simple" aria-label="Bookmark" /></x-slot:actions>
     </x-fltc::media-card>

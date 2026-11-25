@@ -68,9 +68,9 @@ Every component takes a `color`:
   indigo, violet, purple, fuchsia, pink, rose, and the neutrals slate, gray, zinc, neutral,
   stone, taupe, mauve, mist, olive.
 
-The **theme** (`data-theme`: default, cyberpunk, fantasy, wh40k, dracula, nord, catppuccin,
+The **theme** (`data-theme`: default, neon, parchment, gothic, dracula, nord, catppuccin,
 solarized, gruvbox, custom) decides which palette each role uses; the **skin**
-(`data-skin`: default, cyberpunk, fantasy, wh40k) is the look — fonts, cut corners, lines,
+(`data-skin`: default, neon, parchment, gothic) is the look — fonts, cut corners, lines,
 glow, page effects — and draws every component in its own colour. Roles need
 `resources/css/colors.css` (Tailwind v4) or `resources/js/colors.js` (v3) plus
 `resources/css/themes.css`; see the README "Colours, themes and skins" section.
@@ -227,7 +227,7 @@ Props:
 - `active`: force the active state; when omitted it is auto-derived by matching the current request URL (same rules as the sidebar link)
 - `activePattern`: `Request::is()` pattern for active detection (defaults to the href path; supports wildcards like `invoices/*`)
 - `color`: role or palette (default: inherited from the navbar)
-- Active links render `aria-current="page"` and keep the hover background with a continuous underline beneath icon and text (an inset shadow, not a text underline, which breaks at the gap between icon and label). Under the cyberpunk skin they look exactly like hovered links. Use `active` rather than adding `underline` yourself
+- Active links render `aria-current="page"` and keep the hover background with a continuous underline beneath icon and text (an inset shadow, not a text underline, which breaks at the gap between icon and label). Under the neon skin they look exactly like hovered links. Use `active` rather than adding `underline` yourself
 
 **Navbar toggle** (`x-fltc::nav.navbar.toggle`): a hamburger button that opens the responsive sidebar drawer on small screens. Place it in the navbar's `left` slot.
 - `target`: the `name` of the sidebar to control — only needed when more than one sidebar is on the page (default: the unnamed sidebar)
@@ -296,7 +296,7 @@ roles so they flip cleanly in dark mode.
 **Heading** (`x-fltc::heading`):
 - `size`: `sm`, `base` (default), `lg`, `xl`, `2xl`
 - `level`: heading level `1`–`6`, renders the matching `<h1>`–`<h6>` tag (default: `2`)
-- `glitch`: opt into a skin's glitch effect (cyberpunk in `skin-effects.css`); copies the
+- `glitch`: opt into a skin's glitch effect (neon in `skin-effects.css`); copies the
   text into `data-text` for the effect layers. No visible change without such a skin
 - `color`: role or palette — the theme's Primary Content colour. Default: none, which keeps
   the neutral zinc/white
@@ -1147,7 +1147,7 @@ component); choosing a theme sets `data-theme` (re-colouring every role colour).
 `data-theme-<role>`. Each choice is saved and synced with other pickers on the page. The
 mode part is `x-fltc::darkmode.toggle`, which owns that storage and the OS-following system
 mode.
-- `skins`: skin names, or name => label (default: default, cyberpunk, fantasy, wh40k)
+- `skins`: skin names, or name => label (default: default, neon, parchment, gothic)
 - `themes`: theme names, or name => label (default: every shipped theme plus `custom`)
 - `palettes`: the palettes offered per role for `custom` (default: every Tailwind palette)
 - An empty `skins` or `themes` list hides that select

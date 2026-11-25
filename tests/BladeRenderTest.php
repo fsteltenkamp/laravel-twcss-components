@@ -907,11 +907,11 @@ it('themes pagination with one theme and marks the current page as the solid but
  * Import plan, phase 1: runtime theme switching.
  */
 it('renders a head script that restores the stored skin, theme and dark mode before paint', function () {
-    $html = Blade::render('<x-fltc::theme.script skinStorageKey="app-skin" themeStorageKey="app-theme" skin="fantasy" theme="dracula" nonce="abc" />');
+    $html = Blade::render('<x-fltc::theme.script skinStorageKey="app-skin" themeStorageKey="app-theme" skin="parchment" theme="dracula" nonce="abc" />');
 
     expect($html)
         ->toMatch('/<script\s+nonce="abc"\s*>/')
-        ->toContain("localStorage.getItem('app-skin') || 'fantasy'")
+        ->toContain("localStorage.getItem('app-skin') || 'parchment'")
         ->toContain("setAttribute('data-skin', skin)")
         ->toContain("localStorage.getItem('app-theme') || 'dracula'")
         ->toContain("setAttribute('data-theme', theme)")
@@ -925,14 +925,14 @@ it('renders a head script that restores the stored skin, theme and dark mode bef
 
 it('renders a theme picker with skin, theme and custom role selects and the dark-mode control', function () {
     shareErrors();
-    $html = Blade::render('<x-fltc::theme.picker :skins="[\'default\', \'wh40k\' => \'Grimdark\']" :themes="[\'default\', \'dracula\', \'custom\']" :palettes="[\'rose\', \'zinc\']" skinStorageKey="app-skin" themeStorageKey="app-theme" color="rose" />');
+    $html = Blade::render('<x-fltc::theme.picker :skins="[\'default\', \'gothic\' => \'Dark gothic\']" :themes="[\'default\', \'dracula\', \'custom\']" :palettes="[\'rose\', \'zinc\']" skinStorageKey="app-skin" themeStorageKey="app-theme" color="rose" />');
 
     expect($html)
         ->toContain('fltc-theme-picker')
         ->toContain('x-model="value"')
         ->toContain("key: 'app-skin'")
         ->toContain("key: 'app-theme'")
-        ->toContain('<option value="wh40k">Grimdark</option>')
+        ->toContain('<option value="gothic">Dark gothic</option>')
         ->toContain('<option value="dracula">Dracula</option>')
         ->toContain('fltc-skin-change')
         ->toContain('fltc-theme-change')

@@ -24,7 +24,7 @@ it('defines every colour in every colour map', function () {
                 ->toBe($maps, "{$file->getFilename()}: '{$color}' entries should match 'rose' entries");
         }
 
-        foreach (['cyberpunk', 'fantasy', 'wh40k', 'palette', 'skin'] as $gone) {
+        foreach (['neon', 'parchment', 'gothic', 'palette', 'skin'] as $gone) {
             expect(preg_match("/'{$gone}'\s*=>\s*['\[a]/", $source))->toBe(0, "{$file->getFilename()}: '{$gone}' is a theme or skin now, not a colour");
         }
     }
