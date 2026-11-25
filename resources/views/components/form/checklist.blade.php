@@ -11,7 +11,7 @@
         @endphp
         <div class="space-y-1">
             <div class="flex justify-between text-xs {{ $labelColorPendingThemed }}">
-                <span>{{ $displayCompleted }} von {{ $displayTotal }} Schritten abgeschlossen</span>
+                <span>{{ __(':completed of :total steps completed', ['completed' => $displayCompleted, 'total' => $displayTotal]) }}</span>
                 <span>{{ $displayPercent }}%</span>
             </div>
             <div class="fltc-form-checklist-track w-full {{ $progressTrackColor }} rounded-full h-2.5 overflow-hidden">

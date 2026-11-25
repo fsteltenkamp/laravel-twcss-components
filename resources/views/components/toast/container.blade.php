@@ -41,7 +41,7 @@
             window.addEventListener('flux:toast',  this._fluxHandler);
 
             // Script API: fltc.toast('Saved') or fltc.toast({ … }), and fltc.toast.success(title,
-            // message) / .info / .warning / .danger (.error) — e.g. as a bridge for toastr calls.
+            // message) / .info / .warning / .danger (.error) — e.g. to replace another toast library's calls.
             window.fltc = window.fltc || {};
             if (! window.fltc.toast) {
                 const send = (detail) => window.dispatchEvent(new CustomEvent('fltc:toast', { detail }));

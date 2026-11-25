@@ -77,7 +77,7 @@ function galleryGroups(): array
                 ['themes', '<x-fltc::badge color="primary">available</x-fltc::badge> <x-fltc::badge color="primary">no stock</x-fltc::badge> <x-fltc::badge color="primary">start sale</x-fltc::badge>'],
             ],
             'Alert' => [
-                ['with icon', '<x-fltc::alert color="warning" icon="warning">The deed has not been signed yet.</x-fltc::alert>'],
+                ['with icon', '<x-fltc::alert color="warning" icon="warning">The contract has not been approved yet.</x-fltc::alert>'],
                 ['default', '<x-fltc::alert color="base">Heads up — your trial ends soon.</x-fltc::alert>'],
             ],
             'Message box' => [
@@ -331,13 +331,13 @@ request id 7f3a9c</x-slot:details>
                 ['default', '<x-fltc::form.checkbox label="I agree to the terms" color="primary" />'],
                 ['toggle', '<x-fltc::form.checkbox variant="toggle" label="Email notifications" color="primary" colorOff="base" checked />'],
                 ['toggle with icons', '<x-fltc::form.checkbox variant="toggle" size="lg" label="Dark mode" color="primary" colorOff="base" iconChecked="ph ph-moon" iconUnchecked="ph ph-sun" />'],
-                ['lever (icons beside the track)', '<x-fltc::form.checkbox variant="toggle" label="Ready for signing" color="success" colorOff="danger" iconOff="x" iconOn="check" iconChecked="" iconUnchecked="" />'],
+                ['lever (icons beside the track)', '<x-fltc::form.checkbox variant="toggle" label="Ready for review" color="success" colorOff="danger" iconOff="x" iconOn="check" iconChecked="" iconUnchecked="" />'],
             ],
             'Field options' => [
                 ['aside, note toggle and explicit error', '<x-fltc::form.input.text id="g-iban" label="IBAN" color="primary" note="22 characters, without spaces." noteToggle error="Checksum does not match" errorIcon="warning-circle" value="DE00 1234">
     <x-slot:aside><x-fltc::icon name="check" /> saved 12:03</x-slot:aside>
 </x-fltc::form.input.text>'],
-                ['compact (size sm) with suggestions', '<div class="flex flex-wrap items-end gap-2"><x-fltc::form.input.text id="g-key" size="sm" inline mono placeholder="placeholder key" color="primary" :suggestions="[\'customer.name\', \'customer.iban\', \'deed.date\']" /><x-fltc::form.input.date id="g-d" size="sm" inline color="primary" /><x-fltc::form.input.select id="g-s" size="sm" inline color="primary"><option>Draft</option><option>Sent</option></x-fltc::form.input.select></div>'],
+                ['compact (size sm) with suggestions', '<div class="flex flex-wrap items-end gap-2"><x-fltc::form.input.text id="g-key" size="sm" inline mono placeholder="placeholder key" color="primary" :suggestions="[\'customer.name\', \'customer.iban\', \'order.date\']" /><x-fltc::form.input.date id="g-d" size="sm" inline color="primary" /><x-fltc::form.input.select id="g-s" size="sm" inline color="primary"><option>Draft</option><option>Sent</option></x-fltc::form.input.select></div>'],
                 ['stand-alone error', '<x-fltc::form.error icon="warning">Pick at least one participant.</x-fltc::form.error>'],
             ],
             'Date range' => [
@@ -386,7 +386,7 @@ request id 7f3a9c</x-slot:details>
                 ['default', '<x-fltc::nav.link href="#" color="base">Dashboard</x-fltc::nav.link>'],
             ],
             'Text link' => [
-                ['in text, external, always underlined', '<p class="text-sm">See <x-fltc::link href="#" color="primary">the deed</x-fltc::link>, the <x-fltc::link href="https://example.com" external color="primary">land registry</x-fltc::link> or <x-fltc::link href="#" underline="always" color="primary" icon="file-pdf">the PDF</x-fltc::link>.</p>'],
+                ['in text, external, always underlined', '<p class="text-sm">See <x-fltc::link href="#" color="primary">the contract</x-fltc::link>, the <x-fltc::link href="https://example.com" external color="primary">documentation</x-fltc::link> or <x-fltc::link href="#" underline="always" color="primary" icon="file-pdf">the PDF</x-fltc::link>.</p>'],
             ],
             'Page header' => [
                 ['title, description, actions', '<x-fltc::page-header title="Customers" description="Everyone with an active contract." color="primary" divided>

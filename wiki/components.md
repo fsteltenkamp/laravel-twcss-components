@@ -151,8 +151,11 @@ navigation bars).
 - `stepParam`: query-string parameter for tab links (default: `step`)
 - `tabs`: renders linked step tabs with previous/next controls (default: false)
 - `iconsOnly`: hides step labels in tab mode, exposes via tooltip (default: false)
-- `savebtn`: renders save actions in non-tab mode for legacy form stepper (default: false)
-- `onclick`: JavaScript prefix before legacy `util.stepperPreviousStep/NextStep` calls
+- Without `tabs`: a panel with Back / Next links to the neighbouring steps and "Step n / m"
+- `savebtn`: in the panel, a Save button (`type="submit"`, `data-fltc-stepper-save`) for the
+  surrounding form (default: false)
+- `onclick`: JavaScript run before the panel's Back / Next links are followed (e.g. saving)
+- Labels go through `__()`: `Back`, `Next`, `Save`, `Step :current / :count: :label`, `No steps.`
 - `class`: extra wrapper classes
 
 **Tabs** (`x-fltc::tabs`, `x-fltc::tabs.tab`, `x-fltc::tabs.panel`): a tab strip and the
@@ -1346,8 +1349,8 @@ Livewire event or any `CustomEvent` — instead of hand-written listeners:
 overrides them.
 
 **Script API:** the container defines `fltc.toast('Saved')` / `fltc.toast({ … })` and
-`fltc.toast.success(title, message)`, `.info`, `.warning`, `.danger` (alias `.error`) — handy as a
-bridge for existing `toastr` calls.
+`fltc.toast.success(title, message)`, `.info`, `.warning`, `.danger` (alias `.error`) — handy
+when replacing another toast library's calls.
 
 **Flux compatibility:** the container also listens for `flux:toast` events and maps Flux semantic variants to the matching roles (`success`, `warning`, `danger`, `info`; `default` → `base`).
 

@@ -1872,3 +1872,14 @@ it('accepts a pasted or autofilled code in the one-time-code boxes', function ()
         ->toContain("getData('text')")
         ->toContain('this.fill(chars.length >= 6 ? 0 : i, chars)');
 });
+
+it('links the stepper panel to the neighbouring steps without host scripts', function () {
+    $html = Blade::render('<x-fltc::nav.stepper :steps="[1 => \'One\', 2 => \'Two\', 3 => \'Three\']" :stepIndex="2" savebtn onclick="save()" />');
+
+    expect($html)
+        ->toContain('step=1')->toContain('step=3')
+        ->toContain('onclick="save();"')
+        ->toContain('type="submit"')->toContain('data-fltc-stepper-save')
+        ->toContain('Back')->toContain('Next')->toContain('Step 2 / 3: Two')
+        ->not->toContain('util.')->not->toContain('submit()')->not->toContain('id="');
+});
