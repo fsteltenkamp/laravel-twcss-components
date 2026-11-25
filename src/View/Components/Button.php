@@ -23,6 +23,7 @@ class Button extends Component
         public string $iconPosition = 'before',
         string $class = '',
         public bool $square = false,
+        public string $drawer = '',
     )
     {
         $solidThemeMap = [

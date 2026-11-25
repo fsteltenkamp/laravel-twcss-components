@@ -9,7 +9,7 @@
             ])->merge([
                 'type' => 'button',
                 'style' => $heightStyle,
-            ]) }}
+            ] + ($drawer !== '' ? ['data-fltc-drawer-trigger' => $drawer, 'aria-haspopup' => 'dialog'] : [])) }}
         >@if($hasIcon && $iconPosition !== 'after')<x-fltc::icon :name="$icon" :variant="$iconVariant" :after="$hasLabel ? '2' : ''" />@endif{{ $slot }}@if($hasIcon && $iconPosition === 'after')<x-fltc::icon :name="$icon" :variant="$iconVariant" :before="$hasLabel ? '2' : ''" />@endif</button>
     </x-fltc::tooltip>
 @else
@@ -20,6 +20,6 @@
         ])->merge([
             'type' => 'button',
             'style' => $heightStyle,
-        ]) }}
+        ] + ($drawer !== '' ? ['data-fltc-drawer-trigger' => $drawer, 'aria-haspopup' => 'dialog'] : [])) }}
     >@if($hasIcon && $iconPosition !== 'after')<x-fltc::icon :name="$icon" :variant="$iconVariant" :after="$hasLabel ? '2' : ''" />@endif{{ $slot }}@if($hasIcon && $iconPosition === 'after')<x-fltc::icon :name="$icon" :variant="$iconVariant" :before="$hasLabel ? '2' : ''" />@endif</button>
 @endif

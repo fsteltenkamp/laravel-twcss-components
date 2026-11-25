@@ -1762,7 +1762,7 @@ div.fltc-spoiler:is([data-skin="neon"] [class*="fltc-color-"])::after,
 /* ---- neon chips (badge variants) ----
    Link chips light up cyan on hover; toggle chips fill pink while on; the count is a
    square tag and the remove button fills pink. */
-a.fltc-badge:is([data-skin="neon"] [class*="fltc-color-"]):is(:hover, :focus-visible),
+:is(a, button).fltc-badge:is([data-skin="neon"] [class*="fltc-color-"]):is(:hover, :focus-visible),
 label.fltc-badge:is([data-skin="neon"] [class*="fltc-color-"]):hover {
     border-color: rgb(var(--fltc-fx-text));
     background: rgb(var(--fltc-fx-text) / 0.2);
@@ -2494,7 +2494,7 @@ body[data-skin="parchment"]::after {
     letter-spacing: 0.02em;
     text-transform: none;
 }
-a.fltc-badge:is([data-skin="parchment"] [class*="fltc-color-"]):is(:hover, :focus-visible),
+:is(a, button).fltc-badge:is([data-skin="parchment"] [class*="fltc-color-"]):is(:hover, :focus-visible),
 label.fltc-badge:is([data-skin="parchment"] [class*="fltc-color-"]):hover {
     border-color: rgb(var(--fltc-fx-accent));
     color: rgb(var(--fltc-fx-accent));
@@ -3105,7 +3105,7 @@ body[data-skin="gothic"]::before {
     font-size: 0.68rem;
     font-weight: 700;
 }
-a.fltc-badge:is([data-skin="gothic"] [class*="fltc-color-"]):is(:hover, :focus-visible),
+:is(a, button).fltc-badge:is([data-skin="gothic"] [class*="fltc-color-"]):is(:hover, :focus-visible),
 label.fltc-badge:is([data-skin="gothic"] [class*="fltc-color-"]):hover {
     border-color: rgb(var(--fltc-fx-accent));
     color: rgb(var(--fltc-fx-accent));
@@ -3624,4 +3624,71 @@ div.fltc-spoiler:is([data-skin="gothic"] [class*="fltc-color-"]) .fltc-spoiler-t
 .fltc-form-upload:is([data-skin="gothic"] [class*="fltc-color-"]) .fltc-form-upload-actions {
     border-top: 1px solid rgb(var(--fltc-fx-text) / 0.4);
     padding-top: 0.75rem;
+}
+
+/* ============ NAVIGATION EXTRAS (all skins) ============ */
+/* Text links, the page header and the sidebar's footer links, in each skin. */
+
+/* neon: links are terminal type with an accent underline that glows on hover */
+.fltc-link:is([data-skin="neon"] [class*="fltc-color-"]) {
+    font-family: var(--fltc-font-term);
+    font-size: 1.1em;
+    letter-spacing: 0.06em;
+    color: rgb(var(--fltc-fx-text));
+    text-decoration-color: rgb(var(--fltc-fx-accent));
+}
+.fltc-link:is([data-skin="neon"] [class*="fltc-color-"]):is(:hover, :focus-visible) {
+    color: rgb(var(--fltc-fx-accent));
+    text-shadow: 0 0 10px rgb(var(--fltc-fx-accent) / var(--fltc-fx-glow));
+}
+.fltc-page-header:is([data-skin="neon"] [class*="fltc-color-"]) {
+    border-color: rgb(var(--fltc-fx-text) / 0.25);
+    box-shadow: 0 1px 0 rgb(var(--fltc-fx-accent) / 0.2);
+}
+.fltc-page-header:is([data-skin="neon"] [class*="fltc-color-"]) .fltc-heading {
+    text-transform: uppercase;
+}
+.fltc-nav-sidebar-footer:is([data-skin="neon"] [class*="fltc-color-"]) .fltc-nav-sidebar-footer-links {
+    font-family: var(--fltc-font-term);
+    font-size: 0.95rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+/* parchment: italic links in the accent, underlined in a fine rule */
+.fltc-link:is([data-skin="parchment"] [class*="fltc-color-"]) {
+    color: rgb(var(--fltc-fx-accent));
+    font-style: italic;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+}
+.fltc-page-header:is([data-skin="parchment"] [class*="fltc-color-"]) {
+    border-bottom-style: double;
+    border-bottom-width: 3px;
+    border-color: rgb(var(--fltc-fx-text) / 0.3);
+}
+.fltc-nav-sidebar-footer:is([data-skin="parchment"] [class*="fltc-color-"]) .fltc-nav-sidebar-footer-links {
+    font-style: italic;
+}
+
+/* gothic: links in the accent with a heavy underline */
+.fltc-link:is([data-skin="gothic"] [class*="fltc-color-"]) {
+    color: rgb(var(--fltc-fx-accent));
+    font-weight: 600;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 3px;
+}
+.fltc-page-header:is([data-skin="gothic"] [class*="fltc-color-"]) {
+    border-bottom-width: 2px;
+    border-color: rgb(var(--fltc-fx-text) / 0.45);
+}
+.fltc-page-header:is([data-skin="gothic"] [class*="fltc-color-"]) .fltc-heading::first-letter {
+    font-size: 1.4em;
+}
+.fltc-nav-sidebar-footer:is([data-skin="gothic"] [class*="fltc-color-"]) .fltc-nav-sidebar-footer-links {
+    font-family: var(--fltc-font-term);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
 }

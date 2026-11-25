@@ -25,6 +25,7 @@ class Breadcrumbs extends Component
         public string $color = 'base',
         public string $class = '',
         public string $containerClass = 'w-full px-4 sm:px-6 lg:px-8',
+        public bool $scroll = false,
     ) {
         $this->classList = trim(implode(' ', array_filter([
             'ml-5',
@@ -69,7 +70,11 @@ class Breadcrumbs extends Component
             'danger'     => 'text-danger-500 dark:text-danger-400',
         ];
 
-        $this->listClass = 'flex flex-wrap items-center gap-x-2 gap-y-2 text-sm ' . ($listTextMap[$this->color] ?? $listTextMap['base']);
+        // scroll: one line that scrolls sideways instead of wrapping (narrow headers).
+        $this->listClass = ($this->scroll
+                ? 'flex flex-nowrap items-center gap-x-2 overflow-x-auto whitespace-nowrap [scrollbar-width:thin] [&>li]:shrink-0 '
+                : 'flex flex-wrap items-center gap-x-2 gap-y-2 ')
+            . 'text-sm ' . ($listTextMap[$this->color] ?? $listTextMap['base']);
 
         $this->items = [];
 

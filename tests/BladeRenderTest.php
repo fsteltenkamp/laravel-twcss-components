@@ -1560,3 +1560,64 @@ it('fills a date range from presets', function () {
     expect(\Fsteltenkamp\TwcssComponents\View\Components\Form\Daterange::range('last-month', \Illuminate\Support\Carbon::parse('2026-03-31')))
         ->toBe(['label' => 'Last month', 'from' => '2026-02-01', 'to' => '2026-02-28']);
 });
+
+/* ---- navigation: heights, pinnable sidebar, breadcrumbs, links ---- */
+
+it('sets the navbar height and the sidebar head height', function () {
+    expect(Blade::render('<x-fltc::nav.navbar height="sm">x</x-fltc::nav.navbar>'))->toContain('flex h-12 items-center')
+        ->and(Blade::render('<x-fltc::nav.navbar>x</x-fltc::nav.navbar>'))->toContain('flex h-16 items-center')
+        ->and(Blade::render('<x-fltc::nav.sidebar headerHeight="sm"><x-slot:brand>B</x-slot:brand><x-fltc::nav.sidebar.link href="#">x</x-fltc::nav.sidebar.link></x-fltc::nav.sidebar>'))->toMatch('/fltc-nav-sidebar-brand flex h-12/');
+});
+
+it('pins or hides a pinnable sidebar from lg up and keeps the state', function () {
+    $html = Blade::render('<x-fltc::nav.sidebar pinnable persist="app-sidebar"><x-slot:brand>B</x-slot:brand><x-fltc::nav.sidebar.link href="#">x</x-fltc::nav.sidebar.link></x-fltc::nav.sidebar>');
+
+    expect($html)
+        ->toContain("localStorage.getItem(key) === 'collapsed'")
+        ->toContain("})('app-sidebar');")
+        ->toContain('new MutationObserver')
+        ->toContain('lg:[[data-sidebar=collapsed]_&amp;]:-translate-x-full')
+        ->toContain('window.fltcSidebar.collapse()')
+        ->toContain('window.fltcSidebar.pin(); open = false')
+        ->toContain('lg:[[data-sidebar=collapsed]_&amp;]:block');
+
+    expect(Blade::render('<x-fltc::nav.sidebar>x</x-fltc::nav.sidebar>'))->not->toContain('fltcSidebar')->not->toContain('data-sidebar=');
+    expect(Blade::render('<x-fltc::nav.navbar.toggle pinnable />'))->toContain('lg:hidden')->toContain('lg:[[data-sidebar=collapsed]_&amp;]:inline-flex');
+});
+
+it('renders footer links in the sidebar footer', function () {
+    $html = Blade::render('<x-fltc::nav.sidebar.footer :links="[\'Docs\' => \'/docs\', [\'Status\', \'https://status.example\', true]]" />');
+
+    expect($html)->toContain('href="/docs"')->toContain('>Docs</a>')->toContain('target="_blank"')->toContain('·');
+});
+
+it('keeps scrolling breadcrumbs on one line', function () {
+    $html = Blade::render('<x-fltc::nav.breadcrumbs scroll :crumbs="[[\'label\' => \'A\', \'href\' => \'/\'], [\'label\' => \'B\']]" />');
+
+    expect($html)->toContain('flex-nowrap')->toContain('overflow-x-auto')->not->toContain('flex-wrap');
+});
+
+it('renders text links: navigate, external and underline', function () {
+    expect(Blade::render('<x-fltc::link href="/a" navigate color="primary">A</x-fltc::link>'))
+        ->toContain('href="/a"')->toContain('wire:navigate')->toContain('text-primary-600')->toContain('hover:underline')->toContain('fltc-link')
+        ->and(Blade::render('<x-fltc::link href="https://x.test" external>X</x-fltc::link>'))
+        ->toContain('target="_blank"')->toContain('rel="noopener noreferrer"')->toContain('ph-arrow-square-out')->not->toContain('wire:navigate')
+        ->and(Blade::render('<x-fltc::link href="#" underline="always">U</x-fltc::link>'))->toMatch('/class="[^"]*\bunderline\b/');
+});
+
+it('opens a drawer from a button or a badge', function () {
+    expect(Blade::render('<x-fltc::button drawer="notes">Notes</x-fltc::button>'))->toContain('data-fltc-drawer-trigger="notes"')
+        ->and(Blade::render('<x-fltc::badge drawer="notes">3</x-fltc::badge>'))->toMatch('/<button[^>]*type="button"[^>]*data-fltc-drawer-trigger="notes"/')
+        ->and(Blade::render('<x-fltc::drawer name="d" label="D">x</x-fltc::drawer>'))->toContain("closest?.('[data-fltc-drawer-trigger]')?.getAttribute('data-fltc-drawer-trigger')");
+});
+
+it('renders a page header with title, description and actions', function () {
+    $html = Blade::render('<x-fltc::page-header title="Customers" description="All of them" color="primary"><x-slot:actions><x-fltc::button>New</x-fltc::button></x-slot:actions></x-fltc::page-header>');
+
+    expect($html)->toContain('<h1')->toContain('Customers')->toContain('All of them')->toContain('fltc-page-header-actions')->toContain('fltc-color-primary');
+});
+
+it('aligns headings and subheadings', function () {
+    expect(Blade::render('<x-fltc::heading align="center">T</x-fltc::heading>'))->toContain('text-center')
+        ->and(Blade::render('<x-fltc::subheading align="center">S</x-fltc::subheading>'))->toContain('text-center');
+});

@@ -122,13 +122,13 @@ gutter also grows by the width of a pinned drawer on that side and animates with
 </x-fltc::container.page>
 ```
 
-**Layouts**:
-- `x-app-layout`, `x-guest-layout`, `x-formular-layout`, `x-admin-layout`, `x-profile-layout`, `x-error-layout`, `x-editor-layout`
-
 **Breadcrumbs** (`x-fltc::nav.breadcrumbs`):
 - `color`: role or palette (default: base) — propagated to all items
 - `crumbs`: array of `{href, label, icon?, isActive?}` for programmatic rendering
 - `containerClass`: wrapper div class (default: `w-full px-4 sm:px-6 lg:px-8`)
+- `scroll`: keep the trail on one line that scrolls sideways instead of wrapping (narrow headers)
+- Part hooks: `fltc-nav-breadcrumbs-crumb` (with `aria-current="page"` on the current one) and
+  `fltc-nav-breadcrumbs-separator`; each skin draws its own separators
 
 **Breadcrumb Item** (`x-fltc::nav.breadcrumbs.item`):
 - `color`: role or palette (default: inherited from parent)
@@ -136,6 +136,13 @@ gutter also grows by the width of a pinned drawer on that side and animates with
 - `icon`: icon class string
 - `isActive`: marks the current page item
 - `showSeparator`: show preceding caret separator (default: true)
+
+**Text link** (`x-fltc::link`): a link in running text, tables and lists (`nav.link` is for
+navigation bars).
+- `href`, `color` (role or palette, default: base — `primary` for the usual link colour)
+- `navigate`: `wire:navigate`; `external`: new tab with `rel="noopener noreferrer"` and an
+  outward arrow
+- `underline`: `hover` (default), `always`, `none`; `icon`: leading icon
 
 **Stepper** (`x-fltc::nav.stepper`):
 - `color`: role or palette (default: base)
@@ -227,6 +234,7 @@ Props:
 - `containerClass`: inner container width/padding (default: `w-full px-4 sm:px-6 lg:px-8`)
 - `stickyTop` / `stickyBottom`: pin the bar to the top/bottom; sets the matching edge border and applies `zIndexClass`. Use `stickyBottom` to make the navbar double as a page footer (bottom-pinned, top edge border)
 - `zIndexClass`: z-index when sticky (default: `z-40`)
+- `height`: `sm` (48px), `md` (64px, default), `lg` (80px), or classes of your own
 - Slots: `logo` (optional start-aligned logo box — only rendered when provided), `left` (or the default slot) and `right` for start/end aligned content
 - Children: `x-fltc::nav.navbar.link` (`href`), `x-fltc::nav.navbar.postlink` (`action` — styled like a link but submits a POST form + CSRF, e.g. logout), `x-fltc::nav.navbar.item` (static label), `x-fltc::nav.navbar.onclick` (`onclick` JS string), `x-fltc::nav.navbar.toggle` (sidebar drawer button, see below), and `x-fltc::nav.navbar.dropdown` (`trigger` slot, optional `hover`) with `dropdown.link` (`href`) and `dropdown.postlink` (`action` — POST form + CSRF) menu items. Self-initialising vanilla JS handles open/close, outside-click, Escape and optional hover.
 
@@ -242,6 +250,7 @@ Props:
 - `label`: accessible label (default: `Toggle navigation`)
 - `color`: role or palette (default: inherited from the navbar)
 - `class`: extra classes; the default slot overrides the built-in hamburger icon
+- `pinnable`: with a pinnable sidebar, also show the toggle from `lg` up while the sidebar is hidden
 - Behaviour: hidden from `lg` up (where the sidebar is a permanent column) and dispatches the `fltc-sidebar-toggle` window event the sidebar listens for. Requires Alpine.
 
 **Sidebar** (`x-fltc::nav.sidebar`): a full-height vertical navigation column that automatically collapses into an off-canvas drawer below `lg`.
@@ -250,6 +259,14 @@ Props:
 - `heightClass`: height class (default: `h-screen` for full viewport height; override when nesting inside a layout, e.g. `h-full`)
 - `collapsible`: enable the responsive mobile drawer (default: `true`); set `false` for a sidebar that is always an in-flow column (the original behaviour, no Alpine)
 - `name`: stable key so a `x-fltc::nav.navbar.toggle` with a matching `target` controls this specific sidebar (only needed with multiple sidebars)
+- `headerHeight`: height of the `brand` row — `sm`, `md` (default), `lg` — to line up with the navbar's `height`
+- `pinnable`: from `lg` up the visitor can hide the sidebar (button in the brand row); hidden, it
+  leaves the layout and the navbar toggle (with `pinnable`) slides it over the content like the
+  drawer below `lg`, where a pin button brings it back. The choice is kept per browser in
+  `localStorage` under `persist` (default `fltc-sidebar`) and applied as
+  `data-sidebar="pinned|collapsed"` on `<html>` before the sidebar paints; a MutationObserver
+  restores it after `wire:navigate`. Script API: `window.fltcSidebar.pin()`, `.collapse()`,
+  `.state()`. Needs `collapsible` (the default)
 - `class`: extra wrapper classes — apply desktop positioning with the `lg:` prefix (e.g. `lg:sticky lg:top-0`) so it doesn't fight the mobile `fixed` drawer
 - Slots: `brand` (top header row, e.g. logo), default slot (nav body), `footer` (pinned to the bottom)
 - Behaviour (when `collapsible`): below `lg` the sidebar is pinned off-screen and slides in over a dimmed backdrop when toggled; it closes on backdrop click, Escape, navigating a link, and when the viewport grows to `lg`. From `lg` up it is a static column, always visible regardless of the toggle state. Self-contained Alpine, no extra wiring — pair it with `x-fltc::nav.navbar.toggle`.
@@ -279,6 +296,8 @@ Props:
 - Behaviour: groups **stay open once opened** (the choice is remembered in `localStorage` across page loads / `wire:navigate`) and are **forced open when the URL is on one of their sub-items** (detected via a child `data-sidebar-active` link). Self-initialising vanilla JS, no Alpine dependency.
 
 **Sidebar footer** (`x-fltc::nav.sidebar.footer`): bottom region pinned with `mt-auto` and a top border. Drop it in the sidebar's `footer` slot. `color` inherited; `class` for extras.
+- `links`: small links in a row under the slot ("Documentation · Imprint") — `label => href`, or
+  `[label, href, external]` for one that opens in a new tab
 
 **Sidebar profile** (`x-fltc::nav.sidebar.profile`): an optional account row for the footer.
 - `name`: display name; `email`: secondary line
@@ -293,6 +312,16 @@ Components:
 - `x-fltc::heading`
 - `x-fltc::subheading`
 - `x-fltc::text`
+
+- `x-fltc::page-header`
+
+`heading` and `subheading` take `align` (`center`, `right`).
+
+**Page header** (`x-fltc::page-header`): the head of a page — title and description on the
+left, actions on the right, wrapping on narrow screens.
+- `title`, `description`, `level` (heading level, default 1), `size` (default `xl`)
+- `divided`: a rule under the header; `color`: role or palette (default: base)
+- Slots: default (under the title — breadcrumbs, badges), `actions`
 
 **Text** (`x-fltc::text`): inline text in the theme's Primary Content colour.
 - `color`: role or palette (default: base). Ignored when `color` is set
@@ -525,6 +554,7 @@ Shared props:
 - `height`: xs, sm, md, lg, xl, auto, or numeric pixel value
 - `disabled`: true or false
 - `variant`: `solid` (default), `outline`, `ghost` (no fill or frame until hovered — toolbars, icon buttons) or `link` (text that acts as a button, underlined on hover; no padding or fixed height, so it sits in running text)
+- `drawer`: name of a drawer the button toggles
 - `square`: as wide as it is high, for icon-only buttons (`<x-fltc::button variant="ghost" icon="push-pin" square tooltip="Pin" />`)
 - `tooltip`: plain text tooltip; when set, button renders inside `x-fltc::tooltip`
 - `icon`: Phosphor icon name rendered via `x-fltc::icon` (e.g. `floppy-disk`). Automatically spaced from the label
@@ -1026,6 +1056,8 @@ Use message boxes for alerts, empty-state notices, warnings, and selected-item s
 - `removable`: adds a ✕ button that dispatches a `badge-remove` browser event with `value`
   (or the label) as detail: `x-on:badge-remove="$wire.removeTag($event.detail)"`.
   `removeLabel`: its accessible name (default: `__('Remove')`)
+- `drawer="name"`: a button chip that toggles the drawer of that name (also on `x-fltc::button`;
+  any element with `data-fltc-drawer-trigger="name"` does the same)
 
 Other props: `icon`, `iconVariant`, `count` (a small number after the label, e.g. facet counts),
 `color` (role or palette, default: slate, or the surrounding chip cloud's).

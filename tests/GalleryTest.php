@@ -355,11 +355,29 @@ request id 7f3a9c</x-slot:details>
             'Nav link' => [
                 ['default', '<x-fltc::nav.link href="#" color="base">Dashboard</x-fltc::nav.link>'],
             ],
+            'Text link' => [
+                ['in text, external, always underlined', '<p class="text-sm">See <x-fltc::link href="#" color="primary">the deed</x-fltc::link>, the <x-fltc::link href="https://example.com" external color="primary">land registry</x-fltc::link> or <x-fltc::link href="#" underline="always" color="primary" icon="file-pdf">the PDF</x-fltc::link>.</p>'],
+            ],
+            'Page header' => [
+                ['title, description, actions', '<x-fltc::page-header title="Customers" description="Everyone with an active contract." color="primary" divided>
+    <x-slot:actions>
+        <x-fltc::button color="base" variant="outline" icon="download-simple">Export</x-fltc::button>
+        <x-fltc::button color="primary" icon="plus">New customer</x-fltc::button>
+    </x-slot:actions>
+</x-fltc::page-header>'],
+            ],
             'Breadcrumbs' => [
                 ['default', '<x-fltc::nav.breadcrumbs :crumbs="$crumbs" color="base" />', ['crumbs' => [
                     ['label' => 'Home', 'href' => '#'],
                     ['label' => 'Library', 'href' => '#'],
                     ['label' => 'Data', 'href' => null],
+                ]]],
+                ['scroll (one line, scrolls sideways)', '<div class="max-w-xs rounded border p-1"><x-fltc::nav.breadcrumbs :crumbs="$crumbs" color="base" scroll containerClass="w-full" /></div>', ['crumbs' => [
+                    ['label' => 'Dashboard', 'href' => '#'],
+                    ['label' => 'Customers', 'href' => '#'],
+                    ['label' => 'Müller GmbH', 'href' => '#'],
+                    ['label' => 'Contracts', 'href' => '#'],
+                    ['label' => 'Purchase agreement 2026', 'href' => null],
                 ]]],
             ],
             'Segmented toggle' => [
@@ -405,6 +423,7 @@ request id 7f3a9c</x-slot:details>
             ],
             'Sidebar' => [
                 ['default', sidebarExample()],
+                ['pinnable, with a compact navbar (from lg up: hide it with the button in its head, bring it back with the navbar toggle)', pinnableSidebarExample()],
             ],
         ],
 
@@ -673,6 +692,34 @@ function sidebarExample(): string
                 </x-fltc::nav.sidebar.footer>
             </x-slot:footer>
         </x-fltc::nav.sidebar>
+        BLADE;
+}
+
+function pinnableSidebarExample(): string
+{
+    return <<<'BLADE'
+        <div class="flex h-80 overflow-hidden rounded-xl border shadow-sm">
+            <x-fltc::nav.sidebar color="base" heightClass="h-full" headerHeight="sm" pinnable persist="fltc-gallery-sidebar" name="gallery-pin">
+                <x-slot:brand><span class="font-semibold">Acme Inc.</span></x-slot:brand>
+                <x-fltc::nav.sidebar.link href="#" icon="ph ph-house" active>Home</x-fltc::nav.sidebar.link>
+                <x-fltc::nav.sidebar.link href="#" icon="ph ph-lifebuoy">Support</x-fltc::nav.sidebar.link>
+                <x-slot:footer>
+                    <x-fltc::nav.sidebar.footer :links="['Documentation' => '#', 'Imprint' => '#']" />
+                </x-slot:footer>
+            </x-fltc::nav.sidebar>
+            <div class="min-w-0 flex-1">
+                <x-fltc::nav.navbar color="base" height="sm">
+                    <x-slot:left>
+                        <x-fltc::nav.navbar.toggle pinnable target="gallery-pin" />
+                        <x-fltc::nav.navbar.item>Customers</x-fltc::nav.navbar.item>
+                    </x-slot:left>
+                    <x-slot:right>
+                        <x-fltc::badge color="primary" drawer="gallery-notes" icon="note">Notes</x-fltc::badge>
+                    </x-slot:right>
+                </x-fltc::nav.navbar>
+                <p class="p-4 text-sm">Page content. The badge in the bar opens the Notes drawer.</p>
+            </div>
+        </div>
         BLADE;
 }
 

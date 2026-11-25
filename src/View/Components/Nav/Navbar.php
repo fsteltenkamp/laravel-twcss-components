@@ -10,6 +10,7 @@ use Fsteltenkamp\TwcssComponents\View\Component;
 class Navbar extends Component
 {
     public string $classList;
+    public string $heightClass;
 
     /**
      * Create a new component instance.
@@ -21,7 +22,11 @@ class Navbar extends Component
         public bool $stickyTop = false,
         public bool $stickyBottom = false,
         public string $zIndexClass = 'z-40',
+        public string $height = 'md',
     ) {
+        // Bar height: sm 48px, md 64px (default), lg 80px; any other value is used as classes.
+        $this->heightClass = ['sm' => 'h-12', 'md' => 'h-16', 'lg' => 'h-20'][$height] ?? $height;
+
         $edgeBorderClass = match (true) {
             $this->stickyTop && $this->stickyBottom => 'border-y',
             $this->stickyBottom => 'border-t',

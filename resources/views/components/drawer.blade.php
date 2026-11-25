@@ -259,6 +259,13 @@
 
             mobile.addEventListener('change', () => api.layout());
 
+            // Any element with data-fltc-drawer-trigger="name" toggles that drawer (the
+            // `drawer` prop of button and badge). A trigger without a name is left alone.
+            document.addEventListener('click', (event) => {
+                const name = event.target.closest?.('[data-fltc-drawer-trigger]')?.getAttribute('data-fltc-drawer-trigger');
+                if (name) api.toggle(name);
+            });
+
             if (window.Alpine) {
                 register(window.Alpine);
             } else {

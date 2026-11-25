@@ -1,6 +1,6 @@
 <nav {{ $attributes->merge(['class' => $classList]) }}>
 	<div class="{{ $containerClass }}">
-		<div class="flex h-16 items-center gap-4">
+		<div class="flex {{ $heightClass }} items-center gap-4">
 			@isset($logo)
 			<div class="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden">
 				{{ $logo }}

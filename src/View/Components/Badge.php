@@ -32,6 +32,7 @@ class Badge extends Component
         public bool $removable = false,
         public string $removeLabel = '',
         public int|string|null $count = null,
+        public string $drawer = '',
     ) {
         $this->color = $color ?? ViewFacade::shared('fltcBadgeColor') ?? 'base';
         $color = $this->color;
@@ -187,6 +188,7 @@ class Badge extends Component
         $this->tag = match (true) {
             $variant === 'toggle' => 'label',
             $href !== '' => 'a',
+            $drawer !== '' => 'button',
             default => 'span',
         };
 
@@ -194,7 +196,7 @@ class Badge extends Component
             'inline-flex items-center gap-1 rounded-md border px-2.5 py-1 text-xs font-medium',
             static::surface($color),
             match ($this->tag) {
-                'a' => 'cursor-pointer transition focus:outline-none focus-visible:ring-2 '.($linkMap[$color] ?? $linkMap['base']),
+                'a', 'button' => 'cursor-pointer transition focus:outline-none focus-visible:ring-2 '.($linkMap[$color] ?? $linkMap['base']),
                 'label' => 'cursor-pointer select-none transition has-[:focus-visible]:ring-2 '.($linkMap[$color] ?? $linkMap['base']).' '.($onMap[$color] ?? $onMap['base']),
                 default => '',
             },
