@@ -1855,3 +1855,9 @@ it('renders a markdown editor with toolbar, shortcuts, controls and preview', fu
     expect(Blade::render('<x-fltc::form.markdown id="b" preview />'))->toContain("new CustomEvent('fltc-markdown-preview'");
     expect(Blade::render('<x-fltc::form.markdown id="b" />'))->not->toContain('fltc-form-markdown-preview');
 });
+
+it('colours one-time-code boxes with literal classes and separators by role', function () {
+    expect(Blade::render('<x-fltc::form.otp color="primary" />'))->toContain('border-primary-300')->toContain('focus:ring-primary-500')->not->toContain('{{')
+        ->and(Blade::render('<x-fltc::separator color="primary" />'))->toContain('border-primary-200')->toContain('fltc-color-primary')
+        ->and(Blade::render('<x-fltc::separator />'))->toContain('border-zinc-200')->not->toContain('fltc-color-');
+});

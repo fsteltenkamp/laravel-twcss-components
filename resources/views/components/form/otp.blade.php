@@ -53,7 +53,7 @@
             x-on:input="handleInput({{ $i }}, $event)"
             x-on:keydown="handleKeydown({{ $i }}, $event)"
             x-on:focus="$event.target.select()"
-            class="fltc-form-otp-box h-12 w-11 rounded-md border border-{{ $color }}-300 bg-white text-center text-lg font-semibold text-{{ $color }}-900 shadow-sm transition focus:border-{{ $color }}-500 focus:outline-none focus:ring-2 focus:ring-{{ $color }}-500 dark:border-{{ $color }}-600 dark:bg-{{ $color }}-950 dark:text-{{ $color }}-100 dark:focus:border-{{ $color }}-400 dark:focus:ring-{{ $color }}-400"
+            class="fltc-form-otp-box h-12 w-11 rounded-md border text-center text-lg font-semibold shadow-sm transition focus:outline-none focus:ring-2 {{ \Fsteltenkamp\TwcssComponents\Support\Shades::control($color) }}"
         />
     @endfor
 

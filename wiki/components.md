@@ -1443,6 +1443,7 @@ Buttons created by JavaScript can look the same: read the classes from the toolb
 **Separator** (`x-fltc::separator`): a thin divider rule.
 - `vertical`: render a vertical rule instead of horizontal (default: false)
 - `variant`: `default` or `subtle` (lighter border)
+- `color`: role or palette for the rule (default: neutral zinc)
 - `class`: extra classes (e.g. `my-4`, `md:hidden`)
 
 **Icon** (`x-fltc::icon`): renders a single [Phosphor](https://phosphoricons.com) webfont glyph
