@@ -565,6 +565,8 @@ Components:
 - `x-fltc::form.rating`
 - `x-fltc::form.upload`
 - `x-fltc::form.otp`
+- `x-fltc::form.error`
+- `x-fltc::form.daterange`
 - `x-fltc::form.container.auth.simple`
 - `x-fltc::form.container.auth.two-col-left`
 - `x-fltc::form.container.auth.two-col-right`
@@ -580,6 +582,15 @@ Common props:
 - `model`: Livewire binding target
 - `live`: use `wire:model.live` when true
 - `debounce`: with `live`, wait this long after typing before updating, e.g. `300ms`
+- `error`: error text to show instead of the error bag's (marks the control invalid);
+  `errorIcon`: icon before the error text (e.g. `warning-circle`)
+- `noteToggle`: hide the `note` behind an ⓘ button next to the label (`aria-controls`)
+- slot `aside`: content at the right end of the label row — a save status, a timestamp:
+  `<x-slot:aside><x-fltc::icon name="check" /> saved 12:03</x-slot:aside>`
+- `size` (text, typed inputs and select): `md` (default) or `sm` — compact height for table
+  rows and toolbars (combine with `inline` and no label)
+- `suggestions` (text inputs): values the browser offers while typing (a `<datalist>`) — a
+  list, or value => label; `mono`: monospace text
   (`wire:model.live.debounce.300ms`); text-based inputs only
 - `icon`: a Phosphor icon name (e.g. `user`, `envelope`) on the text/email/password/select inputs. Rendered internally through `x-fltc::icon` — the host app only needs the Phosphor icon stylesheet loaded.
 - `iconVariant`: Phosphor weight for the input icon (default: `regular`) — see Icon below
@@ -612,7 +623,24 @@ picker, a third-party widget) to make them look like the rest of the form.
 - `name`: field name whose validation error to show (default: `for`; `name[]` and `name.*`
   errors count too). The error's id is `{name}-error`
 - `color`: role or palette (default: base); `inline`: no bottom margin
+- `error`, `errorIcon`, `noteToggle` and the `aside` slot as for the inputs above (every
+  input passes them through)
 - `class` and attributes go on the wrapper `<div>`
+
+**Error** (`x-fltc::form.error`): a validation error outside a field — under a group of
+controls, in a table row. Shows `message`, else the slot, else the error bag's first message
+for `name` (`name.*` counts too); renders nothing without one.
+- `name`, `message`, `icon`
+- `color`: role or palette (default: `danger`)
+
+**Date range** (`x-fltc::form.daterange`): from and to dates side by side with preset
+buttons. A preset fills both dates and fires `input`, so `wire:model` picks it up.
+- `fromName` / `toName` (default `from` / `to`), `fromModel` / `toModel` (Livewire), `live`
+- `from` / `to`: initial values (`Y-m-d`); `fromLabel` / `toLabel` (default "From" / "To")
+- `presets`: keys of the built-in ranges — `today`, `this-week`, `this-month`, `last-month`,
+  `last-30-days`, `last-12-months`, `this-year`, `last-year` (default: this month, last month,
+  last 12 months, this year) — and/or your own as `label => [from, to]`; `[]` for none
+- `color`, `size` (`sm` for a compact toolbar), `inline`
 
 **Settings section** (`x-fltc::form.section`): a titled group of fields with hint text, e.g.
 one block of a settings page. Consecutive sections are separated by a rule.
@@ -654,6 +682,8 @@ The chosen file names are listed under the zone.
 - `name` (use `name[]` with `multiple`), `id`, `label`, `note`, `required`, `disabled`
 - `accept` (also shown as a hint), `multiple` (a single-file zone keeps only the first dropped file)
 - `model` / `live`: Livewire binding on the input; other attributes go on the input too
+- slot `actions`: buttons shown under the drop zone once files are chosen ("Upload",
+  "Cancel"); inside it, `clear()` empties the selection
 - `icon` (default `upload-simple`), `prompt` (default "Drop a file / files here or click to browse")
 - `color`: role or palette (default: base); `inline`, `wrapperClass`
 - Errors on `name` and `name.*` are shown. The plain picker is `x-fltc::form.input.file`
@@ -674,6 +704,9 @@ Group props:
 - `value`: the selected option for plain forms; `old()` input wins after a failed validation
 - `model` / `live`: Livewire binding for every option (then `wire:model` decides the checked one)
 - `horizontal`: options in a wrapping row instead of a column
+- `variant`: `default` or `cards` — each option a bordered row that takes the colour when
+  chosen (a picker for plans, tickets, addresses); options then take a `description` (or slot
+  content after the `label`) as a second line. `horizontal` lays cards out in a grid
 - `color`: role or palette (default: base); `inline`: no bottom margin
 - Shows the validation error for `name`
 
@@ -709,6 +742,9 @@ JavaScript. Two visual variants:
   - `size`: `sm`, `md` (default), or `lg` — sets track, knob and icon sizes
   - `iconChecked` / `iconUnchecked`: optional Phosphor icons shown inside the knob for the
     on / off states (colored by `color` / `colorOff`). Pass an empty string to hide one.
+  - `labelOff` / `labelOn`, `iconOff` / `iconOn`: text or icons on either side of the track
+    (a lever: ✗ left, ✓ right); the side that applies reads, the other fades
+    (`<x-fltc::form.checkbox variant="toggle" iconOff="x" iconOn="check" />`)
 
 Shared props: `id`, `name`, `value`, `label`, `model` (Livewire binding), `live`
 (`wire:model.live`), `checked`, `disabled`, `class`.

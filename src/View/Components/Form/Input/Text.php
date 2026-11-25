@@ -41,6 +41,12 @@ class Text extends Input
         public bool $inline = false,
         public string $note = '',
         public string $wrapperClass = '',
+        public string $error = '',
+        public string $errorIcon = '',
+        public bool $noteToggle = false,
+        public string $size = 'md',
+        public array $suggestions = [],
+        public bool $mono = false,
     ) {
         $this->type = $type !== '' ? $type : $this->defaultType;
 
@@ -48,6 +54,7 @@ class Text extends Input
             $this->name = $this->id;
         }
 
+        $class = trim(($mono ? 'font-mono ' : '').$class);
         $this->normalClasses  = $this->getNormalClasses($color, $class);
         $this->errorClasses   = $this->getErrorClasses($class);
 

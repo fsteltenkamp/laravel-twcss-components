@@ -3464,3 +3464,164 @@ div.fltc-spoiler:is([data-skin="gothic"] [class*="fltc-color-"]) .fltc-spoiler-t
 .fltc-spinner:is([data-skin="parchment"] [class*="fltc-color-"]) {
     animation-duration: 1.6s;
 }
+
+/* ============ FORM EXTRAS (all skins) ============ */
+/* The field's label row (aside, note toggle), toggle side labels, radio cards, the
+   upload's actions, the stand-alone error and the date range, in each skin. */
+
+/* neon */
+.fltc-form-field:is([data-skin="neon"] [class*="fltc-color-"]) .fltc-form-field-aside {
+    font-family: var(--fltc-font-term);
+    font-size: 0.95rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgb(var(--fltc-fx-text) / 0.65);
+}
+.fltc-form-field:is([data-skin="neon"] [class*="fltc-color-"]) .fltc-form-field-note-toggle {
+    border-radius: 0;
+    color: rgb(var(--fltc-fx-text) / 0.7);
+}
+.fltc-form-field:is([data-skin="neon"] [class*="fltc-color-"]) .fltc-form-field-note-toggle[aria-expanded="true"] {
+    color: rgb(var(--fltc-fx-accent));
+    text-shadow: 0 0 8px rgb(var(--fltc-fx-accent) / var(--fltc-fx-glow));
+}
+.fltc-form-checkbox:is([data-skin="neon"] [class*="fltc-color-"]) ~ :is(.fltc-form-checkbox-off, .fltc-form-checkbox-on) {
+    font-family: var(--fltc-font-term);
+    font-size: 1rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgb(var(--fltc-fx-text));
+}
+.fltc-form-checkbox:is([data-skin="neon"] [class*="fltc-color-"]):checked ~ .fltc-form-checkbox-on {
+    color: rgb(var(--fltc-fx-accent));
+    text-shadow: 0 0 8px rgb(var(--fltc-fx-accent) / var(--fltc-fx-glow));
+}
+.fltc-form-radio-card:has(> .fltc-form-radio:is([data-skin="neon"] [class*="fltc-color-"])) {
+    --fltc-line: var(--fltc-fx-text);
+    --fltc-line-alpha: 0.4;
+    position: relative;
+    border-color: rgb(var(--fltc-line) / var(--fltc-line-alpha));
+    border-radius: 0;
+    background: rgb(var(--fltc-fx-ink) / 0.6);
+    clip-path: polygon(calc(var(--fltc-cut) + 1px) -1px, calc(100% + 1px) -1px, calc(100% + 1px) calc(100% - var(--fltc-cut) - 1px), calc(100% - var(--fltc-cut) - 1px) calc(100% + 1px), -1px calc(100% + 1px), -1px calc(var(--fltc-cut) + 1px));
+}
+.fltc-form-radio-card:has(> .fltc-form-radio:is([data-skin="neon"] [class*="fltc-color-"]))::after {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    pointer-events: none;
+    background: linear-gradient(to bottom right, transparent 50%, rgb(var(--fltc-line) / var(--fltc-line-alpha)) 50%, rgb(var(--fltc-line) / var(--fltc-line-alpha)) calc(50% + 1.2px), transparent calc(50% + 1.2px)) top left / var(--fltc-cut) var(--fltc-cut) no-repeat, linear-gradient(to top left, transparent 50%, rgb(var(--fltc-line) / var(--fltc-line-alpha)) 50%, rgb(var(--fltc-line) / var(--fltc-line-alpha)) calc(50% + 1.2px), transparent calc(50% + 1.2px)) bottom right / var(--fltc-cut) var(--fltc-cut) no-repeat;
+}
+.fltc-form-radio-card:has(> .fltc-form-radio:is([data-skin="neon"] [class*="fltc-color-"]):checked) {
+    --fltc-line: var(--fltc-fx-accent);
+    --fltc-line-alpha: 1;
+    background: rgb(var(--fltc-fx-accent) / 0.1);
+    box-shadow: inset 0 0 18px rgb(var(--fltc-fx-accent) / 0.15);
+}
+.fltc-form-error:is([data-skin="neon"] [class*="fltc-color-"]) {
+    font-family: var(--fltc-font-term);
+    font-size: 1rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgb(var(--fltc-fx-danger));
+}
+.fltc-form-daterange:is([data-skin="neon"] [class*="fltc-color-"]) .fltc-form-daterange-presets {
+    border-left: 1px solid rgb(var(--fltc-fx-text) / 0.3);
+    padding-left: 0.5rem;
+}
+.fltc-form-upload:is([data-skin="neon"] [class*="fltc-color-"]) .fltc-form-upload-actions {
+    border-top: 1px dashed rgb(var(--fltc-fx-text) / 0.3);
+    padding-top: 0.75rem;
+}
+
+/* parchment */
+.fltc-form-field:is([data-skin="parchment"] [class*="fltc-color-"]) .fltc-form-field-aside {
+    font-style: italic;
+}
+.fltc-form-field:is([data-skin="parchment"] [class*="fltc-color-"]) .fltc-form-field-note-toggle[aria-expanded="true"] {
+    color: rgb(var(--fltc-fx-accent));
+}
+.fltc-form-checkbox:is([data-skin="parchment"] [class*="fltc-color-"]) ~ :is(.fltc-form-checkbox-off, .fltc-form-checkbox-on) {
+    font-variant-caps: all-small-caps;
+    letter-spacing: 0.06em;
+    font-size: 1rem;
+}
+.fltc-form-checkbox:is([data-skin="parchment"] [class*="fltc-color-"]):checked ~ .fltc-form-checkbox-on {
+    color: rgb(var(--fltc-fx-accent));
+}
+.fltc-form-radio-card:has(> .fltc-form-radio:is([data-skin="parchment"] [class*="fltc-color-"])) {
+    border-color: rgb(var(--fltc-fx-text) / 0.3);
+    background: rgb(var(--fltc-fx-ink) / 0.5);
+    box-shadow: 0 1px 2px rgb(var(--fltc-fx-text) / 0.12);
+}
+.fltc-form-radio-card:has(> .fltc-form-radio:is([data-skin="parchment"] [class*="fltc-color-"]):checked) {
+    border-color: rgb(var(--fltc-fx-accent));
+    outline: 1px solid rgb(var(--fltc-fx-accent) / 0.4);
+    outline-offset: -4px;
+    background: rgb(var(--fltc-fx-accent) / 0.06);
+}
+.fltc-form-error:is([data-skin="parchment"] [class*="fltc-color-"]) {
+    font-style: italic;
+    color: rgb(var(--fltc-fx-danger));
+}
+.fltc-form-daterange:is([data-skin="parchment"] [class*="fltc-color-"]) .fltc-form-daterange-preset {
+    font-style: italic;
+    font-variant-caps: normal;
+    text-transform: none;
+}
+.fltc-form-upload:is([data-skin="parchment"] [class*="fltc-color-"]) .fltc-form-upload-actions {
+    border-top: 3px double rgb(var(--fltc-fx-text) / 0.25);
+    padding-top: 0.75rem;
+}
+
+/* gothic */
+.fltc-form-field:is([data-skin="gothic"] [class*="fltc-color-"]) .fltc-form-field-aside {
+    font-family: var(--fltc-font-term);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+.fltc-form-field:is([data-skin="gothic"] [class*="fltc-color-"]) .fltc-form-field-note-toggle {
+    border-radius: 0;
+}
+.fltc-form-field:is([data-skin="gothic"] [class*="fltc-color-"]) .fltc-form-field-note-toggle[aria-expanded="true"] {
+    color: rgb(var(--fltc-fx-accent));
+}
+.fltc-form-checkbox:is([data-skin="gothic"] [class*="fltc-color-"]) ~ :is(.fltc-form-checkbox-off, .fltc-form-checkbox-on) {
+    font-family: var(--fltc-font-term);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+.fltc-form-checkbox:is([data-skin="gothic"] [class*="fltc-color-"]):checked ~ .fltc-form-checkbox-on {
+    color: rgb(var(--fltc-fx-accent));
+}
+.fltc-form-radio-card:has(> .fltc-form-radio:is([data-skin="gothic"] [class*="fltc-color-"])) {
+    border-color: rgb(var(--fltc-fx-text) / 0.45);
+    border-radius: 0;
+    background: rgb(var(--fltc-fx-ink) / 0.5);
+    box-shadow: inset 0 0 0 1px rgb(var(--fltc-fx-ink) / 0.5), 0 2px 0 rgb(0 0 0 / 0.2);
+}
+.fltc-form-radio-card:has(> .fltc-form-radio:is([data-skin="gothic"] [class*="fltc-color-"]):checked) {
+    border-color: rgb(var(--fltc-fx-accent));
+    background: rgb(var(--fltc-fx-accent) / 0.08);
+    box-shadow: inset 4px 0 0 rgb(var(--fltc-fx-accent)), 0 2px 0 rgb(0 0 0 / 0.2);
+}
+.fltc-form-error:is([data-skin="gothic"] [class*="fltc-color-"]) {
+    font-family: var(--fltc-font-term);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgb(var(--fltc-fx-danger));
+}
+.fltc-form-daterange:is([data-skin="gothic"] [class*="fltc-color-"]) .fltc-form-daterange-presets {
+    border-left: 2px solid rgb(var(--fltc-fx-text) / 0.35);
+    padding-left: 0.5rem;
+}
+.fltc-form-upload:is([data-skin="gothic"] [class*="fltc-color-"]) .fltc-form-upload-actions {
+    border-top: 1px solid rgb(var(--fltc-fx-text) / 0.4);
+    padding-top: 0.75rem;
+}

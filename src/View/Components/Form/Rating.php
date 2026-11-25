@@ -37,6 +37,9 @@ class Rating extends Component
         public bool $clearable = true,
         public bool $inline = false,
         public string $wrapperClass = '',
+        public string $error = '',
+        public string $errorIcon = '',
+        public bool $noteToggle = false,
     ) {
         $this->max = max(1, $max);
         $this->current = max(0, min($this->max, (int) ($name !== '' ? old($name, $value) : $value)));

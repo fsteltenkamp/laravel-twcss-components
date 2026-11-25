@@ -28,6 +28,10 @@ class Select extends Input
         public bool $inline = false,
         public string $note = '',
         public string $wrapperClass = '',
+        public string $error = '',
+        public string $errorIcon = '',
+        public bool $noteToggle = false,
+        public string $size = 'md',
     ) {
         if ($this->name === '') {
             $this->name = $this->id;

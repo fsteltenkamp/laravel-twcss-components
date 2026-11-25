@@ -1458,3 +1458,105 @@ it('keeps the icon margin classes literal in the source for Tailwind', function 
     expect($source)->toContain("'me-2'")->toContain("'ms-2'")
         ->and(Blade::render('<x-fltc::button icon="plus">New</x-fltc::button>'))->toContain('me-2');
 });
+
+/* ---- field options: aside, note toggle, explicit error ---- */
+
+it('renders an aside next to the label of every field', function (string $tag) {
+    shareErrors();
+    $html = Blade::render("<x-fltc::{$tag} id=\"f\" label=\"Name\"><x-slot:aside>saved 12:03</x-slot:aside></x-fltc::{$tag}>");
+
+    expect($html)->toContain('fltc-form-field-head')->toMatch('/fltc-form-field-aside[^>]*>saved 12:03</');
+})->with(['form.input.text', 'form.input.select', 'form.input.file', 'form.textarea', 'form.upload', 'form.rating']);
+
+it('hides the note behind an info button with noteToggle', function () {
+    shareErrors();
+    $html = Blade::render('<x-fltc::form.input.text id="iban" label="IBAN" note="Without spaces" noteToggle />');
+
+    expect($html)
+        ->toContain('x-data="{ noteOpen: false }"')
+        ->toContain('aria-controls="iban-note"')
+        ->toMatch('/id="iban-note"[^>]*x-show="noteOpen"/');
+
+    expect(Blade::render('<x-fltc::form.input.text id="iban" label="IBAN" note="Without spaces" />'))
+        ->not->toContain('noteOpen')->not->toContain('fltc-form-field-head');
+});
+
+it('shows an explicit error instead of the error bag, with an icon', function () {
+    shareErrors(['amount' => 'From the bag']);
+    $html = Blade::render('<x-fltc::form.input.number id="amount" label="Amount" error="Too high" errorIcon="warning-circle" />');
+
+    expect($html)
+        ->toContain('Too high')->not->toContain('From the bag')
+        ->toContain('aria-invalid="true"')
+        ->toContain('ph-warning-circle')
+        ->toContain('text-danger-600');
+});
+
+it('renders compact inputs and selects with size sm', function () {
+    shareErrors();
+
+    expect(Blade::render('<x-fltc::form.input.date id="d" size="sm" inline />'))->toContain('h-8 py-1 text-sm')
+        ->and(Blade::render('<x-fltc::form.input.select id="s" size="sm"><option>a</option></x-fltc::form.input.select>'))->toContain('h-8 py-1 text-sm')
+        ->and(Blade::render('<x-fltc::form.input.text id="t" />'))->toContain(' py-2 ')->not->toContain('h-8');
+});
+
+it('offers suggestions through a datalist and sets monospace type', function () {
+    shareErrors();
+    $html = Blade::render('<x-fltc::form.input.text id="key" mono :suggestions="[\'alpha\', \'beta\' => \'Beta (2)\']" />');
+
+    expect($html)
+        ->toContain('list="key-suggestions"')
+        ->toContain('<datalist id="key-suggestions">')
+        ->toContain('<option value="alpha"></option>')
+        ->toContain('<option value="beta">Beta (2)</option>')
+        ->toContain('font-mono');
+});
+
+it('renders upload actions shown once files are chosen', function () {
+    shareErrors();
+    $html = Blade::render('<x-fltc::form.upload id="doc" label="Document"><x-slot:actions><x-fltc::button x-on:click="clear()">Cancel</x-fltc::button></x-slot:actions></x-fltc::form.upload>');
+
+    expect($html)->toContain('fltc-form-upload-actions')->toContain('clear()')->toMatch('/fltc-form-upload-actions[^>]*x-show="files.length"/');
+});
+
+it('puts labels or icons on both sides of a toggle', function () {
+    $html = Blade::render('<x-fltc::form.checkbox variant="toggle" id="t" iconOff="x" iconOn="check" labelOn="yes" />');
+
+    expect($html)
+        ->toMatch('/fltc-form-checkbox-off[^"]*".*ph-x/s')
+        ->toMatch('/fltc-form-checkbox-on[^"]*".*ph-check.*yes/s');
+    expect(strpos($html, 'fltc-form-checkbox-off'))->toBeLessThan(strpos($html, 'fltc-form-checkbox-track'))
+        ->and(strpos($html, 'fltc-form-checkbox-track'))->toBeLessThan(strpos($html, 'fltc-form-checkbox-on'));
+});
+
+it('renders radio options as cards with descriptions', function () {
+    shareErrors();
+    $html = Blade::render('<x-fltc::form.radio.group name="plan" variant="cards" color="primary"><x-fltc::form.radio value="a" label="Basic" description="For one person" /><x-fltc::form.radio value="b" label="Team" /></x-fltc::form.radio.group>');
+
+    expect(substr_count($html, 'fltc-form-radio-card'))->toBe(2)
+        ->and($html)->toContain('has-[:checked]:border-primary-500')
+        ->toContain('fltc-form-radio-description')->toContain('For one person');
+});
+
+it('renders a stand-alone error from the bag, the slot or a message', function () {
+    shareErrors(['items.0' => 'First item is missing']);
+
+    expect(Blade::render('<x-fltc::form.error name="items" icon="warning" />'))
+        ->toContain('First item is missing')->toContain('id="items-error"')->toContain('text-danger-600')->toContain('ph-warning')
+        ->and(Blade::render('<x-fltc::form.error>Typed</x-fltc::form.error>'))->toContain('Typed')
+        ->and(trim(Blade::render('<x-fltc::form.error name="nothing" />')))->toBe('');
+});
+
+it('fills a date range from presets', function () {
+    shareErrors();
+    $html = Blade::render('<x-fltc::form.daterange fromModel="from" toModel="to" :presets="[\'this-month\', \'Q1\' => [\'2026-01-01\', \'2026-03-31\']]" />');
+
+    expect($html)
+        ->toContain('wire:model="from"')->toContain('wire:model="to"')
+        ->toContain('x-ref="from"')->toContain('x-ref="to"')
+        ->toContain("apply('2026-01-01', '2026-03-31')")
+        ->toContain('This month')->toContain('Q1');
+
+    expect(\Fsteltenkamp\TwcssComponents\View\Components\Form\Daterange::range('last-month', \Illuminate\Support\Carbon::parse('2026-03-31')))
+        ->toBe(['label' => 'Last month', 'from' => '2026-02-01', 'to' => '2026-02-28']);
+});

@@ -27,10 +27,13 @@ class Group extends Component
         public string $color = 'base',
         public bool $horizontal = false,
         public bool $inline = false,
+        public string $variant = 'default',
     ) {
         $this->classList = $inline ? 'min-w-0' : 'mb-4 min-w-0';
         $this->legendClasses = 'mb-1 block text-sm font-medium '.Shades::secondary($color);
-        $this->optionsClasses = $horizontal ? 'flex flex-wrap items-center gap-x-6 gap-y-2' : 'flex flex-col gap-2';
+        $this->optionsClasses = $variant === 'cards'
+            ? ($horizontal ? 'grid gap-2 sm:grid-cols-2 lg:grid-cols-3' : 'grid gap-2')
+            : ($horizontal ? 'flex flex-wrap items-center gap-x-6 gap-y-2' : 'flex flex-col gap-2');
     }
 
     public function render(): View|Closure|string
@@ -44,6 +47,7 @@ class Group extends Component
             'live' => $this->live,
             'required' => $this->required,
             'color' => $this->color,
+            'variant' => $this->variant,
         ]);
 
         return view('fltc::components.form.radio.group');

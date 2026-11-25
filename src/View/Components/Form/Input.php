@@ -47,8 +47,16 @@ abstract class Input extends Component
     // dark:[color-scheme:dark] makes native parts (date picker icon and popup, select
     // list) render for a dark background instead of black-on-dark. Left padding comes
     // from leftPadding(): room for the leading icon only when there is one.
-    protected string $baseClasses = 'block w-full rounded-md border py-2 pr-3 shadow-sm transition duration-150 focus:outline-none focus:ring-2 dark:[color-scheme:dark]';
-    protected string $errorBaseClasses = 'border-red-500 placeholder-red-300 focus:border-red-500 focus:ring-red-500 dark:border-red-400 dark:placeholder-red-400 dark:focus:border-red-400 dark:focus:ring-red-400';
+    protected string $baseClasses = 'block w-full rounded-md border pr-3 shadow-sm transition duration-150 focus:outline-none focus:ring-2 dark:[color-scheme:dark]';
+    protected string $errorBaseClasses = 'border-danger-500 placeholder-danger-300 focus:border-danger-500 focus:ring-danger-500 dark:border-danger-400 dark:placeholder-danger-400 dark:focus:border-danger-400 dark:focus:ring-danger-400';
+
+    /**
+     * Height: `sm` is the compact size for table rows and toolbars.
+     */
+    protected function sizeClasses(): string
+    {
+        return (property_exists($this, 'size') ? $this->size : 'md') === 'sm' ? 'h-8 py-1 text-sm' : 'py-2';
+    }
 
     protected function leftPadding(): string
     {
@@ -75,6 +83,7 @@ abstract class Input extends Component
     {
         return trim(implode(' ', [
             $this->baseClasses,
+            $this->sizeClasses(),
             $this->leftPadding(),
             $this->getBackgroundClasses($color),
             $this->themeMap[$color] ?? $this->themeMap['base'],
@@ -86,6 +95,7 @@ abstract class Input extends Component
     {
         return trim(implode(' ', [
             $this->baseClasses,
+            $this->sizeClasses(),
             $this->leftPadding(),
             $this->getBackgroundClasses(),
             $this->errorBaseClasses,

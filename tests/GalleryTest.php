@@ -282,6 +282,13 @@ request id 7f3a9c</x-slot:details>
     <x-fltc::button color="primary" icon="funnel">Filter</x-fltc::button>
 </div>'],
             ],
+            'Radio cards' => [
+                ['variant cards', '<x-fltc::form.radio.group name="g-plan" label="Ticket" variant="cards" color="primary" value="b" horizontal>
+    <x-fltc::form.radio value="a" label="#1042 Login fails" description="Opened 3 days ago" />
+    <x-fltc::form.radio value="b" label="#1057 Export broken" description="Opened yesterday" />
+    <x-fltc::form.radio value="c" label="New ticket" description="Report it separately" />
+</x-fltc::form.radio.group>'],
+            ],
             'Radio group' => [
                 ['vertical', '<x-fltc::form.radio.group color="primary" name="gallery-plan" label="Plan" value="pro" required>
     <x-fltc::form.radio value="free" label="Free" />
@@ -301,6 +308,17 @@ request id 7f3a9c</x-slot:details>
                 ['default', '<x-fltc::form.checkbox label="I agree to the terms" color="primary" />'],
                 ['toggle', '<x-fltc::form.checkbox variant="toggle" label="Email notifications" color="primary" colorOff="base" checked />'],
                 ['toggle with icons', '<x-fltc::form.checkbox variant="toggle" size="lg" label="Dark mode" color="primary" colorOff="base" iconChecked="ph ph-moon" iconUnchecked="ph ph-sun" />'],
+                ['lever (icons beside the track)', '<x-fltc::form.checkbox variant="toggle" label="Ready for signing" color="success" colorOff="danger" iconOff="x" iconOn="check" iconChecked="" iconUnchecked="" />'],
+            ],
+            'Field options' => [
+                ['aside, note toggle and explicit error', '<x-fltc::form.input.text id="g-iban" label="IBAN" color="primary" note="22 characters, without spaces." noteToggle error="Checksum does not match" errorIcon="warning-circle" value="DE00 1234">
+    <x-slot:aside><x-fltc::icon name="check" /> saved 12:03</x-slot:aside>
+</x-fltc::form.input.text>'],
+                ['compact (size sm) with suggestions', '<div class="flex flex-wrap items-end gap-2"><x-fltc::form.input.text id="g-key" size="sm" inline mono placeholder="placeholder key" color="primary" :suggestions="[\'customer.name\', \'customer.iban\', \'deed.date\']" /><x-fltc::form.input.date id="g-d" size="sm" inline color="primary" /><x-fltc::form.input.select id="g-s" size="sm" inline color="primary"><option>Draft</option><option>Sent</option></x-fltc::form.input.select></div>'],
+                ['stand-alone error', '<x-fltc::form.error icon="warning">Pick at least one participant.</x-fltc::form.error>'],
+            ],
+            'Date range' => [
+                ['with presets', '<x-fltc::form.daterange color="primary" inline />'],
             ],
             'Label' => [
                 ['default', '<x-fltc::form.label color="base" for="x" required description="Shown to other members">Display name</x-fltc::form.label>'],
@@ -498,6 +516,12 @@ request id 7f3a9c</x-slot:details>
             'Upload' => [
                 ['drop zone (drop files on it or click)', '<x-fltc::form.upload color="base" name="files[]" label="Attachments" note="Images or PDFs, up to 10 MB each." accept="image/*,.pdf" multiple wrapperClass="max-w-xl" />'],
                 ['single file', '<x-fltc::form.upload color="base" name="manuscript" label="Manuscript" accept=".docx,.md" icon="file-doc" wrapperClass="max-w-xl" />'],
+                ['with actions (pick a file to see them)', '<x-fltc::form.upload color="primary" name="contract" label="Contract" accept=".pdf" wrapperClass="max-w-xl">
+    <x-slot:actions>
+        <x-fltc::button color="base" variant="ghost" x-on:click="clear()">Cancel</x-fltc::button>
+        <x-fltc::button color="primary" icon="upload-simple">Upload</x-fltc::button>
+    </x-slot:actions>
+</x-fltc::form.upload>'],
             ],
         ],
 
